@@ -1,4 +1,4 @@
-import type { Account, Persona } from '../types'
+import type { Account, Persona, Transaction } from '../types'
 import { ninoTransactions } from './nino.data'
 import { ninoBeneficiaries } from './nino.beneficiaries'
 
@@ -28,6 +28,35 @@ const accounts: Account[] = [
   },
 ]
 
+/**
+ * Ereignisse, die den Signalen zugrunde liegen — siehe `reto.ts` für das Warum.
+ *
+ * Nino, Interview 04: war oft im Minus. Ein Abo, das sich im Juli
+ * eingeschlichen hat, ist bei ihm kein Randfall, sondern der Anfang des
+ * Problems. Zwei Buchungen sind kein Muster — die App fragt deshalb, statt zu
+ * behaupten.
+ */
+const events: Transaction[] = [
+  {
+    id: 'nino-EV-2026-07-abo',
+    accountId: PRIVATE,
+    date: '2026-07-11',
+    text: 'APPLE PAY KAUF/DIENSTLEISTUNG VOM 11.07.2026 KARTEN NR. XXXX2264 CRUNCHYROLL',
+    amount: -2_490,
+    currency: 'CHF',
+    category: 'subscriptions',
+  },
+  {
+    id: 'nino-EV-2026-08-abo',
+    accountId: PRIVATE,
+    date: '2026-08-11',
+    text: 'APPLE PAY KAUF/DIENSTLEISTUNG VOM 11.08.2026 KARTEN NR. XXXX2264 CRUNCHYROLL',
+    amount: -2_490,
+    currency: 'CHF',
+    category: 'subscriptions',
+  },
+]
+
 export const nino: Persona = {
   id: 'nino',
   name: 'Nino Roth',
@@ -37,7 +66,7 @@ export const nino: Persona = {
   birthYear: 2007,
   address: { street: 'Länggassstrasse 63', place: '3012 Bern', country: 'Schweiz' },
   accounts,
-  transactions: ninoTransactions,
+  transactions: [...ninoTransactions, ...events],
   beneficiaries: ninoBeneficiaries,
   standingOrders: [],
   pendingOrders: [

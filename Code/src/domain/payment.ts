@@ -254,3 +254,44 @@ export function rawToCents(raw: string): number {
 export function centsToRaw(cents: number): string {
   return cents % 100 === 0 ? String(cents / 100) : (cents / 100).toFixed(2)
 }
+
+/**
+ * Wohin gespartes Geld gehen soll.
+ *
+ * Die Antwort auf «entweder aufs PostFinance-Sparkonto oder auf das, für das
+ * man sich selbst einen Dauerauftrag eingerichtet hat»:
+ *
+ *   1. Ein eigenes Spar- oder Vorsorgekonto **bei PostFinance** — dann ist es
+ *      eine Umbuchung auf sich selbst, und `recommendedRecipients` führt es
+ *      bereits.
+ *   2. Ein eigenes Sparkonto **bei einer anderen Bank**. Retos liegt bei der
+ *      BKB. Das ist keine Umbuchung, sondern eine echte Zahlung — der
+ *      Empfänger trägt deshalb seinen eigenen Namen, seine Adresse und die
+ *      IBAN dieses Kontos. Genau so, wie er den Dauerauftrag selbst
+ *      eingerichtet hat.
+ *   3. Nichts davon → `undefined`. Dann beginnt der Fluss wie immer bei der
+ *      Empfängerwahl, statt ein Konto zu raten.
+ */
+export function savingsRecipient(persona: Persona): Recipient | undefined {
+  const savings = persona.accounts.filter(
+    (account) => account.kind === 'savings' || account.kind === 'retirement3a',
+  )
+  if (savings.length === 0) return undefined
+
+  const internal = savings.find((account) => account.source.type === 'postfinance')
+  if (internal) {
+    return recommendedRecipients(persona).find((recipient) => recipient.accountId === internal.id)
+  }
+
+  const external = savings[0]
+  return {
+    id: `own-${external.id}`,
+    name: persona.name,
+    iban: external.iban,
+    address: persona.address,
+    bank: bankOf(external),
+    /* Bewusst nicht `own`: Auf ein Konto bei einer anderen Bank geht eine
+       Zahlung, keine Umbuchung — und der Fluss zeigt dann auch die IBAN. */
+    own: false,
+  }
+}

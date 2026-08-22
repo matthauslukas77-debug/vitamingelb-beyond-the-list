@@ -1,6 +1,7 @@
 import { useSession } from '../session'
 import { Icon, type IconName } from '../shell/Icon'
 import { Card, Row, SectionHead, TopBar } from '../shell/parts'
+import { SignalsButton } from '../../insights/cards/SignalsButton'
 
 /**
  * Angebote — Tab 4. Statt Kreisreihe ein 2×3-Raster.
@@ -18,11 +19,11 @@ const PRODUCTS: { icon: IconName; label: string }[] = [
 const VOUCHERS = ['Coop', 'Disney+', 'Zalando', 'SBB']
 
 export function Offers() {
-  const { push, toggleTheme, theme } = useSession()
+  const { push } = useSession()
 
   return (
     <div className="screen">
-      <TopBar onSearch={() => push({ name: 'search' })} onToggleTheme={toggleTheme} theme={theme} />
+      <TopBar onSearch={() => push({ name: 'search' })} leading={<SignalsButton />} />
       <h1 className="screen__title">Angebote</h1>
 
       <div className="screen__inner">

@@ -1,4 +1,4 @@
-import type { Account, Persona } from '../types'
+import type { Account, Persona, Transaction } from '../types'
 import { retoTransactions } from './reto.data'
 import { retoBeneficiaries } from './reto.beneficiaries'
 
@@ -26,6 +26,31 @@ const accounts: Account[] = [
   },
 ]
 
+/**
+ * Ereignisse, die den Signalen zugrunde liegen.
+ *
+ * Die generierten Buchungen in `reto.data.ts` sind bewusst gleichmässig — sie
+ * bilden den Alltag ab. Was sie nicht enthalten, ist das Unerwartete, und
+ * genau das ist der Gegenstand des Signale-Bildschirms. Diese Ereignisse
+ * stehen deshalb hier, in der von Hand gepflegten Datei, neben Konten und
+ * Daueraufträgen — mit dem Muster, das sie belegen sollen.
+ *
+ * Reto, Interview 01: kommt gut durch, hat aber noch nie geplant. Der Bonus
+ * ist der Moment, in dem sich das entscheidet — er geht entweder aufs
+ * Sparkonto oder im Monat auf.
+ */
+const events: Transaction[] = [
+  {
+    id: 'reto-EV-2026-08-bonus',
+    accountId: PRIVATE,
+    date: '2026-08-14',
+    text: 'BONUS / Arbeitgeber AG',
+    amount: 80_000,
+    currency: 'CHF',
+    category: 'income',
+  },
+]
+
 export const reto: Persona = {
   id: 'reto',
   name: 'Reto Bühler',
@@ -35,7 +60,7 @@ export const reto: Persona = {
   birthYear: 2004,
   address: { street: 'Sulgenauweg 21', place: '3007 Bern', country: 'Schweiz' },
   accounts,
-  transactions: retoTransactions,
+  transactions: [...retoTransactions, ...events],
   beneficiaries: retoBeneficiaries,
   standingOrders: [
     { id: 'f-so-1', accountId: PRIVATE, recipient: 'Sparkonto BKB', amount: -30_000, currency: 'CHF', nextExecution: '2026-08-26' },

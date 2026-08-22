@@ -134,6 +134,19 @@
 
 .screen__inner { padding: 0 var(--s-5) var(--s-8); }
 
+/* Reiterwechsel. In der echten App sind drei Bilder lang beide Bildschirme
+   übereinander zu sehen — rund 90 ms Kreuzblende, kein Schieben. Weil beide
+   Reiter denselben Hintergrund der Telefonfläche teilen, genügt es, den
+   neuen Inhalt aufzublenden: Was durchscheint, ist derselbe Verlauf.
+   Blätter sind ausgenommen, die schieben sich ja. */
+.phone__screen > .screen { animation: tab-fade 90ms ease-out; }
+.layer .screen { animation: none; }
+
+@keyframes tab-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 
 /* ── Kopfzeile ─────────────────────────────────────────────────────────── */
 
@@ -471,10 +484,14 @@ button.row:active { background: var(--tap); }
    bis der zurückgehende Bildschirm abgeräumt werden darf. Beide Werte müssen
    übereinstimmen. */
 .phone__screen {
-  --sheet-ms: 320ms;
-  /* Wie iOS: schnell los, sanft aus. Kein Überschwingen — bei einer ganzen
-     Seite wirkt Federn unruhig, nicht lebendig. */
-  --sheet-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  /* Beides an der Bildschirmaufnahme der echten App nachgemessen (22.08.2026,
+     33.7 fps): Der Wechsel dauert 400–430 ms, nicht 320. Die Kurve wurde an
+     15 Einzelbildern gegen mehrere Kandidaten geprüft; sie liegt auf dem
+     `ease` des Browsers — bei 18.5% der Zeit 27.7% des Wegs (ease: 28.6%),
+     bei 63% dann 91.4% (ease: 90.6%). Deshalb hier die Werte von `ease`
+     ausgeschrieben statt der iOS-Kurve, die wir vorher geraten hatten. */
+  --sheet-ms: 420ms;
+  --sheet-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .layer {
@@ -508,10 +525,32 @@ button.row:active { background: var(--tap); }
   to { transform: translateX(100%); }
 }
 
-/* Was darunter liegt, tritt leicht zurück. Kein Versatz, nur ein Hauch
-   Abdunkelung: Der Übergang läuft, während die Ebene darüber sie ohnehin
-   verdeckt, und beim Zurückgehen hellt sie hinter der hinausgleitenden
-   Ebene wieder auf. */
+/* ── Die Ebene darunter wandert mit ──────────────────────────────────────
+   Nachgemessen an der Aufnahme: Während die neue Ebene von rechts hereinkommt,
+   schiebt sich die darunterliegende nach links weg — bei 84% Fortschritt der
+   oberen Ebene war die untere 517 von 1206 px verschoben, hochgerechnet die
+   halbe Breite. Aus acht Bildern kamen Werte zwischen 560 und 615 px; der
+   Mittelwert ist die Hälfte. Also 2:1.
+
+   Bewusst ein `transition` und keine `animation`: Beim Zurückgehen fällt die
+   Klasse weg, und die Ebene gleitet von selbst wieder an ihren Platz. Mit
+   einer Keyframe-Animation spränge sie zurück.
+
+   Der Reiterinhalt ist keine `.layer`, sondern liegt als `.screen` direkt in
+   der Telefonfläche — er braucht dieselbe Behandlung, sonst hätte gerade der
+   häufigste Fall (Home → Kontodetail) keinen Versatz. */
+.layer,
+.phone__screen > .screen {
+  transition: transform var(--sheet-ms) var(--sheet-ease);
+}
+
+.layer--under,
+.phone__screen--pushed > .screen {
+  transform: translateX(-50%);
+}
+
+/* Dazu weiterhin ein Hauch Abdunkelung. Der Versatz allein trägt die Tiefe
+   schon; das hier nimmt der Fläche nur die Aufdringlichkeit. */
 .layer::after {
   content: '';
   position: absolute;
@@ -528,7 +567,10 @@ button.row:active { background: var(--tap); }
 
 @media (prefers-reduced-motion: reduce) {
   .layer,
-  .layer--leaving { animation-duration: 1ms; }
+  .layer--leaving,
+  .phone__screen > .screen { animation-duration: 1ms; }
+  .layer,
+  .phone__screen > .screen,
   .layer::after { transition-duration: 1ms; }
 }
 
@@ -1227,3 +1269,7 @@ button.set-row:active { background: var(--tap); }
 }
 
 .state--on { background: rgba(73, 166, 171, 0.18); color: var(--text-strong); }
+
+/* Der linke Platz in der Kopfzeile. Im Nachbau leer; was dort erscheint,
+   kommt von aussen — siehe `TopBar` in `parts.tsx`. */
+.topbar__leading { display: flex; align-items: center; }

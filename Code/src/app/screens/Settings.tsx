@@ -522,10 +522,7 @@ function AppEinstellungen() {
             ]}
             onChange={setTheme}
           />
-          <p className="set-note">
-            Gilt sofort für die ganze App — derselbe Umschalter wie oben rechts auf dem
-            Startbildschirm.
-          </p>
+          <p className="set-note">Gilt sofort für die ganze App.</p>
         </div>
       </section>
 

@@ -3,17 +3,18 @@ import { formatMoney } from '../../lib/money'
 import { useSession } from '../session'
 import { Slot } from '../shell/Slot'
 import { Card, CircleRow, Row, TopBar } from '../shell/parts'
+import { SignalsButton } from '../../insights/cards/SignalsButton'
 
 /**
  * Zahlungen — Tab 2.
  * Vorlage: PREP/03_Screens_and_Assets/playstore_android/postfinance_app/04.png
  */
 export function Payments() {
-  const { pendingOrders, standingOrders, push, toggleTheme, theme } = useSession()
+  const { pendingOrders, standingOrders, push } = useSession()
 
   return (
     <div className="screen">
-      <TopBar onSearch={() => push({ name: 'search' })} onToggleTheme={toggleTheme} theme={theme} />
+      <TopBar onSearch={() => push({ name: 'search' })} leading={<SignalsButton />} />
       <h1 className="screen__title">Zahlungen</h1>
 
       <CircleRow

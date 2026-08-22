@@ -1,4 +1,4 @@
-import type { Account, Persona } from '../types'
+import type { Account, Persona, Transaction } from '../types'
 import { liviaTransactions } from './livia.data'
 import { liviaBeneficiaries } from './livia.beneficiaries'
 
@@ -27,6 +27,26 @@ const accounts: Account[] = [
   },
 ]
 
+/**
+ * Ereignisse, die den Signalen zugrunde liegen — siehe `reto.ts` für das Warum.
+ *
+ * Livia, Interview 05: spart auf 50'000 und rechnet genau. Das Notebook für
+ * die Lehre ist eine echte Anschaffung, aber kein Konsummonat — ohne
+ * Einordnung stünde ihre Konsumblase den ganzen August auf Rot. Sie ist der
+ * zweite Beleg dafür, dass die Einordnung nicht nur Brunos Sonderfall löst.
+ */
+const events: Transaction[] = [
+  {
+    id: 'livia-EV-2026-08-notebook',
+    accountId: PRIVATE,
+    date: '2026-08-07',
+    text: 'KAUF/ONLINE-SHOPPING VOM 07.08.2026 KARTEN NR. XXXX9042 MICROSPOT',
+    amount: -129_000,
+    currency: 'CHF',
+    category: 'shopping',
+  },
+]
+
 export const livia: Persona = {
   id: 'livia',
   name: 'Livia Berger',
@@ -36,7 +56,7 @@ export const livia: Persona = {
   birthYear: 2008,
   address: { street: 'Wachthausgasse 6', place: '3150 Schwarzenburg', country: 'Schweiz' },
   accounts,
-  transactions: liviaTransactions,
+  transactions: [...liviaTransactions, ...events],
   beneficiaries: liviaBeneficiaries,
   standingOrders: [
     { id: 'k-so-1', accountId: PRIVATE, recipient: 'Sparkonto', amount: -50_000, currency: 'CHF', nextExecution: '2026-08-26' },

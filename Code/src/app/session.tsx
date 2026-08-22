@@ -28,8 +28,12 @@ export type Screen =
   /* Der Budget-Wizard. Eigener Bildschirm, weil er einen eigenen Stapel hat:
      «Zurück» geht im Wizard einen Schritt zurück, nicht aus ihm heraus. */
   | { name: 'budgetWizard' }
+  /* Signale — was sich verändert hat. Das Gegenstück zum Cockpit: dort die
+     Instrumente, hier die Leuchten. */
+  | { name: 'signals' }
   | { name: 'scan' }
-  | { name: 'pay' }
+  /* `save` belegt den Zahlungsfluss vor — gesetzt von einer Signalkarte. */
+  | { name: 'pay'; save?: number }
   | { name: 'transfer' }
   | { name: 'search' }
   | { name: 'recurring' }
@@ -46,7 +50,7 @@ export type Screen =
  * passen: Die Animation läuft dort, hier wird nur so lange gewartet, bis der
  * zurückgehende Bildschirm abgeräumt werden darf.
  */
-export const SHEET_MS = 320
+export const SHEET_MS = 420
 
 export type Theme = 'light' | 'dark'
 

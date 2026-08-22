@@ -1,17 +1,20 @@
 import type { ReactNode } from 'react'
 import { Icon, type IconName } from './Icon'
 
-/** Kopfzeile mit Such-Pille und Theme-Umschalter. */
-export function TopBar({ onSearch, onToggleTheme, theme }: {
+/**
+ * Kopfzeile: links ein Platz, rechts die Such-Pille.
+ *
+ * Der linke Platz ist bewusst nicht belegt — im Nachbau steht dort nichts.
+ * Was dort erscheint, kommt von aussen (`leading`), damit dieser Baustein
+ * nichts von unserer Schicht weiss.
+ */
+export function TopBar({ onSearch, leading }: {
   onSearch: () => void
-  onToggleTheme: () => void
-  theme: 'light' | 'dark'
+  leading?: ReactNode
 }) {
   return (
     <div className="topbar">
-      <button className="topbar__icon" onClick={onToggleTheme} aria-label="Darstellung wechseln">
-        <Icon name={theme === 'light' ? 'moon' : 'sun'} size={18} />
-      </button>
+      <span className="topbar__leading">{leading}</span>
       <button className="topbar__pill" onClick={onSearch}>
         <Icon name="search" size={16} />
         Suchen

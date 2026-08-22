@@ -1,6 +1,7 @@
 import { useSession, type Screen } from '../session'
 import { Icon, type IconName } from '../shell/Icon'
 import { TopBar } from '../shell/parts'
+import { SignalsButton } from '../../insights/cards/SignalsButton'
 
 /**
  * Services — Tab 5. Schlichte Liste: Symbol, fette Bezeichnung, sonst nichts.
@@ -31,7 +32,10 @@ function ServiceRow({ icon, label, dot, onClick }: {
         alignItems: 'center',
         gap: 'var(--s-6)',
         width: '100%',
-        padding: '22px var(--s-6)',
+        /* 56 px hoch — an der Aufnahme gemessen (168 px bei @3x = 56 pt).
+           Vorher 22 px Innenabstand und damit 70 px Zeile, ein Drittel zu
+           luftig. Das Symbol ist 26 hoch, bleiben 15 oben und unten. */
+        padding: '15px var(--s-6)',
         color: 'var(--text-strong)',
       }}
     >
@@ -47,11 +51,11 @@ function ServiceRow({ icon, label, dot, onClick }: {
 }
 
 export function Services() {
-  const { push, leave, toggleTheme, theme } = useSession()
+  const { push, leave } = useSession()
 
   return (
     <div className="screen">
-      <TopBar onSearch={() => push({ name: 'search' })} onToggleTheme={toggleTheme} theme={theme} />
+      <TopBar onSearch={() => push({ name: 'search' })} leading={<SignalsButton />} />
       <h1 className="screen__title">Services</h1>
 
       <div className="screen__inner">

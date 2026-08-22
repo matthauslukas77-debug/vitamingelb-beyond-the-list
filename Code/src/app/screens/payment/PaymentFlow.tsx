@@ -5,6 +5,7 @@ import {
   newDraft,
   orderFromDraft,
   rawToCents,
+  savingsRecipient,
   type PaymentDraft,
   type Recipient,
 } from '../../../domain/payment'
@@ -35,11 +36,21 @@ type Step = 1 | 2 | 3 | 4 | 'done'
 /** Läuft nur in der Sitzung — reicht, um Aufträge auseinanderzuhalten. */
 let counter = 0
 
-export function Pay() {
+/**
+ * `save` kommt von einer Signalkarte: «CHF 500 sparen». Dann überspringt der
+ * Fluss die Empfängerwahl und öffnet direkt beim Betrag — Empfänger und Summe
+ * stehen schon, bestätigen genügt. Findet sich kein Sparkonto, beginnt er wie
+ * immer bei Schritt 1, statt etwas zu raten.
+ */
+export function Pay({ save }: { save?: number } = {}) {
   const session = useSession()
   const { persona, pop, addOrder, setTab } = session
-  const [step, setStep] = useState<Step>(1)
-  const [draft, setDraft] = useState<PaymentDraft | null>(null)
+
+  const prefilled = save !== undefined ? savingsRecipient(persona) : undefined
+  const [step, setStep] = useState<Step>(prefilled ? 2 : 1)
+  const [draft, setDraft] = useState<PaymentDraft | null>(
+    prefilled ? { ...newDraft(prefilled, persona, TODAY), amount: save ?? 0 } : null,
+  )
 
   const pick = (recipient: Recipient, copy: boolean) => {
     const next = newDraft(recipient, persona, TODAY)

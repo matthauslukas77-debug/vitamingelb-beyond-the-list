@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { PERSONAS } from '../../data/personas'
+import { PERSONAS, findPersona } from '../../data/personas'
 import { TODAY } from '../../data/types'
 import {
   bankingDays,
@@ -14,6 +14,7 @@ import {
   pressKey,
   rawToCents,
   recommendedRecipients,
+  savingsRecipient,
 } from '../payment'
 
 /** Prüfziffern einer IBAN nach ISO 7064 Mod 97-10. */
@@ -253,5 +254,39 @@ describe('Betragseingabe', () => {
     for (const cents of [1, 5, 99, 2_000, 40_000, 123_456]) {
       expect(rawToCents(centsToRaw(cents))).toBe(cents)
     }
+  })
+})
+
+describe('Wohin gespartes Geld geht', () => {
+  it('nimmt bei Livia und Bruno das eigene Sparkonto', () => {
+    for (const id of ['livia', 'bruno']) {
+      const persona = findPersona(id)!
+      const recipient = savingsRecipient(persona)!
+      expect(recipient, id).toBeTruthy()
+      expect(recipient.own, id).toBe(true)
+      const account = persona.accounts.find((entry) => entry.id === recipient.accountId)
+      expect(account?.kind, id).toBe('savings')
+    }
+  })
+
+  it('macht aus Retos Sparkonto bei der BKB eine Zahlung, keine Umbuchung', () => {
+    /* Sein Sparkonto liegt bei einer anderen Bank. Dorthin geht keine
+       Umbuchung, sondern eine Zahlung auf die eigene IBAN — mit eigenem Namen
+       und eigener Adresse, genau wie in seinem Dauerauftrag. */
+    const reto = findPersona('reto')!
+    const external = reto.accounts.find((account) => account.source.type === 'external')!
+    const recipient = savingsRecipient(reto)!
+
+    expect(recipient.own).toBe(false)
+    expect(recipient.iban).toBe(external.iban)
+    expect(recipient.name).toBe(reto.name)
+    expect(recipient.bank.name).toBe('BKB')
+  })
+
+  it('rät nichts, wo es kein Sparkonto gibt', () => {
+    // Nino hat keines — dann beginnt der Fluss wie immer bei der Empfängerwahl.
+    const nino = findPersona('nino')!
+    expect(nino.accounts.some((account) => account.kind === 'savings')).toBe(false)
+    expect(savingsRecipient(nino)).toBeUndefined()
   })
 })

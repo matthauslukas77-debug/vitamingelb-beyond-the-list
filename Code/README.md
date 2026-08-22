@@ -119,6 +119,40 @@ Getroffen werden je nach Persona 81–90 % der Buchungen. Was übrig bleibt, sin
 `SIX Payment <Nr>`-Terminals, lokale Betriebe ohne Marke und generische Texte wie
 `KRANKENKASSE PRAEMIE` — genau die Fälle, für die es die Rückfrage an den Nutzer braucht.
 
+### Signale
+
+`src/insights/signals/` — Schicht 1 des Anomalie-Systems, erreichbar über den Kreis oben
+links auf jedem Reiter. Das Gegenstück zum Cockpit: dort die Instrumente, hier die
+Leuchten.
+
+| Signal | woraus |
+|---|---|
+| **Zusätzlich hereingekommen** | eine Gutschrift im laufenden Monat ausserhalb der bekannten Reihen — Bonus, 13., Rückerstattung |
+| **Abo teurer geworden** | `priceChange`, das `detectRecurring` ohnehin liefert |
+| **Sprengt die Kategorie** | eine Buchung über dem Doppelten ihres Kategorienbudgets |
+| **Neu aufgetaucht** | eine Reihe, die es im Vormonat noch nicht gab |
+| **Abo-Verdacht** | zwei gleiche Beträge im Monatsabstand — als Frage, nicht als Behauptung |
+| **Ausgeblieben** | eine erwartete monatliche Belastung ist nicht gekommen |
+
+Vier Regeln, die für jede Karte gelten:
+
+1. **Kein Signal ohne Beleg** — jede Karte trägt die Buchungen, aus denen sie stammt.
+2. **Verdacht heisst Verdacht** — zwei Buchungen sind kein Muster.
+3. **Rang statt Reihenfolge** — sortiert nach Betrag × Konfidenz × Aktualität.
+4. **Alles lässt sich erledigen** — sonst bedeutet der rote Punkt nach einer Woche nichts.
+
+**«Neu» ohne Datenbank:** Die Reihen werden zweimal erkannt — einmal über den ganzen
+Bestand, einmal über den Bestand bis Ende Vormonat. Was nur im ersten Lauf vorkommt, ist
+neu. Deterministisch und beim allerersten Start verfügbar; eine gespeicherte Momentaufnahme
+wäre eine zweite Wahrheit neben den Buchungen.
+
+Die Aktionen sind der Punkt. «Du hast CHF 800 mehr bekommen» ist eine Feststellung;
+**«CHF 500 sparen»** öffnet den fertigen Zahlungsfluss mit Empfänger und Betrag —
+`savingsRecipient()` nimmt das eigene PostFinance-Sparkonto, sonst das bei einer anderen
+Bank als echte Zahlung auf die eigene IBAN. **«Einordnen»** ist die Markierung von oben.
+Damit schliesst sich der Kreis: Das Signal findet den Ausreisser, die Einordnung nimmt ihn
+aus der Statistik, und dieselbe Karte kommt nicht wieder.
+
 ## Direktlinks
 
 Für Demo und Screenshots lässt sich jeder Einstieg per URL ansteuern:
@@ -138,8 +172,8 @@ Zusätzlich `&tab=payments` für den Startreiter.
 
 Personas: `reto` · `nino` · `livia` · `bruno`.
 Reiter: `home` · `payments` · `invest` · `offers` · `services`.
-Bildschirme: `account` · `cockpit` · `budget` · `income` · `expenses` · `recurring` ·
-`scan` · `pay` · `transfer` · `search` · `settings`.
+Bildschirme: `account` · `cockpit` · `budget` · `signals` · `income` · `expenses` ·
+`recurring` · `scan` · `pay` · `transfer` · `search` · `settings`.
 Ansichten von `cockpit`: `budget` · `analysis` · `recurring`, über `&view=`.
 Abschnitte von `settings`: `profile` · `login` · `notifications` · `accounts` · `payments` ·
 `invest` · `orders` · `app` · `twint` — ohne `&section` öffnet die Übersicht.
@@ -281,7 +315,8 @@ src/
     ├── engine/           balance.ts (Verlauf und Prognose) · tenure.ts (Abo-Dauer)
     ├── cards/            AccountBalanceCard — die Kontokarte auf Home
     ├── charts/           BalanceChart, Glättung
-    ├── screens/          Cockpit · SeriesDetail
+    ├── screens/          Cockpit · Signale · SeriesDetail
+    ├── signals/          Was sich verändert hat — siehe unten
     └── budget/           Das Budget aus den Buchungen — siehe unten
 ```
 
@@ -305,6 +340,7 @@ Texte und Rechenlogik des Rechners, rekonstruiert aus seinem Angular-Bundle und 
 | `storage.ts` | Gespeichertes Budget je Persona, mit «von dir gesetzt»-Merkern |
 | `forecast.ts` | Zwei Geraden über fünf Jahre: was der Plan verspricht, was bisher wirklich gespart wurde |
 | `pack.ts` | Circle Packing nach Wang et al. — ausgeschrieben, weil die App ohne Diagrammpaket auskommt |
+| `markings.ts` | «Gehört das ins Monatsbudget?» — normal, einmalig oder auf N Monate verteilt |
 | `ui/BubbleField.tsx` | Die Blasen: Ring = Budget, Füllung = verbraucht, Strichring = Monatsfortschritt |
 | `explain.ts` | Der Satz daneben — gerechnet, und wenn erreichbar von Apertus formuliert |
 | `screens/Wizard.tsx` | Der Wizard in drei Schritten: zwei Fragen → Regler → Ausblick |
@@ -324,6 +360,36 @@ Gemessen an den vier Personas: **87 – 98 %** der Ausgabenfranken sind sicher z
 **7 bis 14** der neunzehn Felder füllen sich von selbst. Der Rest ist zu vier Fünfteln
 Bargeld — und dafür gibt es keine Lösung ausser der Rückfrage. Sie steht als solche im
 Bildschirm.
+
+#### Ausserordentliche Ausgaben
+
+Brunos Anzahlung Heizung: CHF 12'000 am 11. August, bei einem Wohnbudget von CHF 1'463.
+Ohne Einordnung steht seine Wohnblase den ganzen Monat auf 920 %. Drei Antworten, weil es
+drei Fälle sind:
+
+| | Wirkung |
+|---|---|
+| **Gehört so dazu** | zählt im Monat der Buchung — die Vorgabe |
+| **War einmalig** | zählt nicht gegen das Budget, steht aber als ausserordentliche Ausgabe weiterhin da |
+| **Auf 12 Monate verteilen** | Jahresrechnung: ein Zwölftel in jedem der zwölf Monate |
+
+Der Unterschied zwischen den letzten beiden ist der Punkt. Die Anzahlung Heizung ist
+einmalig. Brunos Generalabonnement über CHF 3'950 ist es **nicht** — das ist die Mobilität
+eines ganzen Jahres, einmal bezahlt. Wer es ausklammert, versteckt eine echte Ausgabe.
+
+**Die Regel, die die Statistik schützt:** Nichts verschwindet. Über die volle Reichweite
+gilt immer
+
+```
+budget + ausserordentlich + carry  ==  alle Belastungen
+```
+
+`carry` ist der Teil verteilter Buchungen ausserhalb des betrachteten Fensters; über den
+ganzen Zeitraum ist er null. Geld wird verschoben, nie entfernt — und das ist keine
+Absichtserklärung, sondern
+[`__tests__/markings.test.ts`](src/insights/budget/__tests__/markings.test.ts). Der Nachbau
+bleibt unberührt: Kontostand, Analysen und die Ein-/Ausgaben-Detailseiten rechnen weiter
+mit allen Buchungen.
 
 #### Die Blasen
 
@@ -413,6 +479,13 @@ Die vier Personas bilden Personen aus unseren sechs Interviews ab
 
 Diese Muster sind absichtlich enthalten: Sie sind das Material, an dem sich später zeigen
 lässt, was eine bessere Auswertung leisten müsste.
+
+Dazu kommt in `src/data/personas/<id>.ts` — der von Hand gepflegten Datei — je ein
+**Ereignis**, das ein Signal auslöst. Die generierten Buchungen bilden den Alltag ab und
+sind bewusst gleichmässig; das Unerwartete ist aber der Gegenstand des Signale-Bildschirms.
+Reto bekommt im August einen Bonus über CHF 800, bei Nino schleicht sich ein Abo ein, und
+Livia kauft ein Notebook für die Lehre. Jedes trägt im Code den Kommentar, welches Muster
+es belegen soll.
 
 ## Icon
 

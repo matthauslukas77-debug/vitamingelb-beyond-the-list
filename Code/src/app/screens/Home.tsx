@@ -3,17 +3,18 @@ import { useSession } from '../session'
 import { Icon } from '../shell/Icon'
 import { Slot } from '../shell/Slot'
 import { Card, CircleRow, Row, SectionHead, TopBar } from '../shell/parts'
+import { SignalsButton } from '../../insights/cards/SignalsButton'
 
 /**
  * Home — Tab 1.
  * Vorlage: PREP/07_screenshots/IMG_1674.PNG (echter Screenshot, v6)
  */
 export function Home() {
-  const { accountGroups, totalChf, accountName, push, toggleTheme, theme } = useSession()
+  const { accountGroups, totalChf, accountName, push } = useSession()
 
   return (
     <div className="screen">
-      <TopBar onSearch={() => push({ name: 'search' })} onToggleTheme={toggleTheme} theme={theme} />
+      <TopBar onSearch={() => push({ name: 'search' })} leading={<SignalsButton />} />
       <h1 className="screen__title">Home</h1>
 
       <CircleRow

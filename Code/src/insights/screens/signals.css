@@ -1,0 +1,240 @@
+/* ── Unsere Schicht ────────────────────────────────────────────────────────
+   Signale.
+
+   Nur Tokens, wie überall in unserer Schicht. Die drei Tonlagen — gut, Warnung,
+   Verdacht — kommen aus den semantischen Rampen und nicht aus der Petrol-Rampe
+   der Marke: Eine Karte, die eine Beobachtung mitteilt, soll sich vom Rest der
+   App unterscheiden, ohne wie ein Fehler auszusehen.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.sig { padding-top: var(--s-2); }
+
+.sig-lead {
+  margin: 0 0 var(--s-5);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* ── Die Karte ───────────────────────────────────────────────────────────── */
+
+.sig-card {
+  position: relative;
+  padding: var(--s-5) var(--s-6);
+  border-radius: var(--CornerRadius-R-16);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.sig-card + .sig-card { margin-top: var(--s-4); }
+
+/* Der Streifen links trägt die Tonlage. Er ist schmal genug, um die Karte
+   nicht einzufärben, und breit genug, um beim Durchblättern zu wirken. */
+.sig-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+}
+
+.sig-card--good::before { background: var(--success3); }
+.sig-card--warn::before { background: var(--pending2); }
+.sig-card--soft::before { background: var(--petrol4); }
+
+.sig-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.sig-card__icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--surface-sunken);
+  color: var(--text-strong);
+}
+
+.sig-card--good .sig-card__icon { background: var(--success1); color: var(--success3); }
+.sig-card--warn .sig-card__icon { background: var(--pending1); color: var(--pending3); }
+
+.sig-card__title {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-strong);
+}
+
+.sig-card__date { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+
+.sig-card__body {
+  margin: var(--s-3) 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-body);
+}
+
+/* Der Beleg. Leise, aber immer da. */
+.sig-card__proof {
+  display: inline-block;
+  margin-top: var(--s-3);
+  padding: 2px 8px;
+  border-radius: var(--CornerRadius-R-100);
+  font-size: 11px;
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+}
+
+.sig-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+
+.sig-action {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: var(--CornerRadius-R-100);
+  border: 1px solid var(--line-strong);
+  font-size: 14px;
+  color: var(--text-strong);
+  text-align: center;
+}
+
+.sig-action:active { transform: scale(var(--press, 0.97)); }
+
+.sig-action--primary {
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--action-ink);
+  font-weight: 700;
+}
+
+.sig-action--quiet {
+  margin-left: auto;
+  border-color: transparent;
+  color: var(--text-muted);
+}
+
+/* ── Erledigtes ──────────────────────────────────────────────────────────── */
+
+.sig-more {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: var(--s-6) auto 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.sig-done {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-3) var(--s-4);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.sig-done + .sig-done { border-top: 1px solid var(--line); }
+.sig-done button { font-size: 12px; color: var(--petrol6); text-decoration: underline; }
+
+/* ── Leerzustand ─────────────────────────────────────────────────────────── */
+
+.sig-empty {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-3);
+  padding: var(--s-13) var(--s-6);
+  text-align: center;
+  color: var(--petrol5);
+}
+
+.sig-empty__title { font-size: 17px; font-weight: 700; color: var(--text-strong); }
+.sig-empty__body { font-size: 14px; line-height: 1.5; color: var(--text-muted); max-width: 30ch; }
+
+/* ── Das Einordnungs-Blatt ───────────────────────────────────────────────── */
+
+.sig-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: rgba(0, 27, 31, 0.35);
+  animation: sig-fade 160ms ease;
+}
+
+.sig-sheet {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 21;
+  padding: var(--s-6) var(--s-5) calc(var(--s-8) + env(safe-area-inset-bottom, 0px));
+  border-radius: var(--CornerRadius-R-28) var(--CornerRadius-R-28) 0 0;
+  background: var(--surface-card);
+  box-shadow: var(--shadow-lift);
+  animation: sig-rise 220ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.sig-sheet__title {
+  margin: 0 0 var(--s-5);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.sig-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-4);
+  width: 100%;
+  padding: var(--s-4);
+  border-radius: var(--CornerRadius-R-16);
+  color: var(--text-strong);
+}
+
+.sig-choice + .sig-choice { margin-top: var(--s-2); }
+.sig-choice:active { background: var(--tap); }
+.sig-choice.is-current { background: var(--surface-sunken); }
+
+.sig-choice__main { flex: 1; min-width: 0; }
+.sig-choice__title { display: block; font-size: 15px; font-weight: 700; }
+
+.sig-choice__body {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+@keyframes sig-fade {
+  from { opacity: 0; }
+}
+
+@keyframes sig-rise {
+  from { transform: translateY(100%); }
+}
+
+/* ── Der Kreis auf Home ──────────────────────────────────────────────────── */
+
+.topbar__icon { position: relative; }
+
+/* Derselbe Punkt wie am Services-Reiter — er bedeutet dort wie hier
+   «da ist etwas Neues». */
+.topbar__dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--grapefruit);
+  box-shadow: 0 0 0 2px var(--surface-card);
+}

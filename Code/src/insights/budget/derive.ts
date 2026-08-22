@@ -1,12 +1,11 @@
 import type { Account, Persona, Transaction } from '../../data/types'
-import { resolveBrand } from '../../data/brands'
 import { detectRecurring, normaliseMerchant, type Cadence } from '../../domain/recurring'
-import { parseBooking, prettyName } from '../../domain/booking'
 import { pretty } from '../../app/screens/Recurring'
-import { categorize } from './mapping'
+import { categorize, merchantName } from './mapping'
 import { flowTotals, moneyFlow, type FlowContext, type FlowTotals } from './flow'
 import { allSlots, slotKey, type BudgetSlot, type CategoryKey } from './slots'
 import { CATEGORY_KEYS } from './slots'
+import { budgetShare, extraordinaryShare, markingOf, NO_MARKINGS, type Markings } from './markings'
 
 /**
  * ── Unsere Schicht ─────────────────────────────────────────────────────────
@@ -109,6 +108,12 @@ export interface DerivedBudget {
   filledSlots: number
   /** Steuerkanton, wenn er aus einer Steuerbuchung hervorgeht. */
   detectedCanton?: { canton: string; evidence: string }
+  /**
+   * Was im Zeitraum als ausserordentlich eingeordnet wurde, auf den Monat
+   * umgelegt. Fällt nicht ins Budget, verschwindet aber auch nicht: Der
+   * Ausblick rechnet damit, sonst wäre er zu optimistisch.
+   */
+  extraordinaryMonth: number
 }
 
 export interface DeriveOptions {
@@ -116,6 +121,13 @@ export interface DeriveOptions {
   months?: number
   /** Stichtag, ISO. */
   today: string
+  /**
+   * Was der Nutzer eingeordnet hat. Ausserordentliches fällt aus dem
+   * Vorschlag heraus — sonst bläht eine einmalige Zahlung das Budget für
+   * immer auf: Brunos Anzahlung Heizung würde seine Nebenkosten dauerhaft mit
+   * CHF 1'000 im Monat belasten, obwohl sie einmal vorkam.
+   */
+  markings?: Markings
 }
 
 /**
@@ -173,23 +185,6 @@ export function detectCanton(transactions: Transaction[]): { canton: string; evi
 const CHILD_HINT = /(KITA|KINDERKRIPPE|TAGESSCHULE|KINDERZULAGE|FAMILIENZULAGE|HORT|SPIELGRUPPE)/i
 
 /**
- * Lesbarer Name der Gegenpartei.
- *
- * Erst die Marke aus der Registry — sie kennt den Namen besser als der
- * Buchungstext («Adobe Creative Cloud» statt «ADOBE *CREATIVE CLOUD INC»).
- * Sonst der Händler, den `parseBooking` aus dem Text schneidet; der steht in
- * der Zeile ganz hinten, hinter Zahlungsart, Datum und Kartennummer. Erst
- * wenn auch das nichts hergibt, der aufgeräumte Rohtext.
- */
-function sourceLabel(tx: Transaction): string {
-  const brand = resolveBrand(tx.text)
-  if (brand) return brand.brand.name
-  const counterparty = parseBooking(tx).counterparty
-  if (counterparty) return prettyName(counterparty)
-  return pretty(tx.text)
-}
-
-/**
  * Leitet das Budget aus den Buchungen einer Persona ab.
  *
  * `accounts` wird gebraucht, um ein Gegenkonto einordnen zu können — daran
@@ -198,7 +193,7 @@ function sourceLabel(tx: Transaction): string {
 export function deriveBudget(
   transactions: Transaction[],
   accounts: Account[],
-  { months = 12, today }: DeriveOptions,
+  { months = 12, today, markings = NO_MARKINGS }: DeriveOptions,
   ownName?: string,
 ): DerivedBudget {
   /* Ganze Kalendermonate, und der laufende zählt nicht mit.
@@ -251,11 +246,18 @@ export function deriveBudget(
 
   let assigned = 0
   let review = 0
+  let extraordinary = 0
 
-  for (const tx of window) {
+  /* Verteilte Buchungen wirken auch von ausserhalb des Fensters herein —
+     deshalb läuft die Schleife über alle Buchungen und nicht nur über das
+     Fenster. `budgetShare` entscheidet, was davon hier zählt. */
+  for (const tx of transactions) {
     const { flow: kind } = moneyFlow(tx, context)
     if (kind !== 'out') continue
-    const amount = Math.abs(tx.amount)
+
+    const marking = markingOf(markings, tx.id)
+    extraordinary += extraordinaryShare(tx, marking, { from, to })
+    const amount = Math.round(budgetShare(tx, marking, { from, to }))
     if (amount === 0) continue
 
     const slot = categorize(tx)
@@ -267,7 +269,7 @@ export function deriveBudget(
     bucket.weightedConfidence += amount * slot.confidence
     bucket.ids.push(tx.id)
     if (recurringKeys.has(normaliseMerchant(tx.text))) bucket.recurring = true
-    const label = sourceLabel(tx)
+    const label = merchantName(tx)
     bucket.sources.set(label, (bucket.sources.get(label) ?? 0) + amount)
     if (slot.confidence >= 0.6) assigned += amount
     else {
@@ -386,7 +388,7 @@ export function deriveBudget(
   for (const tx of window) {
     if (moneyFlow(tx, context).flow !== 'in') continue
     const key = normaliseMerchant(tx.text)
-    const label = sourceLabel(tx)
+    const label = merchantName(tx)
     const group = incomeGroups.get(label) ?? { total: 0, count: 0, key }
     group.total += tx.amount
     group.count += 1
@@ -454,6 +456,7 @@ export function deriveBudget(
     surplusMonth: incomeMonth - expensesMonth,
     actualSavedMonth: Math.round(flow.movedToSavings / actualMonths),
     flow,
+    extraordinaryMonth: Math.round(extraordinary / actualMonths),
     coverage: {
       assigned: Math.round(assigned / actualMonths),
       review: Math.round(review / actualMonths),
@@ -508,16 +511,26 @@ function iso(date: Date): string {
 export function spendByCategory(
   transactions: Transaction[],
   accounts: Account[],
-  { from, to, ownName }: { from: string; to: string; ownName?: string },
+  {
+    from,
+    to,
+    ownName,
+    markings = NO_MARKINGS,
+  }: { from: string; to: string; ownName?: string; markings?: Markings },
 ): Record<CategoryKey, number> {
   const context: FlowContext = { accounts, ownName }
   const totals = Object.fromEntries(CATEGORY_KEYS.map((key) => [key, 0])) as Record<CategoryKey, number>
 
-  const window = transactions.filter((tx) => tx.date >= from && tx.date <= to)
-  for (const tx of window) {
+  /* Über alle Buchungen, nicht nur über das Fenster: Eine auf zwölf Monate
+     verteilte Jahresrechnung vom Januar belastet den August mit einem
+     Zwölftel, obwohl sie im August nirgends steht. */
+  for (const tx of transactions) {
     if (moneyFlow(tx, context).flow !== 'out') continue
-    totals[categorize(tx).category] += Math.abs(tx.amount)
+    const amount = budgetShare(tx, markingOf(markings, tx.id), { from, to })
+    if (amount === 0) continue
+    totals[categorize(tx).category] += Math.round(amount)
   }
+  const window = transactions.filter((tx) => tx.date >= from && tx.date <= to)
 
   /* Der TWINT-Saldo unter Privaten, genau wie in `deriveBudget`: Wer mehr
      auslegt als zurückbekommt, hat die Differenz ausgegeben. Ohne diese Zeile

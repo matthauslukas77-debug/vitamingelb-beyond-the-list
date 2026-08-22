@@ -12,6 +12,7 @@ import { Payments } from './screens/Payments'
 import { Recurring } from './screens/Recurring'
 import { BudgetWizard } from '../insights/budget/screens/Wizard'
 import { Cockpit } from '../insights/screens/Cockpit'
+import { Signals } from '../insights/screens/Signals'
 import { SeriesDetail } from '../insights/screens/SeriesDetail'
 import { TransactionDetail } from './screens/TransactionDetail'
 import { Services } from './screens/Services'
@@ -73,8 +74,9 @@ function screenFor(screen: Screen) {
     case 'account': return <AccountDetail accountId={screen.accountId} />
     case 'cockpit': return <Cockpit view={screen.view} />
     case 'budgetWizard': return <BudgetWizard />
+    case 'signals': return <Signals />
     case 'scan': return <Scan />
-    case 'pay': return <Pay />
+    case 'pay': return <Pay save={screen.save} />
     case 'transfer': return <Transfer />
     case 'search': return <SearchScreen />
     case 'recurring': return <Recurring />
@@ -133,9 +135,13 @@ function Sheets() {
 }
 
 function Screen() {
-  const { theme } = useSession()
+  const { theme, stack } = useSession()
   return (
-    <div className="phone__screen" data-theme={theme}>
+    /* `--pushed`, solange ein Blatt darüberliegt: Dann weicht der Reiterinhalt
+       um die halbe Breite nach links aus, wie in der echten App. Beim
+       Zurückgehen fällt die Klasse weg und er gleitet zurück — das erledigt
+       das `transition` in `shell.css`. */
+    <div className={'phone__screen' + (stack.length > 0 ? ' phone__screen--pushed' : '')} data-theme={theme}>
       <span className="phone__notch" />
       <CurrentTab />
       <Sheets />

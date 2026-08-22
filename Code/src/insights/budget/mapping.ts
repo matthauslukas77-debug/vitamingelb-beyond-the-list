@@ -1,5 +1,7 @@
 import type { Category, Transaction } from '../../data/types'
 import { resolveBrand } from '../../data/brands'
+import { parseBooking, prettyName } from '../../domain/booking'
+import { pretty } from '../../app/screens/Recurring'
 import type { BudgetSlot, CategoryKey } from './slots'
 
 /**
@@ -253,4 +255,22 @@ export function categorize(tx: Transaction): Categorization {
     matchedBy: 'kein Regeltreffer',
     needsReview: true,
   }
+}
+
+/**
+ * Der lesbare Name der Gegenpartei — eine Stelle für alle, die ihn brauchen.
+ *
+ * Erst die Marke aus der Registry: Sie kennt den Namen besser als der
+ * Buchungstext («Adobe Creative Cloud» statt «ADOBE *CREATIVE CLOUD INC»).
+ * Sonst der Händler, den `parseBooking` aus dem Text schneidet — er steht in
+ * der Zeile ganz hinten, hinter Zahlungsart, Datum und Kartennummer. Ohne
+ * diesen Schritt steht auf einer Signalkarte «Kauf/online-shopping VOM
+ * 07.08.2026 Karten NR. Xxxx9042 Microspot» statt «Microspot».
+ */
+export function merchantName(tx: Transaction): string {
+  const brand = resolveBrand(tx.text)
+  if (brand) return brand.brand.name
+  const counterparty = parseBooking(tx).counterparty
+  if (counterparty) return prettyName(counterparty)
+  return pretty(tx.text)
 }
