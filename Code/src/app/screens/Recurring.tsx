@@ -121,7 +121,8 @@ function SeriesRow({ series }: { series: RecurringSeries }) {
         <span className="abo__title">{title}</span>
         <span className="abo__sub">
           <span className={`kind kind--${series.kind}`}>{kindLabel(series)}</span>
-          {CADENCE_LABEL[series.cadence]} · nächste {formatDate(series.nextExpected)}
+          {CADENCE_LABEL[series.cadence]} · nächste {formatDate(series.nextExpected).slice(0, 6)}
+          {series.nextExpected.slice(0, 4) !== TODAY.slice(0, 4) && formatDate(series.nextExpected).slice(6)}
         </span>
         {series.priceChange && (
           <span className="abo__change">
