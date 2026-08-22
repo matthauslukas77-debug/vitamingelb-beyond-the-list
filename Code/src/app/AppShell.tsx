@@ -9,6 +9,7 @@ import { Invest } from './screens/Invest'
 import { Offers } from './screens/Offers'
 import { Payments } from './screens/Payments'
 import { Subscriptions } from './screens/Subscriptions'
+import { TransactionDetail } from './screens/TransactionDetail'
 import { Services } from './screens/Services'
 
 const TABS: { id: Tab; label: string; icon: IconName; dot?: boolean }[] = [
@@ -70,6 +71,7 @@ function CurrentSheet() {
     case 'transfer': return <Transfer />
     case 'search': return <Search />
     case 'subscriptions': return <Subscriptions />
+    case 'transaction': return <TransactionDetail transactionId={top.transactionId} />
   }
 }
 

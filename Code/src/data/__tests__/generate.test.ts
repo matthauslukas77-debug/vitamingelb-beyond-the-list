@@ -1,77 +1,28 @@
 import { describe, expect, it } from 'vitest'
-import { generateTransactions, groupByDay, sortByDateDesc, type Series } from '../generate'
+import { groupByDay, sortByDateDesc } from '../generate'
 import { PERSONAS } from '../personas'
+import type { Transaction } from '../types'
 
-const series: Series[] = [
-  { id: 'salary', text: 'LOHN', category: 'income', amount: 400_000, dayOfMonth: 25 },
-  {
-    id: 'abo',
-    text: 'ADOBE *CREATIVE CLOUD',
-    category: 'subscriptions',
-    amount: -7_190,
-    dayOfMonth: 14,
-    raise: { fromIso: '2026-03-01', amount: -7_990 },
-  },
+/** Vier Buchungen, absichtlich unsortiert und mit zwei am selben Tag. */
+const sample: Transaction[] = [
+  { id: '1', accountId: 'a', date: '2026-03-04', text: 'A', amount: -100, currency: 'CHF', category: 'other' },
+  { id: '2', accountId: 'a', date: '2026-03-06', text: 'B', amount: -200, currency: 'CHF', category: 'other' },
+  { id: '3', accountId: 'a', date: '2026-03-04', text: 'C', amount: -300, currency: 'CHF', category: 'other' },
+  { id: '4', accountId: 'a', date: '2026-02-28', text: 'D', amount: -400, currency: 'CHF', category: 'other' },
 ]
-
-const options = {
-  accountId: 'a',
-  currency: 'CHF' as const,
-  seed: 42,
-  fromIso: '2026-01-01',
-  toIso: '2026-06-30',
-  series,
-  merchants: [],
-  perWeek: 0,
-}
-
-describe('generateTransactions', () => {
-  it('erzeugt bei gleichem Seed identische Daten', () => {
-    expect(generateTransactions(options)).toEqual(generateTransactions(options))
-  })
-
-  it('bucht wiederkehrende Zahlungen einmal pro Monat', () => {
-    const salary = generateTransactions(options).filter((tx) => tx.seriesId === 'salary')
-    expect(salary).toHaveLength(6)
-  })
-
-  it('wendet die Preiserhöhung ab dem Stichmonat an', () => {
-    const abo = generateTransactions(options).filter((tx) => tx.seriesId === 'abo')
-    expect(abo.find((tx) => tx.date === '2026-02-14')?.amount).toBe(-7_190)
-    expect(abo.find((tx) => tx.date === '2026-04-14')?.amount).toBe(-7_990)
-  })
-
-  it('bleibt innerhalb des Zeitraums', () => {
-    for (const tx of generateTransactions(options)) {
-      expect(tx.date >= options.fromIso && tx.date <= options.toIso).toBe(true)
-    }
-  })
-
-  it('kürzt den Stichtag auf den letzten Tag kurzer Monate', () => {
-    const result = generateTransactions({
-      ...options,
-      fromIso: '2026-02-01',
-      toIso: '2026-02-28',
-      series: [{ id: 'x', text: 'X', category: 'other', amount: -100, dayOfMonth: 31 }],
-    })
-    expect(result[0].date).toBe('2026-02-28')
-  })
-})
 
 describe('sortByDateDesc', () => {
   it('sortiert neueste zuerst', () => {
-    const sorted = sortByDateDesc(generateTransactions(options))
-    for (let i = 1; i < sorted.length; i++) {
-      expect(sorted[i - 1].date >= sorted[i].date).toBe(true)
-    }
+    const sorted = sortByDateDesc(sample)
+    expect(sorted.map((tx) => tx.date)).toEqual(['2026-03-06', '2026-03-04', '2026-03-04', '2026-02-28'])
   })
 })
 
 describe('groupByDay', () => {
   it('fasst Buchungen desselben Tages zusammen', () => {
-    const groups = groupByDay(generateTransactions(options))
-    const dates = groups.map((group) => group.date)
-    expect(new Set(dates).size).toBe(dates.length)
+    const groups = groupByDay(sortByDateDesc(sample))
+    expect(groups.map((group) => group.date)).toEqual(['2026-03-06', '2026-03-04', '2026-02-28'])
+    expect(groups[1].items).toHaveLength(2)
   })
 })
 

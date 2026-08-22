@@ -18,6 +18,7 @@ export type Screen =
   | { name: 'transfer' }
   | { name: 'search' }
   | { name: 'subscriptions' }
+  | { name: 'transaction'; transactionId: string }
 
 export type Theme = 'light' | 'dark'
 

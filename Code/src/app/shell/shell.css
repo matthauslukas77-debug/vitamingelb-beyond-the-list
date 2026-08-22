@@ -643,3 +643,142 @@ button.row:active { background: var(--tap); }
 .liquidity.is-critical .liquidity__cell:first-child { background: var(--danger1); }
 .liquidity.is-critical .liquidity__cell:first-child .liquidity__value,
 .liquidity.is-critical .liquidity__cell:first-child .liquidity__label { color: var(--danger3); }
+
+/* ── Bewegungsdetails ──────────────────────────────────────────────────────
+   Vorlage: examples2/IMG_1691–1693 */
+
+.detail__hero { display: grid; justify-items: center; padding: var(--s-6) var(--s-6) var(--s-8); }
+
+.detail__logo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin-bottom: var(--s-6);
+  background: var(--surface-card);
+  color: var(--text-strong);
+  font-size: 28px;
+  font-weight: 700;
+  box-shadow: var(--shadow-card);
+}
+
+/* Die orange Uhr markiert eine reservierte, noch nicht gebuchte Zahlung. */
+.detail__pending-badge {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--pending2);
+  color: var(--petrol9);
+  border: 2px solid var(--surface-app);
+}
+
+.detail__logo--brand { background: var(--weiss); }
+.detail__logo img { width: 72px; height: 72px; object-fit: contain; }
+
+.detail__amount { font-size: 30px; font-weight: 400; color: var(--text-strong); }
+.detail__cur { font-size: 22px; }
+.detail__meta { margin-top: var(--s-3); font-size: 15px; color: var(--text-body); text-align: center; }
+.detail__meta strong { font-weight: 700; color: var(--text-strong); }
+
+.detail__body { padding: var(--s-6) var(--s-5) var(--s-9); background: var(--surface-card); }
+
+.detail__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-4);
+  padding-bottom: var(--s-6);
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.detail__notice-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--pending2);
+  color: var(--petrol9);
+  flex: none;
+}
+
+.detail__section { padding-top: var(--s-5); }
+.detail__label { font-size: 13px; color: var(--text-muted); padding-bottom: var(--s-3); border-bottom: 1px solid var(--line); }
+.detail__row { display: flex; align-items: center; gap: var(--s-5); padding: var(--s-5) 0; }
+
+.detail__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface-sunken);
+  color: var(--text-strong);
+  flex: none;
+}
+
+.detail__main { flex: 1; min-width: 0; font-size: 16px; color: var(--text-body); }
+.detail__group { display: block; }
+.detail__strong { display: block; font-weight: 700; color: var(--text-strong); }
+.detail__sub { display: block; margin-top: 1px; font-size: 15px; color: var(--text-body); }
+.detail__chevron { color: var(--petrol6); flex: none; }
+
+.detail__add {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-4) 0 var(--s-2);
+  color: var(--text-strong);
+  font-size: 16px;
+}
+
+/* Der Rohtext, ungefiltert — das Material, um das es in der Challenge geht. */
+.detail__raw { flex: 1; min-width: 0; font-size: 15px; line-height: 1.45; color: var(--text-body); }
+.detail__raw span { display: block; overflow-wrap: anywhere; }
+
+/* Kopfzeile des Kontoblatts: ein sichtbarer Zurück-Pfeil plus der Griff.
+   Die echte App schliesst mit einer Wischgeste — im Prototyp braucht es ein
+   Bedienelement, das als solches erkennbar ist. */
+.sheet__topbar {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: var(--safe-top) var(--s-5) var(--s-2);
+}
+
+.sheet__back {
+  position: absolute;
+  left: var(--s-5);
+  top: var(--safe-top);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--surface-card);
+  color: var(--text-strong);
+  box-shadow: var(--shadow-card);
+}
+
+.sheet__grabber {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 40px;
+  border-radius: var(--CornerRadius-R-100);
+  color: var(--petrol6);
+}
+
+.sheet__grabber:active, .sheet__back:active { background: var(--tap); }
+
+/* Buchungszeilen sind anklickbar. */
+button.tx { transition: background 120ms ease; border-radius: var(--CornerRadius-R-8); }
+button.tx:active { background: var(--tap); }

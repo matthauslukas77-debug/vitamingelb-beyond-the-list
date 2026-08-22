@@ -45,9 +45,14 @@ export function AccountDetail({ accountId }: { accountId: string }) {
 
   return (
     <div className="sheet">
-      <button className="sheet__handle" onClick={pop} aria-label="Schliessen">
-        <Icon name="chevronDown" size={26} />
-      </button>
+      <div className="sheet__topbar">
+        <button className="sheet__back" onClick={pop} aria-label="Zurück">
+          <Icon name="chevronLeft" size={22} />
+        </button>
+        <button className="sheet__grabber" onClick={pop} aria-label="Schliessen">
+          <Icon name="chevronDown" size={22} />
+        </button>
+      </div>
 
       <div className="screen">
         <div className="screen__inner account-header">
@@ -96,7 +101,11 @@ export function AccountDetail({ accountId }: { accountId: string }) {
               <div className="day-head">{formatDayHeading(day.date, TODAY)}</div>
               <div className="tx-list">
                 {day.items.map((tx) => (
-                  <div className="tx" key={tx.id}>
+                  <button
+                    className="tx"
+                    key={tx.id}
+                    onClick={() => push({ name: 'transaction', transactionId: tx.id })}
+                  >
                     <BrandAvatar tx={tx} fallbackIcon={iconFor(tx)} />
                     <span className="tx__main">
                       <span className="tx__text">{tx.text}</span>
@@ -104,7 +113,7 @@ export function AccountDetail({ accountId }: { accountId: string }) {
                     <span className={'tx__amount num' + (tx.amount > 0 ? ' tx__amount--credit' : '')}>
                       {formatAmount(tx.amount)}
                     </span>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>

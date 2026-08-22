@@ -34,6 +34,27 @@ simulierten Statusleiste. Am Schreibtisch bleibt der Rahmen, damit die Proportio
 Vollbild ohne Safari-Leisten — das ist die Ansicht für die Videoaufnahme. Voraussetzung ist
 eine HTTPS-URL (z. B. über `tailscale serve`) oder `localhost`.
 
+## Woher die Buchungen kommen
+
+Die Personas haben keine zur Laufzeit erzeugten Daten mehr. Ihre Buchungen
+liegen fertig in `src/data/personas/<id>.data.ts` — **generiert, nicht von Hand
+pflegen**. Quelle und Generator:
+`WORKSPACE/04_experiments/postfinance_template_data/`.
+
+Je Persona 24 Monate (2024-09-01 bis zum Demo-Stichtag), 670–1150 Buchungen,
+Buchungstexte im Format des echten Auszugs, konsistenter Saldo. Daneben liegen
+dort dieselben Daten als Monatsauszüge im PostFinance-CSV-Layout.
+
+Neu erzeugen:
+
+```bash
+cd ../../WORKSPACE/04_experiments/postfinance_template_data/_generator
+python3 generate_synthetic.py && python3 to_app.py
+```
+
+Von Hand gepflegt bleibt `src/data/personas/<id>.ts`: Konten, Rolle, Zitat,
+Daueraufträge und offene Aufträge — alles, was aus dem Interview kommt.
+
 ## Händlerlogos
 
 In der Buchungsliste steht links das echte Logo des Händlers, sobald der Buchungstext
@@ -47,7 +68,7 @@ kein Modell — ein falsches Logo wäre schlimmer als keines.
 * Darstellung: [`src/app/shell/BrandAvatar.tsx`](src/app/shell/BrandAvatar.tsx) —
   Logo, sonst die Farbscheibe der Persona, sonst das Kategoriesymbol.
 
-Getroffen werden je nach Persona 61–84 % der Buchungen. Was übrig bleibt, sind
+Getroffen werden je nach Persona 81–90 % der Buchungen. Was übrig bleibt, sind
 `SIX Payment <Nr>`-Terminals, lokale Betriebe ohne Marke und generische Texte wie
 `KRANKENKASSE PRAEMIE` — genau die Fälle, für die es die Rückfrage an den Nutzer braucht.
 
@@ -63,7 +84,7 @@ Für Demo, Videoaufnahme und Screenshots lässt sich jeder Einstieg per URL anst
 
 Zusätzlich `&tab=payments` für den Startreiter.
 
-Personas: `fritz` · `janic` · `katja` · `michael` · `mia`.
+Personas: `fritz` · `janic` · `katja` · `michael`.
 Reiter: `home` · `payments` · `invest` · `offers` · `services`.
 Bildschirme: `account` · `analysis` · `scan` · `pay` · `transfer` · `search`.
 

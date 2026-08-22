@@ -37,6 +37,28 @@ export const CATEGORY_COLORS: Record<Category, string> = {
 }
 
 /**
+ * Die App zeigt Kategorien zweistufig: Oberkategorie in Grau, darunter die
+ * genaue in Fett — «Mobilität / Öffentlicher Verkehr».
+ * Vorlage: examples2/IMG_1691.
+ */
+export const CATEGORY_GROUP: Record<Category, string> = {
+  income: 'Einkommen',
+  groceries: 'Haushalt',
+  eatingOut: 'Freizeit',
+  shopping: 'Lebensstil',
+  transport: 'Mobilität',
+  housing: 'Wohnen',
+  health: 'Gesundheit',
+  subscriptions: 'Wohnen',
+  leisure: 'Freizeit',
+  taxes: 'Abgaben',
+  insurance: 'Versicherungen',
+  transfer: 'Eigene Konten',
+  cash: 'Bargeld',
+  other: 'Übriges',
+}
+
+/**
  * Umbuchungen auf eigene Konten sind kein Konsum.
  * Die heutige Auswertung zählt sie trotzdem mit — genau das hat Katja im
  * Interview 05 beschrieben. Der Nachbau bildet den Ist-Zustand ab; die
