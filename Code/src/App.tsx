@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { AppShell } from './app/AppShell'
 import { PersonaPicker } from './app/PersonaPicker'
 import type { Screen, Tab } from './app/session'
+import type { SettingsSection } from './app/settings'
 import { findPersona } from './data/personas'
 import type { Persona } from './data/types'
 
@@ -10,6 +11,16 @@ import type { Persona } from './data/types'
  * bestimmten Bildschirm. Praktisch für Demo, Videoaufnahme und Screenshots.
  */
 const TABS: Tab[] = ['home', 'payments', 'invest', 'offers', 'services']
+
+const SECTIONS: SettingsSection[] = [
+  'profile', 'login', 'notifications', 'accounts', 'payments',
+  'invest', 'orders', 'app', 'twint',
+]
+
+function readSettingsScreen(section: string | null): Screen {
+  const match = SECTIONS.find((entry) => entry === section)
+  return match ? { name: 'settingsSection', section: match } : { name: 'settings' }
+}
 
 function readUrl(): { persona: Persona | null; tab?: Tab; screen?: Screen } {
   const params = new URLSearchParams(window.location.search)
@@ -37,7 +48,12 @@ function readUrl(): { persona: Persona | null; tab?: Tab; screen?: Screen } {
           : name === 'analysis' || name === 'scan' || name === 'pay' ||
               name === 'transfer' || name === 'search'
             ? { name }
-            : undefined
+            : // «Profil und Einstellungen» und die neun Unterseiten daraus:
+              // `?screen=settings` öffnet die Übersicht,
+              // `?screen=settings&section=notifications` direkt den Abschnitt.
+              name === 'settings'
+              ? readSettingsScreen(params.get('section'))
+              : undefined
 
   return { persona, tab, screen }
 }
@@ -46,7 +62,7 @@ function writeUrl(persona: Persona | null) {
   const url = new URL(window.location.href)
   if (persona) url.searchParams.set('persona', persona.id)
   else {
-    for (const key of ['persona', 'tab', 'screen', 'account', 'series']) url.searchParams.delete(key)
+    for (const key of ['persona', 'tab', 'screen', 'account', 'series', 'section']) url.searchParams.delete(key)
   }
   window.history.replaceState(null, '', url)
 }

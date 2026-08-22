@@ -66,6 +66,39 @@ export interface Transaction {
   brand?: { bg: string; fg: string; short: string }
 }
 
+/** Postadresse, wie die Zusammenfassung einer Zahlung sie zeilenweise ausgibt. */
+export interface Address {
+  street: string
+  /** PLZ und Ort in einer Zeile — so steht es auf dem Einzahlungsschein. */
+  place: string
+  country: string
+}
+
+/** Bank des Empfängers, ebenfalls Zeile für Zeile in der Zusammenfassung. */
+export interface BankRef {
+  name: string
+  place: string
+  country: string
+}
+
+/**
+ * Ein Empfänger im Adressbuch der Persona.
+ *
+ * Jeder Eintrag steht für eine Gegenpartei, die in den Buchungen dieser Persona
+ * wirklich vorkommt. `match` ist das Textfragment, über das frühere Zahlungen an
+ * sie gefunden werden — daraus speist sich «Daten der bestehenden Zahlung
+ * kopieren» im Zahlungsfluss.
+ */
+export interface Beneficiary {
+  id: string
+  name: string
+  iban: string
+  address: Address
+  bank: BankRef
+  /** Kommt im Buchungstext früherer Zahlungen an diesen Empfänger vor. */
+  match: string
+}
+
 export interface StandingOrder {
   id: string
   accountId: string
@@ -95,8 +128,12 @@ export interface Persona {
   quote: string
   /** Auf welches Interviewdokument sich diese Persona stützt. */
   source: string
+  /** Wohnadresse — steht in der Zusammenfassung, wenn auf ein eigenes Konto geht. */
+  address: Address
   accounts: Account[]
   transactions: Transaction[]
+  /** Adressbuch: Gegenparteien, die in `transactions` wirklich auftauchen. */
+  beneficiaries: Beneficiary[]
   standingOrders: StandingOrder[]
   pendingOrders: PendingOrder[]
 }

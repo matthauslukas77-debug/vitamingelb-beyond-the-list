@@ -4,7 +4,8 @@ import { Icon, type IconName } from './shell/Icon'
 import { AccountDetail } from './screens/AccountDetail'
 import { Analysis } from './screens/Analysis'
 import { Breakdown } from './screens/Breakdown'
-import { Pay, Scan, Search, Transfer } from './screens/Flows'
+import { Scan, Search, Transfer } from './screens/Flows'
+import { Pay } from './screens/payment/PaymentFlow'
 import { Home } from './screens/Home'
 import { Invest } from './screens/Invest'
 import { Offers } from './screens/Offers'
@@ -13,6 +14,7 @@ import { Recurring } from './screens/Recurring'
 import { SeriesDetail } from '../insights/screens/SeriesDetail'
 import { TransactionDetail } from './screens/TransactionDetail'
 import { Services } from './screens/Services'
+import { ProfileSettings, SettingsSectionScreen } from './screens/Settings'
 
 const TABS: { id: Tab; label: string; icon: IconName; dot?: boolean }[] = [
   { id: 'home', label: 'Home', icon: 'home' },
@@ -60,23 +62,71 @@ function CurrentTab() {
   }
 }
 
-/** Der oberste Bildschirm des Stacks liegt über den Tabs. */
-function CurrentSheet() {
-  const { stack } = useSession()
-  const top = stack[stack.length - 1]
-  if (!top) return null
-  switch (top.name) {
-    case 'account': return <AccountDetail accountId={top.accountId} />
+/**
+ * Ein Bildschirm des Stapels. Die Zuordnung Name → Komponente steht nur hier;
+ * neue Bildschirme kommen als weiterer Fall dazu.
+ */
+function screenFor(screen: Screen) {
+  switch (screen.name) {
+    case 'account': return <AccountDetail accountId={screen.accountId} />
     case 'analysis': return <Analysis />
     case 'scan': return <Scan />
     case 'pay': return <Pay />
     case 'transfer': return <Transfer />
     case 'search': return <Search />
     case 'recurring': return <Recurring />
-    case 'series': return <SeriesDetail seriesKey={top.seriesKey} />
-    case 'transaction': return <TransactionDetail transactionId={top.transactionId} />
-    case 'breakdown': return <Breakdown direction={top.direction} />
+    case 'series': return <SeriesDetail seriesKey={screen.seriesKey} />
+    case 'transaction': return <TransactionDetail transactionId={screen.transactionId} />
+    case 'breakdown': return <Breakdown direction={screen.direction} />
+    case 'settings': return <ProfileSettings />
+    case 'settingsSection': return <SettingsSectionScreen section={screen.section} />
   }
+}
+
+/**
+ * Alle Bildschirme des Stapels als Ebenen übereinander — nicht nur der oberste.
+ *
+ * Vorher war nur der oberste gemountet. Ein Klick hat den bisherigen Bildschirm
+ * dann ausgehängt und den neuen eingehängt: Es schob sich nichts über etwas,
+ * es wurde getauscht. Bei zwei ähnlich gebauten Bildschirmen — Analysen und
+ * Ausgaben haben beide Pille, grossen Ring und weisse Fläche — liest das Auge
+ * das nicht als Seitenwechsel, sondern als Zucken: Der Ring ändert seine
+ * Grösse, die weisse Kante springt.
+ *
+ * Jetzt bleibt die darunterliegende Ebene stehen, und die neue gleitet vom
+ * rechten Rand darüber. Das ist zugleich das Verhalten, das der Rahmen
+ * imitiert: eine Push-Navigation wie in der echten App.
+ */
+function Sheets() {
+  const { stack, leaving } = useSession()
+  if (stack.length === 0 && !leaving) return null
+
+  return (
+    <>
+      {stack.map((screen, index) => (
+        <div
+          /* Der Index als Schlüssel ist hier richtig: Beim Zurückgehen
+             schrumpft der Stapel von hinten, die verbleibenden Ebenen behalten
+             ihren Index und werden deshalb nicht neu aufgebaut. */
+          key={index}
+          className={'layer' + (index < stack.length - 1 ? ' layer--under' : '')}
+          style={{ zIndex: 10 + index }}
+          /* `inert` statt `aria-hidden`: Es nimmt die Ebene zugleich aus dem
+             Fokuszug und aus dem Barrierefreiheitsbaum. Mit `aria-hidden`
+             allein blieben die Knöpfe darunter per Tabulator erreichbar —
+             man landet auf etwas, das man nicht sieht. */
+          inert={index < stack.length - 1 || undefined}
+        >
+          {screenFor(screen)}
+        </div>
+      ))}
+      {leaving && (
+        <div className="layer layer--leaving" style={{ zIndex: 10 + stack.length }} inert>
+          {screenFor(leaving)}
+        </div>
+      )}
+    </>
+  )
 }
 
 function Screen() {
@@ -85,7 +135,7 @@ function Screen() {
     <div className="phone__screen" data-theme={theme}>
       <span className="phone__notch" />
       <CurrentTab />
-      <CurrentSheet />
+      <Sheets />
       <TabBar />
     </div>
   )

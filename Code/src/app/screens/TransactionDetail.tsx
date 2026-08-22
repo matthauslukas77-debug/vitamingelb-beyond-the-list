@@ -46,7 +46,7 @@ function DetailRow({ icon, title, sub, chevron }: {
 }
 
 export function TransactionDetail({ transactionId }: { transactionId: string }) {
-  const { persona, pop } = useSession()
+  const { persona, accountName, pop } = useSession()
   const tx = persona.transactions.find((entry) => entry.id === transactionId)
   if (!tx) return null
 
@@ -62,7 +62,13 @@ export function TransactionDetail({ transactionId }: { transactionId: string }) 
       <div className="detail__hero">
         <span
           className={'detail__logo' + (match ? ' detail__logo--brand' : '')}
-          style={!match && tx.brand ? { background: tx.brand.bg, color: tx.brand.fg } : undefined}
+          style={
+            match?.bg
+              ? { background: match.bg }
+              : !match && tx.brand
+                ? { background: tx.brand.bg, color: tx.brand.fg }
+                : undefined
+          }
         >
           {match ? (
             <img src={match.logo} alt="" width={72} height={72} />
@@ -81,7 +87,7 @@ export function TransactionDetail({ transactionId }: { transactionId: string }) 
         {tx.pending ? (
           <>
             <span className="detail__meta">Ausstehender Betrag</span>
-            <span className="detail__meta">auf <strong>{account?.name}</strong></span>
+            <span className="detail__meta">auf <strong>{account && accountName(account)}</strong></span>
           </>
         ) : (
           <>
@@ -91,7 +97,7 @@ export function TransactionDetail({ transactionId }: { transactionId: string }) 
               </span>
             )}
             <span className="detail__meta">
-              Am <strong>{formatDate(tx.date)}</strong> belastet von <strong>{account?.name}</strong>
+              Am <strong>{formatDate(tx.date)}</strong> belastet von <strong>{account && accountName(account)}</strong>
             </span>
           </>
         )}

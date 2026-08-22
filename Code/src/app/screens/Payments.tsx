@@ -9,7 +9,7 @@ import { Card, CircleRow, Row, TopBar } from '../shell/parts'
  * Vorlage: PREP/03_Screens_and_Assets/playstore_android/postfinance_app/04.png
  */
 export function Payments() {
-  const { persona, push, toggleTheme, theme } = useSession()
+  const { pendingOrders, standingOrders, push, toggleTheme, theme } = useSession()
 
   return (
     <div className="screen screen--tinted">
@@ -43,10 +43,10 @@ export function Payments() {
         </Card>
 
         <Card title="Pendente Aufträge">
-          {persona.pendingOrders.length === 0 ? (
+          {pendingOrders.length === 0 ? (
             <p className="empty">Keine pendenten Aufträge.</p>
           ) : (
-            persona.pendingOrders.map((order) => (
+            pendingOrders.map((order) => (
               <Row
                 key={order.id}
                 icon="billPending"
@@ -59,10 +59,10 @@ export function Payments() {
         </Card>
 
         <Card title="Daueraufträge">
-          {persona.standingOrders.length === 0 ? (
+          {standingOrders.length === 0 ? (
             <p className="empty">Keine Daueraufträge.</p>
           ) : (
-            persona.standingOrders.map((order) => (
+            standingOrders.map((order) => (
               <Row
                 key={order.id}
                 icon="clock"

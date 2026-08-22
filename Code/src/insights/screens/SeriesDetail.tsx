@@ -92,7 +92,10 @@ export function SeriesDetail({ seriesKey }: { seriesKey: string }) {
   return (
     <Sheet title="Wiederkehrende Buchung" onBack={pop}>
       <div className="detail__hero">
-        <span className={'detail__logo' + (match ? ' detail__logo--brand' : '')}>
+        <span
+          className={'detail__logo' + (match ? ' detail__logo--brand' : '')}
+          style={match?.bg ? { background: match.bg } : undefined}
+        >
           {match ? (
             <img src={match.logo} alt="" width={72} height={72} />
           ) : (

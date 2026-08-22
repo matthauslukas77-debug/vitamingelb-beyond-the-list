@@ -113,7 +113,14 @@ function SeriesRow({ series, onOpen }: { series: RecurringSeries; onOpen: () => 
   return (
     <button className="abo abo--tap" onClick={onOpen}>
       {match ? (
-        <span className={'abo__icon abo__icon--logo' + (match.logo.endsWith('.svg') ? ' abo__icon--wordmark' : '')}>
+        <span
+          className={
+            'abo__icon abo__icon--logo' +
+            (match.logo.endsWith('.svg') ? ' abo__icon--wordmark' : '') +
+            (match.bg ? ' abo__icon--filled' : '')
+          }
+          style={match.bg ? { background: match.bg } : undefined}
+        >
           <img src={match.logo} alt="" loading="lazy" width={40} height={40} />
         </span>
       ) : (

@@ -8,7 +8,7 @@ import { Card, CircleRow, Row, SectionHead, TopBar } from '../shell/parts'
  * Vorlage: PREP/03_Screens_and_Assets/playstore_android/postfinance_app/05.png
  */
 export function Invest() {
-  const { persona, push, toggleTheme, theme } = useSession()
+  const { persona, accountName, push, toggleTheme, theme } = useSession()
   const products = persona.accounts.filter(
     (account) => account.kind === 'custody' || account.kind === 'retirement3a',
   )
@@ -53,7 +53,7 @@ export function Invest() {
             {products.map((account) => (
               <Row
                 key={account.id}
-                title={account.name}
+                title={accountName(account)}
                 sub={account.source.type === 'external' ? account.source.bank : account.iban}
                 amount={formatMoney(account.balance, account.currency)}
                 chevron

@@ -44,11 +44,11 @@ export function AccountBalanceCard({
       buildTimeline({
         account,
         transactions: session.persona.transactions,
-        pendingOrders: session.persona.pendingOrders,
+        pendingOrders: session.pendingOrders,
         today: TODAY,
         historyDays,
       }),
-    [account, session.persona, historyDays],
+    [account, session.persona, session.pendingOrders, historyDays],
   )
 
   // Sparen bekommt den blauen Ton, der Alltag den petrolfarbenen — so sind die
@@ -69,7 +69,7 @@ export function AccountBalanceCard({
     <div className="balance-card">
       <button className="balance-card__head" onClick={onOpen}>
         <span className="balance-card__line">
-          <span className="balance-card__name">{account.name}</span>
+          <span className="balance-card__name">{session.accountName(account)}</span>
           <span className="balance-card__now num">
             {formatMoney(account.balance, account.currency)}
           </span>

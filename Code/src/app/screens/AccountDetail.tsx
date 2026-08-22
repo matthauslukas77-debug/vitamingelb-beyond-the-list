@@ -35,12 +35,12 @@ function iconFor(tx: Transaction): IconName {
  * Vorlage: PREP/03_Screens_and_Assets/appstore_ios/de_PFApp_Screen2_Overview.png
  */
 export function AccountDetail({ accountId }: { accountId: string }) {
-  const { persona, transactionsFor, pop, push } = useSession()
+  const { persona, transactionsFor, accountName, pendingOrders, pop, push } = useSession()
   const account = persona.accounts.find((a) => a.id === accountId)
   if (!account) return null
 
   const transactions = transactionsFor(accountId)
-  const pending = persona.pendingOrders.filter((order) => order.accountId === accountId)
+  const pending = pendingOrders.filter((order) => order.accountId === accountId)
   const days = groupByDay(transactions).slice(0, 40)
 
   return (
@@ -58,7 +58,7 @@ export function AccountDetail({ accountId }: { accountId: string }) {
         <div className="screen__inner account-header">
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, padding: '4px 0 20px' }}>
             <h1 style={{ margin: 0, fontSize: 26, fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--text-strong)' }}>
-              {account.name}
+              {accountName(account)}
             </h1>
             <span className="num" style={{ fontSize: 24, color: 'var(--text-strong)' }}>
               <span style={{ fontSize: 14, color: 'var(--text-muted)' }}>{account.currency} </span>

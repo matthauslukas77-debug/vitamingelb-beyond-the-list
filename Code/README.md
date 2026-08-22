@@ -83,6 +83,9 @@ Für Demo und Screenshots lässt sich jeder Einstieg per URL ansteuern:
 ?persona=bruno&screen=analysis  zusätzlich einen Bildschirm
 ?persona=nino&screen=account     Kontodetail (optional &account=<id>)
 ?persona=bruno&screen=expenses  Ausgaben nach Oberkategorie
+?persona=livia&screen=settings   Profil und Einstellungen
+                                 (optional &section=notifications)
+?persona=nino&screen=pay         Zahlungsauftrag, Schritt 1 (Empfänger)
 ```
 
 Zusätzlich `&tab=payments` für den Startreiter.
@@ -90,9 +93,13 @@ Zusätzlich `&tab=payments` für den Startreiter.
 Personas: `reto` · `nino` · `livia` · `bruno`.
 Reiter: `home` · `payments` · `invest` · `offers` · `services`.
 Bildschirme: `account` · `analysis` · `income` · `expenses` · `recurring` · `scan` · `pay` ·
-`transfer` · `search`.
+`transfer` · `search` · `settings`.
+Abschnitte von `settings`: `profile` · `login` · `notifications` · `accounts` · `payments` ·
+`invest` · `orders` · `app` · `twint` — ohne `&section` öffnet die Übersicht.
 `recurring` hiess früher `subscriptions` — alte Demo-Links funktionieren weiter.
 `income` und `expenses` sind die beiden Detailseiten hinter der Legende der Analysen.
+`pay` startet den Zahlungsauftrag beim Empfänger — die weiteren drei Schritte hat der Fluss
+selbst in der Hand, damit der Zurück-Pfeil sich wie in der App verhält.
 
 ## Konfiguration
 
@@ -161,12 +168,19 @@ src/
 ├── domain/               Fachlogik des Nachbaus, ohne UI:
 │                         recurring.ts (Abo-Erkennung) · booking.ts (Buchungstext)
 │                         breakdown.ts (Einnahmen/Ausgaben nach Oberkategorie)
+│                         payment.ts (Zahlungsauftrag: Empfänger, Bankwerktage,
+│                         Betragseingabe, Auftrag aus dem Entwurf)
 ├── lib/                  Geld- und Datumsformatierung, Supabase-Anbindung
 ├── app/                  ── DER NACHBAU. Bildet die App von heute ab.
 │   ├── shell/            Telefonrahmen, Tab-Leiste, Karten, Zeilen, Slot
-│   └── screens/          Home · Zahlungen · Anlegen · Angebote · Services
-│                         Kontodetail · Bewegungsdetails · Analysen · Meine Abos
-│                         Einnahmen/Ausgaben · Scannen/Zahlen/Übertragen/Suche
+│   │                     controls.tsx — Schalter, Auswahl, Eingabefeld
+│   ├── screens/          Home · Zahlungen · Anlegen · Angebote · Services
+│   │                     Kontodetail · Bewegungsdetails · Analysen · Meine Abos
+│   │                     Einnahmen/Ausgaben · Scannen/Übertragen/Suche
+│   │                     Profil und Einstellungen mit neun Unterseiten
+│   │   └── payment/      Zahlungsauftrag in vier Schritten: Empfänger, Betrag,
+│   │                     Ausführung, Zusammenfassung mit Wischgeste
+│   └── settings.ts       Was die Nutzerin selbst setzt, im localStorage
 └── insights/             ── UNSERE SCHICHT. Alles Neue kommt hierhin.
     ├── registry.tsx      Wo eine neue Funktion eingehängt wird
     ├── engine/           balance.ts — Verlauf und Prognose
@@ -287,6 +301,11 @@ laufende App und schlagen im Zweifel jedes Marketingbild:
 | `IMG_1677` | Anlegen | Titel «Anlegen und Vorsorgen», Leerzustand mit gelbem Knopf |
 | `IMG_1678` | Angebote | Fette Kachelbeschriftung, Punkte-Navigation, Gutscheinkarte |
 | `IMG_1679` | Services | Schlichte Liste ohne Kreise und ohne Pfeile |
+| `IMG_5013` | Profil und Einstellungen | Neun Einträge mit Stichworten, Liste ohne Karte |
+| `IMG_5014`–`5015` | Zahlung: Empfänger | Suchfeld mit «Abbrechen», «Empfohlene Empfänger», Auswahlblatt mit «Neue Zahlung» und «Daten kopieren» |
+| `IMG_5016`–`5017` | Zahlung: Betrag | Vier Fortschrittsstriche, Betrag rechts und Währung links, gelbe Linie am aktiven Feld, Kontoauswahl von unten |
+| `IMG_5018` | Zahlung: Ausführung | Einzelauftrag/Dauerauftrag auf der getönten Fläche, Wochentag im Datum, «Annahmeschlusszeiten überschritten» |
+| `IMG_5019`–`5020` | Zahlung: Zusammenfassung | Drei Blöcke mit Stift, Wischgeste «Ausführen» statt Knopf |
 
 Ergänzend die offiziellen Store-Bilder in `PREP/03_Screens_and_Assets/` — vor allem
 `playstore_android/postfinance_app/08.png` für die Analysen, für die es kein echtes Foto gibt.

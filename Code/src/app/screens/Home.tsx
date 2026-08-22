@@ -9,7 +9,7 @@ import { Card, CircleRow, Row, SectionHead, TopBar } from '../shell/parts'
  * Vorlage: PREP/07_screenshots/IMG_1674.PNG (echter Screenshot, v6)
  */
 export function Home() {
-  const { accountGroups, totalChf, push, toggleTheme, theme } = useSession()
+  const { accountGroups, totalChf, accountName, push, toggleTheme, theme } = useSession()
 
   return (
     <div className="screen screen--tinted">
@@ -45,7 +45,7 @@ export function Home() {
                     <Row
                       icon="accountPerson"
                       iconAccent
-                      title={account.name}
+                      title={accountName(account)}
                       sub={account.iban}
                       badge={account.source.type === 'external' ? account.source.bank : undefined}
                       amount={formatMoney(account.balance, account.currency)}

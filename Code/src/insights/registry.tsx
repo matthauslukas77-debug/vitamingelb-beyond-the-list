@@ -49,7 +49,7 @@ const AccountRow: SlotComponent = ({ session, account, onOpen, fallback }) => {
   const timeline = buildTimeline({
     account,
     transactions: session.persona.transactions,
-    pendingOrders: session.persona.pendingOrders,
+    pendingOrders: session.pendingOrders,
     today: TODAY,
   })
   if (!timeline.hasMovement) return <>{fallback}</>

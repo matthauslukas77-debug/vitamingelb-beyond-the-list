@@ -17,6 +17,8 @@ export type IconName =
   /* Oberkategorien der Aufteilung — Vorlage IMG_1696–1698 */
   | 'sliders' | 'sofa' | 'bag' | 'heartPulse' | 'ball' | 'tram' | 'bank'
   | 'banknoteIn' | 'banknoteOut'
+  /* Zahlungsfluss — Vorlage IMG_5014–5020 */
+  | 'close' | 'pencil' | 'copy' | 'check' | 'backspace'
 
 const P: Record<IconName, string> = {
   home: 'M3 10.2 12 3l9 7.2M5.6 8.6V20h12.8V8.6M9.8 20v-5.4h4.4V20',
@@ -96,6 +98,20 @@ const P: Record<IconName, string> = {
   bank: 'M3.2 9.6 12 4.6l8.8 5M5.2 9.8v7.8M9.7 9.8v7.8M14.3 9.8v7.8M18.8 9.8v7.8M3 19.4h18',
   banknoteIn: 'M6.2 6.4h12.8A1.4 1.4 0 0 1 20.4 7.8v5.4a1.4 1.4 0 0 1-1.4 1.4H6.2A1.4 1.4 0 0 1 4.8 13.2V7.8A1.4 1.4 0 0 1 6.2 6.4ZM7.6 9h3.4M7.6 11.4h1.8',
   banknoteOut: 'M6.2 6.4h12.8A1.4 1.4 0 0 1 20.4 7.8v5.4a1.4 1.4 0 0 1-1.4 1.4H6.2A1.4 1.4 0 0 1 4.8 13.2V7.8A1.4 1.4 0 0 1 6.2 6.4ZM7.6 9h3.4M7.6 11.4h1.8',
+
+  /* ── Zahlungsfluss ──────────────────────────────────────────────────────
+     Schliessen, Bearbeiten, Kopieren, Bestätigen, Rückschritt. Vorlage
+     IMG_5014–5020: das Kreuz oben rechts, der Stift in der Zusammenfassung,
+     die Doppelkarte im Auswahlblatt, der Ziffernblock. */
+  close: 'M5.8 5.8l12.4 12.4M18.2 5.8L5.8 18.2',
+  pencil: 'M4.6 19.4h3.2L19 8.2a1.8 1.8 0 0 0 0-2.6l-.6-.6a1.8 1.8 0 0 0-2.6 0L4.6 16.2v3.2ZM14.8 7l2.2 2.2',
+  copy:
+    'M8.6 8.6h9.4a1.2 1.2 0 0 1 1.2 1.2v9.4a1.2 1.2 0 0 1-1.2 1.2H8.6a1.2 1.2 0 0 1-1.2-1.2V9.8a1.2 1.2 0 0 1 1.2-1.2Z' +
+    'M16.2 5.8V4.6a1.2 1.2 0 0 0-1.2-1.2H5.6a1.2 1.2 0 0 0-1.2 1.2v9.4a1.2 1.2 0 0 0 1.2 1.2h1.2',
+  check: 'M4.8 12.6 9.6 17.4 19.2 6.6',
+  backspace:
+    'M8.6 5.4h10.2a1.4 1.4 0 0 1 1.4 1.4v10.4a1.4 1.4 0 0 1-1.4 1.4H8.6L3 12l5.6-6.6Z' +
+    'M11.4 9.6l4.6 4.8M16 9.6l-4.6 4.8',
 }
 
 /** Gefüllte Varianten für den aktiven Reiter — so macht es die echte App. */

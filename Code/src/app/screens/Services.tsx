@@ -1,4 +1,4 @@
-import { useSession } from '../session'
+import { useSession, type Screen } from '../session'
 import { Icon, type IconName } from '../shell/Icon'
 import { TopBar } from '../shell/parts'
 
@@ -7,11 +7,13 @@ import { TopBar } from '../shell/parts'
  * Keine getönten Kreise, keine Pfeile, keine Trennlinien.
  * Vorlage: PREP/07_screenshots/IMG_1679.PNG
  */
-const ENTRIES: { icon: IconName; label: string; dot?: boolean }[] = [
+const ENTRIES: { icon: IconName; label: string; dot?: boolean; open?: Screen }[] = [
   { icon: 'card', label: 'Karten' },
-  { icon: 'bell', label: 'Benachrichtigungen', dot: true },
+  /* Die Benachrichtigungen sind zugleich eine der neun Unterseiten von
+     «Profil und Einstellungen» — beide Wege führen auf denselben Bildschirm. */
+  { icon: 'bell', label: 'Benachrichtigungen', dot: true, open: { name: 'settingsSection', section: 'notifications' } },
   { icon: 'document', label: 'Dokumente' },
-  { icon: 'settings', label: 'Profil und Einstellungen' },
+  { icon: 'settings', label: 'Profil und Einstellungen', open: { name: 'settings' } },
   { icon: 'support', label: 'Kontakt und Support' },
 ]
 
@@ -55,7 +57,13 @@ export function Services() {
       <div className="screen__inner">
         <section className="card">
           {ENTRIES.map((entry) => (
-            <ServiceRow key={entry.label} {...entry} />
+            <ServiceRow
+              key={entry.label}
+              icon={entry.icon}
+              label={entry.label}
+              dot={entry.dot}
+              onClick={entry.open ? () => push(entry.open!) : undefined}
+            />
           ))}
         </section>
 

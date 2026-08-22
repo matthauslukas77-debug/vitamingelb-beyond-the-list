@@ -7,8 +7,11 @@ import { Sheet } from '../shell/Sheet'
 import { Card, Row } from '../shell/parts'
 
 /**
- * Die drei Zahlungsflüsse und die Suche. Im Nachbau bewusst flach gehalten:
- * Sie müssen erreichbar sein und richtig aussehen, aber nichts ausführen.
+ * Scannen, Übertragen und die Suche. Im Nachbau flach gehalten: Sie müssen
+ * erreichbar sein und richtig aussehen, aber nichts ausführen.
+ *
+ * «Zahlen» steht nicht mehr hier — der Fluss läuft vollständig durch und liegt
+ * in `screens/payment/`.
  */
 
 /** Scannen — Kamerabild als Attrappe, mit Sucherrahmen wie in der App. */
@@ -39,54 +42,9 @@ export function Scan() {
   )
 }
 
-/** Zahlen — Formular in der Struktur der echten Maske. */
-export function Pay() {
-  const { persona, pop } = useSession()
-  const [recipient, setRecipient] = useState('')
-  const [amount, setAmount] = useState('')
-  const account = persona.accounts[0]
-
-  const field: React.CSSProperties = {
-    width: '100%',
-    padding: '12px 0',
-    border: 0,
-    borderBottom: '1px solid var(--line)',
-    background: 'transparent',
-    color: 'var(--text-strong)',
-    fontSize: 16,
-    outline: 'none',
-  }
-
-  return (
-    <Sheet title="Zahlen" onBack={pop}>
-      <div className="screen__inner">
-        <Card>
-          <div className="card__body" style={{ display: 'grid', gap: 18 }}>
-            <label style={{ display: 'grid', gap: 2 }}>
-              <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Empfänger</span>
-              <input style={field} value={recipient} onChange={(e) => setRecipient(e.target.value)} placeholder="Name oder IBAN" />
-            </label>
-            <label style={{ display: 'grid', gap: 2 }}>
-              <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Betrag</span>
-              <input style={field} value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="CHF 0.00" inputMode="decimal" />
-            </label>
-            <div>
-              <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>Belastungskonto</span>
-              <div style={{ paddingTop: 8, fontSize: 15, color: 'var(--text-strong)' }}>
-                {account.name} · {formatMoney(account.balance, account.currency, { sign: false })}
-              </div>
-            </div>
-          </div>
-        </Card>
-        <p className="empty">Im Prototyp wird keine Zahlung ausgelöst.</p>
-      </div>
-    </Sheet>
-  )
-}
-
 /** Übertragen — Auswahl zweier eigener Konten. */
 export function Transfer() {
-  const { persona, pop } = useSession()
+  const { persona, accountName, pop } = useSession()
   const own = persona.accounts.filter((account) => account.source.type === 'postfinance')
 
   return (
@@ -94,7 +52,7 @@ export function Transfer() {
       <div className="screen__inner">
         <div className="section-head"><span className="section-head__title">Von</span></div>
         <Card>
-          <Row title={own[0]?.name ?? '—'} sub={own[0]?.iban} amount={own[0] && formatMoney(own[0].balance, own[0].currency, { sign: false })} />
+          <Row title={own[0] ? accountName(own[0]) : '—'} sub={own[0]?.iban} amount={own[0] && formatMoney(own[0].balance, own[0].currency, { sign: false })} />
         </Card>
 
         <div style={{ display: 'grid', placeItems: 'center', padding: '14px 0', color: 'var(--petrol5)' }}>
@@ -104,7 +62,7 @@ export function Transfer() {
         <div className="section-head"><span className="section-head__title">Auf</span></div>
         <Card>
           {own.slice(1).map((account) => (
-            <Row key={account.id} title={account.name} sub={account.iban} amount={formatMoney(account.balance, account.currency, { sign: false })} chevron />
+            <Row key={account.id} title={accountName(account)} sub={account.iban} amount={formatMoney(account.balance, account.currency, { sign: false })} chevron />
           ))}
           {own.length < 2 && <p className="empty">Kein zweites eigenes Konto vorhanden.</p>}
         </Card>

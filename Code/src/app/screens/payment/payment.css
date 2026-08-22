@@ -1,0 +1,539 @@
+/* ── Zahlungsfluss ─────────────────────────────────────────────────────────
+   Vorlage: fehlendeDetailseiten/Zahlung/IMG_5014–5020 (Bildschirmfotos vom
+   August 2026, iPhone 16 Pro — 402 × 874 logische Punkte).
+
+   Aufbau aller vier Schritte: eine getönte Kopffläche mit Fortschritt, Titel
+   und Zeile «an <Empfänger>», darunter die Eingaben auf der Grundfläche, unten
+   fest die Aktion. Nur die Kopffläche und die Aktion sind fix, die Mitte
+   scrollt — sonst rutscht bei offenem Ziffernblock der Weiter-Knopf weg. */
+
+.pay {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-app);
+  animation: pay-in 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes pay-in { from { transform: translateY(12px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Die Kopffläche ist einen Ton heller als der Rumpf — in der Vorlage trennt
+   genau diese Kante Titel von Eingaben. */
+.pay__head {
+  flex: none;
+  padding: var(--safe-top) 0 var(--s-5);
+  background: var(--surface-sunken);
+}
+
+/* Vier Striche, der aktive gelb mit einem weichen Schein darunter. */
+.pay__steps {
+  display: flex;
+  justify-content: center;
+  gap: var(--s-3);
+  height: 3px;
+  margin-bottom: var(--s-7);
+}
+
+.pay__step {
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--petrol5);
+  opacity: 0.55;
+}
+
+.pay__step.is-active {
+  background: var(--postfinancegelb);
+  opacity: 1;
+  box-shadow: 0 0 12px 2px rgba(255, 204, 0, 0.45);
+}
+
+.pay__bar {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  padding: 0 var(--s-4);
+}
+
+.pay__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--text-strong);
+}
+
+.pay__icon:active { background: var(--tap); }
+.pay__icon:disabled { opacity: 0; pointer-events: none; }
+
+.pay__title { margin: 0; font-size: 19px; font-weight: 700; color: var(--text-strong); text-align: center; }
+
+.pay__sub {
+  margin: var(--s-4) 0 0;
+  padding: 0 var(--s-6);
+  font-size: 15px;
+  color: var(--text-body);
+  text-align: center;
+}
+
+.pay__sub strong { font-weight: 700; color: var(--text-strong); }
+
+.pay__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 var(--s-6);
+}
+
+.pay__foot { flex: none; padding: var(--s-6) var(--s-6) var(--s-7); }
+.pay__cta-inline { padding: var(--s-9) 0 var(--s-7); }
+
+/* ── Feldzeilen ───────────────────────────────────────────────────────────
+   Ein Feld ist eine Zeile mit Haarlinie darunter. Die aktive Zeile trägt sie
+   in Gelb — so zeigt die Vorlage, worauf der Ziffernblock wirkt. */
+
+.pay-field {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  width: 100%;
+  padding: var(--s-5) 0;
+  border-bottom: 1px solid var(--line);
+  color: inherit;
+  text-align: left;
+}
+
+.pay-field--accent { border-bottom-color: var(--postfinancegelb); }
+.pay-field__main { flex: 1; min-width: 0; }
+.pay-field__label { display: block; font-size: 17px; color: var(--text-body); }
+.pay-field__label strong { font-weight: 700; color: var(--text-strong); }
+.pay-field__sub { display: block; margin-top: 3px; font-size: 15px; color: var(--text-muted); }
+.pay-field__chevron { color: var(--petrol5); flex: none; transition: transform 160ms ease; }
+/* Das Kalendersymbol steht in IMG_5018 so hell wie der Text daneben. */
+.pay-field__chevron--icon { color: var(--text-strong); }
+/* Bei offenem Auswahlblatt zeigt der Pfeil nach oben — IMG_5017. */
+.pay-field__chevron--up { transform: rotate(180deg); }
+
+/* Betrag: Währung links, Zahl rechts — beide auf derselben Grundlinie. */
+.pay-amount { padding: var(--s-7) 0 var(--s-5); }
+
+.pay-amount__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-5);
+}
+
+.pay-amount__cur {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: 19px;
+  color: var(--postfinancegelb);
+  flex: none;
+}
+
+.pay-amount__value {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+  white-space: nowrap;
+}
+
+.pay-amount__value--empty { color: var(--text-muted); opacity: 0.5; }
+
+.pay-optional {
+  display: block;
+  width: 100%;
+  padding: var(--s-8) 0 0;
+  font-size: 16px;
+  color: var(--postfinancegelb);
+  text-align: center;
+}
+
+/* ── Aktion ───────────────────────────────────────────────────────────────
+   Der gelbe Knopf sitzt in der Vorlage mittig und ist deutlich schmaler als
+   die Fläche. */
+
+.pay-cta {
+  display: block;
+  min-width: 128px;
+  margin: 0 auto;
+  padding: var(--s-5) var(--s-8);
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--action);
+  color: var(--action-ink);
+  font-size: 17px;
+  text-align: center;
+  transition: transform 120ms ease, opacity 120ms ease;
+}
+
+.pay-cta:active { transform: scale(0.97); }
+.pay-cta:disabled { opacity: 0.4; pointer-events: none; }
+
+/* ── Ziffernblock ─────────────────────────────────────────────────────────
+   In der Vorlage ist das die Systemtastatur. Der Nachbau braucht sie selbst:
+   Im Browser auf dem Telefonrahmen gibt es keine, und ohne sie liesse sich
+   der Betrag nicht eingeben. */
+
+.pay-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px 6px;
+  padding: var(--s-3) 6px calc(var(--s-6) + var(--safe-bottom));
+  /* Die Tastatur gehört in der Vorlage dem Betriebssystem, nicht der App —
+     deshalb Grau statt Petrol, hell und dunkel wie bei iOS. */
+  --key-tray: var(--grau3);
+  --key-face: var(--weiss);
+  --key-ink: var(--schwarz);
+  background: var(--key-tray);
+}
+
+[data-theme='dark'] .pay-keys {
+  --key-tray: #2A2A2C;
+  --key-face: #6E6E73;
+  --key-ink: var(--weiss);
+}
+
+.pay-key {
+  display: grid;
+  place-items: center;
+  gap: 1px;
+  height: 46px;
+  border-radius: var(--CornerRadius-R-8);
+  background: var(--key-face);
+  color: var(--key-ink);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.28);
+}
+
+.pay-key:active { filter: brightness(1.25); }
+/* Punkt und Rückschritt stehen in der Vorlage ohne Tastenfläche. */
+.pay-key--flat { background: none; box-shadow: none; }
+.pay-key__digit { font-size: 25px; line-height: 1; }
+.pay-key__letters { font-size: 9px; letter-spacing: 0.12em; opacity: 0.7; }
+
+/* ── Einzelauftrag oder Dauerauftrag ─────────────────────────────────────── */
+
+.pay-seg {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin: 0 var(--s-5) var(--s-5);
+  padding: 2px;
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--surface-disc);
+}
+
+.pay-seg__option {
+  padding: var(--s-4) 0;
+  border-radius: var(--CornerRadius-R-100);
+  font-size: 17px;
+  color: var(--text-body);
+  text-align: center;
+}
+
+.pay-seg__option[aria-selected='true'] {
+  background: var(--petrol3);
+  color: var(--petrol9);
+  font-weight: 700;
+}
+
+/* ── Schalter ─────────────────────────────────────────────────────────────
+   «Sofortige Ausführung» ist in der Vorlage ausgegraut, weil der
+   Annahmeschluss vorbei ist — der Schalter ist da, aber ohne Wirkung. */
+
+.pay-switch {
+  position: relative;
+  width: 51px;
+  height: 31px;
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--grau3);
+  flex: none;
+}
+
+.pay-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+/* Im dunklen Thema ist die Bahn dunkel — so steht sie in IMG_5018. */
+[data-theme='dark'] .pay-switch { background: #3A3A3C; }
+
+.pay-switch::after { background: var(--grau5); }
+.pay-switch[aria-checked='true']::after { background: var(--weiss); transform: translateX(20px); }
+.pay-switch:disabled { opacity: 0.5; }
+
+.pay-field--muted .pay-field__label,
+.pay-field--muted .pay-field__label strong { color: var(--text-muted); }
+
+/* Zwei freie Textzeilen, wie in der Vorlage nur mit Platzhalter. */
+.pay-input {
+  display: block;
+  width: 100%;
+  padding: var(--s-7) 0 var(--s-4);
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-strong);
+  font: inherit;
+  font-size: 17px;
+  outline: none;
+}
+
+.pay-input::placeholder { color: var(--text-muted); }
+.pay-input:focus { border-bottom-color: var(--postfinancegelb); }
+
+/* ── Empfängersuche ─────────────────────────────────────────────────────── */
+
+.pay-search {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  padding: var(--safe-top) var(--s-5) var(--s-6);
+  background: var(--surface-sunken);
+}
+
+.pay-search__input {
+  flex: 1;
+  min-width: 0;
+  padding: var(--s-4) var(--s-5);
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: var(--CornerRadius-R-16);
+  background: var(--surface-disc);
+  color: var(--text-strong);
+  font: inherit;
+  font-size: 17px;
+  outline: none;
+}
+
+.pay-search__input { text-overflow: ellipsis; }
+.pay-search__input::placeholder { color: var(--text-muted); }
+.pay-search__input:focus { border-bottom-color: var(--postfinancegelb); }
+
+.pay-search__cancel {
+  flex: none;
+  font-size: 17px;
+  color: var(--postfinancegelb);
+  text-decoration: underline;
+}
+
+.pay-list__head {
+  padding: var(--s-6) 0 var(--s-4);
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+.pay-rec {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  width: 100%;
+  padding: var(--s-4) 0;
+  text-align: left;
+}
+
+.pay-rec:active { background: var(--tap); }
+
+.pay-rec__disc {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--surface-disc);
+  color: var(--text-strong);
+  flex: none;
+}
+
+.pay-rec__main { flex: 1; min-width: 0; }
+.pay-rec__name { display: block; font-size: 17px; font-weight: 700; color: var(--text-strong); }
+
+.pay-rec__iban {
+  display: block;
+  margin-top: 2px;
+  font-size: 15px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Auswahlblatt von unten ───────────────────────────────────────────────
+   Trägt in der Vorlage zweierlei: die zwei Wege «Neue Zahlung» und «Daten
+   kopieren» (IMG_5015) und die Kontoauswahl (IMG_5017). Derselbe Baustein. */
+
+.pay-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  background: rgba(0, 27, 31, 0.55);
+  animation: pay-fade 160ms ease;
+}
+
+@keyframes pay-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.pay-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 21;
+  max-height: 72%;
+  overflow-y: auto;
+  padding-bottom: var(--s-8);
+  border-radius: var(--CornerRadius-R-28) var(--CornerRadius-R-28) 0 0;
+  background: var(--surface-sunken);
+  animation: pay-up 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes pay-up { from { transform: translateY(100%); } to { transform: none; } }
+
+.pay-sheet__grab { display: grid; place-items: center; padding: var(--s-4) 0 var(--s-2); }
+.pay-sheet__grab span { width: 40px; height: 4px; border-radius: 2px; background: var(--petrol5); }
+
+.pay-sheet__title {
+  margin: 0;
+  padding: var(--s-4) var(--s-6) var(--s-6);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-strong);
+  text-align: center;
+}
+
+.pay-sheet__option {
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+  width: 100%;
+  padding: var(--s-6);
+  border-top: 1px solid var(--line);
+  text-align: left;
+}
+
+.pay-sheet__option:first-of-type { border-top: 0; }
+.pay-sheet__option:active { background: var(--tap); }
+.pay-sheet__icon { color: var(--text-strong); flex: none; }
+.pay-sheet__main { flex: 1; min-width: 0; }
+.pay-sheet__label { display: block; font-size: 17px; font-weight: 700; color: var(--text-strong); }
+.pay-sheet__hint { display: block; margin-top: 2px; font-size: 15px; color: var(--text-muted); }
+
+/* Die Kontoauswahl hebt das gewählte Konto hervor, wie in IMG_5017. */
+.pay-sheet__option[aria-selected='true'] { background: var(--surface-disc); }
+
+.pay-sheet__amount { font-size: 16px; color: var(--text-strong); white-space: nowrap; flex: none; }
+
+/* ── Zusammenfassung ─────────────────────────────────────────────────────── */
+
+.pay-block { padding-top: var(--s-6); }
+
+.pay-block__label {
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+.pay-block__body {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  width: 100%;
+  padding: var(--s-5) 0;
+  text-align: left;
+}
+
+.pay-block__lines { flex: 1; min-width: 0; font-size: 17px; line-height: 1.35; color: var(--text-body); }
+.pay-block__lines span { display: block; overflow-wrap: anywhere; }
+.pay-block__lines .is-strong { font-weight: 700; color: var(--text-strong); }
+.pay-block__lines .is-muted { color: var(--text-muted); }
+.pay-block__edit { color: var(--petrol5); flex: none; }
+.pay-block__edit:active { color: var(--postfinancegelb); }
+
+.pay-block__total { font-size: 26px; font-weight: 700; color: var(--text-strong); }
+
+/* ── Wischen zum Ausführen ────────────────────────────────────────────────
+   Der letzte Schritt ist in der Vorlage kein Knopf, sondern eine Geste: Der
+   weisse Knauf muss von links nach rechts gezogen werden (IMG_5019 → 5020).
+   Ein Klick genügt nicht — genau das ist der Sinn der Sicherung. */
+
+.pay-slide {
+  position: relative;
+  height: 64px;
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--action);
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+}
+
+.pay-slide__label {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-left: 56px;
+  font-size: 19px;
+  color: var(--action-ink);
+  pointer-events: none;
+}
+
+.pay-slide__knob {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--weiss);
+  color: var(--petrol8);
+  box-shadow: 0 2px 8px rgba(0, 27, 31, 0.25);
+  cursor: grab;
+}
+
+.pay-slide__knob:active { cursor: grabbing; }
+.pay-slide.is-done .pay-slide__knob { transition: left 180ms ease; }
+
+/* ── Bestätigung ──────────────────────────────────────────────────────────
+   Nicht in den Vorlagen — sie enden bei der Wischgeste. Ohne Abschluss wäre
+   der Fluss aber ohne Antwort, und der erfasste Auftrag bliebe unsichtbar. */
+
+/* Nimmt den freien Raum, damit «Fertig» unten steht wie «Weiter» davor. */
+.pay-done {
+  flex: 1;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  padding: var(--s-13) var(--s-6) 0;
+  text-align: center;
+}
+
+.pay-done__mark {
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 88px;
+  margin-bottom: var(--s-7);
+  border-radius: 50%;
+  background: var(--success1);
+  color: var(--success3);
+}
+
+.pay-done__title { margin: 0; font-size: 24px; font-weight: 700; color: var(--text-strong); }
+.pay-done__text { margin: var(--s-4) 0 0; font-size: 17px; line-height: 1.4; color: var(--text-body); }
+.pay-done__text strong { font-weight: 700; color: var(--text-strong); }

@@ -357,6 +357,25 @@ button.row:active { background: var(--tap); }
 /* Wortmarken sind breit — ohne Rand stossen sie an den Kreis. */
 .tx__brand--wordmark img { padding: 6px; }
 
+/*
+ * Scheibe in der Randfarbe des Logos (`logo-backgrounds.ts`).
+ *
+ * Der Kreis wird damit zur Maske: Das Logo liegt darin, und was es nicht
+ * abdeckt — die eingepassten Balken über und unter einem breiten Logo, die
+ * beschnittenen Ecken eines quadratischen — trägt dieselbe Farbe. Vorher schaute
+ * dort das Weiss der Scheibe heraus, sichtbar als eckiges Logo im runden Feld.
+ *
+ * Die inline gesetzte Farbe überschreibt das Weiss von `--logo`; hier bleibt,
+ * was sich aus ihr ergibt: kein weisser Schutzrand mehr — eine farbige Scheibe
+ * grenzt sich selbst ab —, nur eine neutrale Kante, die auf hellen Füllungen
+ * trägt und auf dunklen verschwindet.
+ */
+.tx__brand--filled { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.10); }
+
+/* Und die Wortmarke darf grösser stehen: Ohne Weiss dahinter braucht sie den
+   Abstand nicht mehr, der sie vom Rand des Kreises frei hielt. */
+.tx__brand--filled.tx__brand--wordmark img { padding: 2px; }
+
 .empty { padding: var(--s-8) var(--s-5); text-align: center; font-size: 14px; color: var(--text-muted); }
 
 /* ── Tab-Leiste ────────────────────────────────────────────────────────── */
@@ -405,10 +424,78 @@ button.row:active { background: var(--tap); }
   z-index: 10;
   display: flex;
   flex-direction: column;
-  animation: sheet-in 220ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@keyframes sheet-in { from { transform: translateX(14px); opacity: 0; } to { transform: none; opacity: 1; } }
+/* ── Push-Navigation ───────────────────────────────────────────────────────
+   Jeder Bildschirm des Stapels ist eine eigene Ebene. Die neue gleitet vom
+   rechten Rand herein und deckt die darunter ab, statt sie zu ersetzen.
+
+   Vorher lag die Animation auf `.sheet` und war ein 14px-Versatz mit
+   Einblenden. Das ist zu wenig Weg, um als Seitenwechsel zu lesen — bei zwei
+   ähnlich gebauten Bildschirmen wirkte es wie ein Zucken an Ort. Der volle
+   Weg über die Breite plus der Schatten an der Kante machen die Richtung
+   eindeutig.
+
+   Die Dauer steht auch in `session.tsx` als `SHEET_MS` — dort wird gewartet,
+   bis der zurückgehende Bildschirm abgeräumt werden darf. Beide Werte müssen
+   übereinstimmen. */
+.phone__screen {
+  --sheet-ms: 320ms;
+  /* Wie iOS: schnell los, sanft aus. Kein Überschwingen — bei einer ganzen
+     Seite wirkt Federn unruhig, nicht lebendig. */
+  --sheet-ease: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  animation: sheet-push var(--sheet-ms) var(--sheet-ease);
+  /* Die Kante wirft einen Schatten auf die Ebene darunter — daran erkennt das
+     Auge, dass etwas davorliegt und nicht ersetzt wurde. */
+  box-shadow: -14px 0 30px rgba(0, 27, 31, 0.18);
+}
+
+@keyframes sheet-push {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+/* Die Ebene, die zurückgeht: gleitet nach rechts hinaus. `forwards` hält sie
+   am Ziel, bis `session.tsx` sie abräumt — sonst blitzte sie am Schluss für
+   einen Bildaufbau wieder an ihrer alten Stelle auf. */
+.layer--leaving {
+  animation: sheet-pop var(--sheet-ms) var(--sheet-ease) forwards;
+  pointer-events: none;
+}
+
+@keyframes sheet-pop {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+/* Was darunter liegt, tritt leicht zurück. Kein Versatz, nur ein Hauch
+   Abdunkelung: Der Übergang läuft, während die Ebene darüber sie ohnehin
+   verdeckt, und beim Zurückgehen hellt sie hinter der hinausgleitenden
+   Ebene wieder auf. */
+.layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 27, 31, 0);
+  pointer-events: none;
+  transition: background var(--sheet-ms) var(--sheet-ease);
+}
+
+.layer--under::after { background: rgba(0, 27, 31, 0.12); }
+
+/* Innerhalb einer Ebene füllt der Bildschirm sie aus. */
+.layer > .sheet { animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .layer,
+  .layer--leaving { animation-duration: 1ms; }
+  .layer::after { transition-duration: 1ms; }
+}
 
 .sheet__bar {
   display: grid;
@@ -576,6 +663,9 @@ button.row:active { background: var(--tap); }
 .abo__icon--logo { background: #fff; box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; }
 .abo__icon--logo img { width: 100%; height: 100%; object-fit: contain; }
 .abo__icon--wordmark img { padding: 5px; }
+/* Wie in der Buchungszeile: Scheibe in der Randfarbe des Logos. */
+.abo__icon--filled { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.10); }
+.abo__icon--filled.abo__icon--wordmark img { padding: 2px; }
 
 .abo__main { flex: 1; min-width: 0; }
 .abo__title { display: block; font-size: 15px; font-weight: 700; color: var(--text-strong); }
@@ -968,3 +1058,137 @@ button.tx:active { background: var(--tap); }
 /* Die Legendenzeilen der Analysen führen jetzt weiter — deshalb ein Pfeil. */
 .legend { width: 100%; text-align: left; }
 .legend__chevron { display: grid; place-items: center; color: var(--text-muted); flex: none; }
+
+/* ── Profil und Einstellungen ───────────────────────────────────────────
+   Die Übersicht ist eine schlichte Liste ohne Karte: Symbol, fette
+   Bezeichnung, darunter die Stichworte. Vorlage IMG_5013. */
+
+.menu { padding: var(--s-2) 0 var(--s-8); }
+
+.menu__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-6);
+  width: 100%;
+  padding: 18px var(--s-6);
+  color: var(--text-strong);
+  transition: background 120ms ease;
+}
+
+.menu__row:active { background: var(--tap); }
+
+.menu__icon { position: relative; flex: none; display: grid; place-items: center; width: 28px; padding-top: 2px; }
+.menu__dot { position: absolute; top: 0; right: -2px; width: 9px; height: 9px; border-radius: 50%; background: var(--danger3); }
+.menu__main { min-width: 0; display: grid; gap: 3px; }
+.menu__title { font-size: 17px; font-weight: 700; }
+.menu__sub { font-size: 14px; color: var(--text-muted); line-height: 1.35; }
+
+/* ── Einstellungszeilen ─────────────────────────────────────────────────
+   Eine Zeile trägt links die Beschriftung und rechts das Bedienelement:
+   Schalter, Wert oder Pfeil. */
+
+.set-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  width: 100%;
+  padding: var(--s-5) var(--s-6);
+  text-align: left;
+  transition: background 120ms ease;
+}
+
+button.set-row:active { background: var(--tap); }
+.set-row + .set-row { border-top: 1px solid var(--line); }
+.set-row__main { flex: 1; min-width: 0; display: grid; gap: 3px; }
+.set-row__title { font-size: 16px; color: var(--text-strong); }
+.set-row__sub { font-size: 13px; color: var(--text-muted); line-height: 1.35; }
+.set-row__value { flex: none; font-size: 15px; color: var(--text-body); }
+.set-row__chevron { flex: none; display: grid; place-items: center; color: var(--petrol5); }
+
+/* Der Schalter. Aus/ein über `aria-checked`, damit die Farbe und die
+   Vorlesehilfe denselben Zustand lesen. */
+.switch {
+  position: relative;
+  flex: none;
+  width: 51px;
+  height: 31px;
+  border-radius: 16px;
+  background: var(--line-strong);
+  transition: background 160ms ease;
+}
+
+.switch[aria-checked='true'] { background: var(--petrol5); }
+
+.switch__knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: var(--weiss);
+  box-shadow: 0 1px 3px rgba(0, 41, 46, 0.28);
+  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.switch[aria-checked='true'] .switch__knob { transform: translateX(20px); }
+.switch[disabled] { opacity: 0.4; }
+
+/* Segmentierte Auswahl — Design hell/dunkel, Lieferart, Sprache. */
+.segmented {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--tap);
+}
+
+.segmented__item {
+  flex: 1;
+  padding: 9px 8px;
+  border-radius: var(--CornerRadius-R-100);
+  font-size: 14px;
+  color: var(--text-body);
+  text-align: center;
+  transition: background 120ms ease;
+}
+
+.segmented__item[aria-pressed='true'] {
+  background: var(--surface-card);
+  color: var(--text-strong);
+  font-weight: 700;
+  box-shadow: var(--shadow-card);
+}
+
+/* Eingabefeld in einer Einstellungskarte. */
+.set-field { display: grid; gap: 2px; }
+.set-field__label { font-size: 12px; color: var(--text-muted); }
+
+.set-field__input {
+  width: 100%;
+  padding: 11px 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-strong);
+  font: inherit;
+  font-size: 16px;
+  outline: none;
+}
+
+.set-field__input:focus { border-bottom-color: var(--petrol5); }
+
+/* Statuszeile am Fuss einer Einstellungskarte. */
+.set-note { margin: var(--s-4) 0 0; font-size: 13px; line-height: 1.45; color: var(--text-muted); }
+
+/* Ein kleiner Zustandschip: «aktiv», «nicht aktiviert». */
+.state {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--tap);
+  font-size: 12px;
+  color: var(--text-body);
+}
+
+.state--on { background: rgba(73, 166, 171, 0.18); color: var(--text-strong); }

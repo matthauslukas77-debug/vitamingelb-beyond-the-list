@@ -29,6 +29,19 @@ export function formatDate(iso: string): string {
   return `${d}.${m}.${date.getFullYear()}`
 }
 
+/**
+ * `Montag, 24.08.2026` — so steht das Ausführungsdatum im Zahlungsfluss
+ * (Vorlage IMG_5018). Der Wochentag ist dort die eigentliche Information:
+ * Er zeigt, warum eine Zahlung am Samstag erst am Montag rausgeht.
+ */
+const WEEKDAYS_DE = [
+  'Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag',
+]
+
+export function formatWeekdayDate(iso: string): string {
+  return `${WEEKDAYS_DE[parseIso(iso).getDay()]}, ${formatDate(iso)}`
+}
+
 /** Tagesüberschrift in der Buchungsliste: «Heute», «Gestern» oder «22. August 2026». */
 export function formatDayHeading(iso: string, today: string): string {
   if (iso === today) return 'Heute'

@@ -1,5 +1,6 @@
 import type { Account, Persona } from '../types'
 import { ninoTransactions } from './nino.data'
+import { ninoBeneficiaries } from './nino.beneficiaries'
 
 const PRIVATE = 'nino-private'
 const CUSTODY = 'nino-custody'
@@ -8,7 +9,7 @@ const accounts: Account[] = [
   {
     id: PRIVATE,
     name: 'Privatkonto',
-    iban: 'CH42 0900 0000 3100 7788 1',
+    iban: 'CH61 0900 0000 3100 7788 1',
     kind: 'youth',
     currency: 'CHF',
     // Knapp — Nino war «wirklich viel im Minus» (Interview 04).
@@ -18,7 +19,7 @@ const accounts: Account[] = [
   {
     id: CUSTODY,
     name: 'Wertschriftendepot',
-    iban: 'CH70 0483 5099 1234 5678 9',
+    iban: 'CH34 0483 5099 1234 5678 9',
     kind: 'custody',
     currency: 'CHF',
     balance: 312_400,
@@ -33,8 +34,10 @@ export const nino: Persona = {
   role: '19 · Mediamatiker · war oft im Minus',
   quote: '«Die Ausgaben sind so verdammt stur in einer Liste aufgeführt.»',
   source: 'Interview 04',
+  address: { street: 'Länggassstrasse 63', place: '3012 Bern', country: 'Schweiz' },
   accounts,
   transactions: ninoTransactions,
+  beneficiaries: ninoBeneficiaries,
   standingOrders: [],
   pendingOrders: [
     { id: 'j-po-1', accountId: PRIVATE, recipient: 'Zahnarztpraxis Lehmann', amount: -34_500, currency: 'CHF', execution: '2026-08-24' },

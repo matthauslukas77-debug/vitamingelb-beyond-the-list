@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { addDays, formatDate, formatDayHeading, formatMonth, toIso } from '../date'
+import { addDays, formatDate, formatDayHeading, formatMonth,
+  formatWeekdayDate, toIso } from '../date'
 
 describe('addDays', () => {
   it('rechnet über Monatsgrenzen', () => {
@@ -39,5 +40,14 @@ describe('formatMonth', () => {
 describe('toIso', () => {
   it('bleibt ohne Zeitzonenverschiebung stabil', () => {
     expect(toIso(new Date(2026, 0, 1))).toBe('2026-01-01')
+  })
+})
+
+describe('formatWeekdayDate', () => {
+  /* Der Wochentag ist im Zahlungsfluss die eigentliche Aussage: Er zeigt,
+     warum eine Zahlung am Samstag erst am Montag ausgeführt wird. */
+  it('stellt den Wochentag vor das Datum', () => {
+    expect(formatWeekdayDate('2026-08-22')).toBe('Samstag, 22.08.2026')
+    expect(formatWeekdayDate('2026-08-24')).toBe('Montag, 24.08.2026')
   })
 })
