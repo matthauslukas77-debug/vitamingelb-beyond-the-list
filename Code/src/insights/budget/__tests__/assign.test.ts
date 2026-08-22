@@ -158,6 +158,43 @@ describe('Was auf dem Brett landet', () => {
       .toBe(false)
   })
 
+  it('fragt nicht nach dem, was das Regelwerk beim Namen kennt', () => {
+    /* Der Fehler der ersten Fassung: Alles in «Weitere Ausgaben» kam aufs
+       Brett. Das ist im Budgetrechner aber der richtige Topf für Elektronik
+       und Software-Abos — digitec, Adobe und ChatGPT standen da und warteten
+       auf eine Antwort, die niemand anders geben würde als das Regelwerk
+       selbst. Wer nach Bekanntem fragt, verbraucht die Aufmerksamkeit, die
+       für die echte Frage nötig wäre. */
+    for (const text of ['DIGITEC GALAXUS AG', 'ADOBE CREATIVE CLOUD', 'OPENAI CHATGPT']) {
+      const entry = categorize({ text, category: 'shopping' } as Transaction)
+      expect(needsAssignment(entry), text).toBe(false)
+    }
+  })
+
+  it('fragt, wo die Antwort an der Person hängt', () => {
+    /* Ein Baumarkt ist beim Hauseigentümer Unterhalt und beim Mieter Konsum.
+       Das kann keine Regel entscheiden — und genau dafür ist das Brett da. */
+    const baumarkt = categorize({ text: 'HORNBACH BERN', category: 'shopping' } as Transaction)
+    expect(baumarkt.ambiguous).toBeTruthy()
+    expect(needsAssignment(baumarkt)).toBe(true)
+  })
+
+  it('nennt einen Kiosk Nahrungsmittel und nicht «Weiteres»', () => {
+    /* Lag in der Schublade, solange niemand hingeschaut hat. Bei Nino sind
+       das 38 Buchungen. */
+    expect(slotKey(categorize({ text: 'K KIOSK BERN BAHNHOF', category: 'other' } as Transaction)))
+      .toBe('consumption.0')
+  })
+
+  it('hält LANDI von den Kleidern fern', () => {
+    /* Über die Bankkategorie «shopping» landete der Landwirtschafts- und
+       Gartenmarkt in «Kleider und Schuhe» — der einzige Posten, der Brunos
+       Kleiderfeld je gefüllt hat. */
+    const entry = categorize({ text: 'LANDI NIDAU', category: 'shopping' } as Transaction)
+    expect(slotKey(entry)).not.toBe('consumption.1')
+    expect(entry.ambiguous).toBeTruthy()
+  })
+
   it('legt hin, was nur aus der groben Bankkategorie kommt', () => {
     /* Livias You.com-Abo wird über «shopping» zu «Kleider und Schuhe». */
     const groups = openFor(livia)

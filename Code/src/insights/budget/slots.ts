@@ -48,8 +48,13 @@ export interface CategoryDef {
    * Sinnbild. Das Original nennt hier `calculator_moneyBag`, `houseWindows`,
    * `handshake`, `personMedal`, `train`, `shoppingBasketGroceries` — Namen aus
    * der PostFinance-Icon-Bibliothek, die uns nicht vorliegt. Genommen wird das
-   * nächstliegende Zeichen aus `src/app/shell/Icon.tsx`, in der Auswahl des
-   * Blasen-Entwurfs: Steuerrechnung, Haus, Schild, Herz, Tram, Tasche.
+   * nächstliegende Zeichen aus `src/app/shell/Icon.tsx`.
+   *
+   * Wohnen ist ein **Sofa** und kein Haus, aus zwei Gründen: Der Nachbau
+   * zeichnet die Kategorie in den Analysen schon so (`SLICE_ICONS` in
+   * `app/screens/Breakdown.tsx`), und `home` ist in dieser App bereits
+   * vergeben — es ist der erste Reiter. Zwei Bedeutungen für dasselbe Zeichen
+   * sind eine zu viel.
    */
   icon: IconName
   /** Die Detailfelder, in Original-Reihenfolge. */
@@ -66,7 +71,7 @@ export const CATEGORIES: CategoryDef[] = [
   {
     key: 'reside',
     title: 'Wohnen',
-    icon: 'home',
+    icon: 'sofa',
     fields: ['Miete', 'Hypothekarzinsen', 'Neben- und Unterhaltskosten'],
   },
   {

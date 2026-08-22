@@ -30,6 +30,8 @@ import type { BudgetSlot, CategoryKey } from './slots'
 export interface Categorization extends BudgetSlot {
   /** 0..1. Steuert, was der Wizard still übernimmt und was er vorlegt. */
   confidence: number
+  /** Gesetzt, wenn die Antwort an der Person hängt — mit der Begründung. */
+  ambiguous?: string
   /** Das Muster, das getroffen hat — für «warum steht das hier?». */
   matchedBy: string
   /** Zuordnung geraten: im Wizard zur Bestätigung anbieten. */
@@ -41,6 +43,17 @@ interface Rule {
   category: CategoryKey
   field: number
   confidence?: number
+  /**
+   * Gesetzt, wenn die Antwort **an der Person hängt** und nicht am Händler.
+   * Der Text ist zugleich die Begründung, die auf dem Zuordnungsbrett steht.
+   *
+   * Der Unterschied zu einer schwachen Regel ist wichtig: «digitec» liegt in
+   * «Weitere Ausgaben», weil das im Budgetrechner der richtige Topf für
+   * Elektronik ist — dazu gibt es nichts zu fragen. Ein Baumarkt dagegen ist
+   * beim Hauseigentümer Unterhalt und beim Mieter Konsum. Nur solche kommen
+   * aufs Brett; alles andere zu fragen, wäre Arbeit ohne Ertrag.
+   */
+  ambiguous?: string
 }
 
 const S = (category: CategoryKey, field: number, confidence = 0.95) => ({ category, field, confidence })
@@ -120,17 +133,41 @@ export const RULES: Rule[] = [
   ...[
     'COOP PRONTO', 'COOP', 'MIGROS', 'MIGROLINO', 'ALDI', 'LIDL', 'DENNER', 'VOLG', 'SPAR',
     'MANOR FOOD', 'BÄCKEREI', 'METZGEREI', 'MARKTHALLE',
+    /* Ein Kiosk verkauft Gipfeli, Getränke und Zigaretten. Das ist
+       Nahrungsmittel und nicht «Weitere Ausgaben» — dort lag es, solange
+       niemand hingeschaut hat. */
+    'KIOSK', 'K KIOSK', 'AVEC', 'SELECTA', 'BREZELKOENIG',
   ].map((m) => ({ match: m, ...S('consumption', 0) })),
   ...[
     'ZALANDO', 'H&M', 'ZARA', 'C&A', 'OCHSNER SPORT', 'LOEB', 'DOSENBACH', 'CHICORÉE',
     'SNIPES', 'TALLY WEIJL', 'TRANSA', 'BAYARD',
   ].map((m) => ({ match: m, ...S('consumption', 1) })),
   ...[
-    'DIGITEC', 'GALAXUS', 'BRACK', 'MICROSPOT', 'INTERDISCOUNT', 'IKEA', 'JUMBO', 'HORNBACH',
+    'DIGITEC', 'GALAXUS', 'BRACK', 'MICROSPOT', 'INTERDISCOUNT',
     'POST CH AG', 'DIE POST', 'APPLE.COM', 'ICLOUD', 'GOOGLE', 'NOTION', 'OPENAI', 'ADOBE',
-    'MICROSOFT', 'DROPBOX', 'HOSTPOINT', 'PAYPAL', 'AMAZON', 'ALIEXPRESS', 'TEMU', 'COIFFEUR',
-    'KIOSK', 'K KIOSK', 'AVEC', 'SELECTA', 'BREZELKOENIG', 'MAHNGEBUEHR', 'KONTOUEBERZUG',
+    'MICROSOFT', 'DROPBOX', 'HOSTPOINT', 'FIGMA', 'AMAZON', 'ALIEXPRESS', 'TEMU', 'COIFFEUR',
+    'MAHNGEBUEHR', 'KONTOUEBERZUG', 'SOLLZINS',
   ].map((m) => ({ match: m, ...S('consumption', 3, 0.85) })),
+
+  // ── Wo die Antwort an der Person hängt ────────────────────────────────────
+  ...['HORNBACH', 'JUMBO', 'BAUHAUS', 'OBI', 'COOP BAU+HOBBY', 'MIGROS DO IT', 'LANDI', 'IKEA'].map(
+    (m) => ({
+      match: m,
+      ...S('consumption', 3, 0.85),
+      ambiguous: 'Baumarkt und Garten: beim Eigentümer Unterhalt, beim Mieter Konsum.',
+    }),
+  ),
+  /* Nur PayPal, und das mit Bedacht: «SIX PAYMENT 88214 BERN» und «SUMUP» sind
+     Terminal-Vorspann, hinter dem der echte Laden steht — den findet entweder
+     eine längere Regel oder die Kategorie der Bank. Als uneindeutig markiert
+     hätten sie allein bei Reto 35 gewöhnliche Buchungen zu Fragen gemacht.
+     Bei PayPal bleibt dagegen wirklich nichts übrig, woran man den Laden
+     erkennt. */
+  {
+    match: 'PAYPAL',
+    ...S('consumption', 3, 0.8),
+    ambiguous: 'Ein Zahlungsdienst — welcher Laden dahintersteht, sagt die Buchung nicht.',
+  },
   ...[
     'NETFLIX', 'SPOTIFY', 'DISNEY PLUS', 'BLUE TV', 'SKY SHOW', 'STEAM', 'PLAYSTATION', 'NINTENDO',
   ].map((m) => ({ match: m, ...S('consumption', 2, 0.9) })),
@@ -238,7 +275,8 @@ export function categorize(tx: Transaction, assignments: Assignments = NO_ASSIGN
         field: rule.field,
         confidence: rule.confidence ?? 0.95,
         matchedBy: rule.match,
-        needsReview: false,
+        ambiguous: rule.ambiguous,
+        needsReview: rule.ambiguous !== undefined,
       }
     }
   }

@@ -349,7 +349,7 @@ export function Assign() {
                     else setHint('Wähl zuerst eine Quelle oben — oder zieh sie direkt hierher.')
                   }}
                 >
-                  <Icon name={category.icon} size={26} />
+                  <Icon name={category.icon} size={30} />
                   <span className="asg-tile__title">{SHORT[category.key]}</span>
                 </button>
               ))}

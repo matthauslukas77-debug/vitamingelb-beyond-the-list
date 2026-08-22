@@ -35,36 +35,53 @@ export const MAX_ON_BOARD = 10
 /**
  * Braucht diese Zuordnung eine menschliche Antwort?
  *
- * Nicht «ist sie falsch» — das weiss nur der Nutzer. Sondern: **steht sie auf
- * schwachem Grund?** Drei Fälle, und alle drei sind an den Daten gemessen,
- * nicht geschätzt:
+ * Nicht «ist sie falsch» — das weiss nur der Nutzer. Sondern: **kann nur er
+ * sie beantworten?** Drei Fälle:
  *
- *   1. **Konfidenz unter 0.6** — Bargeld und Buchungen ohne jeden Regeltreffer.
- *   2. **Die Schublade.** «Konsum · Weitere Ausgaben» ist der Topf, in den
- *      fällt, was sonst nirgends passt. Brunos HORNBACH liegt dort mit
- *      CHF 4'931 im Jahr — für einen Hauseigentümer ist das Unterhalt, nicht
- *      «Weiteres».
- *   3. **Nur die Bankkategorie, und die ist grob.** «shopping» wird zu
- *      «Kleider und Schuhe». Bei Livias You.com-Abo und Brunos LANDI ist das
- *      erkennbar daneben — beide kommen über genau diesen Weg herein.
+ *   1. **Es hängt an der Person.** Ein Baumarkt ist beim Eigentümer Unterhalt
+ *      und beim Mieter Konsum; ein Zahlungsdienst verrät den Laden nicht. Die
+ *      Regel sagt das selbst — siehe `ambiguous` in `mapping.ts`.
+ *   2. **Konfidenz unter 0.6** — Bargeld und Buchungen ohne jeden Regeltreffer.
+ *   3. **Nur die grobe Bankkategorie.** «shopping» wird zu «Kleider und
+ *      Schuhe»; bei Livias You.com-Abo ist das erkennbar daneben.
+ *
+ * ── Was hier ausdrücklich **nicht** mehr steht ────────────────────────────
+ *
+ * «Liegt in der Schublade» war einmal ein vierter Fall, und er war falsch.
+ * «Konsum · Weitere Ausgaben» ist im Budgetrechner der richtige Topf für
+ * Elektronik, Software-Abos und Bankgebühren — digitec, Adobe und ChatGPT
+ * landeten damit auf dem Brett, obwohl das Regelwerk sie beim Namen kennt und
+ * korrekt einsortiert hat. Wer nach etwas fragt, das er weiss, verbrennt die
+ * Bereitschaft, die er für die echte Frage braucht.
  *
  * Eine Zuordnung von Hand fällt nie darunter: Sie hat Konfidenz 1.
  */
 export function needsAssignment(entry: Categorization): boolean {
   if (entry.confidence >= 1) return false
+  if (entry.ambiguous) return true
   if (entry.confidence < 0.6) return true
-  if (entry.category === 'consumption' && entry.field === 3) return true
   return entry.matchedBy.startsWith('Kategorie der Bank') && entry.confidence < 0.8
 }
 
+/**
+ * Unter diesem Jahresbetrag wird nicht gefragt.
+ *
+ * Eine Quelle mit CHF 30 im Jahr verschiebt keine Zahl, die jemand ansieht —
+ * sie kostet nur einen Platz auf dem Brett, den die CHF 5'338 von HORNBACH
+ * besser gebrauchen. Sie bleibt in ihrem Vorgabetopf und darf dort liegen.
+ */
+export const MIN_RELEVANT = 10_000
+
 /** Warum diese Quelle auf dem Brett liegt — ein Halbsatz, kein Vorwurf. */
 function reasonOf(entry: Categorization): string {
+  /* Die Regel bringt ihre Begründung selbst mit, wenn sie eine hat. */
+  if (entry.ambiguous) return entry.ambiguous
   if (entry.matchedBy.startsWith('Bargeld')) return 'Am Automaten bezogen — wofür, steht nirgends.'
   if (entry.matchedBy === 'kein Regeltreffer') return 'Diese Quelle kennen wir noch nicht.'
   if (entry.matchedBy.startsWith('Kategorie der Bank')) {
-    return 'Nur aus der groben Kategorie der Bank abgeleitet.'
+    return `Nur aus der groben Kategorie der Bank abgeleitet — daher «${slotLabel(entry)}».`
   }
-  return `Liegt in der Schublade «${slotLabel(entry)}».`
+  return `Liegt in «${slotLabel(entry)}», und das ist nur geraten.`
 }
 
 /** Eine Quelle, die auf eine Kategorie wartet. */
@@ -140,5 +157,7 @@ export function openAssignments(
     })
   }
 
-  return [...groups.values()].sort((a, b) => b.total - a.total)
+  return [...groups.values()]
+    .filter((group) => group.total >= MIN_RELEVANT)
+    .sort((a, b) => b.total - a.total)
 }

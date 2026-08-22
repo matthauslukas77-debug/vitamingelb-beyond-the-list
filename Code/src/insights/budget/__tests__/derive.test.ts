@@ -89,7 +89,13 @@ describe('Budget aus Buchungen ableiten', () => {
     for (const [id, count] of Object.entries(filled)) {
       expect(count, `${id}: ${count}`).toBeGreaterThanOrEqual(7)
     }
-    expect(filled.bruno, `bruno: ${filled.bruno}`).toBeGreaterThanOrEqual(13)
+    /* Zwölf und nicht dreizehn: «Kleider und Schuhe» ist bei Bruno wirklich
+       leer. Der Posten stand nur so lange darin, wie LANDI über die grobe
+       Bankkategorie «shopping» dorthin fiel — ein Landwirtschafts- und
+       Gartenmarkt verkauft keine Kleider. Seit LANDI eine eigene Regel hat,
+       zählt das Feld ehrlich null. Ein gefülltes Feld mehr wäre hier kein
+       besseres Ergebnis, sondern ein falsches. */
+    expect(filled.bruno, `bruno: ${filled.bruno}`).toBeGreaterThanOrEqual(12)
   })
 
   it('glättet die Steuern über die volle Historie statt über zwölf Monate', () => {

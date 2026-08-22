@@ -41,20 +41,35 @@
 
 /* ── Die offenen Quellen ─────────────────────────────────────────────────── */
 
+/*
+ * Zwei gleich breite Spalten statt freiem Umbruch.
+ *
+ * Vorher lagen die Chips als Fliesstext nebeneinander: jede Zeile endete
+ * woanders, und eine lange Quelle stand allein auf der letzten. Das sah nach
+ * Zufall aus, nicht nach Brett. Im Raster stehen alle Kanten übereinander —
+ * und eine einzelne Quelle am Schluss nimmt beide Spalten, damit keine halbe
+ * Zeile stehen bleibt.
+ */
 .asg-queue {
-  /* Wächst mit den Chips, nicht mit dem Bildschirm: Der freie Platz gehört den
-     Töpfen. Läge er hier, klaffte über der Karte ein leeres Drittel. */
   flex: 0 1 auto;
+  /* Zusammen mit dem `margin-bottom: auto` der Töpfe: Der freie Platz teilt
+     sich gleichmässig über und unter der Gruppe, statt als ein Loch in der
+     Mitte zu stehen. Der Einleitungssatz bleibt davon unberührt oben kleben. */
+  margin-top: auto;
   min-width: 0;
   min-height: 0;
   /* Verborgen und nicht scrollbar: Was hier nicht hinpasst, gehört auf das
      nächste Brett. Ein Bereich, der unter dem ziehenden Finger wegscrollt,
      macht die Geste unbrauchbar. */
   overflow: hidden;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
   gap: var(--s-2);
+}
+
+.asg-chip:last-child:nth-child(odd) {
+  grid-column: span 2;
 }
 
 .asg-chip {
@@ -63,8 +78,13 @@
   gap: var(--s-2);
   padding: var(--s-2) var(--s-3) var(--s-2) var(--s-2);
   border-radius: var(--CornerRadius-R-100);
-  background: var(--surface-card);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  /* Milchglas: Die Fläche lässt den Hintergrund der App durchscheinen, statt
+     ihn zuzudecken. Gemischt gegen `--surface-card`, damit der dunkle Modus
+     mitdreht — eine feste Farbe mit Alpha wäre im Dunkeln ein heller Fleck. */
+  background: color-mix(in srgb, var(--surface-card) 60%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  backdrop-filter: blur(18px) saturate(170%);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.55);
   text-align: left;
   /* Die Waagrechte **und** die Senkrechte gehören der Geste: Ein Zug in einen
      Topf geht nach unten, und ohne das nähme der Browser ihn als Scrollen. */
@@ -72,8 +92,14 @@
   transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
 }
 
+/* Der Ring **neben** der Lichtkante, nicht statt ihr: `box-shadow` ersetzt
+   sonst die ganze Liste, und der Chip verlöre beim Auswählen seine Glasfläche
+   — sichtbar als zwei abgeschnittene Bögen an den Enden. Die Farbe wird wie
+   beim Rand der Töpfe gemischt, damit sie im Dunkeln nicht abfällt. */
 .asg-chip.is-selected {
-  box-shadow: 0 0 0 2px var(--petrol6);
+  box-shadow:
+    0 0 0 2px color-mix(in oklab, var(--petrol6) 55%, var(--text-strong)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
 /* Die angehobene Quelle bleibt als Lücke stehen, damit das Brett beim Ziehen
@@ -124,7 +150,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 38vw;
 }
 
 .asg-chip__meta {
@@ -152,7 +177,9 @@
 }
 
 .asg-look.is-open {
-  background: var(--surface-card);
+  background: color-mix(in srgb, var(--surface-card) 72%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
   justify-content: flex-start;
 }
 
@@ -206,23 +233,23 @@
 
 /* ── Die sechs Töpfe ─────────────────────────────────────────────────────── */
 
-/**
- * Nimmt den freien Platz auf.
+/*
+ * Sechs Quadrate, drei mal zwei.
  *
- * Auf Brunos Brett liegen vier Chips, auf Ninos neun — der Rest der Höhe bleibt
- * übrig. Er gehört den Töpfen: Ein grösseres Ziel ist ein Ziel, das man mit dem
- * Daumen trifft, und ein Brett ohne Loch in der Mitte sieht nach Absicht aus.
- * `min-height` ist die Grenze nach unten, damit die Töpfe auch auf einem kurzen
- * Bildschirm greifbar bleiben.
+ * Vorher streckten sie sich über die freie Höhe und wurden zu hohen Kacheln,
+ * in denen das Symbol verloren stand. Ein Quadrat ist die ruhigere Form und
+ * gibt dem Zeichen die Mitte zurück; der übrige Platz wandert nach oben.
  */
 .asg-grid {
-  flex: 1;
+  flex: 0 0 auto;
+  margin-bottom: auto;
   min-width: 0;
-  min-height: 184px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: var(--s-2);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Weiter auseinander als die Chips: Zwei gestrichelte Ränder direkt
+     nebeneinander lesen sich als eine doppelte Linie und nicht als zwei
+     Felder. Genau das sah auf dem ersten Entwurf nach Schnittkanten aus. */
+  gap: var(--s-3);
 }
 
 .asg-tile {
@@ -232,10 +259,16 @@
   justify-content: center;
   gap: var(--s-1);
   min-width: 0;
-  min-height: 0;
+  aspect-ratio: 1;
   padding: var(--s-2);
   border-radius: var(--CornerRadius-R-16);
-  background: var(--surface-card);
+  /* Dasselbe Milchglas wie die Chips — Brett und Steine aus einem Material.
+     Der helle Rand oben ist die Lichtkante, die eine Glasfläche erst als
+     Fläche lesbar macht; ohne sie wirkt sie wie ein blasses Rechteck. */
+  background: color-mix(in srgb, var(--surface-card) 44%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  backdrop-filter: blur(18px) saturate(170%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
   /* `--text-strong` ist im hellen Modus genau `--petrol8` und im dunklen Weiss.
      Eine feste Rampenstufe stünde hier im Dunkeln unsichtbar auf der Karte. */
   color: var(--text-strong);
