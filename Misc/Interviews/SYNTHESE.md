@@ -1,12 +1,13 @@
 # Interview-Synthese — 3 Gespräche, Fr 21.08.2026
 
 Cross-Case-Auswertung von Interview 01 (Reto), 02 (Silvan), 04 (Nino).
-Quellen: `../../02_design_thinking/interviews/`. Leitfaden + Hypothesen: `../../02_design_thinking/EMPATHIZE_Interviewleitfaden.md`.
+Quellen: die Transkripte in [`transkripte/`](transkripte/). Leitfaden + Hypothesen:
+[`../Design-Thinking/Interviewleitfaden.md`](../Design-Thinking/Interviewleitfaden.md).
 
-> Die **erzählende Fassung** dieser Synthese für Weitergabe/Jury liegt als
-> `../../02_design_thinking/interviews/Empathize_Synthese.docx`. **Dieses Dokument hier ist die
-> Research-Seite:** Hypothesen-Scoreboard, Personas, How-might-we — und die Verbindung zur
-> Marktrecherche in `../11_Wettbewerb/` (was von den Wünschen existiert schon, wo ist wirklich Lücke).
+> **Dieses Dokument ist die Research-Seite:** Hypothesen-Scoreboard, Personas, How-might-we.
+> Eine erzählende Fassung und die Marktrecherche (Schweizer und internationale Apps — was von
+> den Wünschen schon existiert und wo wirklich eine Lücke ist) liegen in unserem
+> Arbeitsordner und sind nicht Teil dieses Repositorys.
 
 > **Kurzfassung in einem Satz:** Alle drei öffnen die App **nur für den Saldo**, keiner
 > weiss, ob ein Monat normal war, keiner hat ein funktionierendes Budget, alle drei
@@ -75,7 +76,7 @@ komplett unbeantwortet, und die Nutzer haben nicht einmal ein Vokabular dafür.*
 |---|---|---|---|
 | M1 | **Saldo ist der einzige KPI.** App auf → Zahl lesen → App zu. | Reto «schaut nachher auf den Saldo»; Silvan «Kontostand, ja, ja»; Nino «meistens ist es wirklich nur der Kontostand» | Der Insight muss **dort** sein, wo der Saldo ist — Home, nicht 3 Ebenen tief. Oder ausserhalb der App (Widget/Push). |
 | M2 | **Die Analysen/Dashboards sind faktisch tot.** | Reto: «ist so ein bisschen versteckt, untergegangen»; Silvan: 3–4× in Jahren; Nino: nie | Nicht «noch ein Dashboard» bauen. Pull ist gescheitert → **Push**. |
-| M3 | **Die Liste ist zu langweilig, um hinzuschauen — nicht zu kompliziert.** | Nino: «Die Ausgaben sind so verdammt stur in einer Liste aufgeführt … nicht mal in so einem Kuchendiagramm»; «es ist wie so eine Dopamin-Schranke» ; Reto: «das Design ist so scheisse bei denen — wenn es übersichtlich wäre und gut aussehen würde, dann würde ich es auch mehr anschauen» | **Ästhetik ist ein Funktionsargument, kein Nice-to-have.** Das ist ein direktes Mandat für unseren PostFinance-Look (PREP/design-tokens). |
+| M3 | **Die Liste ist zu langweilig, um hinzuschauen — nicht zu kompliziert.** | Nino: «Die Ausgaben sind so verdammt stur in einer Liste aufgeführt … nicht mal in so einem Kuchendiagramm»; «es ist wie so eine Dopamin-Schranke» ; Reto: «das Design ist so scheisse bei denen — wenn es übersichtlich wäre und gut aussehen würde, dann würde ich es auch mehr anschauen» | **Ästhetik ist ein Funktionsargument, kein Nice-to-have.** Das ist ein direktes Mandat für unseren PostFinance-Look (die rekonstruierten Design-Tokens). |
 | M4 | **Budgets scheitern nicht am Willen, sondern am Unterhalt.** | Nino: Excel «ganz detailliert … nach etwa 2 Monaten eingeschlafen»; Silvan: «wenn ich es super aufstellen würde, klar definieren wieso — dann würde ich es schon umsetzen»; Reto: nie begonnen | **Zero-Maintenance.** Alles, was gepflegt werden muss, stirbt in 8 Wochen. Insight muss **ohne Setup** entstehen. |
 | M5 | **Kein Bild der Zukunft — bei keinem, privat wie geschäftlich.** | Silvan zu «Kontostand in 30–90 Tagen, privat und als Unternehmen?»: **«Nein, tatsächlich nicht.»**; Reto hat keine Vorstellung vom Monatsende | Forecast ist echtes Neuland, nicht nur ein Feature. Und Silvan' KMU-Antwort ist das stärkste Business-Signal, das wir haben. |
 | M6 | **Tiefes Misstrauen gegen Beratung, aber nicht gegen Tools.** | Nino «absoluter Müll, alles nur Provisionen»; Silvan «Produkte werden verkauft statt beraten»; Reto «würde nicht hingehen» | Der Insight darf **nie** wie ein Verkaufsargument klingen. Kein «Jetzt 3a eröffnen!» am Ende einer Analyse. Sonst verbrennen wir genau die Zielgruppe. |
@@ -101,7 +102,7 @@ Das ist unsere **Feature-Liste, von Nutzern geschrieben**:
 **Lesart:** Die Leute wollen **Rangliste + Urteil**, nicht Charakterisierung.
 «Am meisten» ist die Einstiegsfrage, «unnötig» die eigentliche.
 Reto' Zusatz ist die beste Idee des Abends: *Käufe nachträglich als «dumm» markieren,
-damit die KI lernt* — ein Feedback-Loop, den kein bestehendes Produkt hat (vgl. `../11_Wettbewerb/`).
+damit die KI lernt* — ein Feedback-Loop, den kein bestehendes Produkt hat (belegt in unserer Wettbewerbsanalyse).
 
 ---
 
@@ -113,7 +114,7 @@ Drei unabhängige Bestätigungen, davon **eine unaufgefordert**:
 - **Nino:** «Ja, das wäre top. Das wäre wirklich top.» — Begründung: Passkey-Login ist die Hürde. Auf die Rückfrage, ob Face-ID am Handy als Schutz reicht: «Das wäre okay.»
 - **Silvan:** Sorge nur wegen «Privatdings» (Handy in fremder Hand) → mit Face-ID-Gate: ja.
 
-**Marktcheck (siehe `../11_Wettbewerb/01_SCHWEIZ_APPS.md`):** PostFinance hat heute ein
+**Marktcheck (Wettbewerbsanalyse Schweizer Apps):** PostFinance hat heute ein
 **QR-Scanner-Widget**, aber kein Insight-/Saldo-Widget. UBS und neon haben *In-App*-Widgets
 (anordbare Kacheln auf dem App-Home) — das ist etwas anderes als ein iOS-Home-Screen-Widget.
 → **Ein Home-Screen-Insight-Widget ist in der Schweiz weitgehend freies Feld** und
@@ -174,7 +175,7 @@ Das ist die Produktdefinition, die aus den Interviews fällt.
 
 1. **KMU/Selbständige: null.** H8 ist unbelegt, obwohl die Challenge Unternehmen explizit nennt.
    → eine Finanzberaterin (Finanzberater), Papa, ein Bekannter priorisieren. Leitfaden §3 nutzen.
-2. **PostFinance-intern: null.** Fragen stehen in `../../00_challenge/QUESTIONS_for_PostFinance.md`.
+2. **PostFinance-intern: null.** Unsere Fragen an PostFinance sind gesammelt, aber unbeantwortet.
    Die wichtigste: *Warum kennt ein aktiver PF-Kunde die Abo-Übersicht nicht?*
 3. **Ältere / Familien / Hypothek:** komplett fehlend. Fixkostenquote dort ist ein anderes Spiel.
 4. **Beobachtung «Zeig mir deine App»:** in keinem der drei Gespräche durchgeführt.
@@ -203,7 +204,7 @@ Das ist die Produktdefinition, die aus den Interviews fällt.
 3. **Der 60-Sekunden-Wow ist «Was ist ungewöhnlich?»** — weil es die einzige der drei Challenge-Fragen ist, für die es heute **gar keine** Antwort gibt (M5, H4), und weil sie sich in einem Satz zeigen lässt.
 4. **Die Buchungserklärung (H2) ist der Vertrauens-Anker** — kleiner Wow, aber 2/3 haben ihn spontan erzählt und er beweist, dass wir die Daten wirklich verstehen.
 5. **Ton:** erklärend, nie mahnend, nie verkaufend (M6). Jeder Insight braucht ein sichtbares «weil …».
-6. **Look:** PostFinance-Tokens aus `../PREP/01_Brand_and_Design_System/` konsequent — M3 sagt, dass Ästhetik hier Funktion ist.
+6. **Look:** die rekonstruierten PostFinance-Tokens konsequent — M3 sagt, dass Ästhetik hier Funktion ist.
 
 ---
 

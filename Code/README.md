@@ -1,8 +1,9 @@
 # Beyond the List — Prototyp
 
 Nachbau der PostFinance-App (v6) als Web-App, plus eine klar abgetrennte Schicht für
-unsere eigenen Funktionen. Stand: **der Nachbau läuft, unsere Schicht ist noch leer** —
-der Prototyp zeigt bewusst exakt den Ist-Zustand.
+unsere eigenen Funktionen. Stand: **der Nachbau läuft; aus unserer Schicht ist der
+Kontostand-Verlauf mit Prognose aktiv** (Slot `home.accountRow`). Alle übrigen Slots sind
+leer — dort zeigt der Prototyp weiterhin exakt den Ist-Zustand.
 
 ## Starten
 
@@ -11,7 +12,8 @@ npm install
 npm run dev
 ```
 
-Danach `http://localhost:5173` öffnen. Getestet mit Node 22+ (entwickelt auf Node 25).
+Danach `http://localhost:5173` öffnen. Nötig ist Node 20.19+ (`engines` in `package.json`),
+entwickelt auf Node 22.
 
 | Befehl | Zweck |
 |---|---|
@@ -64,7 +66,7 @@ kein Modell — ein falsches Logo wäre schlimmer als keines.
 
 * Registry: [`src/data/brands.data.ts`](src/data/brands.data.ts), 400 Marken.
   **Generiert** aus `WORKSPACE/05_assets_scratch/abo_logos/logos.json` — nicht von Hand pflegen.
-* Bilddateien: `public/logos/`, auf 128 px verkleinert (3.3 MB gesamt).
+* Bilddateien: `public/logos/`, auf 128 px verkleinert (4.1 MB gesamt).
 * Darstellung: [`src/app/shell/BrandAvatar.tsx`](src/app/shell/BrandAvatar.tsx) —
   Logo, sonst die Farbscheibe der Persona, sonst das Kategoriesymbol.
 
@@ -151,14 +153,21 @@ Domain: `vitamingelb.ch` unter Settings → Domains verbinden.
 src/
 ├── theme/tokens.css      Die 188 PostFinance-Tokens, unverändert aus der Recherche
 ├── theme/base.css        Wie wir diese Werte einsetzen (inkl. Dark Mode)
-├── data/                 Typen, Personas, deterministischer Datengenerator
-├── lib/                  Geld- und Datumsformatierung, Zufallsgenerator
+├── theme/fonts.css       PostFinance Grotesk (Dateien nicht im Repository)
+├── data/                 Typen, Personas mit fertigen Buchungen, Markenregister
+├── domain/               Fachlogik des Nachbaus, ohne UI:
+│                         recurring.ts (Abo-Erkennung) · booking.ts (Buchungstext)
+├── lib/                  Geld- und Datumsformatierung, Supabase-Anbindung
 ├── app/                  ── DER NACHBAU. Bildet die App von heute ab.
 │   ├── shell/            Telefonrahmen, Tab-Leiste, Karten, Zeilen, Slot
 │   └── screens/          Home · Zahlungen · Anlegen · Angebote · Services
-│                         Kontodetail · Analysen · Scannen/Zahlen/Übertragen/Suche
+│                         Kontodetail · Bewegungsdetails · Analysen · Meine Abos
+│                         Scannen/Zahlen/Übertragen/Suche
 └── insights/             ── UNSERE SCHICHT. Alles Neue kommt hierhin.
-    └── registry.tsx      Wo eine neue Funktion eingehängt wird
+    ├── registry.tsx      Wo eine neue Funktion eingehängt wird
+    ├── engine/           balance.ts — Verlauf und Prognose
+    ├── cards/            AccountBalanceCard — die Kontokarte auf Home
+    └── charts/           BalanceChart, Glättung
 ```
 
 ### Die Trennlinie
@@ -167,11 +176,14 @@ src/
 rendern die Bildschirme einen benannten Slot:
 
 ```tsx
-<Slot name="home.aboveAccounts" />
+<Slot name="home.accountRow" account={account} fallback={<Row … />} />
 ```
 
-Solange `src/insights/registry.tsx` leer ist, rendern alle Slots nichts — der Prototyp
-zeigt PostFinance, wie es heute ist. Eine neue Funktion einhängen:
+Ein Slot bekommt mit `fallback` mitgeliefert, was der Nachbau an dieser Stelle selbst
+rendern würde. Ist in `src/insights/registry.tsx` für diesen Slot nichts registriert — oder
+gibt die eingehängte Komponente den `fallback` zurück, weil es nichts zu zeigen gibt —
+erscheint genau der Ist-Zustand. Aktuell belegt ist nur `home.accountRow`.
+Eine neue Funktion einhängen:
 
 1. Komponente in `src/insights/cards/` schreiben
 2. in `registry.tsx` unter dem passenden Slot eintragen
@@ -181,20 +193,21 @@ Verfügbare Slots stehen im Typ `SlotName` in `registry.tsx`.
 
 ## Daten
 
-Alle Beträge und Buchungen sind erfunden. Sie entstehen aus einem festen Startwert pro
-Persona (`mulberry32`), sind also bei jedem Start identisch — wichtig für reproduzierbare
-Demos und Tests. Beträge werden durchgehend als **ganzzahlige Rappen** geführt; gerundet
-wird erst bei der Ausgabe.
+Alle Beträge und Buchungen sind erfunden. Sie liegen als feste Datensätze in
+`src/data/personas/<id>.data.ts` und sind damit bei jedem Start identisch — wichtig für
+reproduzierbare Demos und Tests. Erzeugt wurden sie einmalig vom Generator in
+`WORKSPACE/04_experiments/postfinance_template_data/`, nicht zur Laufzeit. Beträge werden
+durchgehend als **ganzzahlige Rappen** geführt; gerundet wird erst bei der Ausgabe.
 
 Die vier Personas bilden Personen aus unseren sechs Interviews ab
 (`WORKSPACE/02_design_thinking/interviews/`) und tragen je ein Muster aus dem Gespräch:
 
 | Persona | Interview | Muster im Datensatz |
 |---|---|---|
-| Reto | 01 | Sieben Abos, davon eines im März still von 71.90 auf 79.90 erhöht |
+| Reto | 01 | Sechs Abos, davon eines im März still von 71.90 auf 79.90 erhöht |
 | Nino | 04 | Knappes Konto, Sollzins, Mahngebühr für eine untergegangene Rechnung |
 | Livia | 05 | Dauerauftrag aufs **eigene** Sparkonto — zählt in den Analysen als Ausgabe |
-| Bruno | 07 | Sechs Bankbeziehungen, Steuerrechnung als grosser Jahresposten |
+| Bruno | 07 | Fünf Produkte bei zwei Instituten, Steuerrechnung als grosser Jahresposten |
 
 Diese Muster sind absichtlich enthalten: Sie sind das Material, an dem sich später zeigen
 lässt, was eine bessere Auswertung leisten müsste.
@@ -209,10 +222,11 @@ Das Repository ist öffentlich. Die PNG-Grössen daneben sind daraus erzeugt.
 
 - Kein Login und keine Sicherheitsebene — die Persona-Auswahl ersetzt beides.
 - Scannen, Zahlen und Übertragen sind vollständig gestaltet, lösen aber nichts aus.
-- Der Reiter «Zeitverlauf» in den Analysen ist nicht ausgeführt.
+- Budgets sind in den Analysen als Leerzustand angelegt, aber nicht erfassbar.
 - Kategorien sind fest am Datensatz hinterlegt statt automatisch erkannt.
-- Keine UI-Bibliothek und kein Diagrammpaket: Der Donut ist SVG, damit die Farben exakt
-  den Tokens folgen. Einzige Laufzeitabhängigkeit ist React.
+- Keine UI-Bibliothek und kein Diagrammpaket: Donut und Verlaufskurve sind von Hand
+  gezeichnetes SVG, damit die Farben exakt den Tokens folgen. Laufzeitabhängigkeiten sind
+  React und — nur wenn konfiguriert und dann nachgeladen — der Supabase-Client.
 
 ## Schriften
 
@@ -275,8 +289,10 @@ Ergänzend die offiziellen Store-Bilder in `PREP/03_Screens_and_Assets/` — vor
 
 ### Buchungstexte
 
-Die App setzt den Text aus Bausteinen zusammen:
-`Apple Pay Kauf/Dienstleistung vom 21.08.2026, kkiosk 355.78`. Der Händlername steht **ganz
-hinten** und wird abgeschnitten, wenn der Text zu lang ist. Genau dieses Format erzeugt
-`merchantText()` in `src/data/generate.ts` — es ist der Frust, den vier von sechs
-Interviewten beschrieben haben, und damit unser Ausgangsmaterial.
+Die Bank setzt den Text aus Bausteinen zusammen:
+`APPLE PAY KAUF/DIENSTLEISTUNG VOM 03.09.2024 KARTEN NR. XXXX7731 COOP BERN BAHNHOF (CH)`.
+Der Händlername steht **ganz hinten** und wird abgeschnitten, wenn der Text zu lang ist.
+Genau in diesem Format liegen die Buchungen der Personas; zerlegt wird der Text in
+[`src/domain/booking.ts`](src/domain/booking.ts), gelesen in der Bewegungsdetail-Ansicht.
+Unklare Buchungen kamen in vier der sechs Gespräche zur Sprache — damit ist dieser Text unser
+Ausgangsmaterial.

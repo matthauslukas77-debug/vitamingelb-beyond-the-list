@@ -27,9 +27,14 @@ Alle am Freitag, 21.08.2026, geführt — vor der ersten Zeile Produktcode.
 | 06 | Selin | 17, Lernende Labor | BKB | [`06`](Interviews/transkripte/06_selin_transkript.txt) | — |
 | 07 | Bruno | 59, angestellt, Wohneigentum | PostFinance + 5 weitere | [`07`](Interviews/transkripte/07_bruno_transkript.txt) | — |
 
-Die Nummer 03 fehlt: ein Zählsprung, kein Gespräch. Für 05–07 liegt statt der Einzelauswertung
-nur das Transkript vor — die Zeit reichte für drei strukturierte Auswertungen; die Erkenntnisse
-aus allen sechs sind in der [Synthese](Interviews/SYNTHESE.md) zusammengeführt.
+Die Nummer 03 fehlt: ein Zählsprung, kein Gespräch.
+
+**Wie weit die Auswertung reicht:** Alle sechs Gespräche sind geführt und vollständig
+transkribiert. Strukturiert ausgewertet sind drei (01, 02, 04), und die
+[Synthese](Interviews/SYNTHESE.md) ist die Cross-Case-Auswertung genau dieser drei — sie sagt
+das in ihrer ersten Zeile selbst. Für 05–07 liegt das Transkript vor; ihre Muster sind in die
+Personas eingegangen, aber nicht in das Hypothesen-Scoreboard. Das ist die offene Flanke
+unserer Empathize-Phase, und wir schreiben sie lieber hin, als sie zu überdecken.
 
 Vier dieser sechs sind als Persona in die App eingegangen: Reto, Nino, Livia und Bruno.
 

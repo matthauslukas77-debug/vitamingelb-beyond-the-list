@@ -50,7 +50,8 @@ eine Bank tatsächlich hat:
 Der Buchungstext ist der Kern der Challenge. «APPLE PAY KAUF/DIENSTLEISTUNG VOM 03.09.2024
 KARTEN NR. XXXX7731 COOP BERN BAHNHOF (CH)» enthält alles — Zahlungsart, Kaufdatum, Karte,
 Händler, Land — aber in der Liste ist nur der Anfang sichtbar, und der Händler fällt hinten weg.
-Vier von sechs Interviewten haben genau das beschrieben. Dieselben Daten, anders gelesen, ergeben
+Unklare Buchungen kamen in vier der sechs Gespräche zur Sprache — am deutlichsten bei Silvan:
+«manchmal so komische Adressen oder komische Firmennamen». Dieselben Daten, anders gelesen, ergeben
 die Detailansicht ([`TransactionDetail.tsx`](Code/src/app/screens/TransactionDetail.tsx)) und die
 Abo-Übersicht ([`Recurring.tsx`](Code/src/app/screens/Recurring.tsx)).
 
@@ -115,9 +116,12 @@ Wer den Code verstehen will, in dieser Reihenfolge:
 
 ## Design Thinking — warum die App so aussieht
 
-Wir haben am Freitagabend **sechs Gespräche** geführt, transkribiert und ausgewertet, bevor die
+Wir haben am Freitagabend **sechs Gespräche** geführt und vollständig transkribiert, bevor die
 erste Zeile Produktcode entstand. Das ganze Material liegt anonymisiert in
 [`Misc/Interviews/`](Misc/Interviews/): Leitfaden, Transkripte, Auswertungen, Synthese.
+Strukturiert ausgewertet sind drei davon — die restlichen drei sind in die Personas
+eingegangen, aber nicht ins Hypothesen-Scoreboard. Das ist die offene Flanke unserer
+Empathize-Phase, und sie steht im [`Misc/README.md`](Misc/README.md) so drin.
 
 Was dabei herauskam, hat den Scope bestimmt:
 
@@ -139,13 +143,15 @@ jeweiligen Muster:
 | **Reto Bühler** · 22, Informatiker | Sechs Abos, eines still von 71.90 auf 79.90 erhöht |
 | **Nino Roth** · 19, Mediamatiker | Knappes Konto, Sollzins, Mahngebühr für eine vergessene Rechnung |
 | **Livia Berger** · Lernende bei einer Bank | Dauerauftrag aufs **eigene** Sparkonto — zählt heute als Ausgabe |
-| **Bruno Aebischer** · 59, angestellt | Sechs Bankbeziehungen, Steuerrechnung als Jahresposten |
+| **Bruno Aebischer** · 59, angestellt | Fünf Produkte bei zwei Instituten, Steuerrechnung als Jahresposten |
 
 ## Daten und Anonymisierung
 
-**Alle Konten, Buchungen und Beträge in der App sind erfunden.** Sie entstehen aus einem festen
-Startwert pro Persona, sind bei jedem Start identisch und enthalten keine echten Kundendaten.
-Beträge werden durchgehend als ganzzahlige Rappen geführt, gerundet wird erst bei der Ausgabe.
+**Alle Konten, Buchungen und Beträge in der App sind erfunden** und enthalten keine echten
+Kundendaten. Sie liegen als feste Datensätze im Repository — einmalig erzeugt, nicht zur
+Laufzeit — und sind deshalb bei jedem Start identisch. Je Persona sind es 24 Monate und
+670–1150 Buchungen im Textformat des echten Kontoauszugs. Beträge werden durchgehend als
+ganzzahlige Rappen geführt, gerundet wird erst bei der Ausgabe.
 
 Das Interviewmaterial in `Misc/` ist anonymisiert: Namen sind durch Pseudonyme ersetzt,
 Wohn- und Arbeitsorte, Arbeitgeber und der Lehrbetrieb sind maskiert (`[Ort]`, `[Bank]`).

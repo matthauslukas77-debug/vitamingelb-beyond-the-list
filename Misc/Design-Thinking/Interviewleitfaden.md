@@ -133,7 +133,7 @@ davon mind. 3 Business, 1–2 PostFinance.
 
 ## 4. Leitfaden POSTFINANCE / CHALLENGE-OWNER (Expert:innen-Interview, ~10 min)
 
-(ergänzt `00_challenge/QUESTIONS_for_PostFinance.md` — dort die Formalia, hier das Verständnis)
+(ergänzt unsere Fragenliste an PostFinance — dort die Formalia, hier das Verständnis)
 
 1. Woher kommt die Challenge — welches Kund:innenfeedback oder welche Beobachtung steht dahinter?
 2. Was wisst ihr heute darüber, wie Kund:innen die Transaktionsliste tatsächlich nutzen? (Nutzungsdaten, Research, Support-Tickets)
