@@ -413,4 +413,6 @@ export const BRANDS: BrandEntry[] = [
   { key: "nvidia", name: "NVIDIA", category: "software", domain: "nvidia.com", logo: "nvidia.png", color: "#76B900" },
   { key: "google-play", name: "Google Play", category: "software", domain: "play.google.com", logo: "google-play.png", color: "#414141" },
   { key: "karma", name: "Karma", category: "food", domain: "karma.life", logo: "karma.png" },
+  { key: "dm", name: "dm-drogerie markt", category: "pharmacy", domain: "dm.de", logo: "dm.png" },
+  { key: "hornbach", name: "HORNBACH", category: "retail", domain: "hornbach.ch", logo: "hornbach.svg" },
 ]

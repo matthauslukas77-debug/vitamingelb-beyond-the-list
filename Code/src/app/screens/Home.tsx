@@ -34,20 +34,27 @@ export function Home() {
               title={index === 0 ? 'Konten und Depots' : group.title}
               value={index === 0 ? formatMoney(totalChf, 'CHF') : undefined}
             />
-            <Card>
-              {group.accounts.map((account) => (
-                <Row
-                  key={account.id}
-                  icon="accountPerson"
-                  iconAccent
-                  title={account.name}
-                  sub={account.iban}
-                  badge={account.source.type === 'external' ? account.source.bank : undefined}
-                  amount={formatMoney(account.balance, account.currency)}
-                  onClick={() => push({ name: 'account', accountId: account.id })}
-                />
-              ))}
-            </Card>
+            {group.accounts.map((account) => (
+              <Slot
+                key={account.id}
+                name="home.accountRow"
+                account={account}
+                onOpen={() => push({ name: 'account', accountId: account.id })}
+                fallback={
+                  <Card>
+                    <Row
+                      icon="accountPerson"
+                      iconAccent
+                      title={account.name}
+                      sub={account.iban}
+                      badge={account.source.type === 'external' ? account.source.bank : undefined}
+                      amount={formatMoney(account.balance, account.currency)}
+                      onClick={() => push({ name: 'account', accountId: account.id })}
+                    />
+                  </Card>
+                }
+              />
+            ))}
           </div>
         ))}
 

@@ -4,8 +4,9 @@ import type { Persona } from '../data/types'
 import './persona-picker.css'
 
 /**
- * Auswahlbildschirm vor der App. Jede Persona bildet eine Person aus unseren
- * Interviews ab — deshalb steht bei jeder das Originalzitat.
+ * Auswahlbildschirm vor der App. Die ersten vier Personas bilden je eine Person
+ * aus unseren Interviews ab — deshalb steht bei jeder das Originalzitat.
+ * Mia Keller ist keine Interviewperson, sondern der Datenumfang zum Testen.
  */
 export function PersonaPicker({ onChoose }: { onChoose: (persona: Persona) => void }) {
   return (
@@ -14,8 +15,9 @@ export function PersonaPicker({ onChoose }: { onChoose: (persona: Persona) => vo
         <p className="picker__eyebrow">BärnHäckt 2026 · PostFinance «Beyond the List»</p>
         <h1 className="picker__title">Wer schaut heute ins Banking?</h1>
         <p className="picker__lead">
-          Vier Personas aus unseren sechs Interviews. Jede bringt ihre eigenen Konten,
-          Buchungen und Muster mit.
+          Vier Personas aus unseren sechs Interviews — jede mit eigenen Konten,
+          Buchungen und Mustern. Dazu Mia Keller: keine Interviewperson, sondern
+          zwei Jahre Kontodaten am Stück, als Belastungstest.
         </p>
       </header>
 
