@@ -44,6 +44,10 @@ export type SignalKind =
   | 'incomeChange'
   /** Eine einmalige Gutschrift ausserhalb der bekannten Reihen. */
   | 'incomeExtra'
+  /** Eine Lohnreihe endet, eine andere beginnt — ein neuer Arbeitgeber. */
+  | 'incomeSwitch'
+  /** Eine Sonderzahlung, die sich jährlich wiederholt — der dreizehnte Lohn. */
+  | 'incomeAnnual'
   /** Eine Reihe, die es im Vormonat noch nicht gab. */
   | 'newSeries'
   /** Zwei gleichartige Buchungen im Monatsabstand — vielleicht ein Abo. */
@@ -101,6 +105,19 @@ function scoreOf(amount: number, confidence: number, date: string, today: string
 /** Lesbarer Name einer Reihe: erst die Marke, sonst der aufgeräumte Text. */
 function seriesName(series: RecurringSeries): string {
   return resolveBrand(series.label)?.brand.name ?? pretty(series.label)
+}
+
+/**
+ * Nur die Gegenpartei einer Lastschrift oder Gutschrift.
+ *
+ * Der Auszug schreibt sie als «ART / Gegenpartei» — «LOHN / Nordlicht Software
+ * AG», «MIETZINS / Verwaltung Iseli». Wo der Satz die Art schon nennt («Seit
+ * 25.02. kommt CHF 4'635 von …»), wäre sie ein zweites Mal überflüssig.
+ */
+function counterpartyOf(series: RecurringSeries): string {
+  const name = seriesName(series)
+  const slash = name.indexOf(' / ')
+  return slash >= 0 ? name.slice(slash + 3) : name
 }
 
 /**
@@ -238,6 +255,131 @@ function extraIncomeSignals(
       }
     })
 }
+
+/** Wie lange zwischen letztem alten und erstem neuem Lohn liegen darf. */
+const SWITCH_MAX_GAP_DAYS = 70
+/** Und wie weit die Beträge auseinanderliegen dürfen, damit es ein Lohn bleibt. */
+const SWITCH_MAX_SPREAD = 0.5
+
+/**
+ * Ein neuer Arbeitgeber — eine Lohnreihe hört auf, eine andere fängt an.
+ *
+ * Ohne diesen Erkenner zerfällt ein Jobwechsel in zwei irreführende Meldungen:
+ * «Agentur Meridian AG ist ausgeblieben» und «Neu: Studio Kreis GmbH». Beide
+ * stimmen für sich und erzählen zusammen das Falsche. Was zählt, ist die
+ * Differenz — bei Nino CHF 260 mehr im Monat, und das bei einem Konto, das
+ * dreimal im Soll war.
+ *
+ * Erkannt wird am Muster, nicht am Arbeitgebernamen: eine Einnahmereihe, die
+ * aufhört, und eine ähnlich grosse, die kurz darauf beginnt.
+ */
+function switchSignals(series: RecurringSeries[], today: string): Signal[] {
+  const income = series.filter((entry) => entry.kind === 'income' && entry.cadence === 'monthly')
+  const out: Signal[] = []
+
+  for (const ended of income) {
+    /* Läuft sie noch? Dann ist sie nicht zu Ende. */
+    if (ended.lastSeen >= addDays(today, -SWITCH_MAX_GAP_DAYS)) continue
+
+    const successor = income.find(
+      (candidate) =>
+        candidate.key !== ended.key &&
+        candidate.firstSeen > ended.lastSeen &&
+        candidate.firstSeen <= addDays(ended.lastSeen, SWITCH_MAX_GAP_DAYS) &&
+        candidate.lastSeen > ended.lastSeen &&
+        Math.abs(candidate.amount - ended.amount) / Math.max(ended.amount, 1) <= SWITCH_MAX_SPREAD,
+    )
+    if (!successor) continue
+
+    const delta = successor.amount - ended.amount
+    const more = delta > 0
+    out.push({
+      id: `incomeSwitch:${ended.key}:${successor.key}`,
+      kind: 'incomeSwitch',
+      title: more
+        ? `Neuer Arbeitgeber — CHF ${chf(delta)} mehr im Monat`
+        : `Neuer Arbeitgeber — CHF ${chf(delta)} weniger im Monat`,
+      body:
+        `Seit ${successor.firstSeen.slice(8, 10)}.${successor.firstSeen.slice(5, 7)}. kommen ` +
+        `CHF ${chf(successor.amount)} von ${counterpartyOf(successor)}, davor CHF ${chf(ended.amount)} ` +
+        `von ${counterpartyOf(ended)}.` +
+        (more ? ' Das Budget kennt den Unterschied noch nicht.' : ''),
+      date: successor.firstSeen,
+      amount: Math.abs(delta),
+      confidence: 0.85,
+      transactionIds: [...ended.transactionIds.slice(-2), ...successor.transactionIds],
+      actions: more
+        ? [{ kind: 'save' as const, amount: suggestedSaving(delta) }, { kind: 'openBudget' as const, category: 'consumption' }]
+        : [{ kind: 'openBudget' as const, category: 'consumption' }],
+      score: scoreOf(Math.abs(delta), 0.85, successor.firstSeen, today),
+    })
+  }
+  return out
+}
+
+/** Wie weit ein Jahresabstand danebenliegen darf. */
+const ANNUAL_TOLERANCE_DAYS = 45
+
+/**
+ * Eine Sonderzahlung, die sich jährlich wiederholt — typisch der dreizehnte
+ * Monatslohn.
+ *
+ * Sie bildet keine Reihe: `detectRecurring` verlangt drei Vorkommen, und in
+ * zwei Jahren Historie steht ein Dezemberlohn zweimal da. Trotzdem ist sie
+ * das Gegenteil einer Überraschung — sie ist ein Termin. Deshalb sagt die
+ * Karte nicht, was war, sondern wann es wiederkommt: Das ist die Antwort auf
+ * «was kommt als Nächstes», nicht auf «was war».
+ */
+function annualIncomeSignals(transactions: Transaction[], today: string): Signal[] {
+  const byKey = new Map<string, Transaction[]>()
+  for (const tx of transactions) {
+    if (tx.amount < EXTRA_INCOME_MIN) continue
+    const key = normaliseMerchant(tx.text)
+    if (!key) continue
+    const bucket = byKey.get(key)
+    if (bucket) bucket.push(tx)
+    else byKey.set(key, [tx])
+  }
+
+  const out: Signal[] = []
+  for (const [key, items] of byKey) {
+    if (items.length !== 2) continue
+    const [first, last] = [...items].sort((a, b) => (a.date < b.date ? -1 : 1))
+
+    const gap = Math.round((parseIso(last.date).getTime() - parseIso(first.date).getTime()) / 86_400_000)
+    if (Math.abs(gap - 365) > ANNUAL_TOLERANCE_DAYS) continue
+
+    /* Der nächste Termin: ein Jahr nach dem letzten. Liegt er in der
+       Vergangenheit, ist die Zahlung überfällig und keine Vorschau mehr. */
+    const next = addDays(last.date, 365)
+    if (next <= today) continue
+    const months = Math.round((parseIso(next).getTime() - parseIso(today).getTime()) / 86_400_000 / 30.44)
+
+    out.push({
+      id: `incomeAnnual:${key}:${next}`,
+      kind: 'incomeAnnual',
+      title: `CHF ${chf(last.amount)} kommen wieder`,
+      body:
+        `${merchantName(last)}: zuletzt im ${MONTHS[parseIso(last.date).getMonth()]} ` +
+        `${last.date.slice(0, 4)}, davor im ${MONTHS[parseIso(first.date).getMonth()]} ` +
+        `${first.date.slice(0, 4)}. Der nächste Termin ist in ${months} ` +
+        `${months === 1 ? 'Monat' : 'Monaten'}.`,
+      date: last.date,
+      amount: last.amount,
+      /* Zwei Vorkommen sind ein Muster, aber kein Versprechen. */
+      confidence: 0.6,
+      transactionIds: [first.id, last.id],
+      actions: [{ kind: 'openTransaction' as const, transactionId: last.id }],
+      score: scoreOf(last.amount, 0.6, last.date, today),
+    })
+  }
+  return out
+}
+
+const MONTHS = [
+  'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+  'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember',
+]
 
 /**
  * Neu aufgetaucht — der Vergleich zweier Erkennungsläufe.
@@ -438,8 +580,12 @@ export function detectSignals(
 ): Signal[] {
   const series = detectRecurring(transactions, { today: options.today })
 
+  const switches = switchSignals(series, options.today)
+
   return [
+    ...switches,
     ...extraIncomeSignals(transactions, series, options.today),
+    ...annualIncomeSignals(transactions, options.today),
     ...incomeSignals(series, options.today),
     ...priceSignals(series, options.today),
     ...outlierSignals(transactions, accounts, options, ownName),

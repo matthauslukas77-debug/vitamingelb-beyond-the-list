@@ -50,6 +50,8 @@ import './signals.css'
 
 const ICONS: Record<SignalKind, IconName> = {
   incomeExtra: 'banknoteIn',
+  incomeSwitch: 'transfer',
+  incomeAnnual: 'calendar',
   incomeChange: 'trendUp',
   priceUp: 'invest',
   outlier: 'support',
@@ -61,6 +63,7 @@ const ICONS: Record<SignalKind, IconName> = {
 /** Ein Verdacht sieht anders aus als eine Messung. */
 function toneOf(signal: Signal): string {
   if (signal.kind === 'incomeExtra' || signal.kind === 'incomeChange') return 'good'
+  if (signal.kind === 'incomeSwitch' || signal.kind === 'incomeAnnual') return 'good'
   if (signal.confidence < 0.7) return 'soft'
   return 'warn'
 }

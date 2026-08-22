@@ -1,4 +1,4 @@
-import type { Account, Persona } from '../types'
+import type { Account, Persona, Transaction } from '../types'
 import { brunoTransactions } from './bruno.data'
 import { brunoBeneficiaries } from './bruno.beneficiaries'
 
@@ -59,6 +59,39 @@ const accounts: Account[] = [
   },
 ]
 
+/**
+ * Ereignisse, die den Signalen zugrunde liegen — siehe `reto.ts` für das Warum.
+ *
+ * Bruno, Interview 07: 59, angestellt bei einer kantonalen Organisation, sechs
+ * Bankbeziehungen. Bei ihm ist der dreizehnte Monatslohn keine Überraschung,
+ * sondern ein Termin — er kommt jeden Dezember, und er ist der grösste
+ * einzelne Geldeingang des Jahres.
+ *
+ * Zweimal im Datensatz, Dezember 2024 und Dezember 2025. Damit ist es ein
+ * Muster über zwei Jahre und keine Einzelbuchung — die App kann daraus sagen,
+ * wann er wiederkommt, statt ihn nur im Rückblick zu erwähnen.
+ */
+const events: Transaction[] = [
+  {
+    id: 'bruno-EV-2024-12-13ter',
+    accountId: PRIVATE,
+    date: '2024-12-20',
+    text: '13. MONATSLOHN / Kantonale Organisation',
+    amount: 862_000,
+    currency: 'CHF',
+    category: 'income',
+  },
+  {
+    id: 'bruno-EV-2025-12-13ter',
+    accountId: PRIVATE,
+    date: '2025-12-19',
+    text: '13. MONATSLOHN / Kantonale Organisation',
+    amount: 862_000,
+    currency: 'CHF',
+    category: 'income',
+  },
+]
+
 export const bruno: Persona = {
   id: 'bruno',
   name: 'Bruno Aebischer',
@@ -68,7 +101,7 @@ export const bruno: Persona = {
   birthYear: 1967,
   address: { street: 'Mettstrasse 88', place: '2504 Biel/Bienne', country: 'Schweiz' },
   accounts,
-  transactions: brunoTransactions,
+  transactions: [...brunoTransactions, ...events],
   beneficiaries: brunoBeneficiaries,
   standingOrders: [
     { id: 'm-so-1', accountId: PRIVATE, recipient: 'Vorsorgekonto 3a', amount: -60_000, currency: 'CHF', nextExecution: '2026-08-26' },

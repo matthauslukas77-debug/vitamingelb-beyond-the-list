@@ -1,6 +1,7 @@
 import type { Account, Persona, Transaction } from '../types'
 import { ninoTransactions } from './nino.data'
 import { ninoBeneficiaries } from './nino.beneficiaries'
+import { withJobChange } from './events'
 
 const PRIVATE = 'nino-private'
 const CUSTODY = 'nino-custody'
@@ -31,10 +32,16 @@ const accounts: Account[] = [
 /**
  * Ereignisse, die den Signalen zugrunde liegen — siehe `reto.ts` für das Warum.
  *
- * Nino, Interview 04: war oft im Minus. Ein Abo, das sich im Juli
- * eingeschlichen hat, ist bei ihm kein Randfall, sondern der Anfang des
- * Problems. Zwei Buchungen sind kein Muster — die App fragt deshalb, statt zu
- * behaupten.
+ * Nino, Interview 04: war oft im Minus. Zwei Dinge, die dazu gehören.
+ *
+ * Das Abo, das sich im Juli eingeschlichen hat, ist bei ihm kein Randfall,
+ * sondern der Anfang des Problems. Zwei Buchungen sind kein Muster — die App
+ * fragt deshalb, statt zu behaupten.
+ *
+ * Der Jobwechsel im Mai bringt CHF 260 mehr. Bei einem Konto, das dreimal im
+ * Soll war, ist das der Unterschied zwischen knapp und nicht knapp — und
+ * genau die Art Veränderung, die man selbst nicht bemerkt, weil der Lohn ja
+ * weiterhin einfach kommt.
  */
 const events: Transaction[] = [
   {
@@ -57,6 +64,18 @@ const events: Transaction[] = [
   },
 ]
 
+/** Wechsel per Ende Mai 2026: CHF 2'640 statt CHF 2'380. */
+const transactions = [
+  ...withJobChange(ninoTransactions, {
+    since: '2026-05-01',
+    match: /^LOHN \/ Agentur Meridian AG$/,
+    text: 'LOHN / Studio Kreis GmbH',
+    amount: 264_000,
+    idPrefix: 'nino-EV-lohn',
+  }),
+  ...events,
+]
+
 export const nino: Persona = {
   id: 'nino',
   name: 'Nino Roth',
@@ -66,7 +85,7 @@ export const nino: Persona = {
   birthYear: 2007,
   address: { street: 'Länggassstrasse 63', place: '3012 Bern', country: 'Schweiz' },
   accounts,
-  transactions: [...ninoTransactions, ...events],
+  transactions,
   beneficiaries: ninoBeneficiaries,
   standingOrders: [],
   pendingOrders: [

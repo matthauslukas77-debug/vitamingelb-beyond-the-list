@@ -102,6 +102,56 @@ describe('Signale — Schicht 1', () => {
   })
 })
 
+describe('Jobwechsel und Jahreszahlungen', () => {
+  it('macht aus zwei Lohnreihen einen Wechsel statt zwei Meldungen', () => {
+    /* Ohne diesen Erkenner zerfällt ein Jobwechsel in «Agentur Meridian ist
+       ausgeblieben» und «Neu: Studio Kreis GmbH». Beide stimmen für sich und
+       erzählen zusammen das Falsche. */
+    for (const id of ['reto', 'nino']) {
+      const signals = signalsOf(id)
+      const change = signals.find((entry) => entry.kind === 'incomeSwitch')!
+      expect(change, id).toBeTruthy()
+      expect(change.title, id).toMatch(/mehr im Monat/)
+      // Der Beleg umfasst beide Seiten des Wechsels.
+      expect(change.transactionIds.length, id).toBeGreaterThan(2)
+      // Und keine zweite Meldung über denselben Vorgang.
+      expect(signals.filter((entry) => entry.kind === 'newSeries'), id).toHaveLength(0)
+    }
+  })
+
+  it('meldet den alten Arbeitgeber nicht als ausgeblieben', () => {
+    for (const id of ['reto', 'nino']) {
+      expect(signalsOf(id).some((entry) => entry.kind === 'missed'), id).toBe(false)
+    }
+  })
+
+  it('bietet beim Mehrverdienst an, einen Teil beiseitezulegen', () => {
+    const change = signalsOf('nino').find((entry) => entry.kind === 'incomeSwitch')!
+    const save = change.actions.find((action) => action.kind === 'save')
+    expect(save).toMatchObject({ kind: 'save' })
+  })
+
+  it('sagt beim dreizehnten Monatslohn, wann er wiederkommt', () => {
+    /* Zwei Vorkommen sind keine Reihe — `detectRecurring` verlangt drei. Der
+       dreizehnte ist trotzdem ein Termin und keine Überraschung. */
+    const signal = signalsOf('bruno').find((entry) => entry.kind === 'incomeAnnual')!
+    expect(signal.title).toMatch(/kommen wieder/)
+    expect(signal.body).toMatch(/Dezember 2025/)
+    expect(signal.body).toMatch(/in \d+ Monaten/)
+    // Ein Muster aus zwei Jahren ist kein Versprechen.
+    expect(signal.confidence).toBeLessThan(0.7)
+  })
+
+  it('kündigt nichts an, was schon fällig gewesen wäre', () => {
+    // Läge der nächste Termin in der Vergangenheit, wäre es keine Vorschau.
+    for (const persona of PERSONAS) {
+      for (const signal of signalsOf(persona.id).filter((entry) => entry.kind === 'incomeAnnual')) {
+        expect(signal.body, persona.id).not.toMatch(/in 0 Monaten/)
+      }
+    }
+  })
+})
+
 describe('Der Sparvorschlag', () => {
   it('nimmt 60 %, auf hundert Franken gerundet', () => {
     expect(suggestedSaving(80_000)).toBe(50_000)

@@ -127,7 +127,9 @@ Leuchten.
 
 | Signal | woraus |
 |---|---|
-| **Zusätzlich hereingekommen** | eine Gutschrift im laufenden Monat ausserhalb der bekannten Reihen — Bonus, 13., Rückerstattung |
+| **Zusätzlich hereingekommen** | eine Gutschrift im laufenden Monat ausserhalb der bekannten Reihen — Bonus, Rückerstattung |
+| **Neuer Arbeitgeber** | eine Lohnreihe endet, eine ähnlich grosse beginnt kurz darauf |
+| **Kommt wieder** | eine Sonderzahlung im Jahresabstand — der dreizehnte Monatslohn, mit dem nächsten Termin |
 | **Abo teurer geworden** | `priceChange`, das `detectRecurring` ohnehin liefert |
 | **Sprengt die Kategorie** | eine Buchung über dem Doppelten ihres Kategorienbudgets |
 | **Neu aufgetaucht** | eine Reihe, die es im Vormonat noch nicht gab |
@@ -356,8 +358,8 @@ Zwei Dinge, die dabei nicht schiefgehen dürfen und deshalb Tests haben:
   Schlussrechnung ergäbe im Zwölfmonatsfenster CHF 1'883 pro Monat, im Fenster daneben
   CHF 0.
 
-Gemessen an den vier Personas: **87 – 98 %** der Ausgabenfranken sind sicher zugeordnet,
-**7 bis 14** der neunzehn Felder füllen sich von selbst. Der Rest ist zu vier Fünfteln
+Gemessen an den vier Personas: **87 – 97 %** der Ausgabenfranken sind sicher zugeordnet,
+**7 bis 13** der neunzehn Felder füllen sich von selbst. Der Rest ist zu vier Fünfteln
 Bargeld — und dafür gibt es keine Lösung ausser der Rückfrage. Sie steht als solche im
 Bildschirm.
 
@@ -480,12 +482,24 @@ Die vier Personas bilden Personen aus unseren sechs Interviews ab
 Diese Muster sind absichtlich enthalten: Sie sind das Material, an dem sich später zeigen
 lässt, was eine bessere Auswertung leisten müsste.
 
-Dazu kommt in `src/data/personas/<id>.ts` — der von Hand gepflegten Datei — je ein
-**Ereignis**, das ein Signal auslöst. Die generierten Buchungen bilden den Alltag ab und
-sind bewusst gleichmässig; das Unerwartete ist aber der Gegenstand des Signale-Bildschirms.
-Reto bekommt im August einen Bonus über CHF 800, bei Nino schleicht sich ein Abo ein, und
-Livia kauft ein Notebook für die Lehre. Jedes trägt im Code den Kommentar, welches Muster
-es belegen soll.
+Dazu kommen in `src/data/personas/<id>.ts` — der von Hand gepflegten Datei — **Ereignisse**,
+die Signale auslösen. Die generierten Buchungen bilden den Alltag ab und sind bewusst
+gleichmässig: Jede Persona bekam über 23 Monate exakt denselben Lohnbetrag. Das
+Unerwartete ist aber der Gegenstand des Signale-Bildschirms.
+
+| Persona | Ereignis | Signal |
+|---|---|---|
+| Reto | Jobwechsel per Februar 2026 (+ CHF 420), Bonus CHF 800 im August | Neuer Arbeitgeber · Zusätzlich hereingekommen |
+| Nino | Jobwechsel per Mai 2026 (+ CHF 260), eingeschlichenes Abo seit Juli | Neuer Arbeitgeber · Abo-Verdacht |
+| Livia | Notebook für die Lehre, CHF 1'290 im August | Sprengt die Kategorie |
+| Bruno | 13. Monatslohn, Dezember 2024 und 2025 | Kommt wieder — in 4 Monaten |
+
+Ein Jobwechsel ist eine **Ersetzung**, keine Ergänzung: `withJobChange()` in
+[`events.ts`](src/data/personas/events.ts) tauscht die Lohnbuchungen ab dem Stichtag aus,
+denn wer den Arbeitgeber wechselt, bekommt nicht zwei Löhne. Der heutige Kontostand bleibt
+der Anker; was sich ändert, ist die Vergangenheit — mit dem höheren Lohn stand vorher
+weniger auf dem Konto. Jedes Ereignis trägt im Code den Kommentar, welches Muster es
+belegen soll.
 
 ## Icon
 

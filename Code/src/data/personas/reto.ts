@@ -1,6 +1,7 @@
 import type { Account, Persona, Transaction } from '../types'
 import { retoTransactions } from './reto.data'
 import { retoBeneficiaries } from './reto.beneficiaries'
+import { withJobChange } from './events'
 
 const PRIVATE = 'reto-private'
 const SAVINGS = 'reto-savings-bkb'
@@ -29,26 +30,36 @@ const accounts: Account[] = [
 /**
  * Ereignisse, die den Signalen zugrunde liegen.
  *
- * Die generierten Buchungen in `reto.data.ts` sind bewusst gleichmässig — sie
- * bilden den Alltag ab. Was sie nicht enthalten, ist das Unerwartete, und
- * genau das ist der Gegenstand des Signale-Bildschirms. Diese Ereignisse
- * stehen deshalb hier, in der von Hand gepflegten Datei, neben Konten und
- * Daueraufträgen — mit dem Muster, das sie belegen sollen.
+ * Reto, Interview 01: kommt gut durch, hat aber noch nie geplant. Beide
+ * Ereignisse sind Momente, in denen sich das entscheidet — der höhere Lohn
+ * nach dem Wechsel und der Bonus gehen entweder aufs Sparkonto oder im Monat
+ * auf. Genau dort setzt die Aktion «CHF 500 sparen» an.
  *
- * Reto, Interview 01: kommt gut durch, hat aber noch nie geplant. Der Bonus
- * ist der Moment, in dem sich das entscheidet — er geht entweder aufs
- * Sparkonto oder im Monat auf.
+ * Warum bei ihm ein Jobwechsel: 22, Informatiker. In dieser Branche ist der
+ * Wechsel nach zwei Jahren der Normalfall, nicht die Ausnahme.
  */
 const events: Transaction[] = [
   {
     id: 'reto-EV-2026-08-bonus',
     accountId: PRIVATE,
     date: '2026-08-14',
-    text: 'BONUS / Arbeitgeber AG',
+    text: 'BONUS / Nordlicht Software AG',
     amount: 80_000,
     currency: 'CHF',
     category: 'income',
   },
+]
+
+/** Wechsel per Ende Februar 2026: CHF 4'635 statt CHF 4'215. */
+const transactions = [
+  ...withJobChange(retoTransactions, {
+    since: '2026-02-01',
+    match: /^LOHN \/ Arbeitgeber AG$/,
+    text: 'LOHN / Nordlicht Software AG',
+    amount: 463_500,
+    idPrefix: 'reto-EV-lohn',
+  }),
+  ...events,
 ]
 
 export const reto: Persona = {
@@ -60,7 +71,7 @@ export const reto: Persona = {
   birthYear: 2004,
   address: { street: 'Sulgenauweg 21', place: '3007 Bern', country: 'Schweiz' },
   accounts,
-  transactions: [...retoTransactions, ...events],
+  transactions,
   beneficiaries: retoBeneficiaries,
   standingOrders: [
     { id: 'f-so-1', accountId: PRIVATE, recipient: 'Sparkonto BKB', amount: -30_000, currency: 'CHF', nextExecution: '2026-08-26' },
