@@ -137,7 +137,7 @@ const SETTING_ENTRIES: CatalogEntry[] = [
     kind: 'setting',
     title: 'PostFinance TWINT',
     path: SETTINGS_ROOT,
-    keywords: ['limite', 'bewegungen', 'handy zahlen'],
+    keywords: ['limite', 'bewegungen', 'handy zahlen', 'twint aktivieren', 'geld an freunde'],
     icon: 'twint',
     target: section('twint'),
   },
@@ -338,15 +338,6 @@ const SETTING_ENTRIES: CatalogEntry[] = [
     path: `${SETTINGS_ROOT} · Zahlungen`,
     keywords: ['rechnungen elektronisch', 'ebill aktivieren'],
     icon: 'document',
-    target: section('payments'),
-  },
-  {
-    id: 'set.pay.twint',
-    kind: 'setting',
-    title: 'PostFinance TWINT',
-    path: `${SETTINGS_ROOT} · Zahlungen`,
-    keywords: ['twint aktivieren', 'handy bezahlen', 'geld an freunde'],
-    icon: 'twint',
     target: section('payments'),
   },
   {
@@ -613,9 +604,9 @@ export const SUGGESTED_IDS = [
   'set.app.theme',
   'set.notify.lowbalance',
   'fn.analysis',
-  'set.pay.twint',
+  'set.twint',
 ] as const
 
-export const SUGGESTIONS: CatalogEntry[] = SUGGESTED_IDS.map(
-  (id) => CATALOG.find((entry) => entry.id === id)!,
-)
+export const SUGGESTIONS: CatalogEntry[] = SUGGESTED_IDS.map((id) =>
+  CATALOG.find((entry) => entry.id === id),
+).filter((entry): entry is CatalogEntry => entry !== undefined)

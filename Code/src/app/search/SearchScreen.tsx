@@ -58,12 +58,22 @@ function EntryRow({ entry, onOpen }: { entry: CatalogEntry; onOpen: () => void }
   )
 }
 
-function Group({ title, count, children }: { title: string; count: number; children: ReactNode }) {
+/**
+ * Eine Treffergruppe. `shown` ist, was in der Liste steht, `total` was es
+ * wirklich gibt — steht am Kopf nur «30», während 47 Buchungen passen, behauptet
+ * die Zahl etwas Falsches.
+ */
+function Group({ title, shown, total, children }: {
+  title: string
+  shown: number
+  total: number
+  children: ReactNode
+}) {
   return (
     <div>
       <div className="section-head">
         <span className="section-head__title">{title}</span>
-        <span className="section-head__value">{count}</span>
+        <span className="section-head__value">{shown < total ? `${shown} von ${total}` : total}</span>
       </div>
       <Card>{children}</Card>
     </div>
@@ -92,8 +102,8 @@ export function SearchScreen() {
   )
 
   const catalogHits = useMemo(() => (ready ? searchList(CATALOG, query) : []), [ready, query])
-  const settings = catalogHits.filter((entry) => entry.kind === 'setting').slice(0, LIMIT.setting)
-  const functions = catalogHits.filter((entry) => entry.kind === 'function').slice(0, LIMIT.function)
+  const settings = catalogHits.filter((entry) => entry.kind === 'setting')
+  const functions = catalogHits.filter((entry) => entry.kind === 'function')
 
   const accounts = useMemo<Account[]>(() => {
     if (!ready) return []
@@ -101,21 +111,20 @@ export function SearchScreen() {
       .filter((account) =>
         matchesText(`${accountName(account)} ${account.name} ${account.iban}`, tokens),
       )
-      .slice(0, LIMIT.account)
   }, [ready, persona, accountName, tokens])
 
   const recurring = useMemo(() => {
     if (!ready) return []
-    return series
-      .filter((entry) => matchesText(`${seriesTitle(entry)} ${entry.label} ${kindLabel(entry)}`, tokens))
-      .slice(0, LIMIT.series)
+    return series.filter((entry) =>
+      matchesText(`${seriesTitle(entry)} ${entry.label} ${kindLabel(entry)}`, tokens),
+    )
   }, [ready, series, tokens])
 
   const transactions = useMemo(() => {
     if (!ready) return []
-    return persona.transactions
-      .filter((tx) => matchesText(`${tx.text} ${CATEGORY_LABELS[tx.category]}`, tokens))
-      .slice(0, LIMIT.transaction)
+    return persona.transactions.filter((tx) =>
+      matchesText(`${tx.text} ${CATEGORY_LABELS[tx.category]}`, tokens),
+    )
   }, [ready, persona, tokens])
 
   const total = settings.length + functions.length + accounts.length + recurring.length + transactions.length
@@ -170,24 +179,24 @@ export function SearchScreen() {
         {ready && total === 0 && <p className="empty">Keine Treffer für «{query.trim()}».</p>}
 
         {settings.length > 0 && (
-          <Group title="Einstellungen" count={settings.length}>
-            {settings.map((entry) => (
+          <Group title="Einstellungen" shown={Math.min(settings.length, LIMIT.setting)} total={settings.length}>
+            {settings.slice(0, LIMIT.setting).map((entry) => (
               <EntryRow key={entry.id} entry={entry} onOpen={() => open(entry.target)} />
             ))}
           </Group>
         )}
 
         {functions.length > 0 && (
-          <Group title="Funktionen" count={functions.length}>
-            {functions.map((entry) => (
+          <Group title="Funktionen" shown={Math.min(functions.length, LIMIT.function)} total={functions.length}>
+            {functions.slice(0, LIMIT.function).map((entry) => (
               <EntryRow key={entry.id} entry={entry} onOpen={() => open(entry.target)} />
             ))}
           </Group>
         )}
 
         {accounts.length > 0 && (
-          <Group title="Konten" count={accounts.length}>
-            {accounts.map((account) => (
+          <Group title="Konten" shown={Math.min(accounts.length, LIMIT.account)} total={accounts.length}>
+            {accounts.slice(0, LIMIT.account).map((account) => (
               <Row
                 key={account.id}
                 icon="accounts"
@@ -202,8 +211,8 @@ export function SearchScreen() {
         )}
 
         {recurring.length > 0 && (
-          <Group title="Wiederkehrend" count={recurring.length}>
-            {recurring.map((entry) => (
+          <Group title="Wiederkehrend" shown={Math.min(recurring.length, LIMIT.series)} total={recurring.length}>
+            {recurring.slice(0, LIMIT.series).map((entry) => (
               <Row
                 key={entry.key}
                 icon={KIND_ICON[entry.kind]}
@@ -219,8 +228,8 @@ export function SearchScreen() {
         )}
 
         {transactions.length > 0 && (
-          <Group title="Buchungen" count={transactions.length}>
-            {transactions.map((tx) => (
+          <Group title="Buchungen" shown={Math.min(transactions.length, LIMIT.transaction)} total={transactions.length}>
+            {transactions.slice(0, LIMIT.transaction).map((tx) => (
               <Row
                 key={tx.id}
                 title={tx.text}

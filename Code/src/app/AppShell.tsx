@@ -4,7 +4,7 @@ import { Icon, type IconName } from './shell/Icon'
 import { AccountDetail } from './screens/AccountDetail'
 import { Analysis } from './screens/Analysis'
 import { Breakdown } from './screens/Breakdown'
-import { Scan, Search, Transfer } from './screens/Flows'
+import { Scan, Transfer } from './screens/Flows'
 import { Pay } from './screens/payment/PaymentFlow'
 import { Home } from './screens/Home'
 import { Invest } from './screens/Invest'
@@ -15,6 +15,7 @@ import { SeriesDetail } from '../insights/screens/SeriesDetail'
 import { TransactionDetail } from './screens/TransactionDetail'
 import { Services } from './screens/Services'
 import { ProfileSettings, SettingsSectionScreen } from './screens/Settings'
+import { SearchScreen } from './search/SearchScreen'
 
 const TABS: { id: Tab; label: string; icon: IconName; dot?: boolean }[] = [
   { id: 'home', label: 'Home', icon: 'home' },
@@ -73,7 +74,7 @@ function screenFor(screen: Screen) {
     case 'scan': return <Scan />
     case 'pay': return <Pay />
     case 'transfer': return <Transfer />
-    case 'search': return <Search />
+    case 'search': return <SearchScreen />
     case 'recurring': return <Recurring />
     case 'series': return <SeriesDetail seriesKey={screen.seriesKey} />
     case 'transaction': return <TransactionDetail transactionId={screen.transactionId} />

@@ -1,17 +1,17 @@
-import { useState } from 'react'
 import { formatMoney } from '../../lib/money'
-import { CATEGORY_LABELS } from '../../data/categories'
 import { useSession } from '../session'
 import { Icon } from '../shell/Icon'
 import { Sheet } from '../shell/Sheet'
 import { Card, Row } from '../shell/parts'
 
 /**
- * Scannen, Übertragen und die Suche. Im Nachbau flach gehalten: Sie müssen
- * erreichbar sein und richtig aussehen, aber nichts ausführen.
+ * Scannen und Übertragen. Im Nachbau flach gehalten: Sie müssen erreichbar
+ * sein und richtig aussehen, aber nichts ausführen.
  *
- * «Zahlen» steht nicht mehr hier — der Fluss läuft vollständig durch und liegt
- * in `screens/payment/`.
+ * Zwei Bildschirme sind hier ausgezogen, weil sie mehr tun als aussehen:
+ * «Zahlen» läuft vollständig durch und liegt in `screens/payment/`, die Suche
+ * kennt seit `search/` auch Einstellungen und Funktionen und liegt in
+ * `search/SearchScreen.tsx`.
  */
 
 /** Scannen — Kamerabild als Attrappe, mit Sucherrahmen wie in der App. */
@@ -67,56 +67,6 @@ export function Transfer() {
           {own.length < 2 && <p className="empty">Kein zweites eigenes Konto vorhanden.</p>}
         </Card>
         <p className="empty">Im Prototyp wird keine Übertragung ausgeführt.</p>
-      </div>
-    </Sheet>
-  )
-}
-
-/** Suche über alle Buchungen — die App zeigt sie als Beta. */
-export function Search() {
-  const { persona, pop } = useSession()
-  const [query, setQuery] = useState('')
-  const hits = query.trim().length < 2
-    ? []
-    : persona.transactions.filter((tx) => tx.text.toLowerCase().includes(query.toLowerCase())).slice(0, 30)
-
-  return (
-    <Sheet title="Suchen" onBack={pop}>
-      <div className="screen__inner">
-        <input
-          autoFocus
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Buchungen durchsuchen"
-          style={{
-            width: '100%',
-            padding: '14px 18px',
-            border: 0,
-            borderRadius: 'var(--CornerRadius-R-100)',
-            background: 'var(--surface-card)',
-            color: 'var(--text-strong)',
-            fontSize: 15,
-            boxShadow: 'var(--shadow-card)',
-            outline: 'none',
-          }}
-        />
-        {hits.length > 0 ? (
-          <Card>
-            {hits.map((tx) => (
-              <Row
-                key={tx.id}
-                title={tx.text}
-                sub={`${CATEGORY_LABELS[tx.category]} · ${tx.date}`}
-                amount={formatMoney(tx.amount, tx.currency).replace(`${tx.currency} `, '')}
-                credit={tx.amount > 0}
-              />
-            ))}
-          </Card>
-        ) : (
-          <p className="empty">
-            {query.trim().length < 2 ? 'Mindestens zwei Zeichen eingeben.' : 'Keine Treffer.'}
-          </p>
-        )}
       </div>
     </Sheet>
   )

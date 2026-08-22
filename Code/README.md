@@ -141,6 +141,8 @@ Bildschirme: `account` · `analysis` · `income` · `expenses` · `recurring` ·
 Abschnitte von `settings`: `profile` · `login` · `notifications` · `accounts` · `payments` ·
 `invest` · `orders` · `app` · `twint` — ohne `&section` öffnet die Übersicht.
 `recurring` hiess früher `subscriptions` — alte Demo-Links funktionieren weiter.
+`search` findet Einstellungen und Funktionen so gut wie Buchungen: «twint», «dark mode»,
+«face id» führen an den Ort, nicht auf eine Liste von Belegen.
 `income` und `expenses` sind die beiden Detailseiten hinter der Legende der Analysen.
 `pay` startet den Zahlungsauftrag beim Empfänger — die weiteren drei Schritte hat der Fluss
 selbst in der Hand, damit der Zurück-Pfeil sich wie in der App verhält.
@@ -221,10 +223,14 @@ src/
 │   │                     controls.tsx — Schalter, Auswahl, Eingabefeld
 │   ├── screens/          Home · Zahlungen · Anlegen · Angebote · Services
 │   │                     Kontodetail · Bewegungsdetails · Analysen · Meine Abos
-│   │                     Einnahmen/Ausgaben · Scannen/Übertragen/Suche
+│   │                     Einnahmen/Ausgaben · Scannen/Übertragen
 │   │                     Profil und Einstellungen mit neun Unterseiten
 │   │   └── payment/      Zahlungsauftrag in vier Schritten: Empfänger, Betrag,
 │   │                     Ausführung, Zusammenfassung mit Wischgeste
+│   ├── search/           Die Suchleiste. catalog.ts — Einstellungen und
+│   │                     Funktionen als durchsuchbare Einträge, mit den
+│   │                     Wörtern, unter denen man sie sucht («dark mode»)
+│   │                     match.ts — Umlautfaltung und Gewichtung
 │   └── settings.ts       Was die Nutzerin selbst setzt, im localStorage
 └── insights/             ── UNSERE SCHICHT. Alles Neue kommt hierhin.
     ├── registry.tsx      Wo eine neue Funktion eingehängt wird

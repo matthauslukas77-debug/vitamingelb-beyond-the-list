@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { CATALOG } from '../catalog'
+import { CATALOG, SUGGESTED_IDS, SUGGESTIONS } from '../catalog'
 import { fold, matchesText, score, searchList, tokenize } from '../match'
 
 describe('fold', () => {
@@ -88,6 +88,23 @@ describe('searchList über den Katalog', () => {
   it('vergibt keine zwei gleichen Kennungen', () => {
     const ids = CATALOG.map((entry) => entry.id)
     expect(new Set(ids).size).toBe(ids.length)
+  })
+
+  /* Zwei Zeilen mit demselben Titel in derselben Gruppe lesen sich als Fehler,
+     auch wenn sie auf verschiedene Seiten führen. Über Gruppen hinweg ist es in
+     Ordnung: «Zahlungen» ist ein Reiter und eine Einstellungsseite. */
+  it('zeigt keinen Titel zweimal in derselben Gruppe', () => {
+    for (const kind of ['setting', 'function'] as const) {
+      const titles = CATALOG.filter((entry) => entry.kind === kind).map((entry) => entry.title)
+      expect(new Set(titles).size, `doppelter Titel in ${kind}`).toBe(titles.length)
+    }
+  })
+})
+
+describe('SUGGESTIONS', () => {
+  it('löst jede vorgeschlagene Kennung auf', () => {
+    expect(SUGGESTIONS).toHaveLength(SUGGESTED_IDS.length)
+    expect(SUGGESTIONS.every((entry) => entry?.id)).toBe(true)
   })
 })
 
