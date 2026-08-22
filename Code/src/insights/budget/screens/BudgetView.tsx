@@ -1,9 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { TODAY } from '../../../data/types'
 import { formatAmount } from '../../../lib/money'
+import { formatDate } from '../../../lib/date'
 import { useSession } from '../../../app/session'
 import { Icon } from '../../../app/shell/Icon'
 import { deriveForPersona, type SlotEvidence } from '../derive'
+import { amountOf, loadBudget, totalOf, type SavedBudget } from '../storage'
+import { slotKey as keyOf } from '../slots'
 import {
   DEFAULT_ANSWERS,
   benchmarkFor,
@@ -29,8 +32,18 @@ import { CATEGORIES, fieldLabel, slotKey, type CategoryKey } from '../slots'
  * Detailfelder, jede Zahl mit dem Beleg daneben — und daneben der Richtwert
  * des PostFinance-Budgetrechners für denselben Haushalt.
  *
- * Diese Ansicht **zeigt** nur. Sliders und das Speichern kommen als eigener
- * Schritt; was hier steht, ist die Grundlage, auf der sie arbeiten.
+ * Zwei Zustände, und der Unterschied ist wichtig:
+ *
+ *   **Noch kein Budget gesetzt** — dann steht hier der *Vorschlag* aus den
+ *   Buchungen, klar als solcher gekennzeichnet, mit dem Einstieg in den
+ *   Wizard.
+ *   **Budget gesetzt** — dann steht hier *dein* Budget, und die abgeleiteten
+ *   Zahlen daneben zeigen, wie nah du drankommst.
+ *
+ * Der Nachbau zeigt an dieser Stelle «Keine aktiven Budgets — Budgets
+ * erfassen, um Ausgaben in Bezug auf Kategorien oder Labels nachzuverfolgen»:
+ * ein Formular, das darauf wartet, dass jemand Zahlen abtippt, die die Bank
+ * längst hat.
  */
 
 /** Der Richtwert braucht die 56 KB Messdaten — deshalb kommt er nachgeladen. */
@@ -62,7 +75,18 @@ function CategoryBar({ actual, benchmark, scale }: { actual: number; benchmark: 
 }
 
 /** Eine Zeile pro Detailfeld — mit dem, worauf die Zahl beruht. */
-function FieldRow({ evidence, months }: { evidence: SlotEvidence; months: number }) {
+function FieldRow({
+  evidence,
+  months,
+  planned,
+  edited,
+}: {
+  evidence: SlotEvidence
+  months: number
+  /** Was budgetiert ist. Ohne gesetztes Budget derselbe Wert wie abgeleitet. */
+  planned: number
+  edited: boolean
+}) {
   return (
     <div className="bud-field">
       <span className="bud-field__main">
@@ -75,14 +99,21 @@ function FieldRow({ evidence, months }: { evidence: SlotEvidence; months: number
           {evidence.recurring && ' · Fixkosten'}
           {evidence.sources.length > 0 && ` · ${evidence.sources.join(', ')}`}
         </span>
-        {evidence.reviewReason && (
+        {edited && <span className="bud-field__set">von dir gesetzt</span>}
+        {!edited && evidence.reviewReason && (
           <span className="bud-field__review">
             <Icon name="support" size={13} />
             {evidence.reviewReason} — bitte bestätigen
           </span>
         )}
       </span>
-      <span className="bud-field__amount num">{chf(evidence.monthly)}</span>
+      <span className="bud-field__amount num">
+        {chf(planned)}
+        {/* Weicht das Budget vom Gemessenen ab, steht beides da. */}
+        {planned !== evidence.monthly && (
+          <span className="bud-field__was">gemessen {chf(evidence.monthly)}</span>
+        )}
+      </span>
     </div>
   )
 }
@@ -101,7 +132,7 @@ function Tip({ tip }: { tip: TipKey }) {
 }
 
 export function BudgetView() {
-  const { persona } = useSession()
+  const { persona, push, stack } = useSession()
   const [yearView, setYearView] = useState(false)
   const [open, setOpen] = useState<CategoryKey | null>(null)
   const [loaded, setLoaded] = useState<Loaded | null>(null)
@@ -111,6 +142,21 @@ export function BudgetView() {
     () => deriveForPersona(persona, { today: TODAY, months: 12 }),
     [persona],
   )
+
+  /* Neu lesen, sobald der Wizard zugeht: `stack` schrumpft dabei, und genau
+     das ist das Signal, dass gespeichert worden sein könnte. */
+  const [saved, setSaved] = useState<SavedBudget | null>(() => loadBudget(persona.id))
+  useEffect(() => setSaved(loadBudget(persona.id)), [persona.id, stack.length])
+
+  /* Wo ein Budget gesetzt ist, gilt es. Sonst der Vorschlag aus den Buchungen. */
+  const plannedOf = (key: string) =>
+    saved ? amountOf(saved, key) : (derived.slots.find((entry) => keyOf(entry.slot) === key)?.monthly ?? 0)
+  const plannedCategory = (category: CategoryKey) =>
+    derived.slots
+      .filter((entry) => entry.slot.category === category)
+      .reduce((total, entry) => total + plannedOf(keyOf(entry.slot)), 0)
+  const plannedTotal = saved ? totalOf(saved) : derived.expensesMonth
+  const plannedSurplus = derived.incomeMonth - plannedTotal
 
   /* Richtwert und Satz kommen beide nach. Bis dahin steht das Ist schon da —
      es braucht weder Netz noch Nachladen. */
@@ -164,12 +210,20 @@ export function BudgetView() {
           <span className="num">{chf(derived.incomeMonth * factor)}</span>
         </div>
         <div className="bud-head__line">
-          <span>Ausgaben</span>
-          <span className="num">{chf(derived.expensesMonth * factor)}</span>
+          <span>{saved ? 'Budgetiert' : 'Ausgaben'}</span>
+          <span className="num">{chf(plannedTotal * factor)}</span>
         </div>
-        <div className={'bud-head__line bud-head__line--total' + (derived.surplusMonth < 0 ? ' is-negative' : '')}>
-          <span>{derived.surplusMonth < 0 ? 'Ausgabenüberschuss' : 'Einkommensüberschuss'}</span>
-          <span className="num">{chf(derived.surplusMonth * factor, { sign: true })}</span>
+        {/* Wo ein Budget gesetzt ist, steht das Ist daneben: Der Vergleich mit
+            sich selbst ist der, der zählt. */}
+        {saved && plannedTotal !== derived.expensesMonth && (
+          <div className="bud-head__line bud-head__line--faint">
+            <span>tatsächlich ausgegeben</span>
+            <span className="num">{chf(derived.expensesMonth * factor)}</span>
+          </div>
+        )}
+        <div className={'bud-head__line bud-head__line--total' + (plannedSurplus < 0 ? ' is-negative' : '')}>
+          <span>{plannedSurplus < 0 ? 'Ausgabenüberschuss' : 'Einkommensüberschuss'}</span>
+          <span className="num">{chf(plannedSurplus * factor, { sign: true })}</span>
         </div>
 
         {/* Die Zahl, die es heute nirgends gibt: Überschuss ist nicht dasselbe
@@ -180,6 +234,25 @@ export function BudgetView() {
           </div>
         )}
       </section>
+
+      {/* Der Einstieg in den Wizard. Ohne gesetztes Budget ist er die Aussage
+          des Bildschirms, mit gesetztem eine ruhige Zeile am Rand. */}
+      <button
+        className={'bud-cta' + (saved ? ' bud-cta--quiet' : '')}
+        onClick={() => push({ name: 'budgetWizard' })}
+      >
+        <span className="bud-cta__main">
+          <span className="bud-cta__title">
+            {saved ? 'Budget anpassen' : 'Budget übernehmen und anpassen'}
+          </span>
+          <span className="bud-cta__sub">
+            {saved
+              ? `zuletzt geändert am ${formatDate(saved.savedAt)}${saved.edited.length > 0 ? ` · ${saved.edited.length} ${saved.edited.length === 1 ? 'Feld' : 'Felder'} von dir gesetzt` : ''}`
+              : `Zwei Fragen, dann stehen ${derived.filledSlots} von 19 Feldern schon drin`}
+          </span>
+        </span>
+        <Icon name="chevronRight" size={18} />
+      </button>
 
       {explanation && (
         <section className="card bud-say">
@@ -199,7 +272,7 @@ export function BudgetView() {
 
       <section className="card">
         {CATEGORIES.map((category) => {
-          const actual = derived.categoryTotals[category.key]
+          const actual = plannedCategory(category.key)
           const row = rows?.find((entry) => entry.key === category.key)
           const fields = derived.slots.filter((entry) => entry.slot.category === category.key)
           const isOpen = open === category.key
@@ -233,7 +306,13 @@ export function BudgetView() {
               {isOpen && (
                 <div className="bud-cat__fields">
                   {fields.map((evidence) => (
-                    <FieldRow key={slotKey(evidence.slot)} evidence={evidence} months={derived.months} />
+                    <FieldRow
+                      key={slotKey(evidence.slot)}
+                      evidence={evidence}
+                      months={derived.months}
+                      planned={plannedOf(slotKey(evidence.slot))}
+                      edited={saved?.edited.includes(slotKey(evidence.slot)) ?? false}
+                    />
                   ))}
                 </div>
               )}

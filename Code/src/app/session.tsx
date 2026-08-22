@@ -25,6 +25,9 @@ export type Screen =
      Jetzt ist er das Dach über Budget, Analyse und wiederkehrenden Buchungen —
      alte Demo-Links auf `?screen=analysis` funktionieren weiter. */
   | { name: 'cockpit'; view?: CockpitView }
+  /* Der Budget-Wizard. Eigener Bildschirm, weil er einen eigenen Stapel hat:
+     «Zurück» geht im Wizard einen Schritt zurück, nicht aus ihm heraus. */
+  | { name: 'budgetWizard' }
   | { name: 'scan' }
   | { name: 'pay' }
   | { name: 'transfer' }

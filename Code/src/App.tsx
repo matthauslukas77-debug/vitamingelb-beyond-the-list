@@ -53,6 +53,9 @@ function readScreen(name: string, params: URLSearchParams, persona: Persona): Sc
     return { name: 'cockpit', view: known ? view : name === 'analysis' ? 'analysis' : 'budget' }
   }
 
+  /* Der Wizard direkt — für Demo und Videoaufnahme. */
+  if (name === 'budget') return { name: 'budgetWizard' }
+
   /* «subscriptions» bleibt gültig: der Bildschirm hiess mal «Meine Abos». */
   if (name === 'subscriptions' || name === 'recurring') return { name: 'recurring' }
 

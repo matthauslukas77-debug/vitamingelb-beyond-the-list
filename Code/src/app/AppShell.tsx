@@ -10,6 +10,7 @@ import { Invest } from './screens/Invest'
 import { Offers } from './screens/Offers'
 import { Payments } from './screens/Payments'
 import { Recurring } from './screens/Recurring'
+import { BudgetWizard } from '../insights/budget/screens/Wizard'
 import { Cockpit } from '../insights/screens/Cockpit'
 import { SeriesDetail } from '../insights/screens/SeriesDetail'
 import { TransactionDetail } from './screens/TransactionDetail'
@@ -71,6 +72,7 @@ function screenFor(screen: Screen) {
   switch (screen.name) {
     case 'account': return <AccountDetail accountId={screen.accountId} />
     case 'cockpit': return <Cockpit view={screen.view} />
+    case 'budgetWizard': return <BudgetWizard />
     case 'scan': return <Scan />
     case 'pay': return <Pay />
     case 'transfer': return <Transfer />

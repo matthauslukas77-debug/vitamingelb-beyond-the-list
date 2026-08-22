@@ -272,3 +272,419 @@
 
 .bud-src__q { display: grid; gap: 2px; }
 .bud-src__q strong { font-size: 14px; color: var(--text-strong); }
+
+/* ── Der Wizard ──────────────────────────────────────────────────────────── */
+
+.wz { display: flex; flex-direction: column; min-height: 100%; }
+
+/* Drei Striche wie im Zahlungsfluss — Vorlage IMG_5016. */
+.wz-steps {
+  display: flex;
+  gap: var(--s-2);
+  padding: 0 var(--s-5) var(--s-5);
+}
+
+.wz-steps__bar {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--line);
+  transition: background 200ms ease;
+}
+
+.wz-steps__bar.is-done { background: var(--action); }
+
+.wz-title {
+  margin: 0 0 var(--s-3);
+  font-size: 22px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.wz-lead {
+  margin: 0 0 var(--s-6);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.wz-card { padding: var(--s-6); }
+.wz-card + .wz-card { margin-top: var(--s-5); }
+
+.wz-q { display: block; font-size: 16px; font-weight: 700; color: var(--text-strong); }
+
+.wz-why {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+/* Auswahlknöpfe: umbrechend, damit «0 1 2 3 4 5» auch auf schmalen Geräten passt. */
+.wz-choice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+
+.wz-choice button {
+  flex: 1 1 auto;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: var(--CornerRadius-R-100);
+  border: 1px solid var(--line-strong);
+  font-size: 14px;
+  color: var(--text-body);
+  text-align: center;
+}
+
+.wz-choice button[aria-checked='true'] {
+  background: var(--action);
+  border-color: var(--action);
+  color: var(--action-ink);
+  font-weight: 700;
+}
+
+.wz-field { display: grid; gap: 6px; margin-top: var(--s-5); font-size: 14px; color: var(--text-body); }
+
+.wz-field input {
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--CornerRadius-R-8);
+  background: var(--surface-card);
+  color: var(--text-strong);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.wz-field__why { font-size: 12px; line-height: 1.4; color: var(--text-muted); }
+
+/* «Das wissen wir schon» — Wert links, Beleg darunter */
+
+.wz-known {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px var(--s-4);
+  padding: var(--s-4) 0;
+}
+
+.wz-known + .wz-known { border-top: 1px solid var(--line); }
+.wz-known:first-child { padding-top: 0; }
+
+.wz-known__label { font-size: 15px; color: var(--text-strong); }
+.wz-known__value { font-size: 15px; font-weight: 700; color: var(--text-strong); text-align: right; }
+
+.wz-known__why {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.wz-select {
+  height: 34px;
+  padding: 0 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--CornerRadius-R-8);
+  background: var(--surface-card);
+  color: var(--text-strong);
+  font: inherit;
+  font-size: 14px;
+}
+
+/* Weiter-Knopf */
+
+.wz-next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  width: 100%;
+  min-height: 52px;
+  margin: var(--s-8) 0 var(--s-6);
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--action);
+  color: var(--action-ink);
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.wz-next:active { transform: scale(0.99); }
+
+.wz-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: var(--s-5) 0 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── Der Regler ──────────────────────────────────────────────────────────── */
+
+.wz-fields { padding: var(--s-2) var(--s-5) var(--s-5); }
+
+.sld { padding: var(--s-4) 0; }
+.sld + .sld { border-top: 1px solid var(--line); }
+
+.sld__top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s-4); }
+.sld__main { min-width: 0; }
+.sld__label { display: block; font-size: 14px; color: var(--text-strong); }
+
+.sld__hint {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--text-muted);
+}
+
+.sld__value { display: flex; align-items: baseline; gap: 4px; flex: none; }
+.sld__cur { font-size: 11px; color: var(--text-muted); }
+
+/* Die Zahl ist ein Eingabefeld — sie sieht nur nicht danach aus, bis man sie
+   antippt. Wer die Miete kennt, tippt sie, statt sie zu suchen. */
+.sld__input {
+  width: 5.5em;
+  padding: 2px 4px;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: none;
+  color: var(--text-strong);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.sld__input:focus { outline: none; border-bottom-color: var(--action); }
+.sld--edited .sld__input { color: var(--petrol6); }
+
+.sld__track { position: relative; margin-top: var(--s-3); }
+
+/* Natives `range`, damit Tastatur und Vorlesehilfe von selbst stimmen. */
+.sld__range {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.sld__range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--surface-sunken);
+}
+
+.sld__range::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--surface-sunken);
+}
+
+.sld__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -9px;
+  border-radius: 50%;
+  border: 2px solid var(--surface-card);
+  background: var(--petrol7);
+  box-shadow: var(--shadow-card);
+}
+
+.sld__range::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--surface-card);
+  background: var(--petrol7);
+}
+
+.sld--edited .sld__range::-webkit-slider-thumb { background: var(--action); }
+.sld--edited .sld__range::-moz-range-thumb { background: var(--action); }
+
+/* Die Marke: was aus den Buchungen kam. */
+.sld__mark {
+  position: absolute;
+  top: 9px;
+  width: 2px;
+  height: 10px;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: var(--text-muted);
+  pointer-events: none;
+}
+
+.sld__reset {
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--petrol6);
+  text-decoration: underline;
+}
+
+/* ── Die Rechnung, die unten klebt ───────────────────────────────────────── */
+
+.balbar {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  padding: var(--s-4) var(--s-5) calc(var(--s-5) + env(safe-area-inset-bottom, 0px));
+  background: var(--surface-card);
+  border-top: 1px solid var(--line);
+  box-shadow: 0 -4px 16px rgba(0, 41, 46, 0.06);
+}
+
+.balbar__track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.balbar__fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--petrol6);
+  transition: width 90ms linear, background 200ms ease;
+}
+
+.balbar--negative .balbar__fill { background: var(--danger3); }
+
+.balbar__line {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin-top: var(--s-3);
+}
+
+.balbar__label { font-size: 14px; font-weight: 700; color: var(--text-strong); }
+.balbar__sub { display: block; margin-top: 2px; font-size: 11px; font-weight: 400; color: var(--text-muted); }
+.balbar__amount { font-size: 20px; font-weight: 700; color: var(--text-strong); white-space: nowrap; }
+.balbar__cur { font-size: 12px; font-weight: 400; color: var(--text-muted); }
+.balbar--negative .balbar__amount { color: var(--danger3); }
+
+/* ── Der Ausblick ────────────────────────────────────────────────────────── */
+
+.fc { display: block; width: 100%; height: auto; }
+.fc__zero { stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 3 3; }
+.fc__plan { stroke: var(--petrol7); stroke-width: 2.5; stroke-linecap: round; }
+.fc__actual { stroke: var(--petrol4); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 5 4; }
+.fc__dot { fill: var(--petrol7); }
+.fc__dot--plan { fill: var(--action); stroke: var(--petrol7); stroke-width: 1.5; }
+.fc__tick { font-size: 9px; fill: var(--text-muted); }
+
+.fc-legend { margin-top: var(--s-4); }
+
+.fc-legend__row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 4px 0;
+  font-size: 13px;
+  color: var(--text-body);
+}
+
+.fc-legend__dash { width: 18px; height: 2.5px; border-radius: 2px; flex: none; }
+.fc-legend__dash--plan { background: var(--petrol7); }
+.fc-legend__dash--actual { background: var(--petrol4); }
+.fc-legend__label { flex: 1; min-width: 0; }
+.fc-legend__value { font-weight: 700; color: var(--text-strong); }
+
+.wz-fine {
+  margin: var(--s-4) 0 0;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.wz-marks { display: flex; gap: var(--s-3); margin-top: var(--s-5); }
+
+.wz-mark {
+  flex: 1;
+  padding: var(--s-4);
+  border-radius: var(--CornerRadius-R-16);
+  background: var(--surface-sunken);
+  text-align: center;
+}
+
+.wz-mark__label { display: block; font-size: 11px; color: var(--text-muted); }
+.wz-mark__plan { display: block; margin-top: 4px; font-size: 15px; font-weight: 700; color: var(--text-strong); }
+.wz-mark__actual { display: block; margin-top: 2px; font-size: 10px; color: var(--text-muted); }
+
+.wz-warn {
+  display: flex;
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+  padding: var(--s-5);
+  border-radius: var(--CornerRadius-R-16);
+  background: var(--danger1);
+  color: var(--danger4);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.wz-over {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-3) 0;
+  font-size: 14px;
+  color: var(--text-strong);
+}
+
+.wz-over + .wz-over { border-top: 1px solid var(--line); }
+.wz-over .num { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
+
+.wz-next--save { background: var(--petrol8); color: var(--weiss); }
+
+/* ── Einstieg in den Wizard aus dem Cockpit ──────────────────────────────── */
+
+.bud-cta {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  width: 100%;
+  margin-top: var(--s-5);
+  padding: var(--s-5) var(--s-6);
+  border-radius: var(--CornerRadius-R-16);
+  background: var(--action);
+  color: var(--action-ink);
+}
+
+.bud-cta--quiet { background: var(--surface-card); color: var(--text-strong); box-shadow: var(--shadow-card); }
+.bud-cta:active { background: var(--surface-sunken); }
+.bud-cta__main { flex: 1; min-width: 0; }
+.bud-cta__title { display: block; font-size: 15px; font-weight: 700; }
+.bud-cta__sub { display: block; margin-top: 2px; font-size: 12px; line-height: 1.4; opacity: 0.75; }
+
+.bud-head__line--faint { font-size: 13px; color: var(--text-muted); }
+
+.bud-field__set {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 8px;
+  border-radius: var(--CornerRadius-R-100);
+  font-size: 11px;
+  background: var(--surface-sunken);
+  color: var(--petrol6);
+}
+
+.bud-field__was { display: block; margin-top: 2px; font-size: 10px; color: var(--text-muted); }
+
+/* Damit die Rechnung auch bei kurzem Inhalt unten sitzt und nicht direkt
+   unter dem letzten Absatz klebt. */
+.wz-sliders { flex: 1; }

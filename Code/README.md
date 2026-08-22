@@ -138,8 +138,8 @@ Zusätzlich `&tab=payments` für den Startreiter.
 
 Personas: `reto` · `nino` · `livia` · `bruno`.
 Reiter: `home` · `payments` · `invest` · `offers` · `services`.
-Bildschirme: `account` · `cockpit` · `income` · `expenses` · `recurring` · `scan` · `pay` ·
-`transfer` · `search` · `settings`.
+Bildschirme: `account` · `cockpit` · `budget` · `income` · `expenses` · `recurring` ·
+`scan` · `pay` · `transfer` · `search` · `settings`.
 Ansichten von `cockpit`: `budget` · `analysis` · `recurring`, über `&view=`.
 Abschnitte von `settings`: `profile` · `login` · `notifications` · `accounts` · `payments` ·
 `invest` · `orders` · `app` · `twint` — ohne `&section` öffnet die Übersicht.
@@ -303,7 +303,10 @@ Texte und Rechenlogik des Rechners, rekonstruiert aus seinem Angular-Bundle und 
 | `pf-reference.ts` | Der Richtwert für denselben Haushalt, aus `data/reference.json` (56 KB, nachgeladen) |
 | `benchmark.ts` | Die **einzige** Stelle, an der Rappen und Franken aufeinandertreffen |
 | `storage.ts` | Gespeichertes Budget je Persona, mit «von dir gesetzt»-Merkern |
+| `forecast.ts` | Zwei Geraden über fünf Jahre: was der Plan verspricht, was bisher wirklich gespart wurde |
 | `explain.ts` | Der Satz daneben — gerechnet, und wenn erreichbar von Apertus formuliert |
+| `screens/Wizard.tsx` | Der Wizard in drei Schritten: zwei Fragen → Regler → Ausblick |
+| `ui/Slider.tsx` | Betrag schieben oder tippen, mit der abgeleiteten Zahl als Marke |
 
 Zwei Dinge, die dabei nicht schiefgehen dürfen und deshalb Tests haben:
 
@@ -315,10 +318,31 @@ Zwei Dinge, die dabei nicht schiefgehen dürfen und deshalb Tests haben:
   Schlussrechnung ergäbe im Zwölfmonatsfenster CHF 1'883 pro Monat, im Fenster daneben
   CHF 0.
 
-Gemessen an den vier Personas: **93.6 – 97.8 %** der Ausgabenfranken sind sicher
-zugeordnet, **7 bis 14** der neunzehn Felder füllen sich von selbst. Der Rest ist zu vier
-Fünfteln Bargeld — und dafür gibt es keine Lösung ausser der Rückfrage. Sie steht als
-solche im Bildschirm.
+Gemessen an den vier Personas: **87 – 98 %** der Ausgabenfranken sind sicher zugeordnet,
+**7 bis 14** der neunzehn Felder füllen sich von selbst. Der Rest ist zu vier Fünfteln
+Bargeld — und dafür gibt es keine Lösung ausser der Rückfrage. Sie steht als solche im
+Bildschirm.
+
+#### Der Wizard
+
+Drei Schritte, erreichbar über das Cockpit oder `?screen=budget`:
+
+1. **Zwei Fragen** — Lebensform und Kinderzahl. Der öffentliche Rechner fragt sieben
+   Dinge; fünf davon stehen in den Buchungen oder im Profil. Was wir ableiten, steht
+   trotzdem da: unter «Das wissen wir schon», jede Zeile mit ihrem Beleg und jede Zeile
+   korrigierbar.
+2. **Das Budget** — sechs Kategorien, neunzehn Regler, alle schon gefüllt. Unten klebt
+   die Rechnung und läuft beim Schieben mit. Der Originalrechner braucht dafür einen
+   Server-Aufruf mit 300 ms Verzögerung (`SPEC.md`, 3.3); hier rechnet dieselbe Formel
+   lokal.
+3. **Der Ausblick** — zwei Geraden über fünf Jahre, ohne Zins. Die eine ist das
+   Versprechen des Budgets, die andere das gemessene Sparverhalten. Der Abstand
+   dazwischen ist die Aussage: Ein Überschuss von CHF 1'390 heisst nicht, dass 1'390
+   gespart werden.
+
+Eine von Hand gesetzte Zahl bleibt gesetzt. `refreshed()` liest im nächsten Monat die
+Ableitung neu ein und lässt genau die Felder stehen, die jemand angefasst hat — ein
+Budget, das die eigene Eingabe überschreibt, wird einmal benutzt und nie wieder.
 
 ### Die Trennlinie
 
@@ -372,9 +396,10 @@ Das Repository ist öffentlich. Die PNG-Grössen daneben sind daraus erzeugt.
 
 - Kein Login und keine Sicherheitsebene — die Persona-Auswahl ersetzt beides.
 - Scannen, Zahlen und Übertragen sind vollständig gestaltet, lösen aber nichts aus.
-- Das abgeleitete Budget ist noch nicht von Hand änderbar — Schieberegler und
-  Speichern kommen als eigener Schritt. Der Leerzustand des Nachbaus steht weiterhin
-  unter der Pille «Analyse».
+- Der Ausblick rechnet ohne Zins und ohne Teuerung. Eine angenommene Rendite würde nach
+  fünf Jahren mehr ausmachen als das Sparverhalten selbst.
+- Das Budget lebt im Browser (`localStorage`), nicht in der Datenbank. Für die Demo
+  genügt das; ein Gerätewechsel nimmt es nicht mit.
 - Kategorien sind fest am Datensatz hinterlegt statt automatisch erkannt.
 - Keine UI-Bibliothek und kein Diagrammpaket: Donut und Verlaufskurve sind von Hand
   gezeichnetes SVG, damit die Farben exakt den Tokens folgen. Laufzeitabhängigkeiten sind
