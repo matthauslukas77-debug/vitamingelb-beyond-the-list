@@ -43,7 +43,35 @@ function axisLabel(cents: number): string {
   return String(Math.round(francs))
 }
 
-export function BalanceChart({ timeline }: { timeline: BalanceTimeline }) {
+export type ChartTone = 'petrol' | 'hellblau'
+
+const TONES: Record<ChartTone, { line: string; ahead: string; fill: string }> = {
+  petrol: { line: 'var(--petrol8)', ahead: 'var(--petrol5)', fill: 'var(--petrol6)' },
+  hellblau: { line: 'var(--hellblau6)', ahead: 'var(--hellblau3)', fill: 'var(--hellblau4)' },
+}
+
+/**
+ * Kurze Rückmeldung beim Wechsel des Tages.
+ * Auf Android liefert das die Vibration API; iOS Safari kennt sie nicht —
+ * dort bleibt es wirkungslos, ohne dass etwas kaputtgeht.
+ */
+function tick() {
+  if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+    try { navigator.vibrate(8) } catch { /* nicht unterstützt */ }
+  }
+}
+
+export function BalanceChart({
+  timeline,
+  tone = 'petrol',
+  id,
+}: {
+  timeline: BalanceTimeline
+  tone?: ChartTone
+  /** Eindeutig je Karte — sonst teilen sich zwei Diagramme einen Verlauf. */
+  id: string
+}) {
+  const colors = TONES[tone]
   const { history, forecast, events, low, min, max } = timeline
   const svgRef = useRef<SVGSVGElement>(null)
   const [cursor, setCursor] = useState<number | null>(null)
@@ -96,7 +124,11 @@ export function BalanceChart({ timeline }: { timeline: BalanceTimeline }) {
     const viewX = ((clientX - rect.left) / rect.width) * W
     const ratio = (viewX - PAD_LEFT) / (W - PAD_LEFT)
     const index = Math.round(ratio * (geometry.all.length - 1))
-    setCursor(Math.max(0, Math.min(geometry.all.length - 1, index)))
+    const next = Math.max(0, Math.min(geometry.all.length - 1, index))
+    setCursor((previous) => {
+      if (previous !== next) tick()
+      return next
+    })
   }, [geometry])
 
   if (!geometry) return null
@@ -141,16 +173,23 @@ export function BalanceChart({ timeline }: { timeline: BalanceTimeline }) {
         onPointerMove={(e) => {
           if (e.buttons > 0 || e.pointerType === 'touch') locate(e.clientX)
         }}
-        onPointerUp={(e) => e.currentTarget.releasePointerCapture(e.pointerId)}
+        onPointerUp={(e) => {
+          e.currentTarget.releasePointerCapture(e.pointerId)
+          // Ohne Berührung verschwindet das Etikett wieder — es verdeckt sonst
+          // den Verlauf und wiederholt nur die Zahl aus der Kopfzeile.
+          setCursor(null)
+        }}
+        onPointerCancel={() => setCursor(null)}
+        onPointerLeave={() => setCursor(null)}
       >
         <defs>
-          <linearGradient id="bc-past" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--petrol6)" stopOpacity="0.30" />
-            <stop offset="100%" stopColor="var(--petrol6)" stopOpacity="0" />
+          <linearGradient id={`bc-past-${id}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={colors.fill} stopOpacity="0.30" />
+            <stop offset="100%" stopColor={colors.fill} stopOpacity="0" />
           </linearGradient>
-          <linearGradient id="bc-ahead" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="var(--petrol4)" stopOpacity="0.18" />
-            <stop offset="100%" stopColor="var(--petrol4)" stopOpacity="0" />
+          <linearGradient id={`bc-ahead-${id}`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={colors.ahead} stopOpacity="0.18" />
+            <stop offset="100%" stopColor={colors.ahead} stopOpacity="0" />
           </linearGradient>
         </defs>
 
@@ -177,11 +216,11 @@ export function BalanceChart({ timeline }: { timeline: BalanceTimeline }) {
           </text>
         ))}
 
-        <path d={areaPath(past, baseline)} fill="url(#bc-past)" />
-        <path d={areaPath(ahead, baseline)} fill="url(#bc-ahead)" />
-        <path d={smoothPath(past)} fill="none" stroke="var(--petrol8)" strokeWidth="2.2"
+        <path d={areaPath(past, baseline)} fill={`url(#bc-past-${id})`} />
+        <path d={areaPath(ahead, baseline)} fill={`url(#bc-ahead-${id})`} />
+        <path d={smoothPath(past)} fill="none" stroke={colors.line} strokeWidth="2.2"
               strokeLinecap="round" strokeLinejoin="round" />
-        <path d={smoothPath(ahead)} fill="none" stroke="var(--petrol5)" strokeWidth="2"
+        <path d={smoothPath(ahead)} fill="none" stroke={colors.ahead} strokeWidth="2"
               strokeDasharray="5 4" strokeLinecap="round" strokeLinejoin="round" />
 
         {/* Gegenwart */}
@@ -204,27 +243,36 @@ export function BalanceChart({ timeline }: { timeline: BalanceTimeline }) {
                   fill={lowCritical ? 'var(--danger3)' : 'var(--petrol8)'} />
         )}
 
-        {/* Abtaststelle */}
-        <line x1={activeX} y1={PAD_TOP - 8} x2={activeX} y2={baseline}
-              stroke="var(--petrol8)" strokeWidth="1" strokeDasharray="2 3" />
-        <circle cx={activeX} cy={activeY} r="5.5" fill="var(--surface-card)"
-                stroke={isForecast ? 'var(--petrol5)' : 'var(--petrol8)'} strokeWidth="2.4" />
+        {/* Abtaststelle — nur während der Berührung */}
+        {cursor !== null && (
+          <>
+            <line x1={activeX} y1={PAD_TOP - 8} x2={activeX} y2={baseline}
+                  stroke={colors.line} strokeWidth="1" strokeDasharray="2 3" />
+            <circle cx={activeX} cy={activeY} r="5.5" fill="var(--surface-card)"
+                    stroke={isForecast ? colors.ahead : colors.line} strokeWidth="2.4" />
+          </>
+        )}
+        {/* Heute bleibt immer markiert */}
+        <circle cx={x(todayIndex)} cy={y(all[todayIndex].balance)} r="4"
+                fill="var(--surface-card)" stroke={colors.line} strokeWidth="2.2" />
       </svg>
 
-      <div
-        className="chart__tip"
-        style={{
-          left: `${labelLeft}%`,
-          top: `${labelTop}%`,
-          translate: above ? '-50% -100%' : '-50% 0',
-        }}
-      >
-        <span className="chart__tip-value num">{formatAmount(active.balance)}</span>
-        <span className="chart__tip-date">
-          {activeDate.getDate()}. {MONTHS[activeDate.getMonth()]}
-          {isForecast && ' · erwartet'}
-        </span>
-      </div>
+      {cursor !== null && (
+        <div
+          className="chart__tip"
+          style={{
+            left: `${labelLeft}%`,
+            top: `${labelTop}%`,
+            translate: above ? '-50% -100%' : '-50% 0',
+          }}
+        >
+          <span className="chart__tip-value num">{formatAmount(active.balance)}</span>
+          <span className="chart__tip-date">
+            {activeDate.getDate()}. {MONTHS[activeDate.getMonth()]}
+            {isForecast && ' · erwartet'}
+          </span>
+        </div>
+      )}
     </div>
   )
 }

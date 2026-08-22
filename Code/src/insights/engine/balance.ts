@@ -136,6 +136,26 @@ export function forecastHorizon(todayIso: string): string {
   return `${end.getFullYear()}-${m}-${String(end.getDate()).padStart(2, '0')}`
 }
 
+/**
+ * Konten ohne eigene Buchungen aus den Gegenbuchungen ableiten.
+ *
+ * Ein Sparkonto hat im Datenbestand keine eigenen Zeilen — die Bewegung steht
+ * als «UEBERTRAG AUF SPARKONTO» im Privatkonto und trägt dort das Gegenkonto.
+ * Aus demselben Vorgang, umgekehrt vorzeichenbehaftet, entsteht der Verlauf
+ * des Sparkontos. Erfunden wird dabei nichts.
+ */
+export function mirrored(accountId: string, all: Transaction[]): Transaction[] {
+  return all
+    .filter((tx) => tx.counterAccountId === accountId)
+    .map((tx) => ({
+      ...tx,
+      id: `${tx.id}-gegen`,
+      accountId,
+      amount: -tx.amount,
+      counterAccountId: tx.accountId,
+    }))
+}
+
 export interface TimelineOptions {
   account: Account
   transactions: Transaction[]
@@ -153,7 +173,8 @@ export function buildTimeline({
   today,
   historyDays = 90,
 }: TimelineOptions): BalanceTimeline {
-  const own = transactions.filter((tx) => tx.accountId === account.id)
+  const direct = transactions.filter((tx) => tx.accountId === account.id)
+  const own = direct.length > 0 ? direct : mirrored(account.id, transactions)
   const from = addDays(today, -historyDays)
   const until = forecastHorizon(today)
 
@@ -186,7 +207,7 @@ export function buildTimeline({
     paymentsBeforeIncome,
     // Ein Sparkonto ohne Bewegung ergibt eine gerade Linie. Dafür braucht es
     // keine Kurve — dann bleibt die schlichte Zeile stehen.
-    hasMovement: own.length >= 5 && max - min > 5_000,
+    hasMovement: own.length >= 4 && max - min > 5_000,
     min,
     max,
   }

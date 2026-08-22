@@ -570,6 +570,12 @@ button.row:active { background: var(--tap); }
 
 /* ── Kontokarte mit Verlauf und Prognose (insights) ────────────────────── */
 
+/* Abstand zwischen den Kontokarten — vorher klebte das Sparkonto am
+   Privatkonto. Gilt für beide Fassungen, Karte wie schlichte Zeile. */
+.balance-card + .balance-card,
+.balance-card + .card,
+.card + .balance-card { margin-top: var(--s-6); }
+
 .balance-card {
   padding: var(--s-5) var(--s-4) var(--s-4);
   border-radius: var(--CornerRadius-R-28);
@@ -618,6 +624,25 @@ button.row:active { background: var(--tap); }
 
 /* Liquidität: zwei Angaben nebeneinander statt untereinander — kompakter
    und direkt vergleichbar. */
+/* Zeitfenster des Verlaufs. Dieselbe Chip-Reihe wie auf dem Krypto-Bildschirm
+   der echten App. */
+.ranges {
+  display: flex;
+  justify-content: center;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+
+.ranges__chip {
+  padding: 5px var(--s-4);
+  border-radius: var(--CornerRadius-R-100);
+  font-size: 12px;
+  color: var(--text-muted);
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.ranges__chip.is-active { background: var(--surface-sunken); color: var(--text-strong); font-weight: 700; }
+
 .liquidity {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -782,3 +807,7 @@ button.row:active { background: var(--tap); }
 /* Buchungszeilen sind anklickbar. */
 button.tx { transition: background 120ms ease; border-radius: var(--CornerRadius-R-8); }
 button.tx:active { background: var(--tap); }
+
+/* Jede Kontokarte auf Home bekommt denselben Abstand, unabhängig davon,
+   ob sie als Verlaufskarte oder als schlichte Zeile erscheint. */
+.account-slot + .account-slot { margin-top: var(--s-6); }

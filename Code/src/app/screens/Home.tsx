@@ -35,8 +35,8 @@ export function Home() {
               value={index === 0 ? formatMoney(totalChf, 'CHF') : undefined}
             />
             {group.accounts.map((account) => (
+              <div className="account-slot" key={account.id}>
               <Slot
-                key={account.id}
                 name="home.accountRow"
                 account={account}
                 onOpen={() => push({ name: 'account', accountId: account.id })}
@@ -54,6 +54,7 @@ export function Home() {
                   </Card>
                 }
               />
+              </div>
             ))}
           </div>
         ))}
