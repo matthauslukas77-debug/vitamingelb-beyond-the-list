@@ -128,13 +128,19 @@ export function WizardForecast({
         </p>
       </section>
 
+      {/* Zeilen statt drei Spalten nebeneinander. Brunos Fünfjahreswert ist
+          «292'806.80», daneben «bisher 189'800.00» — nebeneinander passt das
+          auf keinem Telefon, und drei Zellen, die nicht schrumpfen dürfen,
+          schieben den ganzen Bildschirm zur Seite. */}
       <div className="wz-marks">
         {marks.map((mark) => (
           <div className="wz-mark" key={mark.months}>
             <span className="wz-mark__label">{mark.label}</span>
-            <span className="wz-mark__plan num">{formatAmount(mark.plan, { sign: false })}</span>
-            <span className="wz-mark__actual num">
-              bisher: {formatAmount(mark.actual, { sign: false })}
+            <span className="wz-mark__values">
+              <span className="wz-mark__plan num">{formatAmount(mark.plan, { sign: false })}</span>
+              <span className="wz-mark__actual num">
+                bisher {formatAmount(mark.actual, { sign: false })}
+              </span>
             </span>
           </div>
         ))}

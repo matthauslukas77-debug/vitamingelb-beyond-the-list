@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
    Haus aus, und die App braucht dafür keine Node-Typen. */
 import budgetCss from '../budget.css?raw'
 import signalsCss from '../../screens/signals.css?raw'
+import shellCss from '../../../app/shell/shell.css?raw'
 
 /**
  * Wache über die Stilvorlagen unserer Schicht.
@@ -36,11 +37,34 @@ describe.each(files)('%s', (_name, css) => {
     expect(doubled.map(([title]) => title), 'doppelte Abschnitte').toEqual([])
   })
 
+  it('gibt jedem dehnbaren Kind ein `min-width`', () => {
+    /* Die häufigste Ursache für seitliches Scrollen in einer App: Ein
+       Flex-Kind mit `flex: 1` darf ohne `min-width: 0` nicht unter seine
+       Inhaltsbreite schrumpfen. Eine einzige Zelle mit «bisher 189'800.00»
+       schiebt so den ganzen Bildschirm zur Seite — genau das ist im Ausblick
+       passiert. Die Regel gilt ohne Ausnahme; auf einem Element ohne Inhalt
+       kostet sie nichts. */
+    const bare = css.replace(/\/\*[\s\S]*?\*\//g, '')
+    const offenders = [...bare.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+      .filter(([, , body]) => /(^|[;\s])flex\s*:\s*1\b/.test(body) && !/min-width\s*:/.test(body))
+      .map(([, selector]) => selector.trim())
+    expect(offenders, 'flex: 1 ohne min-width').toEqual([])
+  })
+
   it('enthält keine Farbwerte ausserhalb der Tokens', () => {
     /* Erlaubt bleiben rgba() für Schatten und Schleier — dafür gibt es keine
        Tokens, und sie hängen an der Deckkraft, nicht an der Marke. */
     const hex = css.replace(/\/\*[\s\S]*?\*\//g, '').match(/#[0-9a-fA-F]{3,8}\b/g) ?? []
     expect(hex, 'Hexfarben gehören nach theme/tokens.css').toEqual([])
+  })
+})
+
+describe('Die Hülle scrollt nicht zur Seite', () => {
+  it('klemmt die Querachse in der Scrollfläche ab', () => {
+    /* Die Zusage der Hülle. Ein zu breiter Inhalt bleibt ein Fehler und wird
+       dort behoben — aber er darf nie dazu führen, dass man den halben
+       Bildschirm wegwischen kann. */
+    expect(shellCss).toMatch(/\.screen\s*\{[^}]*overflow-x:\s*hidden/)
   })
 })
 

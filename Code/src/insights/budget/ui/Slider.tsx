@@ -35,9 +35,6 @@ export interface SliderProps {
   onReset?: () => void
 }
 
-/** Zehnerschritte. Rappengenau zu schieben wäre Präzision ohne Bedeutung. */
-const STEP = toRappen(10)
-
 export function Slider({
   label,
   value,
@@ -60,9 +57,13 @@ export function Slider({
   const francs = toFrancs(value)
   const markLeft = suggestion !== undefined && max > 0 ? Math.min(100, (suggestion / max) * 100) : null
 
+  /* Getippte Beträge werden auf dieselbe Obergrenze begrenzt wie der Regler.
+     Sonst stünde im Feld eine Zahl, die der Daumen daneben nicht erreicht —
+     und die Summe unten würde etwas anderes zeigen als die Schiene. */
   function commit(raw: string) {
-    const cleaned = raw.replace(/[^\d]/g, '')
-    onChange(cleaned === '' ? 0 : toRappen(Number(cleaned)))
+    const cleaned = raw.replace(/[^\d]/g, '').slice(0, 7)
+    const rappen = cleaned === '' ? 0 : toRappen(Number(cleaned))
+    onChange(Math.min(rappen, max))
   }
 
   return (
@@ -96,11 +97,12 @@ export function Slider({
           className="sld__range"
           type="range"
           min={0}
-          max={Math.max(max, STEP)}
-          step={STEP}
+          max={max}
+          step={sliderStep(max)}
           value={Math.min(value, max)}
           aria-label={label}
-          onChange={(event) => onChange(Number(event.target.value))}
+          aria-valuetext={`${toFrancs(value).toLocaleString('de-CH')} Franken`}
+          onChange={(event) => onChange(Math.min(Number(event.target.value), max))}
         />
         {/* Die Marke zeigt, was aus den Buchungen kam. Wer weit davon
             wegschiebt, sieht es, statt es zu erraten. */}
@@ -117,14 +119,39 @@ export function Slider({
 }
 
 /**
- * Die Obergrenze der Schiene: doppelt so viel wie abgeleitet, mindestens 500.
+ * Die Obergrenze der Schiene — **unabhängig vom aktuellen Wert**.
  *
- * Doppelt, damit oben Luft bleibt, ohne dass der abgeleitete Wert in der Mitte
- * verschwindet. Der Mindestwert fängt die leeren Felder ab — bei einem
- * Vorschlag von 0 wäre die Schiene sonst 0 Franken breit und nicht bedienbar.
- * Aufgerundet auf glatte Hunderter, damit sie nicht bei 1'347 endet.
+ * Genau daran ist die erste Fassung gescheitert: Sie rechnete die Grenze aus
+ * `max(Vorschlag, aktueller Wert)`. Wer den Regler ans Ende zog, verdoppelte
+ * damit die Grenze, konnte erneut ans Ende ziehen und wieder verdoppeln. Nach
+ * acht Zügen stand ein Steuerbudget von CHF 1'154 bei CHF 307'200. Eine
+ * Obergrenze, die auf ihren eigenen Wert reagiert, ist keine.
+ *
+ * Sie kommt jetzt aus zwei festen Grössen:
+ *
+ *   · dem **Vierfachen des abgeleiteten Werts** — genug Luft, um eine Kategorie
+ *     zu vervielfachen, ohne dass der abgeleitete Wert am linken Rand klebt;
+ *   · einem **Viertel des Monatseinkommens** als Boden, damit auch ein Feld
+ *     ohne Vorschlag bedienbar ist. Wer nie Miete gezahlt hat, soll trotzdem
+ *     eine eintragen können.
+ *
+ * Aufgerundet auf glatte Hunderter, damit die Schiene nicht bei 1'347 endet.
  */
-export function sliderMax(suggestion: number): number {
-  const raw = Math.max(suggestion * 2, toRappen(500))
+export function sliderMax(suggestion: number, incomeMonth: number): number {
+  const raw = Math.max(suggestion * 4, incomeMonth * 0.25, toRappen(1000))
   return toRappen(Math.ceil(toFrancs(raw) / 100) * 100)
+}
+
+/**
+ * Die Schrittweite, passend zur Länge der Schiene.
+ *
+ * Zehnerschritte auf einer kurzen Schiene sind fein genug; auf einer langen
+ * wären es tausend Rasten, zwischen denen der Daumen nichts mehr trifft. Ziel
+ * sind rund zweihundert Stufen — genug für flüssiges Ziehen, wenig genug für
+ * runde Zahlen.
+ */
+export function sliderStep(max: number): number {
+  const target = toFrancs(max) / 200
+  const sizes = [10, 20, 50, 100, 200, 500]
+  return toRappen(sizes.find((size) => size >= target) ?? 1000)
 }

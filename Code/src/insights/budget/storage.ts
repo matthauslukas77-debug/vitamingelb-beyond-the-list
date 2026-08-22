@@ -1,5 +1,5 @@
-import { DEFAULT_ANSWERS, type Answers } from './benchmark'
-import { Display } from './pf-model'
+import { DEFAULT_ANSWERS, toRappen, type Answers } from './benchmark'
+import { Display, MAX_AMOUNT_MONTH } from './pf-model'
 import { allSlots, slotKey } from './slots'
 import type { DerivedBudget } from './derive'
 
@@ -92,9 +92,16 @@ export function amountOf(budget: SavedBudget, key: string): number {
   return budget.amounts[key] ?? 0
 }
 
-/** Setzt ein Feld und merkt sich, dass es von Hand kommt. */
+/**
+ * Setzt ein Feld und merkt sich, dass es von Hand kommt.
+ *
+ * Die Obergrenze ist die des Originals (`MAX_AMOUNT_MONTH`, CHF 5 Mio.) und
+ * hier nur ein Netz: Der Regler begrenzt längst enger. Sie steht trotzdem
+ * da, weil ein gespeicherter Unsinn jede spätere Summe verdirbt und niemand
+ * mehr weiss, woher er kam.
+ */
 export function withAmount(budget: SavedBudget, key: string, monthlyRappen: number, savedAt: string): SavedBudget {
-  const clamped = Math.max(0, Math.round(monthlyRappen))
+  const clamped = Math.min(Math.max(0, Math.round(monthlyRappen)), toRappen(MAX_AMOUNT_MONTH))
   return {
     ...budget,
     amounts: { ...budget.amounts, [key]: clamped },

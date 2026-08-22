@@ -159,6 +159,12 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  /* Eine App scrollt nicht zur Seite. Das ist kein Kaschieren, sondern die
+     Zusage der Hülle: Was zu breit ist, ist ein Fehler im Inhalt und wird dort
+     behoben — aber es darf nie dazu führen, dass man den halben Bildschirm
+     wegwischen kann. Ohne diese Zeile genügt eine einzige nicht schrumpfbare
+     Zelle, um den ganzen Bildschirm verschiebbar zu machen. */
+  overflow-x: hidden;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
 }

@@ -30,6 +30,7 @@
 
 .cockpit__pill {
   flex: 1;
+  min-width: 0;
   height: 38px;
   border-radius: var(--CornerRadius-R-100);
   font-size: 14px;
@@ -289,6 +290,7 @@
 
 .wz-steps__bar {
   flex: 1;
+  min-width: 0;
   height: 3px;
   border-radius: 2px;
   background: var(--line);
@@ -483,10 +485,14 @@
   appearance: none;
   display: block;
   width: 100%;
-  height: 28px;
+  height: 34px;
   margin: 0;
   background: none;
   cursor: pointer;
+  /* Der Regler nimmt die Waagrechte, die Seite behält die Senkrechte. Ohne
+     das fängt der Daumen beim Ziehen mal den Wert und mal die Scrollfläche,
+     je nachdem, wie schräg die Bewegung anfängt. */
+  touch-action: pan-y;
 }
 
 .sld__range::-webkit-slider-runnable-track {
@@ -504,9 +510,11 @@
 .sld__range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 22px;
-  height: 22px;
-  margin-top: -9px;
+  /* 26 px statt 22: Der Griff ist die Trefferfläche, und ein Daumen ist
+     breiter als ein Mauszeiger. */
+  width: 26px;
+  height: 26px;
+  margin-top: -11px;
   border-radius: 50%;
   border: 2px solid var(--surface-card);
   background: var(--petrol7);
@@ -514,8 +522,8 @@
 }
 
 .sld__range::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   border: 2px solid var(--surface-card);
   background: var(--petrol7);
@@ -527,7 +535,7 @@
 /* Die Marke: was aus den Buchungen kam. */
 .sld__mark {
   position: absolute;
-  top: 9px;
+  top: 12px;
   width: 2px;
   height: 10px;
   margin-left: -1px;
@@ -579,7 +587,7 @@
   margin-top: var(--s-3);
 }
 
-.balbar__label { font-size: 14px; font-weight: 700; color: var(--text-strong); }
+.balbar__label { flex: 1; min-width: 0; font-size: 14px; font-weight: 700; color: var(--text-strong); }
 .balbar__sub { display: block; margin-top: 2px; font-size: 11px; font-weight: 400; color: var(--text-muted); }
 .balbar__amount { font-size: 20px; font-weight: 700; color: var(--text-strong); white-space: nowrap; }
 .balbar__cur { font-size: 12px; font-weight: 400; color: var(--text-muted); }
@@ -619,19 +627,27 @@
   color: var(--text-muted);
 }
 
-.wz-marks { display: flex; gap: var(--s-3); margin-top: var(--s-5); }
-
-.wz-mark {
-  flex: 1;
-  padding: var(--s-4);
+.wz-marks {
+  margin-top: var(--s-5);
+  padding: var(--s-2) var(--s-5);
   border-radius: var(--CornerRadius-R-16);
   background: var(--surface-sunken);
-  text-align: center;
 }
 
-.wz-mark__label { display: block; font-size: 11px; color: var(--text-muted); }
-.wz-mark__plan { display: block; margin-top: 4px; font-size: 15px; font-weight: 700; color: var(--text-strong); }
-.wz-mark__actual { display: block; margin-top: 2px; font-size: 10px; color: var(--text-muted); }
+.wz-mark {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-4) 0;
+}
+
+.wz-mark + .wz-mark { border-top: 1px solid var(--line); }
+
+.wz-mark__label { flex: 1; min-width: 0; font-size: 13px; color: var(--text-body); }
+.wz-mark__values { text-align: right; }
+.wz-mark__plan { display: block; font-size: 16px; font-weight: 700; color: var(--text-strong); }
+.wz-mark__actual { display: block; margin-top: 2px; font-size: 11px; color: var(--text-muted); }
 
 .wz-warn {
   display: flex;
@@ -650,12 +666,14 @@
   align-items: baseline;
   justify-content: space-between;
   gap: var(--s-4);
+  min-width: 0;
   padding: var(--s-3) 0;
   font-size: 14px;
   color: var(--text-strong);
 }
 
 .wz-over + .wz-over { border-top: 1px solid var(--line); }
+.wz-over > span:first-child { flex: 1; min-width: 0; }
 .wz-over .num { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
 
 .wz-next--save { background: var(--petrol8); color: var(--weiss); }
@@ -696,7 +714,7 @@
 
 /* Damit die Rechnung auch bei kurzem Inhalt unten sitzt und nicht direkt
    unter dem letzten Absatz klebt. */
-.wz-sliders { flex: 1; }
+.wz-sliders { flex: 1; min-width: 0; }
 
 /* ── Die Blasen ──────────────────────────────────────────────────────────
    Vorlage: `circles_vorschlag bubbles screens/states_sheet.png`.
@@ -840,6 +858,7 @@
 
 .bud-month__total {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: center;
   gap: 6px;

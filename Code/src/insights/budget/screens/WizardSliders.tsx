@@ -113,7 +113,7 @@ export function WizardSliders({
                           label={fieldLabel(evidence.slot)}
                           hint={hintFor(evidence, derived.months)}
                           value={amountOf(budget, key)}
-                          max={sliderMax(Math.max(evidence.monthly, amountOf(budget, key)))}
+                          max={sliderMax(evidence.monthly, derived.incomeMonth)}
                           suggestion={evidence.monthly}
                           edited={budget.edited.includes(key)}
                           onChange={(rappen) => onChange(withAmount(budget, key, rappen, TODAY))}

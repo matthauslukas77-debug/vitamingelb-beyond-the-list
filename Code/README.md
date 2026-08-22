@@ -445,6 +445,13 @@ Drei Schritte, erreichbar über das Cockpit oder `?screen=budget`:
    die Rechnung und läuft beim Schieben mit. Der Originalrechner braucht dafür einen
    Server-Aufruf mit 300 ms Verzögerung (`SPEC.md`, 3.3); hier rechnet dieselbe Formel
    lokal.
+
+   Die Obergrenze eines Reglers hängt **nicht** am aktuellen Wert, sondern am
+   abgeleiteten Betrag und am Einkommen (`sliderMax()`). Das klingt selbstverständlich,
+   war es aber nicht: Die erste Fassung rechnete sie aus `max(Vorschlag, Wert)` — wer ans
+   Ende zog, verdoppelte damit die Grenze und konnte erneut ziehen. Nach acht Zügen stand
+   ein Steuerbudget von CHF 1'154 bei CHF 307'200. Die Schrittweite wächst mit der
+   Schiene, damit immer rund zweihundert Rasten übrigbleiben.
 3. **Der Ausblick** — zwei Geraden über fünf Jahre, ohne Zins. Die eine ist das
    Versprechen des Budgets, die andere das gemessene Sparverhalten. Der Abstand
    dazwischen ist die Aussage: Ein Überschuss von CHF 1'390 heisst nicht, dass 1'390
@@ -453,6 +460,24 @@ Drei Schritte, erreichbar über das Cockpit oder `?screen=budget`:
 Eine von Hand gesetzte Zahl bleibt gesetzt. `refreshed()` liest im nächsten Monat die
 Ableitung neu ein und lässt genau die Felder stehen, die jemand angefasst hat — ein
 Budget, das die eigene Eingabe überschreibt, wird einmal benutzt und nie wieder.
+
+### Kein seitliches Scrollen
+
+Eine App scrollt nicht zur Seite. `.screen` klemmt die Querachse deshalb ab — nicht um
+einen Fehler zu verstecken, sondern als Zusage der Hülle: Zu breiter Inhalt bleibt ein
+Fehler und wird dort behoben, aber er darf nie dazu führen, dass man den halben
+Bildschirm wegwischen kann.
+
+Die Ursache ist fast immer dieselbe und wird deshalb geprüft
+([`stylesheet.test.ts`](src/insights/budget/__tests__/stylesheet.test.ts)): **Ein
+Flex-Kind mit `flex: 1` braucht `min-width: 0`**, sonst kann es nicht unter seine
+Inhaltsbreite schrumpfen. Im Ausblick standen drei solche Zellen nebeneinander, eine
+davon mit «bisher 189'800.00» — das genügte, um den ganzen Bildschirm verschiebbar zu
+machen. Sie sind jetzt Zeilen.
+
+Dieselbe Datei hält noch drei andere Zusagen fest, weil CSS für Typprüfung und Tests
+unsichtbar ist: jeder Abschnitt genau einmal, keine Hexfarbe ausserhalb der Tokens, und
+die Füllung der Blase an genau einer Stelle.
 
 ### Die Trennlinie
 
