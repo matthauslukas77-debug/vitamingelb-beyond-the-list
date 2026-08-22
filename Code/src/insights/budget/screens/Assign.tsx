@@ -147,10 +147,6 @@ export function Assign() {
   /** Antwort auf einen Tipp ins Leere. */
   const [hint, setHint] = useState<string | null>(null)
 
-  /* Rechtecke der sechs Töpfe, einmal beim Anfassen gemessen. Bei jedem
-     Pointer-Ereignis neu zu messen, hiesse das Layout sechzigmal pro Sekunde
-     zu erzwingen — und das Brett bewegt sich während des Zugs ohnehin nicht. */
-  const tiles = useRef(new Map<CategoryKey, DOMRect>())
   const start = useRef({ x: 0, y: 0 })
   const moved = useRef(false)
 
@@ -197,24 +193,26 @@ export function Assign() {
 
   // ── Ziehen ───────────────────────────────────────────────────────────────
 
-  function measureTiles() {
-    tiles.current.clear()
-    for (const category of CATEGORIES) {
-      const node = document.querySelector(`[data-drop="${category.key}"]`)
-      if (node) tiles.current.set(category.key, node.getBoundingClientRect())
-    }
-  }
-
+  /**
+   * Welcher Topf unter dem Finger liegt.
+   *
+   * Gefragt wird der Browser, nicht ein gemerktes Rechteck. Die erste Fassung
+   * mass die sechs Kacheln einmal beim Anfassen — das ist schneller, aber es
+   * stimmt nur, solange sich nichts bewegt. Genau das trifft nicht zu: Das
+   * Brett gleitet beim Öffnen herein, und die Rücknahme unten ändert nach dem
+   * ersten Zug die Höhe. Gemerkte Rechtecke gehen dann ins Leere, und der
+   * Nutzer sieht bloss, dass sein Zug nicht ankam.
+   *
+   * Der Geist am Finger hat `pointer-events: none`, sonst träfe die Prüfung
+   * immer ihn.
+   */
   function overAt(x: number, y: number): CategoryKey | null {
-    for (const [key, rect] of tiles.current) {
-      if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) return key
-    }
-    return null
+    const hit = document.elementFromPoint(x, y)?.closest('[data-drop]')
+    return (hit?.getAttribute('data-drop') as CategoryKey | undefined) ?? null
   }
 
   function onPointerDown(event: React.PointerEvent, group: AssignGroup) {
     event.currentTarget.setPointerCapture(event.pointerId)
-    measureTiles()
     start.current = { x: event.clientX, y: event.clientY }
     moved.current = false
     setDrag({ key: group.key, x: event.clientX, y: event.clientY, over: null })
