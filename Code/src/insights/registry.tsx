@@ -1,7 +1,9 @@
 import type { ComponentType, ReactNode } from 'react'
 import type { Account } from '../data/types'
+import type { RecurringSeries } from '../domain/recurring'
 import type { useSession } from '../app/session'
 import { AccountBalanceCard } from './cards/AccountBalanceCard'
+import { RecurringSummaryCard } from './cards/RecurringSummaryCard'
 import { TODAY } from '../data/types'
 import { buildTimeline } from './engine/balance'
 
@@ -27,6 +29,7 @@ export type SlotName =
   | 'analysis.aboveDonut'
   | 'analysis.belowLegend'
   | 'payments.top'
+  | 'recurring.summary'
 
 export type SlotProps = {
   session: ReturnType<typeof useSession>
@@ -34,6 +37,8 @@ export type SlotProps = {
   fallback?: ReactNode
   /** Nur bei `home.accountRow` gesetzt. */
   account?: Account
+  /** Nur bei `recurring.summary` gesetzt — vom Nachbau schon erkannt. */
+  series?: RecurringSeries[]
   onOpen?: () => void
 }
 
@@ -65,4 +70,8 @@ export const SLOT_CONTENT: Record<SlotName, SlotComponent[]> = {
   'analysis.aboveDonut': [],
   'analysis.belowLegend': [],
   'payments.top': [],
+  /* Der Kopf über den wiederkehrenden Buchungen: Anteil statt nur Summe, ein
+     Befund statt eines Absatzes, Herkunft hinter dem ⓘ. Ohne diesen Eintrag
+     zeigt der Nachbau seine schlichten drei Zahlen. */
+  'recurring.summary': [RecurringSummaryCard],
 }

@@ -2,7 +2,8 @@
 
 Nachbau der PostFinance-App (v6) als Web-App, plus eine klar abgetrennte Schicht für
 unsere eigenen Funktionen. Stand: **der Nachbau läuft; aus unserer Schicht sind der
-Kontostand-Verlauf mit Prognose (Slot `home.accountRow`), die Abo-Detailseite und das
+Kontostand-Verlauf mit Prognose (Slot `home.accountRow`), der Kopf über den
+wiederkehrenden Buchungen (Slot `recurring.summary`), die Abo-Detailseite und das
 Cockpit mit dem abgeleiteten Budget aktiv.** Die übrigen Slots sind leer — dort zeigt der
 Prototyp weiterhin exakt den Ist-Zustand.
 
@@ -491,7 +492,7 @@ rendern die Bildschirme einen benannten Slot:
 Ein Slot bekommt mit `fallback` mitgeliefert, was der Nachbau an dieser Stelle selbst
 rendern würde. Ist in `src/insights/registry.tsx` für diesen Slot nichts registriert — oder
 gibt die eingehängte Komponente den `fallback` zurück, weil es nichts zu zeigen gibt —
-erscheint genau der Ist-Zustand. Aktuell belegt ist nur `home.accountRow`.
+erscheint genau der Ist-Zustand. Belegt sind `home.accountRow` und `recurring.summary`.
 Eine neue Funktion einhängen:
 
 1. Komponente in `src/insights/cards/` schreiben

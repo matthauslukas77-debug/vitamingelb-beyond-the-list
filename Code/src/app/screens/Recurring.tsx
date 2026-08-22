@@ -7,6 +7,7 @@ import { formatDate } from '../../lib/date'
 import { useSession } from '../session'
 import { Icon, type IconName } from '../shell/Icon'
 import { Sheet } from '../shell/Sheet'
+import { Slot } from '../shell/Slot'
 
 /**
  * Wiederkehrende Buchungen — alles, was regelmässig kommt oder geht.
@@ -163,6 +164,53 @@ function SeriesRow({ series, onOpen }: { series: RecurringSeries; onOpen: () => 
 }
 
 /**
+ * Der schlichte Kopf: drei Zahlen, keine Deutung.
+ *
+ * Das ist, was der Nachbau an dieser Stelle zeigt — und der `fallback` des
+ * Slots darunter. Unsere Fassung (Anteil am regelmässigen Eingang, ein
+ * Befund, Herkunft hinter dem ⓘ) liegt in
+ * `src/insights/cards/RecurringSummaryCard.tsx`.
+ */
+function SummaryHead({ series }: { series: RecurringSeries[] }) {
+  const next30 = upcoming(series, TODAY, 30)
+  const monthlyOut = series
+    .filter((entry) => entry.monthlyAmount < 0)
+    .reduce((total, entry) => total + entry.monthlyAmount, 0)
+  const monthlyIn = series
+    .filter((entry) => entry.monthlyAmount > 0)
+    .reduce((total, entry) => total + entry.monthlyAmount, 0)
+
+  return (
+    <section className="card">
+      <div className="card__body" style={{ paddingTop: 'var(--s-6)' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12 }}>
+          <span style={{ fontSize: 15, color: 'var(--text-body)' }}>Fix pro Monat</span>
+          <span className="num" style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-strong)' }}>
+            {formatAmount(monthlyOut)}
+          </span>
+        </div>
+        {monthlyIn > 0 && (
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, marginTop: 10 }}>
+            <span style={{ fontSize: 15, color: 'var(--text-body)' }}>Regelmässig herein</span>
+            <span className="num abo__amount--credit" style={{ fontSize: 17, fontWeight: 700 }}>
+              {formatAmount(monthlyIn)}
+            </span>
+          </div>
+        )}
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, marginTop: 14, paddingTop: 14, borderTop: '1px solid var(--line)' }}>
+          <span style={{ fontSize: 15, color: 'var(--text-body)' }}>
+            Nächste 30 Tage · {next30.length} Zahlungen
+          </span>
+          <span className="num" style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-strong)' }}>
+            {formatAmount(next30.reduce((total, entry) => total + entry.amount, 0))}
+          </span>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/**
  * Derselbe Inhalt ohne Bildschirmrahmen — so hängt ihn das Cockpit unter der
  * Pille «Wiederkehrend» ein, ohne dass es die Liste ein zweites Mal gibt.
  */
@@ -174,15 +222,6 @@ export function RecurringContent() {
     [persona],
   )
 
-  const next30 = upcoming(series, TODAY, 30)
-  const monthlyOut = series
-    .filter((entry) => entry.monthlyAmount < 0)
-    .reduce((total, entry) => total + entry.monthlyAmount, 0)
-  const monthlyIn = series
-    .filter((entry) => entry.monthlyAmount > 0)
-    .reduce((total, entry) => total + entry.monthlyAmount, 0)
-  const subscriptionCount = series.filter((entry) => entry.kind === 'subscription').length
-
   const grouped = ORDER.map((kind) => ({
     kind,
     entries: series.filter((entry) => entry.kind === kind),
@@ -190,39 +229,7 @@ export function RecurringContent() {
 
   return (
     <div className="screen__inner">
-      <section className="card">
-        <div className="card__body" style={{ paddingTop: 'var(--s-6)' }}>
-          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 15, color: 'var(--text-body)' }}>Fix pro Monat</span>
-            <span className="num" style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-strong)' }}>
-              {formatAmount(monthlyOut)}
-            </span>
-          </div>
-          {monthlyIn > 0 && (
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, marginTop: 10 }}>
-              <span style={{ fontSize: 15, color: 'var(--text-body)' }}>Regelmässig herein</span>
-              <span className="num abo__amount--credit" style={{ fontSize: 17, fontWeight: 700 }}>
-                {formatAmount(monthlyIn)}
-              </span>
-            </div>
-          )}
-          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, marginTop: 14, paddingTop: 14, borderTop: '1px solid var(--line)' }}>
-            <span style={{ fontSize: 15, color: 'var(--text-body)' }}>
-              Nächste 30 Tage · {next30.length} Zahlungen
-            </span>
-            <span className="num" style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-strong)' }}>
-              {formatAmount(next30.reduce((total, entry) => total + entry.amount, 0))}
-            </span>
-          </div>
-          <p style={{ margin: '14px 0 0', fontSize: 13, lineHeight: 1.45, color: 'var(--text-muted)' }}>
-            {series.length} wiederkehrende Zahlungen erkannt, davon {subscriptionCount} Abos —
-            aus Buchungstext, Betrag und Abstand. Nichts davon ist hinterlegt oder gepflegt.{' '}
-            <strong style={{ fontWeight: 700, color: 'var(--text-body)' }}>
-              Antippen zeigt, seit wann du zahlst und was es insgesamt war.
-            </strong>
-          </p>
-        </div>
-      </section>
+      <Slot name="recurring.summary" series={series} fallback={<SummaryHead series={series} />} />
 
       {grouped.map((group) => (
         <div key={group.kind}>

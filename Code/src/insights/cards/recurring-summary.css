@@ -1,0 +1,199 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Der Kopf über den wiederkehrenden Buchungen — unsere Fassung.
+
+   Gehört zu `RecurringSummaryCard.tsx`. Die Masse des Balkens sind bewusst
+   dieselben wie beim Budget-Balken (`.balbar` in budget.css): 6 px Höhe,
+   3 px Radius, Rampe in Petrol. Zwei Balken in derselben App, die
+   verschiedene Dinge zeigen, dürfen nicht verschieden aussehen.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Die grosse Zahl ─────────────────────────────────────────────────────── */
+
+.recsum__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.recsum__label {
+  font-size: 15px;
+  color: var(--text-body);
+}
+
+.recsum__total {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-strong);
+  white-space: nowrap;
+}
+
+/* ── Der Anteil ──────────────────────────────────────────────────────────── */
+
+.recsum__gauge { margin-top: var(--s-4); }
+
+.recsum__track {
+  display: flex;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.recsum__fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--petrol6);
+}
+
+/* Was auf ein eigenes Konto geht. Heller, weil es abgeht, ohne weg zu sein —
+   und im Balken direkt neben dem, was wirklich ausgegeben ist. */
+.recsum__fill--moved { background: var(--petrol3); }
+
+.recsum__gauge--over .recsum__fill { background: var(--danger3); }
+
+.recsum__gaugeline {
+  margin: var(--s-3) 0 0;
+  font-size: 13px;
+}
+
+.recsum__gaugehead {
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.recsum__gauge--over .recsum__gaugehead { color: var(--danger3); }
+
+.recsum__gaugesub {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ── Was in dreissig Tagen kommt ─────────────────────────────────────────── */
+
+.recsum__next {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+}
+
+.recsum__nextlabel {
+  font-size: 14px;
+  color: var(--text-body);
+}
+
+.recsum__nextnone {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.recsum__nextvalue {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-strong);
+  white-space: nowrap;
+}
+
+/* ── Der eine Befund ─────────────────────────────────────────────────────── */
+
+.recsum__finding {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+  width: 100%;
+  margin-top: var(--s-5);
+  padding: var(--s-4);
+  border-radius: var(--CornerRadius-R-16);
+  background: var(--surface-sunken);
+  transition: transform 120ms ease;
+}
+
+.recsum__finding:active { transform: scale(var(--press)); }
+
+.recsum__findicon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--surface-disc);
+  color: var(--text-strong);
+}
+
+.recsum__finding--warn .recsum__findicon {
+  background: var(--pending1);
+  color: var(--pending3);
+}
+
+.recsum__findmain {
+  flex: 1;
+  min-width: 0;
+}
+
+.recsum__findtitle {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.recsum__findbody {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-body);
+}
+
+.recsum__findchevron {
+  flex: none;
+  margin-top: var(--s-2);
+  color: var(--text-muted);
+}
+
+/* ── Herkunft und Zählung ────────────────────────────────────────────────── */
+
+.recsum__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+}
+
+.recsum__origin {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 3px var(--s-3);
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--surface-sunken);
+  font-size: 12px;
+  color: var(--text-body);
+}
+
+.recsum__origin[aria-expanded='true'] {
+  background: var(--surface-disc);
+  color: var(--text-strong);
+}
+
+.recsum__counts {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.recsum__note {
+  margin: var(--s-3) 0 0;
+  padding-top: var(--s-3);
+  border-top: 1px solid var(--line);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}

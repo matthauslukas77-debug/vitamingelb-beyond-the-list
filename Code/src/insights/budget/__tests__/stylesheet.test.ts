@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest'
 import budgetCss from '../budget.css?raw'
 import assignCss from '../screens/assign.css?raw'
 import signalsCss from '../../screens/signals.css?raw'
+import recurringCss from '../../cards/recurring-summary.css?raw'
 import shellCss from '../../../app/shell/shell.css?raw'
 import tokensCss from '../../../theme/tokens.css?raw'
 import baseCss from '../../../theme/base.css?raw'
@@ -25,6 +26,7 @@ const files: [name: string, css: string][] = [
   ['budget.css', budgetCss],
   ['signals.css', signalsCss],
   ['assign.css', assignCss],
+  ['recurring-summary.css', recurringCss],
 ]
 
 /** Alle Namen, die `theme/` bereitstellt. */
