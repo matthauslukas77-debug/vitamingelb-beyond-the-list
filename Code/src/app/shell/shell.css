@@ -35,8 +35,48 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: var(--surface-app);
+  background: var(--app-backdrop);
   color: var(--text-body);
+}
+
+/* ── Der Hintergrund der ganzen App ───────────────────────────────────────
+   Vorlage: PREP/07_screenshots/Homeseite_Hintergrund.PNG
+
+   Im Original liegt hinter allem eine grosse, sehr weiche Form: ein heller
+   Bogen, der oben rechts anfängt und nach links unten wegzieht, und darin
+   oben links eine hellere Fläche. Ausgemessen sind es genau zwei Töne,
+   #EDF6F6 und #E4F2F2 — 3.5% Helligkeit auseinander. Man erahnt die Form.
+
+   Zwei Dinge waren vorher anders:
+
+   1. Die Stärke. Der alte Verlauf ging bis #CFE9E9, also gut dreimal so weit
+      vom Grundton weg. Das liest sich als Farbfläche, nicht als Andeutung.
+
+   2. Der Ort. Er lag auf der Scrollfläche und lief nach rund einem Drittel
+      Höhe aus. Was darunter lag, war Fläche in einem Ton — und die Kante
+      dazwischen sah aus wie ein abgeschnittener Balken am Kopf der Seite.
+
+   Jetzt trägt ihn die Telefonfläche selbst: einmal für die ganze App, ohne
+   Kante, und er scrollt nicht mit. `.layer` bekommt ihn ebenso, weil eine
+   hereingleitende Ebene deckend sein muss — gleiche Kiste, gleicher Verlauf,
+   also stimmt er über der Ebene darunter genau überein.
+
+   Beide Bögen sind Kreise, deren Mittelpunkt links ausserhalb des Bildschirms
+   liegt. Radius und Mittelpunkt stehen in Punkten und nicht in Prozent: Ein
+   Kreis soll ein Kreis bleiben, auch wenn der Bildschirm in Safari niedriger
+   ist als im Vollbild. Die Werte sind aus der Vorlage gerechnet und auf die
+   Entwurfsbreite von 390 Punkten umgelegt. */
+.phone__screen,
+.layer {
+  --app-backdrop:
+    /* Die hellere Fläche oben links — innen im kleinen Kreis. */
+    radial-gradient(circle 285px at -187px 2%,
+      var(--backdrop-lift) 0 92%, transparent 108%),
+    /* Der grosse Bogen: aussen hell, innen der Grundton. Seine Kante zieht
+       von oben rechts nach unten links durch das Bild. */
+    radial-gradient(circle 714px at -359px 0,
+      transparent 0 92%, var(--backdrop-lift) 108%),
+    var(--backdrop);
 }
 
 .phone__notch {
@@ -94,15 +134,6 @@
 
 .screen__inner { padding: 0 var(--s-5) var(--s-8); }
 
-/* Der weiche Verlauf mit dem angedeuteten Bogen. Trägt jeder Bildschirm mit
-   getönter Kopffläche — Home, Analysen, Kontodetail. */
-.screen--tinted,
-.sheet {
-  background:
-    radial-gradient(150% 60% at 85% -10%, rgba(166, 216, 217, 0.55) 0%, transparent 60%),
-    radial-gradient(90% 45% at 5% 30%, rgba(166, 216, 217, 0.28) 0%, transparent 70%),
-    var(--surface-app);
-}
 
 /* ── Kopfzeile ─────────────────────────────────────────────────────────── */
 
@@ -181,7 +212,7 @@
   transition: transform 120ms ease;
 }
 
-.circle:active .circle__disc { transform: scale(0.94); }
+.circle:active .circle__disc { transform: scale(var(--press)); }
 .circle__disc--action { background: var(--action); color: var(--action-ink); box-shadow: none; }
 .circle__disc--outline { background: transparent; border: 1px solid var(--petrol4); box-shadow: none; }
 .circle__label {
@@ -450,6 +481,10 @@ button.row:active { background: var(--tap); }
   position: absolute;
   inset: 0;
   animation: sheet-push var(--sheet-ms) var(--sheet-ease);
+  /* Deckend, sonst schiene der Bildschirm darunter durch. Es ist derselbe
+     Verlauf wie auf der Telefonfläche und dieselbe Kiste — die Form steht
+     also nach dem Hereingleiten genau dort, wo sie vorher stand. */
+  background: var(--app-backdrop);
   /* Die Kante wirft einen Schatten auf die Ebene darunter — daran erkennt das
      Auge, dass etwas davorliegt und nicht ersetzt wurde. */
   box-shadow: -14px 0 30px rgba(0, 27, 31, 0.18);

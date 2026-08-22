@@ -50,7 +50,7 @@ export function Services() {
   const { push, leave, toggleTheme, theme } = useSession()
 
   return (
-    <div className="screen screen--tinted">
+    <div className="screen">
       <TopBar onSearch={() => push({ name: 'search' })} onToggleTheme={toggleTheme} theme={theme} />
       <h1 className="screen__title">Services</h1>
 

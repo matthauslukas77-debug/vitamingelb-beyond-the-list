@@ -178,7 +178,7 @@ export function SessionProvider({
   useEffect(() => {
     document.documentElement.dataset.theme = theme
     const meta = document.querySelector('meta[name="theme-color"]')
-    meta?.setAttribute('content', theme === 'dark' ? '#00292E' : '#E9F3F2')
+    meta?.setAttribute('content', theme === 'dark' ? '#00292E' : '#E4F2F2')
     return () => {
       delete document.documentElement.dataset.theme
     }

@@ -359,6 +359,10 @@
   background: var(--surface-card);
   color: var(--text-strong);
   font: inherit;
+  /* `font: inherit` holt sich die 14px von `.wz-field`. Unter 16px zieht iOS
+     Safari das Feld beim Fokus heran, und der Zoom bleibt danach stehen —
+     siehe die Begründung in theme/base.css. */
+  font-size: max(16px, 1em);
   font-variant-numeric: tabular-nums;
 }
 
@@ -394,7 +398,9 @@
   background: var(--surface-card);
   color: var(--text-strong);
   font: inherit;
-  font-size: 14px;
+  /* Nicht kleiner: Auch ein Auswahlfeld zieht iOS Safari beim Fokus heran,
+     wenn die Schrift unter 16px liegt — siehe theme/base.css. */
+  font-size: max(16px, 1em);
 }
 
 /* Weiter-Knopf */
@@ -415,7 +421,7 @@
   text-align: center;
 }
 
-.wz-next:active { transform: scale(0.99); }
+.wz-next:active { transform: scale(var(--press)); }
 
 .wz-note {
   display: flex;

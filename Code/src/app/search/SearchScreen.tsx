@@ -154,7 +154,10 @@ export function SearchScreen() {
             borderRadius: 'var(--CornerRadius-R-100)',
             background: 'var(--surface-card)',
             color: 'var(--text-strong)',
-            fontSize: 15,
+            /* Mindestens 16px, sonst zieht iOS Safari das Feld beim Fokus
+               heran — und weil die Suche sich selbst fokussiert, passierte das
+               hier bei jedem Öffnen. Der Zoom blieb danach stehen. */
+            fontSize: 16,
             boxShadow: 'var(--shadow-card)',
             outline: 'none',
           }}

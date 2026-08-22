@@ -15,7 +15,7 @@ export function Invest() {
   const total = products.reduce((sum, account) => sum + account.balance, 0)
 
   return (
-    <div className="screen screen--tinted">
+    <div className="screen">
       <TopBar onSearch={() => push({ name: 'search' })} onToggleTheme={toggleTheme} theme={theme} />
       <h1 className="screen__title">Anlegen und Vorsorgen</h1>
 

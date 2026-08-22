@@ -12,7 +12,7 @@ export function Home() {
   const { accountGroups, totalChf, accountName, push, toggleTheme, theme } = useSession()
 
   return (
-    <div className="screen screen--tinted">
+    <div className="screen">
       <TopBar onSearch={() => push({ name: 'search' })} onToggleTheme={toggleTheme} theme={theme} />
       <h1 className="screen__title">Home</h1>
 

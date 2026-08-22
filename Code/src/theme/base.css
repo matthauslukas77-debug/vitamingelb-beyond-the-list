@@ -4,11 +4,21 @@
 
 :root {
   /* Flächen */
-  --surface-app: #E9F3F2;        /* Hintergrund hinter den Karten */
+  /* Derselbe Ton wie der Grundton des Verlaufs (`--backdrop`). Wer eine
+     Fläche «wie die Seite» einfärbt — eine klebende Kopfzeile etwa — trifft
+     damit den Hintergrund und hinterlässt keine sichtbare Kante. */
+  --surface-app: #E4F2F2;        /* Hintergrund hinter den Karten */
   --surface-card: var(--weiss);
   --surface-sunken: #EEF6F6;     /* petrol1 — getönte Zeilen, Chips */
   --surface-disc: #D6EBEB;       /* petrol2 — Symbolscheibe auf getönter Zeile */
   --surface-inverse: var(--petrol8);
+
+  /* Die zwei Töne des Hintergrundverlaufs, aus der Vorlage ausgemessen
+     (siehe `.phone__screen` in shell.css). Sie liegen absichtlich nur rund
+     3.5% Helligkeit auseinander: Im Original erahnt man die Form, man sieht
+     sie nicht. */
+  --backdrop: #E4F2F2;
+  --backdrop-lift: #EDF6F6;
 
   /* Text */
   --text-strong: var(--petrol8);
@@ -25,6 +35,11 @@
   --action-ink: var(--petrol8);
 
   --tap: rgba(0, 75, 90, 0.06);
+  /* Ein Druck gibt überall gleich viel nach — auf der Kreisscheibe wie auf
+     dem gelben Knopf. Vorher waren es zwei verschiedene Werte, das las sich
+     als zwei verschiedene Bauteile. Nur nach innen, nie nach aussen: Etwas,
+     das beim Antippen wächst, wirkt wie ein Zoom. */
+  --press: 0.97;
   --shadow-card: 0 1px 2px rgba(0, 41, 46, 0.05);
   --shadow-lift: 0 6px 24px rgba(0, 41, 46, 0.12);
 
@@ -41,6 +56,9 @@
   --surface-sunken: #004B5A;     /* petrol8 */
   --surface-disc: #00373D;        /* petrol9 */
   --surface-inverse: var(--petrol2);
+
+  --backdrop: #00292E;           /* petrol10 */
+  --backdrop-lift: #00343A;
 
   --text-strong: var(--weiss);
   --text-body: #D6EBEB;          /* petrol2 */
@@ -80,6 +98,42 @@ button {
 }
 
 ul { margin: 0; padding: 0; list-style: none; }
+
+/* ── Kein ungefragtes Hineinzoomen ────────────────────────────────────────
+   Auf dem Telefon zoomt der Browser von selbst herein, und der Zoom bleibt
+   danach stehen: Auch nach «Zurück» sieht die ganze App vergrössert aus.
+
+   Zwei Auslöser, zwei Gegenmittel:
+
+   1. Doppeltipp-Zoom. Nach jedem Tippen wartet der Browser kurz auf einen
+      zweiten Tipp. Wer flott zweimal auf dieselbe Fläche tippt — «Suchen»,
+      «Zahlen» — löst ihn aus. `touch-action: manipulation` schaltet nur diese
+      Erkennung ab; Wischen und Scrollen bleiben, wie sie sind.
+
+   2. Fokus-Zoom in iOS Safari. Kommt der Fokus in ein Eingabefeld, dessen
+      Schrift kleiner als 16px ist, zieht Safari das Feld heran. Darum hat
+      jedes Feld mindestens 16px. Das ist die Ursache — nicht die Wirkung.
+
+   Bewusst NICHT `user-scalable=no` im Viewport: Zwei-Finger-Zoom muss
+   möglich bleiben. Verhindert wird nur der Zoom, um den niemand gebeten hat. */
+button,
+a,
+label,
+summary,
+input,
+select,
+textarea,
+[role='button'] {
+  touch-action: manipulation;
+}
+
+/* Untergrenze für alles, was Fokus annehmen kann. `1em` heisst: eine
+   ausdrücklich grössere Schrift bleibt grösser, nur nach unten ist Schluss. */
+input,
+select,
+textarea {
+  font-size: max(16px, 1em);
+}
 
 :focus-visible {
   outline: var(--Outline-2) solid var(--hellblau);

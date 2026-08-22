@@ -43,6 +43,33 @@ function axisLabel(cents: number): string {
   return String(Math.round(francs))
 }
 
+/** Schmalster Abstand zwischen zwei Monatsnamen, in Einheiten der viewBox.
+    «Mär» ist bei 9px Schrift rund 20 Einheiten breit — 34 lässt Luft. */
+const MIN_TICK_GAP = 34
+
+/**
+ * Monatsnamen ausdünnen, bis sie nebeneinander Platz haben.
+ *
+ * Bei «Max» liegen gut zwei Jahre auf 318 Einheiten Breite: 25 Monatsnamen mit
+ * 13 Einheiten Abstand, die übereinander drucken und unlesbar werden.
+ *
+ * Ausgedünnt wird mit einer festen Schrittweite — jeder zweite, jeder dritte
+ * Monat — und nicht mit «nimm, was noch passt». Ein gleichmässiger Rhythmus
+ * liest sich als Achse; ungleiche Abstände sehen nach Zufall aus.
+ */
+function thinTicks(all: { x: number; label: string }[]): { x: number; label: string }[] {
+  if (all.length < 2) return all
+
+  const gap = (all[all.length - 1].x - all[0].x) / (all.length - 1)
+  const stride = gap > 0 ? Math.max(1, Math.ceil(MIN_TICK_GAP / gap)) : 1
+
+  return all
+    .filter((_, index) => index % stride === 0)
+    // Am Rand bliebe der Name halb ausserhalb stehen oder klebte an der
+    // Betragsachse — dort lassen wir ihn weg.
+    .filter((tick) => tick.x >= PAD_LEFT + 12 && tick.x <= W - 12)
+}
+
 export type ChartTone = 'petrol' | 'hellblau'
 
 const TONES: Record<ChartTone, { line: string; ahead: string; fill: string }> = {
@@ -143,11 +170,12 @@ export function BalanceChart({
   const lowIndex = all.findIndex((point) => point.date === low.date)
   const lowCritical = low.balance < 0
 
-  const ticks: { x: number; label: string }[] = []
+  const monthFirsts: { x: number; label: string }[] = []
   for (let i = 1; i < all.length; i++) {
     const date = parseIso(all[i].date)
-    if (date.getDate() === 1) ticks.push({ x: x(i), label: MONTHS[date.getMonth()] })
+    if (date.getDate() === 1) monthFirsts.push({ x: x(i), label: MONTHS[date.getMonth()] })
   }
+  const ticks = thinTicks(monthFirsts)
 
   const activeDate = parseIso(active.date)
   // Das Etikett steht neben dem Punkt, nicht am oberen Rand — und kippt nach
