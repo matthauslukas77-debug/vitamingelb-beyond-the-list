@@ -8,6 +8,7 @@ import { formatDate } from '../../lib/date'
 import { useSession } from '../session'
 import { Icon } from '../shell/Icon'
 import { Sheet } from '../shell/Sheet'
+import { useFocusWhenSettled } from '../shell/focus'
 import { Card, Row } from '../shell/parts'
 import { CADENCE_LABEL, kindLabel, KIND_ICON, pretty } from '../screens/Recurring'
 import { CATALOG, SUGGESTIONS, type CatalogEntry, type Target } from './catalog'
@@ -89,6 +90,9 @@ function seriesTitle(series: RecurringSeries): string {
 export function SearchScreen() {
   const { persona, accountName, push, pop, setTab } = useSession()
   const [query, setQuery] = useState('')
+  /* Fokus erst, wenn der Bildschirm steht — sonst fährt die Tastatur hoch,
+     während die Ebene noch hereingleitet. Siehe `shell/focus.ts`. */
+  const field = useFocusWhenSettled<HTMLInputElement>()
 
   const tokens = useMemo(() => tokenize(query), [query])
   const ready = tokens.length > 0 && query.trim().length >= MIN_QUERY
@@ -142,7 +146,7 @@ export function SearchScreen() {
     <Sheet title="Suchen" onBack={pop}>
       <div className="screen__inner">
         <input
-          autoFocus
+          ref={field}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Einstellungen, Funktionen, Buchungen"

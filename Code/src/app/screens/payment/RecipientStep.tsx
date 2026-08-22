@@ -4,6 +4,7 @@ import { formatMoney } from '../../../lib/money'
 import { filterRecipients, recommendedRecipients, type Recipient } from '../../../domain/payment'
 import { useSession } from '../../session'
 import { Icon } from '../../shell/Icon'
+import { useFocusWhenSettled } from '../../shell/focus'
 import { BottomSheet, SheetOption } from './parts'
 
 /**
@@ -26,6 +27,8 @@ export function RecipientStep({
   const { persona } = useSession()
   const [query, setQuery] = useState('')
   const [chosen, setChosen] = useState<Recipient | null>(null)
+  /* Fokus erst, wenn der Bildschirm steht — siehe `shell/focus.ts`. */
+  const field = useFocusWhenSettled<HTMLInputElement>()
 
   const all = useMemo(() => recommendedRecipients(persona), [persona])
   const hits = filterRecipients(all, query)
@@ -35,7 +38,7 @@ export function RecipientStep({
       <div className="pay-search">
         <input
           className="pay-search__input"
-          autoFocus
+          ref={field}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="IBAN, Mobiltelefonnr., Name, Konto"
