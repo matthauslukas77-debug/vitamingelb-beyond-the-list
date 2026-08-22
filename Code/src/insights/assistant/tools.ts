@@ -100,15 +100,42 @@ export interface Tool {
 // Hilfen
 // ───────────────────────────────────────────────────────────────────────────
 
-/** Kleinschreibung ohne Umlaute und Satzzeichen — die Vergleichsform. */
-export function plain(text: string): string {
+/**
+ * Kleinschreibung ohne Umlaute und Satzzeichen — die Vergleichsform.
+ *
+ * `normalize('NFKD')` und das Löschen der Kombinationszeichen davor: Sonst
+ * kommt ein «e» mit angehängtem Akzent durch, wo ein «é» geprüft wurde, und
+ * ein Zaun, der «investier» sucht, sieht «ínvestier» nicht.
+ */
+export function plain(text: unknown): string {
+  if (typeof text !== 'string') return ''
   return text
     .toLowerCase()
-    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+    .replace(/ä/g, 'ae')
+    .replace(/ö/g, 'oe')
+    .replace(/ü/g, 'ue')
+    .replace(/ß/g, 'ss')
+    /* Erst nach der Umschrift zerlegen: NFKD spaltet «ä» in a + Trema, und
+       das Trema fällt zwei Zeilen später weg — die Umschrift käme dann nie
+       zum Zug und «Wofür» hiesse «wofur». Gemessen, nicht vermutet. */
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036F\u200B-\u200D\uFEFF]/g, '')
     .replace(/[^a-z0-9 ]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim()
 }
+
+
+/**
+ * Wörter, die als Händlername gemeint sein könnten, aber nie einer sind.
+ * «Wer ist das?» darf nicht die halbe Kontobewegung als Händler ausgeben.
+ */
+const STOPWORDS = new Set([
+  'das', 'die', 'der', 'den', 'dem', 'ein', 'eine', 'einen', 'und', 'oder',
+  'vom', 'von', 'bei', 'fuer', 'mit', 'auf', 'aus', 'ich', 'mir', 'mich',
+  'mein', 'meine', 'meinem', 'meiner', 'diese', 'dieser', 'dieses', 'dass',
+  'was', 'wer', 'wie', 'wo', 'geld', 'buchung', 'zahlung', 'konto', 'firma',
+])
 
 const chf = (rappen: number) => formatAmount(Math.round(rappen), { sign: false })
 
@@ -138,14 +165,14 @@ function expensesOf(context: AskContext, from: string, to: string): Transaction[
  */
 const topSpending: Tool = {
   name: 'topSpending',
-  purpose: 'Welche Kategorien am meisten Geld gekostet haben, im Schnitt pro Monat.',
-  parameters: {
-    type: 'object',
-    properties: {
-      months: { type: 'integer', description: 'Wie viele volle Monate zurück. Vorgabe 12.' },
-    },
-    required: [],
-  },
+  purpose:
+    'Rangliste der Ausgaben-KATEGORIEN: wofür im Schnitt am meisten Geld pro Monat draufgeht. ' +
+    'Für «Wofür gebe ich am meisten aus?», «Wo geht mein Geld hin?», «Was kostet mich am meisten?». ' +
+    'NICHT für eine einzelne Buchung — dafür gibt es extraordinary.',
+  /* Kein `months`: Das Werkzeug rechnet fest über zwölf volle Monate. Ein
+     Argument anzubieten, das niemand liest, lädt das Modell ein, es zu
+     setzen — und der Nutzer bekäme einen Zeitraum, den er nicht bekommt. */
+  parameters: { type: 'object', properties: {}, required: [] },
   examples: ['Wofür gebe ich am meisten aus?', 'Wo geht mein Geld hin?'],
   match(question) {
     const q = plain(question)
@@ -216,12 +243,29 @@ const topSpending: Tool = {
  */
 const subscriptions: Tool = {
   name: 'subscriptions',
-  purpose: 'Welche wiederkehrenden Belastungen es gibt und was sie zusammen kosten.',
+  purpose:
+    'Alle wiederkehrenden Belastungen — Abos, Daueraufträge, regelmässige Rechnungen — mit Monats- ' +
+    'und Jahressumme. Für «Welche Abos habe ich?», «Was zahle ich jeden Monat?», «Was läuft automatisch ab?».',
   parameters: { type: 'object', properties: {}, required: [] },
   examples: ['Welche Abos habe ich?', 'Was zahle ich monatlich?'],
   match(question) {
     const q = plain(question)
-    return /\b(abo|abos|abonnement|abonnemente|wiederkehrend|regelmaessig|monatlich)\b/.test(q)
+    /* «Ist eines von meinen Abos teurer geworden?» handelt von einer
+       Veränderung und nicht von einer Liste — das ist whatsUnusual. */
+    if (/(teurer|gestiegen|erhoeht|erhoehung|aufgeschlagen|veraendert|\bneue?\b)/.test(q)) return null
+    /* Wo «Budget» steht, ist der Budgetstand gemeint. */
+    if (/budget/.test(q)) return null
+    /* Das Abo-Wort entscheidet und steht deshalb **vor** den Ausnahmen unten:
+       «Was ist mein teuerstes Abo?» ist eine Abofrage, obwohl sie mit «was
+       ist» beginnt. Stämme ohne Schluss-Wortgrenze — «monatlichen» ist
+       «monatlich» plus Endung und traf mit `\b` dahinter nicht. */
+    if (/(abo|abonnement|wiederkehrend|regelmaessig|dauerauftrag)/.test(q)) return {}
+    /* «Wer ist das schon wieder, das kommt jeden Monat.» fragt dagegen nach
+       dem Händler, auch wenn ein Rhythmus darin vorkommt. */
+    if (/^(wer|was) (ist|war|sind)/.test(q)) return null
+    /* «monatlich» allein ist zu schwach — «Was zahle ich monatlich fürs
+       Essen?» ist eine Kategoriefrage. Nur, wenn kein Ziel genannt wird. */
+    return /(monatlich|jeden monat|fixe|fixen)/.test(q) && !/ fuer | fuers /.test(q)
       ? {}
       : null
   },
@@ -269,7 +313,10 @@ const subscriptions: Tool = {
  */
 const merchantLookup: Tool = {
   name: 'merchantLookup',
-  purpose: 'Wer hinter einem Buchungstext steht und wie viel dorthin geflossen ist.',
+  purpose:
+    'Erklärt EINEN bestimmten Händler oder Buchungstext: wer das ist, wie oft und wie viel dorthin ging. ' +
+    'Für «Wer ist X?», «Was ist diese Buchung von X?», «Wie viel habe ich bei X ausgegeben?». ' +
+    'Nur wählen, wenn in der Frage ein konkreter Name vorkommt.',
   parameters: {
     type: 'object',
     properties: { name: { type: 'string', description: 'Der gesuchte Händler oder Buchungstext.' } },
@@ -278,20 +325,40 @@ const merchantLookup: Tool = {
   examples: ['Wer ist Digitec?', 'Was ist SumUp?'],
   match(question) {
     const q = question.trim()
-    const asked = /^(wer|was|wofuer|wofür)\s+(ist|war|sind|waren)\s+(.{2,40}?)\s*\??$/i.exec(q)
-    if (asked) return { name: asked[3] }
+    /*
+     * Ein Händlername ist kurz und hat höchstens drei Wörter. Ohne diese
+     * Grenze wurde «Was sind meine fixen monatlichen Kosten?» zur Suche nach
+     * dem Händler «meine fixen monatlichen Kosten» — der Satz passt formal
+     * auf «was sind X».
+     */
+    const asked =
+      /^(?:wer|was)\s+(?:ist|war|sind|waren)\s+(?:das|der|die|denn)?\s*([\wÄÖÜäöü.&'-]+(?:\s+[\wÄÖÜäöü.&'-]+){0,2})\s*\??$/i.exec(q)
+    if (asked) return { name: asked[1] }
     const spent = /^(wie ?viel|wieviel)\s+(?:habe ich\s+)?(?:bei|f(ü|u)r|an)\s+(.{2,40}?)\s*(?:ausgegeben|bezahlt|gezahlt)?\s*\??$/i.exec(q)
     return spent ? { name: spent[3] } : null
   },
   run(args, context) {
     const needle = plain(args.name ?? '')
-    if (needle.length < 2) return null
+    /*
+     * Drei Zeilen gegen einen Streuschuss. Gemessen an Bruno traf «ch» als
+     * Teilzeichenkette **289 Buchungen** — die Antwort hätte «CH» zu einem
+     * Händler erklärt und eine Jahressumme dazu behauptet.
+     *
+     *   · unter drei Zeichen ist kein Name,
+     *   · gesucht wird an der Wortgrenze statt irgendwo im Text,
+     *   · und wer über vierzig Buchungen trifft, hat keinen Händler benannt.
+     */
+    if (needle.length < 3 || STOPWORDS.has(needle)) return null
 
+    const boundary = new RegExp(`(^|[^a-z0-9])${needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([^a-z0-9]|$)`)
     const { from } = window12(context.today)
     const hits = expensesOf(context, from, context.today).filter((tx) => {
       const brand = resolveBrand(tx.text)?.brand.name ?? ''
-      return plain(`${tx.text} ${brand}`).includes(needle)
+      return boundary.test(plain(`${tx.text} ${brand}`))
     })
+    /* Kein Deckel auf der Trefferzahl: Coop hat bei Bruno 63 Buchungen, und
+       genau nach solchen Händlern wird gefragt. Die Vagheit wird am Suchwort
+       begrenzt, nicht am Ergebnis. */
     if (hits.length === 0) return null
 
     const total = hits.reduce((sum, tx) => sum + Math.abs(tx.amount), 0)
@@ -339,7 +406,9 @@ const merchantLookup: Tool = {
  */
 const budgetStatus: Tool = {
   name: 'budgetStatus',
-  purpose: 'Wie der laufende Monat gegen das gesetzte Budget steht.',
+  purpose:
+    'Stand des laufenden Monats gegen das gesetzte Budget, je Kategorie. ' +
+    'Für «Wie steht mein Budget?», «Bin ich im Plan?», «Halte ich mein Budget ein?», «Wie viel habe ich noch?».',
   parameters: { type: 'object', properties: {}, required: [] },
   examples: ['Wie steht mein Budget?', 'Bin ich im Budget?'],
   match(question) {
@@ -419,12 +488,17 @@ const budgetStatus: Tool = {
  */
 const whatsUnusual: Tool = {
   name: 'whatsUnusual',
-  purpose: 'Was sich verändert hat oder aus der Reihe fällt.',
+  purpose:
+    'Was sich verändert hat oder aus der Reihe fällt: neue Abos, Preiserhöhungen, ungewöhnlich grosse ' +
+    'Buchungen, ausgebliebene Zahlungen. Für «Was ist ungewöhnlich?», «War dieser Monat normal?», ' +
+    '«Ist mir etwas entgangen?», «Hat sich etwas verändert?».',
   parameters: { type: 'object', properties: {}, required: [] },
   examples: ['Was ist ungewöhnlich?', 'War dieser Monat normal?'],
   match(question) {
     const q = plain(question)
-    return /(ungewoehnlich|auffaellig|aufgefallen|komisch|normal|veraendert|anders als sonst)/.test(q)
+    /* «komisch» steht bewusst nicht in dieser Liste: «Da steht so ein
+       komischer Firmenname» meint den Händler, nicht die Veränderung. */
+    return /(ungewoehnlich|auffaellig|aufgefallen|normal|veraender|verschoben|anders als sonst|aus der reihe|aus dem rahmen|teurer|gestiegen|erhoeh|eingeschlichen)/.test(q)
       ? {}
       : null
   },
@@ -473,12 +547,17 @@ const whatsUnusual: Tool = {
  */
 const extraordinary: Tool = {
   name: 'extraordinary',
-  purpose: 'Welche grossen Einzelbuchungen aus dem Rahmen fallen.',
+  purpose:
+    'Die grössten EINZELNEN Buchungen der letzten zwölf Monate, nach Betrag. ' +
+    'Für «Was war meine grösste Ausgabe?», «Was war das Teuerste, das ich gekauft habe?», ' +
+    '«Welche einmaligen Ausgaben hatte ich?». NICHT für Kategorien — dafür gibt es topSpending.',
   parameters: { type: 'object', properties: {}, required: [] },
   examples: ['Was war meine grösste Ausgabe?', 'Welche einmaligen Ausgaben hatte ich?'],
   match(question) {
     const q = plain(question)
-    return /(groesste einzel|einmalig|ausserordentlich|teuerste|groesste buchung|groesste rechnung)/.test(q)
+    /* «einzeln» trennt diese Frage von der Kategorien-Rangliste: «Welche
+       einzelne Zahlung hat mich am meisten gekostet?» meint eine Buchung. */
+    return /(einzel|einmalig|ausserordentlich|teuerste|dickste|groesste (buchung|rechnung|belastung|zahlung))/.test(q)
       ? {}
       : null
   },
@@ -528,6 +607,25 @@ export const TOOLS: Tool[] = [
   topSpending,
   merchantLookup,
 ]
+
+/**
+ * Der Katalog als OpenAI-Werkzeugliste — was der Apertus 8B zu sehen bekommt.
+ *
+ * Erzeugt aus derselben Liste, die der Browser ausführt. Die Edge Function
+ * führt eine Kopie davon (`supabase/functions/ask/catalog.json`), weil Deno
+ * dieses Modul nicht laden kann — es hinge am halben Motor. Ein Test hält die
+ * beiden zusammen: Weicht ein Name ab, fällt er.
+ */
+export function routerSchema() {
+  return TOOLS.map((tool) => ({
+    type: 'function' as const,
+    function: {
+      name: tool.name,
+      description: tool.purpose,
+      parameters: tool.parameters,
+    },
+  }))
+}
 
 export const NO_CONTEXT: Pick<AskContext, 'markings' | 'assignments' | 'budget'> = {
   markings: NO_MARKINGS,

@@ -1,3 +1,4 @@
+import { fenceFor } from '../../../supabase/functions/ask/fences'
 import { plain, TOOLS, type AskContext, type Tool, type ToolResult } from './tools'
 
 /**
@@ -22,6 +23,12 @@ export type AskOutcome =
   | { kind: 'unknown' }
 
 /**
+ * Der Zaun steht in `supabase/functions/ask/fences.ts` und nicht hier.
+ *
+ * Nicht aus Ordnungsliebe: Die Edge Function ist öffentlich erreichbar, und
+ * ein Zaun, der nur im Browser läuft, ist mit einem `curl` umgangen. Beide
+ * Seiten prüfen jetzt dieselbe Liste mit derselben Vergleichsform.
+ *
  * Themen, die wir nicht bedienen — und zwar ausdrücklich, nicht schlecht.
  *
  * Michaels Frage ist die konkreteste des ganzen Samples: «Ich brauche in
@@ -33,38 +40,6 @@ export type AskOutcome =
  *
  * Die Absage nennt den Grund und bietet das, was wir wirklich können.
  */
-const FENCES: { pattern: RegExp; text: string }[] = [
-  {
-    pattern: /\b(anleg|investier|aktie|aktien|fonds|etf|krypto|bitcoin|rendite|kaufen soll|verkaufen soll|3a|saeule 3a|hypothek|zins)\b/,
-    text:
-      'Zu Anlagen, Vorsorge und Hypotheken sage ich nichts — dafür bin ich nicht gebaut, und eine ' +
-      'halbe Antwort wäre hier schlechter als keine. Was ich kann: zeigen, was du hast, was ' +
-      'regelmässig abgeht und was sich verändert hat.',
-  },
-  {
-    /* Michaels Frage trifft keines der Fachwörter oben — sie lautet «wo
-       bekomme ich die am schlausten her». Gefährlich ist nicht die Vokabel,
-       sondern die **Form**: eine Optimierungsfrage mit Betrag und Termin.
-       Genau die beantwortet man entweder richtig oder gar nicht. */
-    pattern: /\b(wo|woher)\s+(bekomme|kriege|nehme|hole)\s+ich\b|\bam (schlausten|klugsten|besten|cleversten)\b|\bwie komme ich (an|zu)\b/,
-    text:
-      'Wo Geld am besten hinkommt oder herkommt, sage ich nicht — das ist eine Beratungsfrage, ' +
-      'und eine halbe Antwort wäre hier schlechter als keine. Was ich dazu beitragen kann: was ' +
-      'du heute zur Seite legst, was regelmässig abgeht und was am Monatsende übrig bleibt.',
-  },
-  {
-    pattern: /\b(was fuer ein typ|persoenlichkeit|charakter|bin ich (geizig|sparsam|schlecht|gut) mit geld)\b/,
-    text:
-      'Über dich als Person sage ich nichts. Ich rechne mit deinen Buchungen, und daraus lässt ' +
-      'sich kein Urteil ableiten — nur Beträge, Rhythmen und Veränderungen.',
-  },
-  {
-    pattern: /\b(soll ich|was soll ich|empfiehlst du|wuerdest du mir raten|rat|tipp geben)\b.*\b(kaufen|kuendigen|abschliessen|wechseln)\b/,
-    text:
-      'Was du tun sollst, entscheidest du. Ich lege die Zahlen daneben, die dafür nötig sind — ' +
-      'frag mich nach dem Betrag, der Häufigkeit oder der Veränderung.',
-  },
-]
 
 /** Mindestlänge, ab der eine Eingabe überhaupt als Frage gilt. */
 export const MIN_QUESTION = 4
@@ -104,10 +79,8 @@ export function ask(question: string, context: AskContext): AskOutcome {
      für meine Säule 3a aus?» eine Vorsorgefrage mit einer Kategoriesumme —
      formal richtig, aber es lädt zur nächsten Frage ein, die wir nicht
      beantworten dürfen. */
-  const q = plain(raw)
-  for (const fence of FENCES) {
-    if (fence.pattern.test(q)) return { kind: 'refused', text: fence.text }
-  }
+  const refusal = fenceFor(plain(raw))
+  if (refusal !== null) return { kind: 'refused', text: refusal }
 
   const picked = pickTool(raw)
   if (!picked) return { kind: 'unknown' }

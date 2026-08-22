@@ -1,12 +1,14 @@
+import { useEffect, useMemo, useState } from 'react'
 import { TODAY } from '../../data/types'
 import { formatAmount } from '../../lib/money'
 import { useSession } from '../../app/session'
 import { Icon } from '../../app/shell/Icon'
+import { fingerprintOf, loadAssignments } from '../budget/assign'
 import { loadMarkings } from '../budget/markings'
-import { loadAssignments } from '../budget/assign'
 import { loadBudget } from '../budget/storage'
-import { ask, NO_ANSWER } from './ask'
-import { TOOLS } from './tools'
+import { ask, NO_ANSWER, type AskOutcome } from './ask'
+import { askRouted } from './router'
+import { TOOLS, type AskContext } from './tools'
 import './assistant.css'
 
 /**
@@ -20,16 +22,24 @@ import './assistant.css'
  *
  * Das Suchfeld dagegen wird benutzt, liegt auf Home und ist ein
  * Texteingabefeld. Wer eine Frage tippt, bekommt oben eine Antwort; wer
- * «twint» tippt, bekommt weiterhin die Funktion. Dieselbe Zeile, zwei
- * Absichten — das kostet keine neue Navigation.
+ * «twint» tippt, bekommt weiterhin die Funktion.
  *
- * Was hier **nicht** passiert: rechnen und formulieren. Der Satz kommt fertig
- * aus `tools.ts`, und jede Zahl darin stammt aus dem Motor, der auch die
- * Blasen zeichnet. Diese Datei zeigt ihn nur an.
+ * ── Zwei Stufen, und die erste trägt allein ───────────────────────────────
+ *
+ * Die Muster antworten sofort und ohne Netz. Erst wenn sie aufgeben, fragt
+ * `askRouted` den Apertus 8B nach dem passenden Werkzeug — gerechnet wird
+ * auch dann hier, aus dem Motor, der die Blasen zeichnet. Deshalb steht unter
+ * einer Antwort nie ein Satz, den ein Modell geschrieben hat.
  */
 
 /** Beispielfragen für das leere Feld — aus den Werkzeugen selbst. */
 export const SUGGESTED_QUESTIONS: string[] = TOOLS.flatMap((tool) => tool.examples.slice(0, 1))
+
+/**
+ * So lange wird nach dem letzten Tastendruck gewartet, bevor die Frage das
+ * Gerät verlässt. Ohne das ginge jeder Buchstabe einzeln über die Leitung.
+ */
+const SETTLE_MS = 450
 
 export function AskSuggestions({ onPick }: { onPick: (question: string) => void }) {
   return (
@@ -55,18 +65,59 @@ export function AskSuggestions({ onPick }: { onPick: (question: string) => void 
 export function AskAnswer({ question }: { question: string }) {
   const { persona, push } = useSession()
 
-  const outcome = ask(question, {
-    persona,
-    today: TODAY,
-    markings: loadMarkings(persona.id),
-    assignments: loadAssignments(persona.id),
-    budget: loadBudget(persona.id),
-  })
+  /* Der Fingerabdruck hält die Identität stabil, damit die Berechnungen nicht
+     bei jedem Rendern neu laufen — dieselbe Begründung wie auf dem
+     Signale-Bildschirm. */
+  const fingerprint = fingerprintOf(loadAssignments(persona.id))
+  const context = useMemo<AskContext>(
+    () => ({
+      persona,
+      today: TODAY,
+      markings: loadMarkings(persona.id),
+      assignments: loadAssignments(persona.id),
+      budget: loadBudget(persona.id),
+    }),
+    [persona, fingerprint],
+  )
+
+  const local = useMemo(() => ask(question, context), [question, context])
+
+  const [routed, setRouted] = useState<{ outcome: AskOutcome; by: 'muster' | 'apertus' } | null>(null)
+  const [waiting, setWaiting] = useState(false)
+
+  useEffect(() => {
+    /* Nur was die Muster nicht können, geht ans Modell. Eine Absage schon gar
+       nicht — die Frage soll das Gerät gar nicht erst verlassen. */
+    setRouted(null)
+    if (local.kind !== 'unknown') {
+      setWaiting(false)
+      return
+    }
+
+    let alive = true
+    setWaiting(true)
+    const timer = window.setTimeout(() => {
+      askRouted(question, context)
+        .then((result) => {
+          if (!alive) return
+          setRouted(result.outcome.kind === 'answer' ? result : null)
+          setWaiting(false)
+        })
+        .catch(() => alive && setWaiting(false))
+    }, SETTLE_MS)
+
+    return () => {
+      alive = false
+      window.clearTimeout(timer)
+    }
+  }, [question, context, local])
+
+  const outcome = routed?.outcome ?? local
 
   if (outcome.kind === 'unknown') {
     return (
       <section className="ask ask--quiet">
-        <p className="ask__text">{NO_ANSWER}</p>
+        <p className="ask__text">{waiting ? 'Einen Moment — ich schaue nach.' : NO_ANSWER}</p>
       </section>
     )
   }
@@ -83,6 +134,12 @@ export function AskAnswer({ question }: { question: string }) {
   }
 
   const { result } = outcome
+  const proof =
+    result.transactionIds.length > 0
+      ? `gerechnet aus ${result.transactionIds.length} ${
+          result.transactionIds.length === 1 ? 'Buchung' : 'Buchungen'
+        }`
+      : 'gerechnet'
 
   return (
     <section className="ask">
@@ -102,13 +159,12 @@ export function AskAnswer({ question }: { question: string }) {
 
       <div className="ask__foot">
         {/* Der Beleg. Ohne ihn ist die Antwort eine Behauptung — dieselbe
-            Doktrin wie auf jeder Signalkarte und im Budget. */}
+            Doktrin wie auf jeder Signalkarte und im Budget. Dass Apertus die
+            Frage verstanden hat, steht daneben und nicht davor: Gerechnet hat
+            es nicht das Modell. */}
         <span className="ask__badge">
-          {result.transactionIds.length > 0
-            ? `gerechnet aus ${result.transactionIds.length} ${
-                result.transactionIds.length === 1 ? 'Buchung' : 'Buchungen'
-              }`
-            : 'gerechnet'}
+          {routed?.by === 'apertus' ? 'Frage von Apertus verstanden · ' : ''}
+          {proof}
           {result.period ? ` · ${result.period}` : ''}
         </span>
 
