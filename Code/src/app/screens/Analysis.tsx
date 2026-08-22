@@ -1,10 +1,11 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { TODAY, type Transaction } from '../../data/types'
 import { formatAmount } from '../../lib/money'
 import { formatPeriod, parseIso } from '../../lib/date'
 import { useSession } from '../session'
 import { Icon } from '../shell/Icon'
 import { Slot } from '../shell/Slot'
+import { ANALYSIS_VIEWS } from '../../insights/registry'
 import { CircleRow } from '../shell/parts'
 
 /**
@@ -90,7 +91,17 @@ function DoubleRing({ totals }: { totals: Totals }) {
 }
 
 export function AnalysisContent() {
-  const { persona, push } = useSession()
+  const session = useSession()
+  const { persona, push } = session
+
+  /* Das Drop-down war eine Attrappe. Jetzt wählt es zwischen der Ansicht des
+     Nachbaus und den Ansichten, die unsere Schicht beisteuert. Ist keine
+     registriert, bleibt ein einziger Eintrag — genau wie heute. */
+  const views = [{ id: 'summary', label: 'Zusammengefasst' }, ...ANALYSIS_VIEWS]
+  const [viewId, setViewId] = useState('summary')
+  const [open, setOpen] = useState(false)
+  const current = views.find((entry) => entry.id === viewId) ?? views[0]
+  const extra = ANALYSIS_VIEWS.find((entry) => entry.id === viewId)
 
   // «Zusammengefasst» zeigt das laufende Jahr.
   const from = `${TODAY.slice(0, 4)}-01-01`
@@ -107,13 +118,34 @@ export function AnalysisContent() {
   return (
     <div className="analysis">
       <div className="analysis__top">
-        <button className="pill-select" style={{ width: 'auto', margin: '0 auto', padding: '0 24px' }}>
-          Zusammengefasst
-          <Icon name="chevronDown" size={16} />
-        </button>
+        <div className="viewpick">
+          <button
+            className="pill-select viewpick__button"
+            aria-expanded={open}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {current.label}
+            <Icon name="chevronDown" size={16} />
+          </button>
+          {open && (
+            <ul className="viewpick__menu">
+              {views.map((entry) => (
+                <li key={entry.id}>
+                  <button
+                    className={'viewpick__item' + (entry.id === viewId ? ' is-active' : '')}
+                    onClick={() => { setViewId(entry.id); setOpen(false) }}
+                  >
+                    {entry.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         <Slot name="analysis.aboveDonut" />
 
+        {!extra && (
         <div className="analysis__ring">
           <DoubleRing totals={totals} />
           <div className="analysis__center">
@@ -130,15 +162,20 @@ export function AnalysisContent() {
           </div>
         </div>
 
+        )}
+
+        {!extra && (
         <CircleRow
           actions={[
             { icon: 'search', label: 'Suchen', outline: true, onClick: () => push({ name: 'search' }) },
             { icon: 'co2', label: 'CO₂ Fussabdruck', outline: true },
           ]}
         />
+        )}
       </div>
 
       <div className="analysis__bottom">
+        {extra ? <extra.Component session={session} /> : <>
         {/* Beide Zeilen führen auf die Detailseite ihrer Richtung —
             Vorlage IMG_1696 (Einnahmen) und IMG_1697 (Ausgaben). */}
         <button className="legend" onClick={() => push({ name: 'breakdown', direction: 'income' })}>
@@ -186,6 +223,8 @@ export function AnalysisContent() {
             <span className="listrow__sub">Abos, Daueraufträge, Rechnungen und der Lohn</span>
           </span>
         </button>
+
+        </>}
 
       <Slot name="analysis.belowLegend" />
     </div>

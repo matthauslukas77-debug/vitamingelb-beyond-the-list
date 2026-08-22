@@ -3,6 +3,7 @@ import type { Account } from '../data/types'
 import type { RecurringSeries } from '../domain/recurring'
 import type { useSession } from '../app/session'
 import { AccountBalanceCard } from './cards/AccountBalanceCard'
+import { MoneyFlow } from './screens/MoneyFlow'
 import { RecurringSummaryCard } from './cards/RecurringSummaryCard'
 import { TODAY } from '../data/types'
 import { buildTimeline } from './engine/balance'
@@ -26,6 +27,7 @@ export type SlotName =
   | 'home.belowAccounts'
   | 'account.aboveTransactions'
   | 'account.belowHeader'
+  | 'analysis.view'
   | 'analysis.aboveDonut'
   | 'analysis.belowLegend'
   | 'payments.top'
@@ -61,12 +63,34 @@ const AccountRow: SlotComponent = ({ session, account, onOpen, fallback }) => {
   return <AccountBalanceCard account={account} session={session} onOpen={onOpen ?? (() => {})} />
 }
 
+/**
+ * Zusätzliche Ansichten der Analysen. Der Nachbau kennt nur
+ * «Zusammengefasst»; jede weitere Ansicht kommt aus dieser Liste und
+ * erscheint im Drop-down. Ist die Liste leer, hat das Drop-down einen
+ * einzigen Eintrag und verhält sich wie heute.
+ */
+export interface AnalysisView {
+  id: string
+  label: string
+  Component: SlotComponent
+}
+
+const MoneyFlowView: SlotComponent = ({ session }) => <MoneyFlow session={session} />
+
+export const ANALYSIS_VIEWS: AnalysisView[] = [
+  /* «Nach Unternehmen» steht im Drop-down neben «Zusammengefasst» — die Frage
+     dahinter ist «bei welcher Firma gebe ich am meisten aus?», und die
+     beantwortet ein Logo schneller als jede Kategorie. */
+  { id: 'flow', label: 'Nach Unternehmen', Component: MoneyFlowView },
+]
+
 export const SLOT_CONTENT: Record<SlotName, SlotComponent[]> = {
   'home.accountRow': [AccountRow],
   'home.aboveAccounts': [],
   'home.belowAccounts': [],
   'account.aboveTransactions': [],
   'account.belowHeader': [],
+  'analysis.view': [MoneyFlowView],
   'analysis.aboveDonut': [],
   'analysis.belowLegend': [],
   'payments.top': [],

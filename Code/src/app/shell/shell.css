@@ -1374,3 +1374,162 @@ button.set-row:active { background: var(--tap); }
 /* Der linke Platz in der Kopfzeile. Im Nachbau leer; was dort erscheint,
    kommt von aussen — siehe `TopBar` in `parts.tsx`. */
 .topbar__leading { display: flex; align-items: center; gap: var(--s-3); }
+
+/* ── «Nach Unternehmen» (insights) ─────────────────────────────────────────
+   Eine Blase je Empfänger, so gross wie der Betrag — und in der Blase das
+   Logo der Marke. */
+
+.flow { padding-bottom: var(--s-6); }
+
+.flow__periods {
+  display: flex;
+  gap: var(--s-2);
+  justify-content: center;
+  padding: 0 0 var(--s-5);
+}
+
+.flow__period {
+  padding: 7px var(--s-6);
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--surface-card);
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.flow__period.is-active { background: var(--petrol8); color: var(--weiss); font-weight: 700; }
+
+.flow__head { display: grid; justify-items: center; padding-bottom: var(--s-4); }
+.flow__total { font-size: 26px; font-weight: 700; color: var(--text-strong); }
+.flow__range { margin-top: 2px; font-size: 12px; color: var(--text-muted); }
+
+.flow__field { display: block; width: 100%; height: auto; max-height: 340px; }
+
+/* Die Blase. Sie zieht beim Wechsel des Zeitraums auf — versetzt nach `--i`,
+   wie die Budgetblasen, damit man dem Haufen beim Entstehen zusieht. */
+.flow__b {
+  cursor: pointer;
+  animation: flow-pop 340ms cubic-bezier(0.22, 1.15, 0.4, 1) both;
+  animation-delay: calc(var(--i, 0) * 40ms);
+}
+
+/*
+ * Die Scheibe. Weiss, weil die meisten Marken-Icons das voraussetzen; die
+ * Farbe der Kachel wird inline gesetzt, wo sie gemessen ist. Die Kante ist
+ * neutral gehalten: Auf hellen Füllungen trägt sie, auf dunklen verschwindet
+ * sie — dieselbe Lösung wie bei der runden Scheibe der Buchungsliste.
+ */
+.flow__disc {
+  fill: var(--weiss);
+  stroke: rgba(0, 0, 0, 0.10);
+  stroke-width: 1;
+}
+
+/* Ohne Logo trägt die Blase das Sinnbild ihrer Kategorie. Hellpetrol statt
+   Weiss, damit die bekannten Marken die Aufmerksamkeit behalten. */
+.flow__disc--plain { fill: var(--petrol3); stroke: none; }
+.flow__icon { color: var(--petrol9); pointer-events: none; }
+
+/* Die Auswahl: ein Ring aussen um die Scheibe, auf einem weissen Spalt. */
+.flow__sel { fill: none; stroke: var(--petrol9); stroke-width: 2; }
+.flow__sel-gap { fill: none; stroke: var(--weiss); stroke-width: 2.8; }
+
+@keyframes flow-pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* `base.css` kürzt bei reduzierter Bewegung die Dauer, nicht die Verzögerung —
+   ohne diese Zeile blieben die hinteren Blasen kurz unsichtbar. */
+@media (prefers-reduced-motion: reduce) {
+  .flow__b { animation-delay: 0ms !important; }
+}
+
+/* Die ausgewählte Blase im Klartext. */
+.flow__pick {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: var(--s-2) var(--s-4);
+  margin: var(--s-5) 0 var(--s-3);
+  padding: var(--s-4) var(--s-5);
+  border-radius: var(--CornerRadius-R-16);
+  background: var(--surface-sunken);
+}
+
+.flow__pick-name { font-size: 16px; font-weight: 700; color: var(--text-strong); }
+.flow__pick-amount { grid-row: span 2; font-size: 18px; font-weight: 700; color: var(--text-strong); }
+.flow__pick-meta { grid-column: 1; font-size: 12px; color: var(--text-muted); }
+
+.flow__list { display: grid; }
+
+.flow__row {
+  display: grid;
+  grid-template-columns: 32px 1fr 64px auto;
+  align-items: center;
+  gap: var(--s-4);
+  width: 100%;
+  padding: var(--s-4) var(--s-2);
+  border-radius: var(--CornerRadius-R-8);
+}
+
+.flow__row + .flow__row { border-top: 1px solid var(--line); }
+.flow__row.is-active { background: var(--surface-sunken); }
+
+.flow__logo {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--weiss);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  color: var(--text-strong);
+}
+
+.flow__logo img { width: 28px; height: 28px; object-fit: contain; }
+
+/* Scheibe in der Randfarbe des Logos — dieselbe Regel wie im Blasenfeld und in
+   der Buchungsliste: kein weisser Rest um eine quadratische Kachel. */
+.flow__logo--filled { border-color: transparent; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.10); }
+
+.flow__name {
+  min-width: 0;
+  font-size: 14px;
+  color: var(--text-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+/* Der Balken macht die Blasengrösse als Zahl nachlesbar. */
+.flow__bar { height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.flow__bar span { display: block; height: 100%; background: var(--petrol6); }
+.flow__amount { font-size: 14px; color: var(--text-strong); white-space: nowrap; }
+
+/* Auswahl der Analysen-Ansicht — das Drop-down über dem Ring. */
+.viewpick { position: relative; display: grid; justify-items: center; }
+.viewpick__button { width: auto; padding: 0 var(--s-6); }
+
+.viewpick__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  z-index: 20;
+  min-width: 250px;
+  padding: var(--s-2);
+  border-radius: var(--CornerRadius-R-16);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-lift);
+}
+
+.viewpick__item {
+  display: block;
+  width: 100%;
+  padding: var(--s-4) var(--s-5);
+  border-radius: var(--CornerRadius-R-8);
+  font-size: 15px;
+  color: var(--text-strong);
+}
+
+.viewpick__item.is-active { background: var(--surface-sunken); font-weight: 700; }
