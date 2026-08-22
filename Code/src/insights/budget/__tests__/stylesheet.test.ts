@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest'
    Haus aus, und die App braucht dafür keine Node-Typen. */
 import budgetCss from '../budget.css?raw'
 import assignCss from '../screens/assign.css?raw'
+import assistantCss from '../../assistant/assistant.css?raw'
 import signalsCss from '../../screens/signals.css?raw'
 import recurringCss from '../../cards/recurring-summary.css?raw'
 import shellCss from '../../../app/shell/shell.css?raw'
@@ -27,6 +28,7 @@ const files: [name: string, css: string][] = [
   ['signals.css', signalsCss],
   ['assign.css', assignCss],
   ['recurring-summary.css', recurringCss],
+  ['assistant.css', assistantCss],
 ]
 
 /** Alle Namen, die `theme/` bereitstellt. */
@@ -85,6 +87,20 @@ describe.each(files)('%s', (_name, css) => {
       .map((match) => match[1])
       .filter((name) => !DEFINED.has(name) && !own.has(name) && !FROM_JSX.has(name))
     expect([...new Set(missing)], 'unbekannte Variablen').toEqual([])
+  })
+
+  it('malt keine Fläche mit einer Rampenstufe, die im Dunkeln der Grund ist', () => {
+    /* `--petrol9` bis `--petrol11` sind im dunklen Modus genau die Farben von
+       `--surface-app` und `--surface-card`. Eine Karte, die sich fest darauf
+       setzt, sieht im hellen Modus richtig aus und ist im dunklen unsichtbar —
+       genau das ist der Antwortkarte des Assistenten und dem Einstieg auf dem
+       Signale-Brett passiert. Für umgekehrte Flächen gibt es das Tokenpaar
+       `--surface-inverse` / `--weiss-petrol11`. */
+    const bare = css.replace(/\/\*[\s\S]*?\*\//g, '')
+    const offenders = [...bare.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+      .filter(([, , body]) => /background(-color)?\s*:\s*var\(--petrol(9|10|11)\)/.test(body))
+      .map(([, selector]) => selector.trim())
+    expect(offenders, 'feste dunkle Rampenstufe als Fläche').toEqual([])
   })
 
   it('enthält keine Farbwerte ausserhalb der Tokens', () => {

@@ -13,6 +13,8 @@ import { Card, Row } from '../shell/parts'
 import { CADENCE_LABEL, kindLabel, KIND_ICON, pretty } from '../screens/Recurring'
 import { CATALOG, SUGGESTIONS, type CatalogEntry, type Target } from './catalog'
 import { MIN_QUERY, matchesText, searchList, tokenize } from './match'
+import { AskAnswer, AskSuggestions } from '../../insights/assistant/AskAnswer'
+import { looksLikeQuestion } from '../../insights/assistant/ask'
 
 /**
  * Die Suche, die beide Hälften kennt.
@@ -96,6 +98,10 @@ export function SearchScreen() {
 
   const tokens = useMemo(() => tokenize(query), [query])
   const ready = tokens.length > 0 && query.trim().length >= MIN_QUERY
+  /* Dieselbe Zeile, zwei Absichten: «twint» bleibt eine Suche, «wofuer gebe
+     ich am meisten aus?» wird eine Frage. Die Trefferliste laeuft daneben
+     weiter — wer doch etwas gesucht hat, findet es unter der Antwort. */
+  const asking = looksLikeQuestion(query)
 
   /* Die Erkennung wiederkehrender Buchungen läuft über alle Transaktionen und
      hängt nicht am Suchbegriff — deshalb einmal pro Persona, nicht pro
@@ -149,7 +155,7 @@ export function SearchScreen() {
           ref={field}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="Einstellungen, Funktionen, Buchungen"
+          placeholder="Suchen — oder frag deine Zahlen"
           aria-label="Suchbegriff"
           style={{
             width: '100%',
@@ -167,8 +173,11 @@ export function SearchScreen() {
           }}
         />
 
+        {asking && <AskAnswer question={query} />}
+
         {!ready && (
           <>
+            <AskSuggestions onPick={setQuery} />
             <div className="section-head">
               <span className="section-head__title">Häufig gesucht</span>
             </div>
@@ -183,7 +192,9 @@ export function SearchScreen() {
           </>
         )}
 
-        {ready && total === 0 && <p className="empty">Keine Treffer für «{query.trim()}».</p>}
+        {ready && total === 0 && !asking && (
+          <p className="empty">Keine Treffer für «{query.trim()}».</p>
+        )}
 
         {settings.length > 0 && (
           <Group title="Einstellungen" shown={Math.min(settings.length, LIMIT.setting)} total={settings.length}>

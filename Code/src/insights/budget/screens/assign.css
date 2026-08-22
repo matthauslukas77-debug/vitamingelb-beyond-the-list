@@ -338,8 +338,10 @@
   min-width: 0;
   padding: var(--s-2) var(--s-3);
   border-radius: var(--CornerRadius-R-100);
-  background: var(--petrol10);
-  color: var(--petrol1);
+  /* Siehe `.ask` in `assistant.css`: `--petrol10` ist im dunklen Modus die
+     Seitenfarbe, die Leiste verschwände darin. */
+  background: var(--surface-inverse);
+  color: var(--weiss-petrol11);
   font-size: 13px;
 }
 
@@ -352,7 +354,7 @@
 
 .asg-undo button {
   flex: 0 0 auto;
-  color: var(--petrol1);
+  color: var(--weiss-petrol11);
   font-size: 13px;
   text-decoration: underline;
 }
@@ -412,8 +414,8 @@
   width: 100%;
   padding: var(--s-4);
   border-radius: var(--CornerRadius-R-16);
-  background: var(--petrol10);
-  color: var(--petrol1);
+  background: var(--surface-inverse);
+  color: var(--weiss-petrol11);
   text-align: left;
 }
 
@@ -424,7 +426,7 @@
   height: 40px;
   flex: 0 0 40px;
   border-radius: 50%;
-  background: var(--petrol9);
+  background: color-mix(in oklab, var(--weiss-petrol11) 14%, transparent);
 }
 
 .asg-task__text {
