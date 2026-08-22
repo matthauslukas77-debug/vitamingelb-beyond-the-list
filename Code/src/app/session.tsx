@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import type { Account, Persona, Transaction } from '../data/types'
+import type { BreakdownDirection } from '../domain/breakdown'
 import { sortByDateDesc } from '../data/generate'
 
 /** Die fünf Tabs der v6-Navigation. */
@@ -19,6 +20,7 @@ export type Screen =
   | { name: 'search' }
   | { name: 'recurring' }
   | { name: 'transaction'; transactionId: string }
+  | { name: 'breakdown'; direction: BreakdownDirection }
 
 export type Theme = 'light' | 'dark'
 

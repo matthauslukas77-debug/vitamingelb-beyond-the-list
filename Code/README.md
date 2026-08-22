@@ -82,14 +82,17 @@ Für Demo und Screenshots lässt sich jeder Einstieg per URL ansteuern:
 ?persona=reto                    Persona direkt öffnen
 ?persona=bruno&screen=analysis  zusätzlich einen Bildschirm
 ?persona=nino&screen=account     Kontodetail (optional &account=<id>)
+?persona=bruno&screen=expenses  Ausgaben nach Oberkategorie
 ```
 
 Zusätzlich `&tab=payments` für den Startreiter.
 
 Personas: `reto` · `nino` · `livia` · `bruno`.
 Reiter: `home` · `payments` · `invest` · `offers` · `services`.
-Bildschirme: `account` · `analysis` · `recurring` · `scan` · `pay` · `transfer` · `search`.
+Bildschirme: `account` · `analysis` · `income` · `expenses` · `recurring` · `scan` · `pay` ·
+`transfer` · `search`.
 `recurring` hiess früher `subscriptions` — alte Demo-Links funktionieren weiter.
+`income` und `expenses` sind die beiden Detailseiten hinter der Legende der Analysen.
 
 ## Konfiguration
 
@@ -157,12 +160,13 @@ src/
 ├── data/                 Typen, Personas mit fertigen Buchungen, Markenregister
 ├── domain/               Fachlogik des Nachbaus, ohne UI:
 │                         recurring.ts (Abo-Erkennung) · booking.ts (Buchungstext)
+│                         breakdown.ts (Einnahmen/Ausgaben nach Oberkategorie)
 ├── lib/                  Geld- und Datumsformatierung, Supabase-Anbindung
 ├── app/                  ── DER NACHBAU. Bildet die App von heute ab.
 │   ├── shell/            Telefonrahmen, Tab-Leiste, Karten, Zeilen, Slot
 │   └── screens/          Home · Zahlungen · Anlegen · Angebote · Services
 │                         Kontodetail · Bewegungsdetails · Analysen · Meine Abos
-│                         Scannen/Zahlen/Übertragen/Suche
+│                         Einnahmen/Ausgaben · Scannen/Zahlen/Übertragen/Suche
 └── insights/             ── UNSERE SCHICHT. Alles Neue kommt hierhin.
     ├── registry.tsx      Wo eine neue Funktion eingehängt wird
     ├── engine/           balance.ts — Verlauf und Prognose

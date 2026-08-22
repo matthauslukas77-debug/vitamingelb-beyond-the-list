@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { TODAY, type Transaction } from '../../data/types'
 import { formatAmount } from '../../lib/money'
-import { parseIso } from '../../lib/date'
+import { formatPeriod, parseIso } from '../../lib/date'
 import { useSession } from '../session'
 import { Icon } from '../shell/Icon'
 import { Slot } from '../shell/Slot'
@@ -114,7 +114,7 @@ export function Analysis() {
           <div className="analysis__ring">
             <DoubleRing totals={totals} />
             <div className="analysis__center">
-              <div className="analysis__period">Jan. – Aug. {TODAY.slice(0, 4)}</div>
+              <div className="analysis__period">{formatPeriod(from, TODAY)}</div>
               <div className="analysis__balance num">
                 <span style={{ fontWeight: 400 }}>CHF </span>
                 {formatAmount(balance)}
@@ -136,7 +136,9 @@ export function Analysis() {
         </div>
 
         <div className="analysis__bottom">
-          <div className="legend">
+          {/* Beide Zeilen führen auf die Detailseite ihrer Richtung —
+              Vorlage IMG_1696 (Einnahmen) und IMG_1697 (Ausgaben). */}
+          <button className="legend" onClick={() => push({ name: 'breakdown', direction: 'income' })}>
             <span className="legend__dot" style={{ background: 'var(--hellblau5)' }} />
             <span className="legend__main">
               <span className="legend__title">Einnahmen</span>
@@ -145,9 +147,12 @@ export function Analysis() {
             <span className="legend__amount num">
               <span className="legend__cur">CHF</span> {formatAmount(totals.income, { sign: false })}
             </span>
-          </div>
+            <span className="legend__chevron">
+              <Icon name="chevronRight" size={18} />
+            </span>
+          </button>
 
-          <div className="legend">
+          <button className="legend" onClick={() => push({ name: 'breakdown', direction: 'expenses' })}>
             <span className="legend__dot" style={{ background: 'var(--petrol9)' }} />
             <span className="legend__main">
               <span className="legend__title">Ausgaben</span>
@@ -156,7 +161,10 @@ export function Analysis() {
             <span className="legend__amount num">
               <span className="legend__cur">CHF</span> {formatAmount(totals.expenses, { sign: false })}
             </span>
-          </div>
+            <span className="legend__chevron">
+              <Icon name="chevronRight" size={18} />
+            </span>
+          </button>
 
           <button className="listrow">
             <span className="listrow__icon"><Icon name="document" size={24} accent /></span>

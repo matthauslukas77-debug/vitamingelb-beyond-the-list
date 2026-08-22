@@ -533,8 +533,31 @@ button.row:active { background: var(--tap); }
 
 /* ── Meine Abos ────────────────────────────────────────────────────────── */
 
-.abo { display: flex; align-items: flex-start; gap: var(--s-5); padding: var(--s-5) 0; }
+.abo {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-5);
+  width: 100%;
+  padding: var(--s-5) 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+}
 .abo + .abo { border-top: 1px solid var(--line); }
+
+/* Die Zeile führt auf die Detailansicht der Reihe. */
+.abo--tap { cursor: pointer; }
+.abo--tap:active { background: var(--tap); }
+/* Der Chevron zieht sich in den Zeilenabstand hinein: Sonst wird die
+   Unterzeile «monatlich · nächste 02.09.» um 24 Pixel schmaler und bricht um. */
+.abo__chevron {
+  align-self: center;
+  margin-left: calc(-1 * var(--s-4));
+  margin-right: calc(-1 * var(--s-2));
+  color: var(--petrol4);
+  flex: none;
+}
 
 .abo__icon {
   display: grid;
@@ -573,6 +596,52 @@ button.row:active { background: var(--tap); }
   font-size: 12px;
   line-height: 1.3;
 }
+
+/* ── Detail einer wiederkehrenden Reihe (insights) ─────────────────────────
+   Die vier Zahlen, die die App heute nicht kennt: wie lange, wie oft, wie viel
+   insgesamt, wie viel im Jahr. Aufbau wie `.liquidity` — zwei Spalten, damit
+   sie auf einen Blick zusammen lesbar sind. */
+.tenure {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-3);
+  padding-top: var(--s-5);
+}
+
+.tenure__cell {
+  display: block;
+  padding: var(--s-4);
+  border-radius: var(--CornerRadius-R-16);
+  background: var(--surface-sunken);
+}
+
+.tenure__label { display: block; font-size: 11px; color: var(--text-muted); }
+.tenure__value { display: block; margin-top: 3px; font-size: 19px; font-weight: 700; color: var(--text-strong); }
+.tenure__value--credit { color: var(--text-credit); }
+/* Wortangaben wie «mind. 1 Jahr 11 Monate» brauchen eine Stufe weniger. */
+.tenure__value--text { font-size: 16px; line-height: 1.25; }
+.tenure__note { display: block; margin-top: 4px; font-size: 11px; line-height: 1.35; color: var(--text-muted); }
+
+/* Betragsabschnitte und die Buchungsliste der Reihe. */
+.phase {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  width: 100%;
+  padding: var(--s-4) 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+}
+.phase + .phase { border-top: 1px solid var(--line); }
+.phase--tap { cursor: pointer; }
+.phase--tap:active { background: var(--tap); }
+
+.phase__main { flex: 1; min-width: 0; }
+.phase__amount { font-size: 16px; font-weight: 700; color: var(--text-strong); white-space: nowrap; }
+.phase__when { display: block; margin-top: 2px; font-size: 13px; color: var(--text-muted); }
+.phase__count { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
 
 /* ── Kontokarte mit Verlauf und Prognose (insights) ────────────────────── */
 
@@ -838,3 +907,62 @@ button.tx:active { background: var(--tap); }
 .kind--subscription { background: var(--postfinancegelb); color: #2b2000; }
 .kind--standingOrder { background: var(--surface-sunken); color: var(--text-body); }
 .kind--bill { background: var(--pending1); color: var(--pending3); }
+
+/* ── Einnahmen und Ausgaben im Detail ──────────────────────────────────────
+   Die beiden Bildschirme hinter der Legende der Analysen.
+   Vorlage: fehlendeDetailseiten/einkommen/IMG_1696–1698. */
+
+/* Abgemessen an IMG_1698: Die MITTE des Kreises «Suchen» liegt genau auf der
+   Kante zwischen getönter und weisser Fläche, die erste Karte 82px darunter.
+   Die Kreisreihe ist 91px hoch (48 Scheibe + 8 Abstand + Beschriftung + 20
+   Innenabstand), die Scheibenmitte also 24px von oben — der negative Rand von
+   67px zieht die Kante genau dorthin. Dafür muss der Innenabstand unten der
+   getönten Fläche weg, sonst rutscht die Kante um diesen Betrag nach unten. */
+.breakdown__top { padding-bottom: 0; }
+
+.breakdown__seam {
+  position: relative;
+  z-index: 2;
+  margin-bottom: -67px;
+}
+
+.breakdown__bottom { padding: 82px var(--s-6) var(--s-9); }
+
+/* Eine Karte pro Oberkategorie: Scheibe, fetter Name, Betrag rechts.
+   Kein Pfeil — die Vorlage hat keinen. */
+/* Abgemessen an IMG_1698: Karte 59pt hoch, 10pt Abstand, Rand 20pt. */
+.slice {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  padding: var(--s-3) var(--s-6);
+  border-radius: var(--CornerRadius-R-20);
+  background: var(--surface-sunken);
+}
+
+.slice + .slice { margin-top: 10px; }
+
+.slice__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface-disc);
+  flex: none;
+}
+
+.slice__label {
+  flex: 1;
+  min-width: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.slice__amount { font-size: 19px; color: var(--text-strong); white-space: nowrap; }
+.slice__cur { font-size: 13px; color: var(--text-muted); }
+
+/* Die Legendenzeilen der Analysen führen jetzt weiter — deshalb ein Pfeil. */
+.legend { width: 100%; text-align: left; }
+.legend__chevron { display: grid; place-items: center; color: var(--text-muted); flex: none; }

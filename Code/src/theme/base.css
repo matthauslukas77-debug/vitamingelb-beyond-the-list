@@ -7,6 +7,7 @@
   --surface-app: #E9F3F2;        /* Hintergrund hinter den Karten */
   --surface-card: var(--weiss);
   --surface-sunken: #EEF6F6;     /* petrol1 — getönte Zeilen, Chips */
+  --surface-disc: #D6EBEB;       /* petrol2 — Symbolscheibe auf getönter Zeile */
   --surface-inverse: var(--petrol8);
 
   /* Text */
@@ -38,6 +39,7 @@
   --surface-app: #00292E;        /* petrol10 */
   --surface-card: #00373D;       /* petrol9 */
   --surface-sunken: #004B5A;     /* petrol8 */
+  --surface-disc: #00373D;        /* petrol9 */
   --surface-inverse: var(--petrol2);
 
   --text-strong: var(--weiss);

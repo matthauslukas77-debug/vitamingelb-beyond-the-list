@@ -25,10 +25,14 @@ function readUrl(): { persona: Persona | null; tab?: Tab; screen?: Screen } {
         // und alte Demo-Links sollen nicht ins Leere laufen.
         name === 'subscriptions' || name === 'recurring'
         ? { name: 'recurring' }
-        : name === 'analysis' || name === 'scan' || name === 'pay' ||
-            name === 'transfer' || name === 'search'
-          ? { name }
-          : undefined
+        : // Die beiden Detailseiten der Analysen heissen in der URL nach ihrer
+          // Richtung — «income» und «expenses» statt eines Parameters.
+          name === 'income' || name === 'expenses'
+          ? { name: 'breakdown', direction: name }
+          : name === 'analysis' || name === 'scan' || name === 'pay' ||
+              name === 'transfer' || name === 'search'
+            ? { name }
+            : undefined
 
   return { persona, tab, screen }
 }

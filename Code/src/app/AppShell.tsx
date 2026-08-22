@@ -3,6 +3,7 @@ import { SessionProvider, useSession, type Screen, type Tab } from './session'
 import { Icon, type IconName } from './shell/Icon'
 import { AccountDetail } from './screens/AccountDetail'
 import { Analysis } from './screens/Analysis'
+import { Breakdown } from './screens/Breakdown'
 import { Pay, Scan, Search, Transfer } from './screens/Flows'
 import { Home } from './screens/Home'
 import { Invest } from './screens/Invest'
@@ -72,6 +73,7 @@ function CurrentSheet() {
     case 'search': return <Search />
     case 'recurring': return <Recurring />
     case 'transaction': return <TransactionDetail transactionId={top.transactionId} />
+    case 'breakdown': return <Breakdown direction={top.direction} />
   }
 }
 

@@ -41,3 +41,23 @@ export function formatMonth(iso: string): string {
   const date = parseIso(iso)
   return `${MONTHS_DE[date.getMonth()]} ${date.getFullYear()}`
 }
+
+/** Kurzformen für die Zeitraumangabe über dem Total in den Analysen. */
+const MONTHS_SHORT_DE = [
+  'Jan.', 'Feb.', 'März', 'Apr.', 'Mai', 'Juni',
+  'Juli', 'Aug.', 'Sept.', 'Okt.', 'Nov.', 'Dez.',
+]
+
+/**
+ * Zeitraum wie in den Analysen: «Jan. – Aug. 2026». Ein einzelner Monat steht
+ * ohne Bindestrich da, ein Zeitraum über den Jahreswechsel mit beiden Jahren.
+ */
+export function formatPeriod(from: string, to: string): string {
+  const a = parseIso(from)
+  const b = parseIso(to)
+  if (a.getFullYear() !== b.getFullYear()) {
+    return `${MONTHS_SHORT_DE[a.getMonth()]} ${a.getFullYear()} – ${MONTHS_SHORT_DE[b.getMonth()]} ${b.getFullYear()}`
+  }
+  if (a.getMonth() === b.getMonth()) return `${MONTHS_SHORT_DE[b.getMonth()]} ${b.getFullYear()}`
+  return `${MONTHS_SHORT_DE[a.getMonth()]} – ${MONTHS_SHORT_DE[b.getMonth()]} ${b.getFullYear()}`
+}
