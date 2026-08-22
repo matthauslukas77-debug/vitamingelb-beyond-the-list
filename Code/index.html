@@ -13,12 +13,19 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="PostFinance" />
 
-    <!-- ?v=2 nur, weil Safari das Home-Bildschirm-Symbol hartnäckig behält:
-         Ohne neuen Pfad zeigt ein einmal gespeichertes Lesezeichen weiter das
-         alte Symbol, und genau das soll hier ja das PostFinance-Zeichen sein. -->
-    <link rel="manifest" href="./manifest.webmanifest?v=2" />
-    <link rel="icon" type="image/svg+xml" href="./icon.svg?v=2" />
-    <link rel="apple-touch-icon" href="./icon-180.png?v=2" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+
+    <!-- Eigener Dateiname statt `icon-180.png?v=2`: iOS backt das Symbol beim
+         Speichern auf den Home-Bildschirm ein und holt es für ein bestehendes
+         Lesezeichen nie wieder. Ein Query-String hilft dabei nicht zuverlässig
+         — manche iOS-Versionen ignorieren ihn am apple-touch-icon. Ein Pfad,
+         den das Gerät noch nie geladen hat, umgeht beide Caches sicher.
+
+         `apple-touch-icon.png` im Wurzelverzeichnis ist zugleich der Pfad, den
+         iOS von sich aus probiert, wenn es das Link-Tag nicht auswertet. -->
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" href="./apple-touch-icon.png" />
 
     <title>PostFinance</title>
   </head>
