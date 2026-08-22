@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { boundsOf, packCircles, radiusFor, type PackedCircle } from '../pack'
-import { bubbleTotals, shareOf, stateOf } from '../ui/BubbleField'
+import { bubbleTotals, overshootOf, shareOf, stateOf } from '../ui/BubbleField'
 
 /** Überlappen sich zwei Kreise wirklich — mit etwas Luft für Rundung? */
 function overlaps(a: PackedCircle<unknown>, b: PackedCircle<unknown>): boolean {
@@ -135,22 +135,35 @@ describe('Radius aus Betrag', () => {
 })
 
 describe('Der Zustand einer Blase', () => {
-  it('bleibt grün, solange Spielraum da ist', () => {
-    expect(stateOf(0)).toBe('ok')
-    expect(stateOf(0.5)).toBe('ok')
-    expect(stateOf(0.85)).toBe('ok')
+  /* Die sechs Stufen des Entwurfs — `states_sheet.png` zeigt genau diese
+     Prozentwerte, deshalb stehen sie hier als Prüfpunkte. */
+  it('läuft bis zum Limit die Petrol-Rampe hinauf', () => {
+    expect(stateOf(0)).toBe('empty')
+    expect(stateOf(0.3)).toBe('low')
+    expect(stateOf(0.6)).toBe('mid')
+    expect(stateOf(0.85)).toBe('high')
   })
 
-  it('wird orange kurz vor dem Limit und rot darüber', () => {
-    expect(stateOf(0.86)).toBe('tight')
+  it('wechselt erst kurz vor dem Limit die Achse', () => {
+    expect(stateOf(0.9)).toBe('high')
+    expect(stateOf(0.97)).toBe('tight')
     expect(stateOf(1)).toBe('tight')
-    expect(stateOf(1.01)).toBe('over')
+    expect(stateOf(1.35)).toBe('over')
     expect(stateOf(9.2)).toBe('over')
+  })
+
+  it('lässt den roten Bogen die Überschreitung messen, nicht den Verbrauch', () => {
+    expect(overshootOf(0.5)).toBe(0)
+    expect(overshootOf(1)).toBe(0)
+    expect(overshootOf(1.35)).toBeCloseTo(0.35, 6)
+    // Ab doppelt so viel ist der Bogen voll und hätte nichts mehr zu wachsen.
+    expect(overshootOf(2)).toBe(1)
+    expect(overshootOf(9.2)).toBe(1)
   })
 
   it('rechnet ohne Budget keinen Anteil aus, statt durch null zu teilen', () => {
     expect(shareOf({ key: 'taxes', budget: 0, spent: 50_000 })).toBe(0)
-    expect(stateOf(shareOf({ key: 'taxes', budget: 0, spent: 50_000 }))).toBe('ok')
+    expect(stateOf(shareOf({ key: 'taxes', budget: 0, spent: 50_000 }))).toBe('empty')
   })
 
   it('summiert Budget und Verbrauch über alle Blasen', () => {

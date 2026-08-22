@@ -19,6 +19,8 @@ export type IconName =
   | 'banknoteIn' | 'banknoteOut'
   /* Zahlungsfluss — Vorlage IMG_5014–5020 */
   | 'close' | 'pencil' | 'copy' | 'check' | 'backspace'
+  /* Budgetkategorien — aus dem Blasen-Entwurf, siehe `insights/budget/slots.ts` */
+  | 'shield'
 
 const P: Record<IconName, string> = {
   home: 'M3 10.2 12 3l9 7.2M5.6 8.6V20h12.8V8.6M9.8 20v-5.4h4.4V20',
@@ -96,6 +98,9 @@ const P: Record<IconName, string> = {
     'M7.4 4.8h9.2A1.6 1.6 0 0 1 18.2 6.4v9.6a1.6 1.6 0 0 1-1.6 1.6H7.4a1.6 1.6 0 0 1-1.6-1.6V6.4' +
     'a1.6 1.6 0 0 1 1.6-1.6ZM6 10h12M12 4.8V2.8M8.8 17.6 7.2 21M15.2 17.6 16.8 21',
   bank: 'M3.2 9.6 12 4.6l8.8 5M5.2 9.8v7.8M9.7 9.8v7.8M14.3 9.8v7.8M18.8 9.8v7.8M3 19.4h18',
+  /* Schild — «Versicherungen und Vorsorgen» in den Budgetblasen. Das einzige
+     Zeichen aus dem Entwurf, für das die Bibliothek noch nichts hatte. */
+  shield: 'M12 3.2 19.2 6v5.4c0 4.1-2.9 7.5-7.2 9.4-4.3-1.9-7.2-5.3-7.2-9.4V6L12 3.2Z',
   banknoteIn: 'M6.2 6.4h12.8A1.4 1.4 0 0 1 20.4 7.8v5.4a1.4 1.4 0 0 1-1.4 1.4H6.2A1.4 1.4 0 0 1 4.8 13.2V7.8A1.4 1.4 0 0 1 6.2 6.4ZM7.6 9h3.4M7.6 11.4h1.8',
   banknoteOut: 'M6.2 6.4h12.8A1.4 1.4 0 0 1 20.4 7.8v5.4a1.4 1.4 0 0 1-1.4 1.4H6.2A1.4 1.4 0 0 1 4.8 13.2V7.8A1.4 1.4 0 0 1 6.2 6.4ZM7.6 9h3.4M7.6 11.4h1.8',
 

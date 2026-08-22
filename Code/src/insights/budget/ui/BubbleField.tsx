@@ -22,11 +22,14 @@ import { boundsOf, packCircles, radiusFor } from '../pack'
  *   Rückstand, sondern Vorsprung. Liegt die Füllung innerhalb des Strichrings,
  *   ist man vor der Zeit — liegt sie darüber, dahinter.
  *
- * Farbe nach Verbrauch: bis 70 % grün, bis 100 % orange, darüber rot. Die drei
- * Töne kommen aus den semantischen Rampen der Tokens (`--success3`,
- * `--pending2`, `--danger3`) und nicht aus der Petrol-Rampe der Marke — die
- * kennt kein Grün, und der Zustand «im Rahmen / eng / drüber» braucht eine
- * eigene Achse, sonst konkurriert er mit der Kategoriefarbe.
+ * **Die Farbe läuft die Petrol-Rampe der Marke hinauf**, statt eine eigene
+ * Ampel aufzumachen: je voller, desto dunkler. petrol4 · petrol6 · petrol8,
+ * dann Orange, dann Gelb mit rotem Bogen. Ein Budget zu zwei Dritteln
+ * verbraucht ist kein Warnzustand, und eine grüne Blase wäre in dieser App
+ * ein Fremdkörper — die Marke kennt kein Grün. Erst wo es eng wird, wechselt
+ * die Achse.
+ *
+ * Vorlage: `circles_vorschlag bubbles screens/states_sheet.png`.
  *
  * Gepackt wird mit `pack.ts`, von Hand gezeichnet wie Donut und Verlaufskurve.
  *
@@ -48,21 +51,43 @@ export function shareOf(bubble: Bubble): number {
   return bubble.budget > 0 ? bubble.spent / bubble.budget : 0
 }
 
-export type BubbleState = 'ok' | 'tight' | 'over'
+export type BubbleState = 'empty' | 'low' | 'mid' | 'high' | 'tight' | 'over'
 
 /**
- * bis 85 % grün, bis 100 % orange, darüber rot.
+ * Sechs Stufen statt drei — die Farbskala des Entwurfs.
+ *
+ *   leer     nichts gebucht: Ring und Strichring, sonst nichts
+ *   low      petrol4, hell
+ *   mid      petrol6
+ *   high     petrol8 — die letzte Petrolstufe, noch kein Alarm
+ *   tight    Orange: knapp, aber innerhalb
+ *   over     Gelb plus roter Bogen
  *
  * Bewusst am **Anteil am Budget** und nicht am Monatsfortschritt: Fixkosten
  * sind am 3. des Monats zu 100 % bezahlt, und eine Anzeige, die deshalb den
- * ganzen Monat orange leuchtet, wird nach zwei Tagen ignoriert. Die Frage, die
- * die Farbe beantwortet, ist «wie viel Spielraum habe ich noch», nicht «bin
- * ich im Zeitplan». Letzteres sagt der Strichring, und zwar leise.
+ * ganzen Monat leuchtet, wird nach zwei Tagen ignoriert. Die Frage, die die
+ * Farbe beantwortet, ist «wie viel Spielraum habe ich noch», nicht «bin ich im
+ * Zeitplan». Letzteres sagt der Strichring, und zwar leise.
  */
 export function stateOf(share: number): BubbleState {
   if (share > 1) return 'over'
-  if (share > 0.85) return 'tight'
-  return 'ok'
+  if (share > 0.9) return 'tight'
+  if (share > 0.7) return 'high'
+  if (share > 0.45) return 'mid'
+  if (share > 0) return 'low'
+  return 'empty'
+}
+
+/**
+ * Wie viel vom Ring der rote Bogen einnimmt, 0..1.
+ *
+ * Er misst die Überschreitung, nicht den Verbrauch: 135 % ergeben gut ein
+ * Drittel, 200 % einen vollen Ring. Darüber bleibt er voll — Brunos 920 %
+ * sehen aus wie 200 %, und die genaue Zahl steht in der Liste darunter. Ein
+ * Bogen, der weiterwächst, hätte nichts mehr zu wachsen.
+ */
+export function overshootOf(share: number): number {
+  return share <= 1 ? 0 : Math.min(1, share - 1)
 }
 
 /* Die Zeichenfläche. Das SVG skaliert über `width: 100%`; diese Zahlen
@@ -144,6 +169,7 @@ export function BubbleField({
            darüber hinausgeht, sagt der Überstandsbogen. */
         const fill = outer * Math.sqrt(Math.min(share, 1))
         const pace = outer * Math.sqrt(Math.min(progress, 1))
+        const overshoot = overshootOf(share)
         const isSelected = selected === bubble.key
 
         return (
@@ -162,9 +188,17 @@ export function BubbleField({
             {/* Der Monatsfortschritt — nur, wo er etwas aussagt. */}
             {pace > 2 && pace < outer && <circle className="bub__pace" r={pace} />}
 
-            {/* Über dem Limit: ein Bogen ausserhalb des Rings. Die
-                Überschreitung wird gezeigt, nicht weggeschnitten. */}
-            {share > 1 && <circle className="bub__over" r={outer + 4} />}
+            {/* Über dem Limit: ein roter Bogen auf dem Ring, dessen Länge das
+                Mass der Überschreitung ist. Die Blase selbst bleibt so gross
+                wie ihr Budget — sonst bedeutete der Ring zweierlei. */}
+            {overshoot > 0 && (
+              <circle
+                className="bub__over"
+                r={outer}
+                transform="rotate(-90)"
+                strokeDasharray={`${overshoot * 2 * Math.PI * outer} ${2 * Math.PI * outer}`}
+              />
+            )}
 
             {outer >= ICON_RADIUS && (
               <g

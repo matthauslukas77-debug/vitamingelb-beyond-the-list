@@ -48,7 +48,8 @@ export interface CategoryDef {
    * Sinnbild. Das Original nennt hier `calculator_moneyBag`, `houseWindows`,
    * `handshake`, `personMedal`, `train`, `shoppingBasketGroceries` — Namen aus
    * der PostFinance-Icon-Bibliothek, die uns nicht vorliegt. Genommen wird das
-   * nächstliegende Zeichen aus `src/app/shell/Icon.tsx`.
+   * nächstliegende Zeichen aus `src/app/shell/Icon.tsx`, in der Auswahl des
+   * Blasen-Entwurfs: Steuerrechnung, Haus, Schild, Herz, Tram, Tasche.
    */
   icon: IconName
   /** Die Detailfelder, in Original-Reihenfolge. */
@@ -59,19 +60,19 @@ export const CATEGORIES: CategoryDef[] = [
   {
     key: 'taxes',
     title: 'Steuern',
-    icon: 'bank',
+    icon: 'document',
     fields: ['Steuern'],
   },
   {
     key: 'reside',
     title: 'Wohnen',
-    icon: 'sofa',
+    icon: 'home',
     fields: ['Miete', 'Hypothekarzinsen', 'Neben- und Unterhaltskosten'],
   },
   {
     key: 'insurance',
     title: 'Versicherungen und Vorsorgen',
-    icon: 'document',
+    icon: 'shield',
     fields: ['Haftpflicht und Hausrat', 'Beiträge private Vorsorge', 'Weitere Versicherungen'],
   },
   {

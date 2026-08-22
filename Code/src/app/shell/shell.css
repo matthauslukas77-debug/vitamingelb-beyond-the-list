@@ -61,22 +61,52 @@
    hereingleitende Ebene deckend sein muss — gleiche Kiste, gleicher Verlauf,
    also stimmt er über der Ebene darunter genau überein.
 
-   Beide Bögen sind Kreise, deren Mittelpunkt links ausserhalb des Bildschirms
-   liegt. Radius und Mittelpunkt stehen in Punkten und nicht in Prozent: Ein
-   Kreis soll ein Kreis bleiben, auch wenn der Bildschirm in Safari niedriger
-   ist als im Vollbild. Die Werte sind aus der Vorlage gerechnet und auf die
-   Entwurfsbreite von 390 Punkten umgelegt. */
+   Wichtig, und vorher falsch verstanden: Die Kante ist HART. Die Vorlage ist
+   ein 8-Bit-RGBA-Bild ohne Farbreduktion und enthält im Hintergrund genau zwei
+   Werte, #EDF6F6 und #E4F2F2 — dazwischen nur die Kantenglättung von wenigen
+   Punkten. Es ist also eine Form mit Umriss, kein Verlauf. Als Weichzeichnung
+   nachgebaut liest sie sich als «irgendwie blau», nicht als Form.
+
+   Die vier Bögen sind aus der Vorlage ausgemessen: Für jede Bildzeile, in der
+   der Hintergrund unverdeckt ist, wurde der Übergang zwischen den beiden Tönen
+   bestimmt und durch die Punkte ein Kreis gelegt. Die Abweichung liegt bei
+   unter drei Punkten. In Einheiten der Vorlage (402 × 874):
+
+     oben links     Mittelpunkt (-213.0,   15.7)  Radius  314.0  hell innen
+     oben rechts    Mittelpunkt (-377.6,   -1.3)  Radius  745.0  hell aussen
+     unten links    Mittelpunkt ( 723.6,  856.1)  Radius  686.2  hell aussen
+     unten rechts   Mittelpunkt ( 583.2,  834.7)  Radius  275.8  hell innen
+
+   Wo die Karten die Vorlage verdecken — das mittlere Drittel — ist der Verlauf
+   der Form nicht zu sehen und deshalb auch nicht belegt. Dort schliessen zwei
+   gerade Kanten die Keile, mit der Neigung, die oben rechts messbar ist.
+
+   `background-size: 100% auto` statt `100% 100%`: Die Form behält ihr
+   Seitenverhältnis. Auf einem niedrigeren Bildschirm — Safari mit Leisten —
+   sieht man unten weniger davon, statt eine gestauchte Form. */
 .phone__screen,
 .layer {
-  --app-backdrop:
-    /* Die hellere Fläche oben links — innen im kleinen Kreis. */
-    radial-gradient(circle 285px at -187px 2%,
-      var(--backdrop-lift) 0 92%, transparent 108%),
-    /* Der grosse Bogen: aussen hell, innen der Grundton. Seine Kante zieht
-       von oben rechts nach unten links durch das Bild. */
-    radial-gradient(circle 714px at -359px 0,
-      transparent 0 92%, var(--backdrop-lift) 108%),
-    var(--backdrop);
+  --backdrop-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 402 874'%3E%3Cpath fill='%23fff' d='M0 0H100.6A314 314 0 0 1 0 246.4Z M367.4 0H402V301L282.3 344.5A745 745 0 0 1 367.4 0Z M0 874V560L127.5 513.7A686.2 686.2 0 0 0 37.6 874Z M402 626.8A275.8 275.8 0 0 0 310.2 874H402Z'/%3E%3C/svg%3E");
+  background: var(--backdrop);
+  /* Ohne dies ist die Telefonfläche kein Stapelkontext, und das `z-index: -1`
+     der Form rutscht hinter deren eigenen Grund — sichtbar war dann nur der
+     Grundton. `isolation` macht sie zum Kontext, ohne sonst etwas zu ändern. */
+  isolation: isolate;
+}
+
+/* Die Form liegt als Maske über dem Grundton, nicht als eingefärbtes Bild:
+   So kommt die Farbe aus dem Thema und die Form steht nur einmal im Code.
+   `z-index: -1` schiebt sie hinter den Inhalt, aber vor den Grund. */
+.phone__screen::before,
+.layer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--backdrop-lift);
+  -webkit-mask: var(--backdrop-shape) top center / 100% auto no-repeat;
+  mask: var(--backdrop-shape) top center / 100% auto no-repeat;
+  pointer-events: none;
 }
 
 .phone__notch {

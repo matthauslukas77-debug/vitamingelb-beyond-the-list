@@ -402,8 +402,14 @@ in jeder:
 * **Der Ring** ist das Budget. Der Durchmesser folgt der **Wurzel** des Betrags, damit
   die Fläche proportional ist. Bei proportionalem Radius sähe ein doppeltes Budget
   viermal so gross aus — der häufigste Fehler in Blasendiagrammen.
-* **Die Füllung** ist, was davon weg ist, ebenfalls flächentreu. Bis 85 % grün, bis
-  100 % orange, darüber rot, mit einem Bogen ausserhalb des Rings.
+* **Die Füllung** ist, was davon weg ist, ebenfalls flächentreu. Ihre Farbe läuft die
+  **Petrol-Rampe der Marke** hinauf — je voller, desto dunkler: petrol4 · petrol6 ·
+  petrol8. Erst kurz vor dem Limit wechselt die Achse auf Orange, darüber auf Gelb mit
+  einem roten Bogen auf dem Ring. Kein Grün: Die Marke kennt keines, und ein zu zwei
+  Dritteln verbrauchtes Budget ist kein Warnzustand.
+* **Der rote Bogen** misst die Überschreitung, nicht den Verbrauch — 135 % ergeben gut
+  ein Drittel des Rings, ab 200 % ist er voll. Die Blase selbst bleibt so gross wie ihr
+  Budget.
 * **Der feine Strichring** ist der Monatsfortschritt. Ohne ihn lügt jede
   Verbrauchsanzeige in der Monatsmitte: Am 8. sind 25 % eines Budgets kein Rückstand,
   sondern Vorsprung.
@@ -411,6 +417,8 @@ in jeder:
 Die Skala richtet sich **nur** nach den Budgets, nie nach dem Verbrauch. Bruno zahlt im
 August CHF 13'463 fürs Wohnen bei CHF 1'463 Budget; nähme die Blase diese Zahl, wäre sie
 neunmal so gross wie alle anderen zusammen und der Ring bedeutete zweierlei.
+
+Vorlage für Farben und Zustände ist `circles_vorschlag bubbles screens/states_sheet.png`.
 
 Gepackt wird mit dem Verfahren aus Wang et al., «Visualization of Large Hierarchical Data
 by Circle Packing» — dasselbe, das `d3-hierarchy` benutzt, hier ausgeschrieben in
