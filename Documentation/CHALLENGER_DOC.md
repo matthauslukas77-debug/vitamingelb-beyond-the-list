@@ -1,4 +1,4 @@
-# «Teamname» — Beyond the List
+# Vitamin Gelb — Beyond the List
 ## Dokumentation für den Challenger (PostFinance)
 
 > "What if banking not only showed what happened, but explained what it means?"

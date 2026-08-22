@@ -1,4 +1,4 @@
-# «Teamname» — Beyond the List (PostFinance)
+# Vitamin Gelb — Beyond the List (PostFinance)
 ## Technische Informationen für die Jury
 
 > Struktur 1:1 gemäss offizieller Vorlage `BernHackt_Tech Jury Template Documentation.docx`.
@@ -9,9 +9,9 @@
 
 ### Aktueller Stand des Sourcecodes
 
-- **GitHub-Repository:** _TODO Link_
-- **Stand / Branch:** `main`, Stand _TODO_
-- **Lauffähig?** _TODO — was läuft, was nicht_
+- **GitHub-Repository:** <https://github.com/matthauslukas77-debug/vitamingelb-beyond-the-list>
+- **Stand / Branch:** `main`
+- **Lauffähig?** Ja. `cd Code && npm install && npm run dev` — ohne Schlüssel, ohne Backend. `npm test` und `npm run build` laufen grün.
 
 ### Ausgangslage
 
