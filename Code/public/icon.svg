@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Eigene Marke für den Prototyp: die Liste, aus der etwas heraussteigt.
+       Bewusst NICHT das PostFinance-Logo — Farbwelt ja, Marke nein. -->
+  <rect width="512" height="512" fill="#004B5A"/>
+  <g stroke="#FFFFFF" stroke-width="26" stroke-linecap="round" opacity="0.55">
+    <path d="M120 330h150"/>
+    <path d="M120 392h230"/>
+  </g>
+  <path d="M120 268h96" stroke="#FFFFFF" stroke-width="26" stroke-linecap="round" opacity="0.55"/>
+  <path d="M140 214 236 214" stroke="#FFFFFF" stroke-width="26" stroke-linecap="round" opacity="0"/>
+  <path d="M128 236 216 152 280 208 392 104"
+        fill="none" stroke="#FFCC00" stroke-width="30"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M312 104h80v80" fill="none" stroke="#FFCC00" stroke-width="30"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

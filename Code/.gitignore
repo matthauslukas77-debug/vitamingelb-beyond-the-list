@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.DS_Store
+*.local
+
+# Umgebungsvariablen — nur das Beispiel wird versioniert
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel
+
+# Supabase CLI
+supabase/.temp
+supabase/.branches

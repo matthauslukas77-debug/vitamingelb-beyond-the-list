@@ -1,0 +1,438 @@
+/* ── Telefonrahmen ─────────────────────────────────────────────────────── */
+
+/* Am Schreibtisch simuliert der Rahmen die Statusleiste; auf einem echten
+   Gerät kommen die Werte vom Betriebssystem (Notch, Home-Indikator). */
+:root {
+  --safe-top: 46px;
+  --safe-bottom: 0px;
+}
+
+.stage {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(120% 90% at 50% 0%, #DDEFEE 0%, #CFE7E6 55%, #C3E0DF 100%);
+}
+
+.phone {
+  position: relative;
+  width: var(--phone-w);
+  height: var(--phone-h);
+  max-height: calc(100dvh - 48px);
+  border-radius: 44px;
+  padding: 10px;
+  background: var(--petrol9);
+  box-shadow: 0 30px 70px rgba(0, 41, 46, 0.35);
+  flex: none;
+}
+
+.phone__screen {
+  position: relative;
+  height: 100%;
+  border-radius: 35px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-app);
+  color: var(--text-body);
+}
+
+.phone__notch {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  translate: -50% 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--petrol9);
+  z-index: 5;
+}
+
+/* Auf einem echten Telefon gibt es keinen Rahmen: Die App füllt den Bildschirm.
+   Greift bei schmalen Viewports und immer, wenn die App vom Home-Bildschirm
+   gestartet wurde. */
+@media (max-width: 560px), (display-mode: standalone), (display-mode: fullscreen) {
+  :root {
+    /* In Safari ist der Inset 0 — dann reicht ein kleiner Abstand.
+       Im Vollbild liefert iOS die echte Höhe der Statusleiste. */
+    --safe-top: max(env(safe-area-inset-top, 0px), 14px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .stage {
+    display: block;
+    padding: 0;
+    background: var(--surface-app);
+  }
+
+  .phone {
+    width: 100%;
+    height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .phone__screen { border-radius: 0; }
+  .phone__notch { display: none; }
+}
+
+/* ── Scrollfläche ──────────────────────────────────────────────────────── */
+
+.screen {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.screen__inner { padding: 0 var(--s-5) var(--s-8); }
+
+/* Der weiche Verlauf hinter dem Kopfbereich, wie in der Vorlage. */
+.screen--tinted {
+  background:
+    radial-gradient(150% 60% at 85% -10%, rgba(166, 216, 217, 0.55) 0%, transparent 60%),
+    var(--surface-app);
+}
+
+/* ── Kopfzeile ─────────────────────────────────────────────────────────── */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--s-3);
+  padding: var(--safe-top) var(--s-5) 0;
+}
+
+.topbar__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  height: 44px;
+  padding: 0 var(--s-6);
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--surface-card);
+  color: var(--text-strong);
+  font-size: 15px;
+  box-shadow: var(--shadow-card);
+}
+
+.topbar__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface-card);
+  color: var(--text-strong);
+  box-shadow: var(--shadow-card);
+}
+
+.screen__title {
+  margin: var(--s-6) 0 var(--s-7);
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+  text-align: center;
+}
+
+/* ── Kreis-Aktionen ────────────────────────────────────────────────────── */
+
+.circles {
+  display: flex;
+  justify-content: center;
+  padding: 0 var(--s-3) var(--s-6);
+}
+
+/* Feste Spaltenbreite: Vier Kreise füllen die Zeile genau aus, zwei stehen
+   mittig beieinander. Die Beschriftung darf etwas breiter sein als die
+   Spalte, damit «Marktübersicht» auf eine Zeile passt. */
+.circle {
+  display: grid;
+  justify-items: center;
+  gap: var(--s-3);
+  /* Spaltenbreite aus den echten Screenshots: vier Kreise füllen die Zeile,
+     drei oder zwei stehen mittig. `min-width: 0`, damit die etwas breitere
+     Beschriftung die Spalte nicht aufzieht. */
+  flex: 0 0 81px;
+  min-width: 0;
+}
+
+.circle__disc {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--surface-card);
+  color: var(--text-strong);
+  box-shadow: var(--shadow-card);
+  transition: transform 120ms ease;
+}
+
+.circle:active .circle__disc { transform: scale(0.94); }
+.circle__disc--action { background: var(--action); color: var(--action-ink); box-shadow: none; }
+.circle__disc--outline { background: transparent; border: 1px solid var(--petrol4); box-shadow: none; }
+.circle__label {
+  width: 100%;
+  font-size: 12px;
+  color: var(--text-body);
+  text-align: center;
+  line-height: 1.25;
+  hyphens: auto;
+}
+
+/* ── Karten und Zeilen ─────────────────────────────────────────────────── */
+
+.card {
+  background: var(--surface-card);
+  border-radius: var(--CornerRadius-R-28);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.card + .card { margin-top: var(--s-6); }
+.card__title { padding: var(--s-6) var(--s-6) var(--s-2); font-size: 16px; font-weight: 700; color: var(--text-strong); }
+.card__body { padding: var(--s-4) var(--s-6) var(--s-6); }
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-6) var(--s-1) var(--s-3);
+}
+
+.section-head__title { font-size: 14px; color: var(--text-body); }
+.section-head__value { font-size: 14px; color: var(--text-body); }
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  width: 100%;
+  padding: var(--s-5);
+  transition: background 120ms ease;
+}
+
+button.row:active { background: var(--tap); }
+.card--divided .row + .row { border-top: 1px solid var(--line); }
+.row__main { flex: 1; min-width: 0; }
+
+/* Bezeichnung und Betrag stehen auf einer Zeile, die IBAN darunter über die
+   volle Breite — so wie im echten Screenshot. */
+.row__line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+.row__title { display: block; font-size: 16px; font-weight: 700; line-height: 1.3; color: var(--text-strong); }
+.row__sub { display: block; margin-top: 3px; font-size: 13px; line-height: 1.35; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row__amount { flex: none; font-size: 16px; color: var(--text-strong); white-space: nowrap; }
+.row__amount--credit { color: var(--text-credit); }
+.row__chevron { color: var(--petrol4); flex: none; }
+
+.badge {
+  display: inline-block;
+  margin-top: var(--s-2);
+  padding: 1px var(--s-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--CornerRadius-R-4);
+  font-size: 11px;
+  color: var(--text-body);
+}
+
+.pill-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  width: 100%;
+  height: 44px;
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--surface-card);
+  color: var(--text-strong);
+  font-size: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.soft-button {
+  display: block;
+  width: 100%;
+  padding: var(--s-4);
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--surface-sunken);
+  color: var(--text-strong);
+  font-size: 15px;
+  text-align: center;
+}
+
+.tx-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface-sunken);
+  color: var(--text-strong);
+  flex: none;
+}
+
+.day-head {
+  padding: var(--s-7) 0 var(--s-3);
+  font-size: 15px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Buchungen stehen direkt auf der Fläche — ohne Karte, ohne Trennlinien.
+   Vorlage: PREP/07_screenshots/IMG_1675.PNG */
+.tx-list { display: grid; }
+
+.tx {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-5);
+  width: 100%;
+  padding: var(--s-5) 0;
+  text-align: left;
+}
+
+.tx__main { flex: 1; min-width: 0; }
+
+.tx__text {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-strong);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tx__amount { padding-top: 2px; font-size: 16px; color: var(--text-strong); white-space: nowrap; }
+.tx__amount--credit { color: var(--text-credit); }
+
+/* Farbige Scheibe als Ersatz für das echte Händlerlogo. */
+.tx__brand {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  flex: none;
+  overflow: hidden;
+}
+
+.empty { padding: var(--s-8) var(--s-5); text-align: center; font-size: 14px; color: var(--text-muted); }
+
+/* ── Tab-Leiste ────────────────────────────────────────────────────────── */
+
+.tabbar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--s-1);
+  padding: var(--s-4) var(--s-2) calc(var(--s-4) + var(--safe-bottom));
+  background: var(--surface-card);
+  border-top: 1px solid var(--line);
+  flex: none;
+}
+
+.tab { display: grid; justify-items: center; gap: 2px; padding: var(--s-2) 0; color: var(--text-strong); }
+
+.tab__disc {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 34px;
+  border-radius: var(--CornerRadius-R-100);
+  transition: background 140ms ease;
+  position: relative;
+}
+
+.tab[aria-current='page'] .tab__disc { background: var(--petrol2); }
+.tab__label { font-size: 12px; line-height: 1.2; }
+.tab[aria-current='page'] .tab__label { font-weight: 400; }
+
+.tab__dot {
+  position: absolute;
+  top: 2px;
+  right: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--danger3);
+}
+
+/* ── Modale Bildschirme (Push-Navigation) ──────────────────────────────── */
+
+.sheet {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-app);
+  animation: sheet-in 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes sheet-in { from { transform: translateX(14px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+.sheet__bar {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  padding: var(--safe-top) var(--s-4) var(--s-4);
+  flex: none;
+}
+
+.sheet__title { font-size: 17px; font-weight: 700; color: var(--text-strong); text-align: center; }
+.sheet__action { display: grid; place-items: center; height: 44px; color: var(--text-strong); }
+.sheet__handle { display: grid; place-items: center; padding-top: calc(var(--safe-top) - 6px); color: var(--petrol5); }
+
+/* Die dezente Balkentextur hinter dem Kontokopf — Detail aus der Vorlage. */
+.account-header { position: relative; }
+
+/* Die Balken sind Hintergrund und liegen deshalb HINTER der Kreisreihe.
+   `z-index: -1` stellt das sicher — vorher hat das positionierte
+   Pseudo-Element die nicht positionierten Kreise überdeckt. */
+.account-header::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 -30px;
+  height: 68px;
+  z-index: -1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='68' viewBox='0 0 120 68'%3E%3Cg fill='%23D6EBEB'%3E%3Crect x='0' y='40' width='5' height='28'/%3E%3Crect x='10' y='26' width='5' height='42'/%3E%3Crect x='20' y='48' width='5' height='20'/%3E%3Crect x='30' y='14' width='5' height='54'/%3E%3Crect x='40' y='35' width='5' height='33'/%3E%3Crect x='50' y='54' width='5' height='14'/%3E%3Crect x='60' y='22' width='5' height='46'/%3E%3Crect x='70' y='43' width='5' height='25'/%3E%3Crect x='80' y='9' width='5' height='59'/%3E%3Crect x='90' y='37' width='5' height='31'/%3E%3Crect x='100' y='56' width='5' height='12'/%3E%3Crect x='110' y='30' width='5' height='38'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: bottom left;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 60%, #000);
+  mask-image: linear-gradient(180deg, transparent, #000 60%, #000);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* Feine Grundlinie, auf der die Balken stehen. */
+.account-header::before {
+  content: '';
+  position: absolute;
+  inset: auto 0 -30px;
+  height: 1px;
+  z-index: -1;
+  background: var(--line);
+}
+
+/* Die Kreise bekommen einen eigenen Stapelkontext und liegen damit sicher
+   über der Balkengrafik. */
+.circles { position: relative; z-index: 1; }

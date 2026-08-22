@@ -1,15 +1,15 @@
-# <Teamname> — BärnHäckt 2026 — PostFinance "Beyond the List"
+# Vitamingelb — BärnHäckt 2026 — PostFinance «Beyond the List»
 
 > What if banking not only showed what happened, but explained what it means?
 
 | Folder | Content |
 |---|---|
-| [`Code/`](Code/) | The solution. See [`Code/README.md`](Code/README.md) for one-command start. |
+| [`Code/`](Code/) | The solution. See [`Code/README.md`](Code/README.md) for one-command start and deployment. |
 | [`Documentation/`](Documentation/) | [Technical jury documentation](Documentation/TECH_JURY_DOC.md) + [challenger documentation](Documentation/CHALLENGER_DOC.md) |
 | [`Presentation/`](Presentation/) | One-page pitch slide (landscape) + link to the 1-minute video |
 | [`Misc/`](Misc/) | Mockups, additional material |
 
-**Video:** _link_ · **Live demo:** _link_
+**Video:** _link_ · **Live demo:** [vitamingelb.ch](https://vitamingelb.ch) _(folgt)_
 
 How this repo is worked in: [`CONTRIBUTING.md`](CONTRIBUTING.md).
 

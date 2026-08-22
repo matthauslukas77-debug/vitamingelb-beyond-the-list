@@ -1,0 +1,93 @@
+/* Anwendungs-Ebene über den PostFinance-Primitives aus tokens.css.
+   tokens.css wird NICHT verändert — es ist die extrahierte Wahrheit.
+   Hier steht nur, wie wir diese Werte im App-Nachbau einsetzen. */
+
+:root {
+  /* Flächen */
+  --surface-app: #E9F3F2;        /* Hintergrund hinter den Karten */
+  --surface-card: var(--weiss);
+  --surface-sunken: #EEF6F6;     /* petrol1 — getönte Zeilen, Chips */
+  --surface-inverse: var(--petrol8);
+
+  /* Text */
+  --text-strong: var(--petrol8);
+  --text-body: var(--petrol9);
+  --text-muted: var(--grau7);
+  --text-credit: var(--info2);   /* Gutschriften sind blau */
+
+  /* Linien */
+  --line: rgba(0, 75, 90, 0.12);
+  --line-strong: rgba(0, 75, 90, 0.22);
+
+  /* Aktion */
+  --action: var(--postfinancegelb);
+  --action-ink: var(--petrol8);
+
+  --tap: rgba(0, 75, 90, 0.06);
+  --shadow-card: 0 1px 2px rgba(0, 41, 46, 0.05);
+  --shadow-lift: 0 6px 24px rgba(0, 41, 46, 0.12);
+
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --phone-w: 390px;
+  --phone-h: 844px;
+}
+
+/* PostFinance Grotesk darf aus Lizenzgründen nicht ausgeliefert werden
+   (siehe PREP/01_Brand_and_Design_System/FONT_LICENSING.md) — wir nutzen Inter. */
+
+[data-theme='dark'] {
+  --surface-app: #00292E;        /* petrol10 */
+  --surface-card: #00373D;       /* petrol9 */
+  --surface-sunken: #004B5A;     /* petrol8 */
+  --surface-inverse: var(--petrol2);
+
+  --text-strong: var(--weiss);
+  --text-body: #D6EBEB;          /* petrol2 */
+  --text-muted: #A6D8D9;         /* petrol3 */
+  --text-credit: #9FBFFD;        /* info1 */
+
+  --line: rgba(214, 235, 235, 0.14);
+  --line-strong: rgba(214, 235, 235, 0.26);
+  --tap: rgba(214, 235, 235, 0.08);
+  --shadow-card: none;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-weight: 400;
+  color: var(--text-body);
+  background: var(--surface-app);
+  -webkit-font-smoothing: antialiased;
+  /* Kein Gummiband-Effekt, der den Hintergrund hinter der App freilegt. */
+  overscroll-behavior: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+:focus-visible {
+  outline: var(--Outline-2) solid var(--hellblau);
+  outline-offset: 2px;
+}
+
+/* Beträge: Tabellenziffern, damit Spalten nicht springen */
+.num { font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

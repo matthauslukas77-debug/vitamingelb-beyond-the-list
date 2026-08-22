@@ -1,0 +1,337 @@
+/* PostFinance design tokens
+   Extracted 2026-08-21 from the live postfinance.ch stylesheet:
+   /etc.clientlibs/pfch/clientlibs/publish.pf-20260819134901.min.css
+
+   NAMING CONVENTION
+   Primitives are literal values (--petrol8: #004B5A).
+   Semantic tokens are named --<light>-<dark>: the value shipped is the LIGHT-mode
+   value, and the second half of the name states the intended DARK-mode counterpart.
+   e.g. --weiss-petrol11 = white on light, petrol11 (#001B1F) on dark.
+   The dark-mode block at the bottom of this file is RECONSTRUCTED from that convention.
+*/
+
+:root {
+  /* --- Brand core --- */
+  --weiss: #FFFFFF;
+  --schwarz: #333333;
+  --postfinancegelb: #FFCC00;
+
+  /* --- Petrol ramp (primary brand colour) --- */
+  --petrol: #004B5A;
+  --petrol1: #EEF6F6;
+  --petrol2: #D6EBEB;
+  --petrol3: #A6D8D9;
+  --petrol4: #70BFC2;
+  --petrol5: #49A6AB;
+  --petrol6: #1A8D93;
+  --petrol7: #067079;
+  --petrol8: #004B5A;
+  --petrol9: #00373D;
+  --petrol10: #00292E;
+  --petrol11: #001B1F;
+
+  /* --- Light blue ramp (accent) --- */
+  --hellblau: #00B5D1;
+  --hellblau1: #B3E7F1;
+  --hellblau2: #80D8E8;
+  --hellblau3: #4DCBDF;
+  --hellblau4: #19BCD6;
+  --hellblau5: #009ABC;
+  --hellblau6: #0086A7;
+  --hellblau7: #007292;
+  --hellblau8: #006685;
+  --hellblau9: #005A78;
+
+  /* --- Grapefruit ramp (accent) --- */
+  --grapefruit: #FF6469;
+  --grapefruit1: #FFD1D2;
+  --grapefruit2: #FFB2B4;
+  --grapefruit3: #FF9396;
+  --grapefruit4: #FF7478;
+  --grapefruit5: #E65A61;
+  --grapefruit6: #CC5058;
+  --grapefruit7: #993C44;
+  --grapefruit8: #80323A;
+  --grapefruit9: #66282F;
+
+  /* --- Neutral greys --- */
+  --grau1: #F8F8F8;
+  --grau2: #E6E6E6;
+  --grau3: #CCCCCC;
+  --grau4: #B3B3B3;
+  --grau5: #999999;
+  --grau6: #808080;
+  --grau7: #666666;
+  --grau8: #4D4D4D;
+
+  /* --- Semantic — danger --- */
+  --danger1: #FFEBEB;
+  --danger2: #FF9396;
+  --danger3: #D80909;
+  --danger4: #800817;
+
+  /* --- Semantic — success --- */
+  --success1: #DAF6E2;
+  --success2: #93EDAE;
+  --success3: #2B8469;
+  --success4: #004743;
+
+  /* --- Semantic — info --- */
+  --info1: #9FBFFD;
+  --info2: #105FF9;
+
+  /* --- Semantic — pending --- */
+  --pending1: #FEF5E5;
+  --pending2: #FFA500;
+  --pending3: #B12E02;
+
+  /* --- Spacing scale --- */
+  --s-1: 2px;
+  --s-2: 4px;
+  --s-3: 8px;
+  --s-4: 12px;
+  --s-5: 16px;
+  --s-6: 20px;
+  --s-7: 24px;
+  --s-8: 32px;
+  --s-9: 40px;
+  --s-10: 48px;
+  --s-11: 56px;
+  --s-12: 64px;
+  --s-13: 80px;
+  --s-14: 96px;
+  --s-15: 128px;
+  --s-16: 160px;
+  --s-17: 192px;
+
+  /* --- Corner radii --- */
+  --CornerRadius-R-4: 4px;
+  --CornerRadius-R-8: 8px;
+  --CornerRadius-R-16: 16px;
+  --CornerRadius-R-20: 20px;
+  --CornerRadius-R-28: 28px;
+  --CornerRadius-R-32: 32px;
+  --CornerRadius-R-100: 100px;
+
+  /* --- Focus / outline widths --- */
+  --Outline-1: 1px;
+  --Outline-2: 2px;
+  --FlyingFocus-Outline-1: 1px;
+  --FlyingFocus-Outline-2: 2px;
+
+  /* --- Grid --- */
+  --grid-gutter: 16px;
+  --grid-margin: 16px;
+
+  /* --- Semantic light/dark pair tokens (light values) --- */
+  --danger1-danger4: var(--danger1);
+  --danger2-danger1: var(--danger2);
+  --danger2-danger3: var(--danger2);
+  --danger3-danger2: var(--danger3);
+  --danger4-danger1: var(--danger4);
+  --danger4-grau1: var(--danger4);
+  --grapefruit1-grapefruit9: var(--grapefruit1);
+  --grapefruit2-grapefruit8: var(--grapefruit2);
+  --grapefruit3-grapefruit7: var(--grapefruit3);
+  --grapefruit4-grapefruit6: var(--grapefruit4);
+  --grapefruit5-grapefruit5: var(--grapefruit5);
+  --grapefruit6-grapefruit4: var(--grapefruit6);
+  --grapefruit7-grapefruit3: var(--grapefruit7);
+  --grapefruit8-grapefruit2: var(--grapefruit8);
+  --grapefruit9-grapefruit1: var(--grapefruit9);
+  --grau1-grau2: var(--grau1);
+  --grau1-grau8: var(--grau1);
+  --grau1-petrol10: var(--grau1);
+  --grau2-grau7: var(--grau2);
+  --grau2-petrol8: var(--grau2);
+  --grau2-petrol9: var(--grau2);
+  --grau3-grau6: var(--grau3);
+  --grau3-petrol3: var(--grau3);
+  --grau3-petrol8: var(--grau3);
+  --grau4-grau5: var(--grau4);
+  --grau4-petrol3: var(--grau4);
+  --grau5-grau4: var(--grau5);
+  --grau6-grau1: var(--grau6);
+  --grau6-grau3: var(--grau6);
+  --grau7-grau1: var(--grau7);
+  --grau7-grau2: var(--grau7);
+  --grau7-grau3: var(--grau7);
+  --grau7-grau6: var(--grau7);
+  --grau7-petrol2: var(--grau7);
+  --grau7-petrol3: var(--grau7);
+  --grau7-petrol5: var(--grau7);
+  --grau7-petrol7: var(--grau7);
+  --grau7-petrol8: var(--grau7);
+  --grau7-petrol9: var(--grau7);
+  --grau8-grau1: var(--grau8);
+  --hellblau1-hellblau9: var(--hellblau1);
+  --hellblau2-hellblau8: var(--hellblau2);
+  --hellblau3-hellblau7: var(--hellblau3);
+  --hellblau4-hellblau6: var(--hellblau4);
+  --hellblau5-hellblau5: var(--hellblau5);
+  --hellblau6-hellblau4: var(--hellblau6);
+  --hellblau7-hellblau3: var(--hellblau7);
+  --hellblau8-hellblau2: var(--hellblau8);
+  --hellblau9-hellblau1: var(--hellblau9);
+  --info1-info2: var(--info1);
+  --info2-grau1: var(--info2);
+  --info2-info1: var(--info2);
+  --pending1-pending3: var(--pending1);
+  --pending2-pending2: var(--pending2);
+  --pending3-grau1: var(--pending3);
+  --pending3-pending1: var(--pending3);
+  --petrol1-petrol10: var(--petrol1);
+  --petrol10-petrol2: var(--petrol10);
+  --petrol11-grau1: var(--petrol11);
+  --petrol11-petrol1: var(--petrol11);
+  --petrol11-petrol3: var(--petrol11);
+  --petrol11-petrol4: var(--petrol11);
+  --petrol11-weiss: var(--petrol11);
+  --petrol2-petrol10: var(--petrol2);
+  --petrol2-petrol3: var(--petrol2);
+  --petrol2-petrol9: var(--petrol2);
+  --petrol3-petrol4: var(--petrol3);
+  --petrol3-petrol8: var(--petrol3);
+  --petrol3-petrol9: var(--petrol3);
+  --petrol4-petrol8: var(--petrol4);
+  --petrol5-petrol7: var(--petrol5);
+  --petrol6-petrol6: var(--petrol6);
+  --petrol7-petrol5: var(--petrol7);
+  --petrol7-petrol9: var(--petrol7);
+  --petrol8-grau1: var(--petrol8);
+  --petrol8-petrol1: var(--petrol8);
+  --petrol8-petrol2: var(--petrol8);
+  --petrol8-petrol3: var(--petrol8);
+  --petrol8-petrol4: var(--petrol8);
+  --petrol8-postfinancegelb: var(--petrol8);
+  --petrol8-weiss: var(--petrol8);
+  --petrol9-petrol3: var(--petrol9);
+  --postfinancegelb-petrol8: var(--postfinancegelb);
+  --schwarz-grau1: var(--schwarz);
+  --schwarz-petrol1: var(--schwarz);
+  --schwarz-petrol3: var(--schwarz);
+  --schwarz-weiss: var(--schwarz);
+  --success1-success4: var(--success1);
+  --success2-success3: var(--success2);
+  --success3-success2: var(--success3);
+  --success4-grau1: var(--success4);
+  --success4-success1: var(--success4);
+  --weiss-danger4: var(--weiss);
+  --weiss-grau1: var(--weiss);
+  --weiss-info2: var(--weiss);
+  --weiss-pending3: var(--weiss);
+  --weiss-petrol11: var(--weiss);
+  --weiss-petrol8: var(--weiss);
+  --weiss-petrol9: var(--weiss);
+  --weiss-postfinancegelb: var(--weiss);
+  --weiss-schwarz: var(--weiss);
+  --weiss-success4: var(--weiss);
+}
+
+/* Reconstructed dark theme: each --a-b pair resolves to its `b` primitive. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --danger1-danger4: var(--danger4);
+    --danger2-danger1: var(--danger1);
+    --danger2-danger3: var(--danger3);
+    --danger3-danger2: var(--danger2);
+    --danger4-danger1: var(--danger1);
+    --danger4-grau1: var(--grau1);
+    --grapefruit1-grapefruit9: var(--grapefruit9);
+    --grapefruit2-grapefruit8: var(--grapefruit8);
+    --grapefruit3-grapefruit7: var(--grapefruit7);
+    --grapefruit4-grapefruit6: var(--grapefruit6);
+    --grapefruit5-grapefruit5: var(--grapefruit5);
+    --grapefruit6-grapefruit4: var(--grapefruit4);
+    --grapefruit7-grapefruit3: var(--grapefruit3);
+    --grapefruit8-grapefruit2: var(--grapefruit2);
+    --grapefruit9-grapefruit1: var(--grapefruit1);
+    --grau1-grau2: var(--grau2);
+    --grau1-grau8: var(--grau8);
+    --grau1-petrol10: var(--petrol10);
+    --grau2-grau7: var(--grau7);
+    --grau2-petrol8: var(--petrol8);
+    --grau2-petrol9: var(--petrol9);
+    --grau3-grau6: var(--grau6);
+    --grau3-petrol3: var(--petrol3);
+    --grau3-petrol8: var(--petrol8);
+    --grau4-grau5: var(--grau5);
+    --grau4-petrol3: var(--petrol3);
+    --grau5-grau4: var(--grau4);
+    --grau6-grau1: var(--grau1);
+    --grau6-grau3: var(--grau3);
+    --grau7-grau1: var(--grau1);
+    --grau7-grau2: var(--grau2);
+    --grau7-grau3: var(--grau3);
+    --grau7-grau6: var(--grau6);
+    --grau7-petrol2: var(--petrol2);
+    --grau7-petrol3: var(--petrol3);
+    --grau7-petrol5: var(--petrol5);
+    --grau7-petrol7: var(--petrol7);
+    --grau7-petrol8: var(--petrol8);
+    --grau7-petrol9: var(--petrol9);
+    --grau8-grau1: var(--grau1);
+    --hellblau1-hellblau9: var(--hellblau9);
+    --hellblau2-hellblau8: var(--hellblau8);
+    --hellblau3-hellblau7: var(--hellblau7);
+    --hellblau4-hellblau6: var(--hellblau6);
+    --hellblau5-hellblau5: var(--hellblau5);
+    --hellblau6-hellblau4: var(--hellblau4);
+    --hellblau7-hellblau3: var(--hellblau3);
+    --hellblau8-hellblau2: var(--hellblau2);
+    --hellblau9-hellblau1: var(--hellblau1);
+    --info1-info2: var(--info2);
+    --info2-grau1: var(--grau1);
+    --info2-info1: var(--info1);
+    --pending1-pending3: var(--pending3);
+    --pending2-pending2: var(--pending2);
+    --pending3-grau1: var(--grau1);
+    --pending3-pending1: var(--pending1);
+    --petrol1-petrol10: var(--petrol10);
+    --petrol10-petrol2: var(--petrol2);
+    --petrol11-grau1: var(--grau1);
+    --petrol11-petrol1: var(--petrol1);
+    --petrol11-petrol3: var(--petrol3);
+    --petrol11-petrol4: var(--petrol4);
+    --petrol11-weiss: var(--weiss);
+    --petrol2-petrol10: var(--petrol10);
+    --petrol2-petrol3: var(--petrol3);
+    --petrol2-petrol9: var(--petrol9);
+    --petrol3-petrol4: var(--petrol4);
+    --petrol3-petrol8: var(--petrol8);
+    --petrol3-petrol9: var(--petrol9);
+    --petrol4-petrol8: var(--petrol8);
+    --petrol5-petrol7: var(--petrol7);
+    --petrol6-petrol6: var(--petrol6);
+    --petrol7-petrol5: var(--petrol5);
+    --petrol7-petrol9: var(--petrol9);
+    --petrol8-grau1: var(--grau1);
+    --petrol8-petrol1: var(--petrol1);
+    --petrol8-petrol2: var(--petrol2);
+    --petrol8-petrol3: var(--petrol3);
+    --petrol8-petrol4: var(--petrol4);
+    --petrol8-postfinancegelb: var(--postfinancegelb);
+    --petrol8-weiss: var(--weiss);
+    --petrol9-petrol3: var(--petrol3);
+    --postfinancegelb-petrol8: var(--petrol8);
+    --schwarz-grau1: var(--grau1);
+    --schwarz-petrol1: var(--petrol1);
+    --schwarz-petrol3: var(--petrol3);
+    --schwarz-weiss: var(--weiss);
+    --success1-success4: var(--success4);
+    --success2-success3: var(--success3);
+    --success3-success2: var(--success2);
+    --success4-grau1: var(--grau1);
+    --success4-success1: var(--success1);
+    --weiss-danger4: var(--danger4);
+    --weiss-grau1: var(--grau1);
+    --weiss-info2: var(--info2);
+    --weiss-pending3: var(--pending3);
+    --weiss-petrol11: var(--petrol11);
+    --weiss-petrol8: var(--petrol8);
+    --weiss-petrol9: var(--petrol9);
+    --weiss-postfinancegelb: var(--postfinancegelb);
+    --weiss-schwarz: var(--schwarz);
+    --weiss-success4: var(--success4);
+  }
+}
