@@ -27,13 +27,12 @@
   --shadow-card: 0 1px 2px rgba(0, 41, 46, 0.05);
   --shadow-lift: 0 6px 24px rgba(0, 41, 46, 0.12);
 
-  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Original-Schrift, siehe fonts.css. Inter bleibt als Fallback stehen,
+     damit die App auch ohne die Dateien richtig aussieht. */
+  --font: 'PostFinance Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --phone-w: 390px;
   --phone-h: 844px;
 }
-
-/* PostFinance Grotesk darf aus Lizenzgründen nicht ausgeliefert werden
-   (siehe PREP/01_Brand_and_Design_System/FONT_LICENSING.md) — wir nutzen Inter. */
 
 [data-theme='dark'] {
   --surface-app: #00292E;        /* petrol10 */

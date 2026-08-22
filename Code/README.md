@@ -77,14 +77,14 @@ Getroffen werden je nach Persona 81–90 % der Buchungen. Was übrig bleibt, sin
 Für Demo, Videoaufnahme und Screenshots lässt sich jeder Einstieg per URL ansteuern:
 
 ```
-?persona=fritz                    Persona direkt öffnen
-?persona=michael&screen=analysis  zusätzlich einen Bildschirm
-?persona=janic&screen=account     Kontodetail (optional &account=<id>)
+?persona=reto                    Persona direkt öffnen
+?persona=bruno&screen=analysis  zusätzlich einen Bildschirm
+?persona=nino&screen=account     Kontodetail (optional &account=<id>)
 ```
 
 Zusätzlich `&tab=payments` für den Startreiter.
 
-Personas: `fritz` · `janic` · `katja` · `michael`.
+Personas: `reto` · `nino` · `livia` · `bruno`.
 Reiter: `home` · `payments` · `invest` · `offers` · `services`.
 Bildschirme: `account` · `analysis` · `scan` · `pay` · `transfer` · `search`.
 
@@ -190,10 +190,10 @@ Die vier Personas bilden Personen aus unseren sechs Interviews ab
 
 | Persona | Interview | Muster im Datensatz |
 |---|---|---|
-| Fritz | 01 | Sieben Abos, davon eines im März still von 71.90 auf 79.90 erhöht |
-| Janic | 04 | Knappes Konto, Sollzins, Mahngebühr für eine untergegangene Rechnung |
-| Katja | 05 | Dauerauftrag aufs **eigene** Sparkonto — zählt in den Analysen als Ausgabe |
-| Michael | 07 | Sechs Bankbeziehungen, Steuerrechnung als grosser Jahresposten |
+| Reto | 01 | Sieben Abos, davon eines im März still von 71.90 auf 79.90 erhöht |
+| Nino | 04 | Knappes Konto, Sollzins, Mahngebühr für eine untergegangene Rechnung |
+| Livia | 05 | Dauerauftrag aufs **eigene** Sparkonto — zählt in den Analysen als Ausgabe |
+| Bruno | 07 | Sechs Bankbeziehungen, Steuerrechnung als grosser Jahresposten |
 
 Diese Muster sind absichtlich enthalten: Sie sind das Material, an dem sich später zeigen
 lässt, was eine bessere Auswertung leisten müsste.
@@ -215,9 +215,45 @@ Das Repository ist öffentlich. Die PNG-Grössen daneben sind daraus erzeugt.
 
 ## Schriften
 
-**PostFinance Grotesk wird nicht ausgeliefert** — die Lizenz verbietet es
-(siehe `WORKSPACE/03_research/PREP/01_Brand_and_Design_System/FONT_LICENSING.md`).
-Der Prototyp nutzt Inter beziehungsweise die Systemschrift.
+Die App ist auf **PostFinance Grotesk** umgestellt, die echte Hausschrift. Lokal und im
+lokalen Build ist sie aktiv — sie liegt in `public/fonts/`, eingebunden über
+`src/theme/fonts.css`.
+
+**Die Schriftdateien sind bewusst NICHT im Repository.** `public/fonts/` steht in
+`.gitignore`. Die Lizenz verbietet die Weitergabe ausdrücklich (siehe
+`WORKSPACE/03_research/PREP/01_Brand_and_Design_System/FONT_LICENSING.md`,
+Konventionalstrafe im fünfstelligen Bereich) — und ein öffentliches Repository ist
+Weitergabe. Verwenden ist das eine, verteilen das andere.
+
+Damit gilt:
+
+| | Schrift |
+|---|---|
+| Lokal (`npm run dev`, `npm run preview`) | PostFinance Grotesk |
+| Videoaufnahme und Jury-Walkthrough | PostFinance Grotesk |
+| vitamingelb.ch (öffentlich) | Inter als Fallback |
+
+Das Team hat sich entschieden, die Schrift für BärnHäckt 2026 einzusetzen, obwohl die
+Lizenz es nicht erlaubt — der Prototyp entsteht für PostFinance selbst, läuft nur dieses
+Wochenende und wird nicht kommerziell genutzt. Eingeschränkt bleibt lediglich die
+Weitergabe, weil sie das eigentliche Risiko trägt und für keinen der Anwendungsfälle
+oben nötig ist.
+
+**Wer die Schrift trotzdem ausliefern will:**
+
+```bash
+git add -f public/fonts && git commit -m "chore: Schriftdateien ausliefern"
+```
+
+**Rückbau nach dem Hackathon** — zwei Schritte, keine Codeänderung:
+
+```bash
+rm -rf public/fonts                    # Dateien entfernen
+# in src/theme/base.css: --font auf 'Inter', … zurücksetzen
+```
+
+Inter steht in der Schriftkette hinter PostFinance Grotesk. Fehlen die Dateien, sieht die
+App unverändert richtig aus — nur eben in Inter. Genau das passiert auf vitamingelb.ch.
 
 ## Herkunft der Vorlagen
 

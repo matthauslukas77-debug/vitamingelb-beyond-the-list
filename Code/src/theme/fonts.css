@@ -1,0 +1,66 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   PostFinance Grotesk
+
+   Lizenzpflichtige Schrift, eingesetzt für BärnHäckt 2026.
+
+   Die Dateien liegen in `public/fonts/` und stehen in `.gitignore` — lokal
+   aktiv, nicht im Repository. Die Lizenz verbietet die Weitergabe, und ein
+   öffentliches Repository wäre genau das. Verwenden ist das eine, verteilen
+   das andere; das Risiko steckt im zweiten.
+
+   Fehlen die Dateien, greift Inter aus der Schriftkette in `base.css` — die
+   App sieht unverändert richtig aus. Genau so läuft vitamingelb.ch.
+
+   Details und Rückbau: Code/README.md, Abschnitt «Schriften».
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Die Familie kennt Light, Medium und Bold — kein Regular. Deshalb liegt
+   Light auf 300 UND 400: Fliesstext ist im Original leicht gesetzt. */
+
+@font-face {
+  font-family: 'PostFinance Grotesk';
+  src: url('/fonts/PostFinanceGrotesk-Light.woff2') format('woff2');
+  font-weight: 300 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PostFinance Grotesk';
+  src: url('/fonts/PostFinanceGrotesk-LightKursiv.woff2') format('woff2');
+  font-weight: 300 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PostFinance Grotesk';
+  src: url('/fonts/PostFinanceGrotesk-Medium.woff2') format('woff2');
+  font-weight: 500 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PostFinance Grotesk';
+  src: url('/fonts/PostFinanceGrotesk-MediumKursiv.woff2') format('woff2');
+  font-weight: 500 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PostFinance Grotesk';
+  src: url('/fonts/PostFinanceGrotesk-Bold.woff2') format('woff2');
+  font-weight: 700 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PostFinance Grotesk';
+  src: url('/fonts/PostFinanceGrotesk-BoldKursiv.woff2') format('woff2');
+  font-weight: 700 900;
+  font-style: italic;
+  font-display: swap;
+}

@@ -14,3 +14,9 @@ dist/
 # Supabase CLI
 supabase/.temp
 supabase/.branches
+
+# PostFinance Grotesk — lizenzpflichtig, liegt lokal, wird nicht verteilt.
+# Bewusst hier: Ein öffentliches Repository wäre Weitergabe, und genau die
+# verbietet die Lizenz. Lokal und im lokalen Build ist die Schrift aktiv.
+# Wer sie trotzdem ausliefern will: git add -f public/fonts
+public/fonts/
