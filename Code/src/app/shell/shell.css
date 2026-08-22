@@ -35,7 +35,8 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: var(--app-backdrop);
+  /* Grund und Form stehen in der gemeinsamen Regel darunter, zusammen mit
+     `.layer` — beide Kisten sind gleich gross und müssen deckungsgleich sein. */
   color: var(--text-body);
 }
 
@@ -86,7 +87,7 @@
    sieht man unten weniger davon, statt eine gestauchte Form. */
 .phone__screen,
 .layer {
-  --backdrop-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 402 874'%3E%3Cpath fill='%23fff' d='M0 0H100.6A314 314 0 0 1 0 246.4Z M367.4 0H402V301L282.3 344.5A745 745 0 0 1 367.4 0Z M0 874V560L127.5 513.7A686.2 686.2 0 0 0 37.6 874Z M402 626.8A275.8 275.8 0 0 0 310.2 874H402Z'/%3E%3C/svg%3E");
+  --backdrop-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 402 874'%3E%3Cpath fill='%23fff' d='M0 0H100.6A314 314 0 0 1 0 246.4Z M367.4 0H402V301L282.3 344.5A745 745 0 0 0 367.4 0Z M0 874V560L127.5 513.7A686.2 686.2 0 0 0 37.6 874Z M402 626.8A275.8 275.8 0 0 0 310.2 874H402Z'/%3E%3C/svg%3E");
   background: var(--backdrop);
   /* Ohne dies ist die Telefonfläche kein Stapelkontext, und das `z-index: -1`
      der Form rutscht hinter deren eigenen Grund — sichtbar war dann nur der
@@ -528,10 +529,10 @@ button.row:active { background: var(--tap); }
   position: absolute;
   inset: 0;
   animation: sheet-push var(--sheet-ms) var(--sheet-ease);
-  /* Deckend, sonst schiene der Bildschirm darunter durch. Es ist derselbe
-     Verlauf wie auf der Telefonfläche und dieselbe Kiste — die Form steht
-     also nach dem Hereingleiten genau dort, wo sie vorher stand. */
-  background: var(--app-backdrop);
+  /* Deckend, sonst schiene der Bildschirm darunter durch. Grundton und Form
+     sind dieselben wie auf der Telefonfläche, und die Kiste ist gleich gross —
+     die Form steht nach dem Hereingleiten also genau dort, wo sie vorher
+     stand. Gesetzt wird beides in der gemeinsamen Regel weiter oben. */
   /* Die Kante wirft einen Schatten auf die Ebene darunter — daran erkennt das
      Auge, dass etwas davorliegt und nicht ersetzt wurde. */
   box-shadow: -14px 0 30px rgba(0, 27, 31, 0.18);
