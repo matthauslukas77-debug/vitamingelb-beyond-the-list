@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { TODAY } from '../../data/types'
-import { formatDate } from '../../lib/date'
+import { formatDate, formatPeriod } from '../../lib/date'
 import { formatAmount } from '../../lib/money'
 import { useSession } from '../../app/session'
 import { Icon, type IconName } from '../../app/shell/Icon'
@@ -15,6 +15,9 @@ import {
   type Dismissed,
 } from '../signals/storage'
 import { loadBudget } from '../budget/storage'
+import { fingerprintOf, loadAssignments } from '../budget/assign'
+import { openAssignments } from '../budget/review'
+import { fullMonthWindow } from '../budget/derive'
 import {
   DEFAULT_SPREAD_MONTHS,
   loadMarkings,
@@ -25,6 +28,7 @@ import {
   type Markings,
 } from '../budget/markings'
 import '../budget/budget.css'
+import '../budget/screens/assign.css'
 import './signals.css'
 
 /**
@@ -133,6 +137,12 @@ export function Signals() {
   const { persona, pop, push } = useSession()
   const [dismissed, setDismissed] = useState<Dismissed>(() => loadDismissed(persona.id))
   const [markings, setMarkings] = useState<Markings>(() => loadMarkings(persona.id))
+  /* Gelesen, nicht gehalten: Geändert wird auf dem Zuordnungsbrett, und dieser
+     Bildschirm bleibt darunter gemountet — ein Zustand hier zeigte nach der
+     Rückkehr die alte Zahl. Der Fingerabdruck hält die Identität stabil,
+     damit die teuren Berechnungen darunter nicht bei jedem Rendern laufen. */
+  const fingerprint = fingerprintOf(loadAssignments(persona.id))
+  const assignments = useMemo(() => loadAssignments(persona.id), [persona.id, fingerprint])
   const [classify, setClassify] = useState<string | null>(null)
   const [showDone, setShowDone] = useState(false)
 
@@ -141,10 +151,28 @@ export function Signals() {
       signalsForPersona(persona, {
         today: TODAY,
         markings,
-        budget: budgetPerCategory(persona, TODAY, markings, loadBudget(persona.id)),
+        assignments,
+        budget: budgetPerCategory(persona, TODAY, markings, loadBudget(persona.id), assignments),
       }),
-    [persona, markings],
+    [persona, markings, assignments],
   )
+
+  /* Die offenen Quellen. Kein Signal, sondern eine stehende Aufgabe: Sie
+     beschreibt keine Veränderung, sie verschwindet erst, wenn sie erledigt
+     ist — und darf deshalb weder wegsortiert noch weggeklickt werden. */
+  const window12 = fullMonthWindow(TODAY, 12)
+  const unassigned = useMemo(
+    () =>
+      openAssignments(persona.transactions, persona.accounts, {
+        from: window12.from,
+        to: TODAY,
+        ownName: persona.name,
+        assignments,
+      }),
+    [persona, assignments, window12.from],
+  )
+  const unassignedBookings = unassigned.reduce((sum, group) => sum + group.count, 0)
+  const unassignedTotal = unassigned.reduce((sum, group) => sum + group.total, 0)
 
   const open = openSignals(signals, dismissed)
   const done = signals.filter((signal) => !open.includes(signal))
@@ -175,6 +203,30 @@ export function Signals() {
   return (
     <Sheet title="Signale" onBack={pop}>
       <div className="screen__inner sig">
+        {/* Die stehende Aufgabe, immer zuoberst. Sie steht vor den Signalen,
+            weil sie deren Grundlage ist: Solange Buchungen im falschen Topf
+            liegen, misst jede Budgetaussage darunter am falschen Mass. */}
+        {unassigned.length > 0 && (
+          <button className="asg-task" onClick={() => push({ name: 'assign' })}>
+            <span className="asg-task__icon">
+              <Icon name="sliders" size={20} />
+            </span>
+            <span className="asg-task__text">
+              <span className="asg-task__title">
+                {unassigned.length === 1
+                  ? 'Eine Quelle ohne klare Kategorie'
+                  : `${unassigned.length} Quellen ohne klare Kategorie`}
+              </span>
+              <span className="asg-task__body">
+                {unassignedBookings} Buchungen, {formatAmount(unassignedTotal, { sign: false })}{' '}
+                seit {formatPeriod(window12.from, window12.from)}. Zuordnen dauert{' '}
+                {unassigned.length === 1 ? 'einen Zug' : `${unassigned.length} Züge`}.
+              </span>
+            </span>
+            <Icon name="chevronRight" size={18} />
+          </button>
+        )}
+
         {open.length === 0 ? (
           <div className="sig-empty">
             <Icon name="check" size={28} />

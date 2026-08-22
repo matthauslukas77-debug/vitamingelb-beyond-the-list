@@ -13,6 +13,7 @@ import { Recurring } from './screens/Recurring'
 import { BudgetWizard } from '../insights/budget/screens/Wizard'
 import { Cockpit } from '../insights/screens/Cockpit'
 import { Signals } from '../insights/screens/Signals'
+import { Assign } from '../insights/budget/screens/Assign'
 import { SeriesDetail } from '../insights/screens/SeriesDetail'
 import { TransactionDetail } from './screens/TransactionDetail'
 import { Services } from './screens/Services'
@@ -75,6 +76,7 @@ function screenFor(screen: Screen) {
     case 'cockpit': return <Cockpit view={screen.view} />
     case 'budgetWizard': return <BudgetWizard />
     case 'signals': return <Signals />
+    case 'assign': return <Assign />
     case 'scan': return <Scan />
     case 'pay': return <Pay save={screen.save} />
     case 'transfer': return <Transfer />

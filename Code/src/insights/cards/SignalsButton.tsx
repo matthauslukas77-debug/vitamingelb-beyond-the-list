@@ -5,6 +5,9 @@ import { budgetPerCategory, signalsForPersona } from '../signals/engine'
 import { loadDismissed, openSignals } from '../signals/storage'
 import { loadBudget } from '../budget/storage'
 import { loadMarkings } from '../budget/markings'
+import { fingerprintOf, loadAssignments } from '../budget/assign'
+import { openAssignments } from '../budget/review'
+import { fullMonthWindow } from '../budget/derive'
 import '../screens/signals.css'
 
 /**
@@ -19,6 +22,10 @@ import '../screens/signals.css'
  * wirklich etwas offen ist; deshalb muss sich jedes Signal erledigen lassen,
  * sonst leuchtet er für immer und bedeutet nach einer Woche nichts mehr.
  *
+ * Gezählt werden auch die Quellen ohne klare Kategorie. Ohne sie wäre das
+ * Zuordnungsbrett nur zu finden, wenn ohnehin ein Signal offen ist — und die
+ * Zuordnung ist die Grundlage, auf der alle anderen Zahlen stehen.
+ *
  * Gerechnet wird bei jedem Aufbau des Startbildschirms neu. Das klingt nach
  * viel, sind aber ein paar Millisekunden auf zweitausend Buchungen — und es
  * spart einen zweiten Zustand, der mit den Buchungen aus dem Tritt geraten
@@ -27,15 +34,25 @@ import '../screens/signals.css'
 export function SignalsButton() {
   const { persona, push } = useSession()
 
+  const fingerprint = fingerprintOf(loadAssignments(persona.id))
+
   const count = useMemo(() => {
     const markings = loadMarkings(persona.id)
+    const assignments = loadAssignments(persona.id)
     const signals = signalsForPersona(persona, {
       today: TODAY,
       markings,
-      budget: budgetPerCategory(persona, TODAY, markings, loadBudget(persona.id)),
+      assignments,
+      budget: budgetPerCategory(persona, TODAY, markings, loadBudget(persona.id), assignments),
     })
-    return openSignals(signals, loadDismissed(persona.id)).length
-  }, [persona])
+    const unassigned = openAssignments(persona.transactions, persona.accounts, {
+      from: fullMonthWindow(TODAY, 12).from,
+      to: TODAY,
+      ownName: persona.name,
+      assignments,
+    })
+    return openSignals(signals, loadDismissed(persona.id)).length + unassigned.length
+  }, [persona, fingerprint])
 
   return (
     <button

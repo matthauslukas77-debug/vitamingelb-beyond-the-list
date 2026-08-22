@@ -1,0 +1,414 @@
+/* ── Unsere Schicht ────────────────────────────────────────────────────────
+   Das Zuordnungsbrett.
+
+   Nur Tokens aus `theme/tokens.css` und die Anwendungsvariablen aus
+   `theme/base.css` — keine eigenen Farbwerte, damit der dunkle Modus von
+   selbst stimmt.
+
+   Die Grundregel dieser Datei: **das Brett scrollt nicht.** Oben die Quellen,
+   unten die Töpfe, beides gleichzeitig sichtbar — sonst zieht man ins Leere.
+   Deshalb ist die Höhe verteilt und nicht summiert, und deshalb hat die
+   Warteschlange `overflow: hidden` statt `auto`.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* ── Das Brett ───────────────────────────────────────────────────────────── */
+
+.asg {
+  display: flex;
+  flex-direction: column;
+  /* Die volle Höhe der Scrollfläche, nicht mehr. `min-height: 0` macht die
+     Kinder schrumpffähig — ohne das wächst das Brett über den Rand hinaus und
+     die Töpfe rutschen unter die Tableiste. */
+  min-height: 100%;
+  min-width: 0;
+  padding: 0 var(--s-5) var(--s-5);
+  gap: var(--s-3);
+}
+
+.asg-lead {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+/* Während des Zugs darf nichts unter dem Finger ausgewählt werden — sonst
+   färbt sich der halbe Bildschirm blau, sobald man über Text zieht. */
+.asg.is-dragging {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ── Die offenen Quellen ─────────────────────────────────────────────────── */
+
+.asg-queue {
+  /* Wächst mit den Chips, nicht mit dem Bildschirm: Der freie Platz gehört den
+     Töpfen. Läge er hier, klaffte über der Karte ein leeres Drittel. */
+  flex: 0 1 auto;
+  min-width: 0;
+  min-height: 0;
+  /* Verborgen und nicht scrollbar: Was hier nicht hinpasst, gehört auf das
+     nächste Brett. Ein Bereich, der unter dem ziehenden Finger wegscrollt,
+     macht die Geste unbrauchbar. */
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: var(--s-2);
+}
+
+.asg-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3) var(--s-2) var(--s-2);
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--surface-card);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  text-align: left;
+  /* Die Waagrechte **und** die Senkrechte gehören der Geste: Ein Zug in einen
+     Topf geht nach unten, und ohne das nähme der Browser ihn als Scrollen. */
+  touch-action: none;
+  transition: transform 140ms ease, box-shadow 140ms ease, opacity 140ms ease;
+}
+
+.asg-chip.is-selected {
+  box-shadow: 0 0 0 2px var(--petrol6);
+}
+
+/* Die angehobene Quelle bleibt als Lücke stehen, damit das Brett beim Ziehen
+   nicht umbricht — sie ist nur blass. */
+.asg-chip.is-lifted {
+  opacity: 0.25;
+}
+
+.asg-chip__mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  border-radius: 50%;
+  background: var(--petrol2);
+  color: var(--petrol10);
+  font-size: 15px;
+  font-weight: 600;
+  overflow: hidden;
+}
+
+.asg-chip__mark--logo {
+  background: var(--surface-card);
+}
+
+.asg-chip__mark--logo.is-filled {
+  /* Die Scheibe nimmt die Randfarbe des Logos an — wie in der Buchungszeile. */
+  padding: 0;
+}
+
+.asg-chip__mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.asg-chip__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.asg-chip__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 38vw;
+}
+
+.asg-chip__meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Der Inspektor in der Mitte ──────────────────────────────────────────── */
+
+/* Sitzt direkt über den Töpfen — dort, wo der Blick zwischen Quelle und Ziel
+   ohnehin hinwandert. Wächst mit seinem Inhalt und nicht mit dem Bildschirm. */
+.asg-look {
+  flex: 0 0 auto;
+  min-width: 0;
+  min-height: 76px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--s-1);
+  padding: var(--s-3);
+  border-radius: var(--CornerRadius-R-16);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.asg-look.is-open {
+  background: var(--surface-card);
+  justify-content: flex-start;
+}
+
+.asg-look__hint {
+  line-height: 1.35;
+}
+
+.asg-look__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2);
+  min-width: 0;
+}
+
+.asg-look__name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-strong);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.asg-look__sum {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.asg-look__now strong {
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.asg-look__why {
+  line-height: 1.35;
+}
+
+/* Der Beleg: der rohe Buchungstext, wie er im Auszug steht. Klein und
+   einzeilig — er soll nachweisen, nicht erklären. */
+.asg-look__proof {
+  margin-top: var(--s-1);
+  font-size: 11px;
+  color: var(--text-muted);
+  opacity: 0.7;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Die sechs Töpfe ─────────────────────────────────────────────────────── */
+
+/**
+ * Nimmt den freien Platz auf.
+ *
+ * Auf Brunos Brett liegen vier Chips, auf Ninos neun — der Rest der Höhe bleibt
+ * übrig. Er gehört den Töpfen: Ein grösseres Ziel ist ein Ziel, das man mit dem
+ * Daumen trifft, und ein Brett ohne Loch in der Mitte sieht nach Absicht aus.
+ * `min-height` ist die Grenze nach unten, damit die Töpfe auch auf einem kurzen
+ * Bildschirm greifbar bleiben.
+ */
+.asg-grid {
+  flex: 1;
+  min-width: 0;
+  min-height: 184px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: var(--s-2);
+}
+
+.asg-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-1);
+  min-width: 0;
+  min-height: 0;
+  padding: var(--s-2);
+  border-radius: var(--CornerRadius-R-16);
+  background: var(--surface-card);
+  /* `--text-strong` ist im hellen Modus genau `--petrol8` und im dunklen Weiss.
+     Eine feste Rampenstufe stünde hier im Dunkeln unsichtbar auf der Karte. */
+  color: var(--text-strong);
+  /* Der gestrichelte Rand sagt «hier hinein» — ohne ihn sieht der Topf aus wie
+     eine Schaltfläche, die etwas anderes tut. Deutlich genug, um ihn zu sehen:
+     Ein Ziel, das man suchen muss, ist keines. */
+  border: 1.5px dashed var(--petrol4);
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.asg-tile__title {
+  font-size: 12px;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--text-strong);
+}
+
+/*
+ * Sobald eine Quelle angefasst ist, treten die Ziele hervor. Kein toter Zustand
+ * davor — ein Tipp ins Leere sagt, was fehlt.
+ *
+ * Die Tönung wird **gegen die Kartenfläche gemischt** und nicht als feste Stufe
+ * der Rampe gesetzt. Ein `background: var(--petrol1)` bliebe im dunklen Modus
+ * hell, während `--text-strong` dort auf Weiss dreht — weisse Schrift auf
+ * weissem Feld. `color-mix` gegen `--surface-card` dreht mit dem Thema mit.
+ */
+.asg-tile.is-armed {
+  /* Auch der Rand wird gemischt, nicht gesetzt: Als feste Stufe lag er im
+     dunklen Modus bei 2.9:1 gegen die Kachel — unter der Schwelle, ab der ein
+     Bedienelement als abgegrenzt gilt. Und der Rand **ist** hier die Zusage
+     «hier hinein», nicht bloss Zierrat. */
+  border-color: color-mix(in oklab, var(--petrol6) 55%, var(--text-strong));
+  background: color-mix(in oklab, var(--petrol6) 10%, var(--surface-card));
+}
+
+.asg-tile.is-over {
+  background: color-mix(in oklab, var(--petrol6) 26%, var(--surface-card));
+  border-color: var(--petrol8);
+  border-style: solid;
+  transform: scale(1.06);
+}
+
+/* ── Der Geist am Finger ─────────────────────────────────────────────────── */
+
+.asg-ghost {
+  position: fixed;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3) var(--s-2) var(--s-2);
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--surface-card);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+  /* Ohne das träfe die Trefferprüfung den Geist statt den Topf darunter. */
+  pointer-events: none;
+  transform: translate(-50%, -140%) rotate(-2deg);
+}
+
+/* ── Die Rücknahme ───────────────────────────────────────────────────────── */
+
+.asg-undo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  min-width: 0;
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--petrol10);
+  color: var(--petrol1);
+  font-size: 13px;
+}
+
+.asg-undo > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.asg-undo button {
+  flex: 0 0 auto;
+  color: var(--petrol1);
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+/* ── Wenn nichts mehr offen ist ──────────────────────────────────────────── */
+
+.asg-done {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  text-align: center;
+  padding: var(--s-6) var(--s-4);
+}
+
+.asg-done__mark {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--petrol2);
+  color: var(--petrol9);
+}
+
+.asg-done__title {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.asg-done__body {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text-muted);
+  max-width: 30ch;
+}
+
+/* ── Die Rückfrage nach dem Feld ─────────────────────────────────────────── */
+
+.asg-sheet__lead {
+  margin: 0 0 var(--s-2);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Der Einstieg auf dem Signale-Brett ──────────────────────────────────── */
+
+.asg-task {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-width: 0;
+  width: 100%;
+  padding: var(--s-4);
+  border-radius: var(--CornerRadius-R-16);
+  background: var(--petrol10);
+  color: var(--petrol1);
+  text-align: left;
+}
+
+.asg-task__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border-radius: 50%;
+  background: var(--petrol9);
+}
+
+.asg-task__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.asg-task__title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.asg-task__body {
+  font-size: 13px;
+  line-height: 1.35;
+  opacity: 0.82;
+}

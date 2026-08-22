@@ -2,8 +2,11 @@ import { describe, expect, it } from 'vitest'
 /* Als Text eingelesen statt über das Dateisystem: `?raw` kennt Vite von
    Haus aus, und die App braucht dafür keine Node-Typen. */
 import budgetCss from '../budget.css?raw'
+import assignCss from '../screens/assign.css?raw'
 import signalsCss from '../../screens/signals.css?raw'
 import shellCss from '../../../app/shell/shell.css?raw'
+import tokensCss from '../../../theme/tokens.css?raw'
+import baseCss from '../../../theme/base.css?raw'
 
 /**
  * Wache über die Stilvorlagen unserer Schicht.
@@ -21,7 +24,24 @@ import shellCss from '../../../app/shell/shell.css?raw'
 const files: [name: string, css: string][] = [
   ['budget.css', budgetCss],
   ['signals.css', signalsCss],
+  ['assign.css', assignCss],
 ]
+
+/** Alle Namen, die `theme/` bereitstellt. */
+const DEFINED = new Set(
+  [...`${tokensCss}\n${baseCss}`.matchAll(/(--[A-Za-z0-9-]+)\s*:/g)].map((match) => match[1]),
+)
+
+/**
+ * Variablen, die aus dem Baum kommen und nicht aus einem Blatt.
+ *
+ * Die Blasen bekommen ihre Rampe je Element gesetzt — `BubbleField.tsx` gibt
+ * `--from`, `--to` und `--mix` an `.bub__g` weiter, damit `color-mix` einen
+ * stetigen Verlauf rechnen kann statt sechs fester Klassen. Sie stehen deshalb
+ * nirgends in einer Datei und müssen hier benannt werden; alles andere wäre
+ * eine Ausnahme, die stillschweigend jeden Tippfehler durchliesse.
+ */
+const FROM_JSX = new Set(['--from', '--to', '--mix', '--glow', '--i', '--arc'])
 
 /** Die Abschnittsüberschriften der Form `── Titel ──`. Der Titel selbst
  *  enthält keine Striche, sonst fände der Ausdruck sich in den Trennlinien. */
@@ -49,6 +69,20 @@ describe.each(files)('%s', (_name, css) => {
       .filter(([, , body]) => /(^|[;\s])flex\s*:\s*1\b/.test(body) && !/min-width\s*:/.test(body))
       .map(([, selector]) => selector.trim())
     expect(offenders, 'flex: 1 ohne min-width').toEqual([])
+  })
+
+  it('verweist nur auf Variablen, die es wirklich gibt', () => {
+    /* Ein `var(--CornerRadius-R-200)` auf einen Namen, den `theme/tokens.css`
+       nie definiert hat, ist kein Fehler: Die Regel fällt still aus, und der
+       Rahmen ist plötzlich eckig. Nichts schlägt dabei an — kein Typfehler,
+       keine Warnung, kein Test. Genau so ist es dieser Datei ergangen.
+       Selbst gesetzte Variablen zählen mit; sie stehen im selben Blatt. */
+    const bare = css.replace(/\/\*[\s\S]*?\*\//g, '')
+    const own = new Set([...bare.matchAll(/(--[A-Za-z0-9-]+)\s*:/g)].map((match) => match[1]))
+    const missing = [...bare.matchAll(/var\(\s*(--[A-Za-z0-9-]+)/g)]
+      .map((match) => match[1])
+      .filter((name) => !DEFINED.has(name) && !own.has(name) && !FROM_JSX.has(name))
+    expect([...new Set(missing)], 'unbekannte Variablen').toEqual([])
   })
 
   it('enthält keine Farbwerte ausserhalb der Tokens', () => {

@@ -3,7 +3,9 @@ import { resolveBrand } from '../../data/brands'
 import { detectRecurring, normaliseMerchant, type RecurringSeries } from '../../domain/recurring'
 import { addDays, parseIso } from '../../lib/date'
 import { pretty } from '../../app/screens/Recurring'
-import { categorize, merchantName } from '../budget/mapping'
+import { categorize } from '../budget/mapping'
+import { merchantName } from '../budget/merchant'
+import { NO_ASSIGNMENTS, type Assignments } from '../budget/assign'
 import { moneyFlow } from '../budget/flow'
 import { deriveForPersona, monthStart } from '../budget/derive'
 import { markingOf, NO_MARKINGS, type Markings } from '../budget/markings'
@@ -91,6 +93,8 @@ export interface SignalOptions {
   markings?: Markings
   /** Budget je Kategorie, Rappen pro Monat. Fehlt es, entfällt `outlier`. */
   budget?: Record<CategoryKey, number>
+  /** Was der Nutzer zugeordnet hat — siehe `budget/assign.ts`. */
+  assignments?: Assignments
 }
 
 /** Der Rang einer Karte: Betrag × Konfidenz, abgeschwächt mit dem Alter. */
@@ -526,7 +530,7 @@ const OUTLIER_MIN = 50_000
 function outlierSignals(
   transactions: Transaction[],
   accounts: Account[],
-  { today, markings = NO_MARKINGS, budget }: SignalOptions,
+  { today, markings = NO_MARKINGS, budget, assignments = NO_ASSIGNMENTS }: SignalOptions,
   ownName?: string,
 ): Signal[] {
   if (!budget) return []
@@ -539,7 +543,7 @@ function outlierSignals(
     /* Schon eingeordnet — dann hat der Nutzer die Frage beantwortet. */
     if (markingOf(markings, tx.id).kind !== 'normal') continue
 
-    const { category } = categorize(tx)
+    const { category } = categorize(tx, assignments)
     if (category === 'taxes') continue
 
     const amount = Math.abs(tx.amount)
@@ -612,8 +616,9 @@ export function budgetPerCategory(
   today: string,
   markings?: Markings,
   saved?: SavedBudget | null,
+  assignments?: Assignments,
 ): Record<CategoryKey, number> {
-  const derived = deriveForPersona(persona, { today, months: 12, markings })
+  const derived = deriveForPersona(persona, { today, months: 12, markings, assignments })
   if (!saved) return derived.categoryTotals
 
   return Object.fromEntries(

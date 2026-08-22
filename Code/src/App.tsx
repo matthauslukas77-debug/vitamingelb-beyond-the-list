@@ -56,6 +56,8 @@ function readScreen(name: string, params: URLSearchParams, persona: Persona): Sc
   /* Der Wizard direkt — für Demo und Videoaufnahme. */
   if (name === 'budget') return { name: 'budgetWizard' }
   if (name === 'signals') return { name: 'signals' }
+  /* Das Zuordnungsbrett — sonst nur über die Signale erreichbar. */
+  if (name === 'assign') return { name: 'assign' }
 
   /* «subscriptions» bleibt gültig: der Bildschirm hiess mal «Meine Abos». */
   if (name === 'subscriptions' || name === 'recurring') return { name: 'recurring' }

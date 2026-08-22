@@ -31,6 +31,9 @@ export type Screen =
   /* Signale — was sich verändert hat. Das Gegenstück zum Cockpit: dort die
      Instrumente, hier die Leuchten. */
   | { name: 'signals' }
+  /* Das Zuordnungsbrett. Eigener Bildschirm, weil er als einziger nicht
+     scrollt: Quellen und Töpfe müssen gleichzeitig sichtbar sein. */
+  | { name: 'assign' }
   | { name: 'scan' }
   /* `save` belegt den Zahlungsfluss vor — gesetzt von einer Signalkarte. */
   | { name: 'pay'; save?: number }

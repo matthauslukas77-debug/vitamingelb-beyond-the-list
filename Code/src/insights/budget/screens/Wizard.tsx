@@ -5,6 +5,7 @@ import { useSession } from '../../../app/session'
 import { Icon } from '../../../app/shell/Icon'
 import { Sheet } from '../../../app/shell/Sheet'
 import { deriveForPersona } from '../derive'
+import { loadAssignments } from '../assign'
 import { DEFAULT_ANSWERS, type Answers } from '../benchmark'
 import { CivilStatus, Denomination } from '../pf-model'
 import { budgetFromDerivation, loadBudget, refreshed, saveBudget, type SavedBudget } from '../storage'
@@ -113,7 +114,9 @@ export function BudgetWizard() {
   const [step, setStep] = useState<Step>(1)
 
   const derived = useMemo(
-    () => deriveForPersona(persona, { today: TODAY, months: 12 }),
+    /* Mit den Zuordnungen vom Brett: Der Wizard schlägt sonst Beträge für Töpfe
+       vor, aus denen der Nutzer die Buchungen gerade herausgezogen hat. */
+    () => deriveForPersona(persona, { today: TODAY, months: 12, assignments: loadAssignments(persona.id) }),
     [persona],
   )
 

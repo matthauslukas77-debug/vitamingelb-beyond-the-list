@@ -1,7 +1,9 @@
 import type { Account, Persona, Transaction } from '../../data/types'
 import { detectRecurring, normaliseMerchant, type Cadence } from '../../domain/recurring'
 import { pretty } from '../../app/screens/Recurring'
-import { categorize, merchantName } from './mapping'
+import { categorize } from './mapping'
+import { merchantName } from './merchant'
+import { NO_ASSIGNMENTS, type Assignments } from './assign'
 import { flowTotals, moneyFlow, type FlowContext, type FlowTotals } from './flow'
 import { allSlots, slotKey, type BudgetSlot, type CategoryKey } from './slots'
 import { CATEGORY_KEYS } from './slots'
@@ -128,6 +130,12 @@ export interface DeriveOptions {
    * CHF 1'000 im Monat belasten, obwohl sie einmal vorkam.
    */
   markings?: Markings
+  /**
+   * Was der Nutzer zugeordnet hat. Schlägt das Regelwerk — siehe `assign.ts`.
+   * Ohne diesen Durchreicher zeigte das Brett eine Zuordnung, die im Budget
+   * nirgends ankäme.
+   */
+  assignments?: Assignments
 }
 
 /**
@@ -193,7 +201,7 @@ const CHILD_HINT = /(KITA|KINDERKRIPPE|TAGESSCHULE|KINDERZULAGE|FAMILIENZULAGE|H
 export function deriveBudget(
   transactions: Transaction[],
   accounts: Account[],
-  { months = 12, today, markings = NO_MARKINGS }: DeriveOptions,
+  { months = 12, today, markings = NO_MARKINGS, assignments = NO_ASSIGNMENTS }: DeriveOptions,
   ownName?: string,
 ): DerivedBudget {
   /* Ganze Kalendermonate, und der laufende zählt nicht mit.
@@ -260,7 +268,7 @@ export function deriveBudget(
     const amount = Math.round(budgetShare(tx, marking, { from, to }))
     if (amount === 0) continue
 
-    const slot = categorize(tx)
+    const slot = categorize(tx, assignments)
     const bucket = bucketOf(slot)
     bucket.total += amount
     bucket.count += 1
@@ -315,7 +323,7 @@ export function deriveBudget(
       const monthsSeen = new Set<string>()
       for (const tx of history) {
         if (moneyFlow(tx, context).flow !== 'out') continue
-        const slot = categorize(tx)
+        const slot = categorize(tx, assignments)
         if (slot.category !== 'taxes') continue
         total += Math.abs(tx.amount)
         monthsSeen.add(tx.date.slice(0, 7))
@@ -516,7 +524,14 @@ export function spendByCategory(
     to,
     ownName,
     markings = NO_MARKINGS,
-  }: { from: string; to: string; ownName?: string; markings?: Markings },
+    assignments = NO_ASSIGNMENTS,
+  }: {
+    from: string
+    to: string
+    ownName?: string
+    markings?: Markings
+    assignments?: Assignments
+  },
 ): Record<CategoryKey, number> {
   const context: FlowContext = { accounts, ownName }
   const totals = Object.fromEntries(CATEGORY_KEYS.map((key) => [key, 0])) as Record<CategoryKey, number>
@@ -528,7 +543,7 @@ export function spendByCategory(
     if (moneyFlow(tx, context).flow !== 'out') continue
     const amount = budgetShare(tx, markingOf(markings, tx.id), { from, to })
     if (amount === 0) continue
-    totals[categorize(tx).category] += Math.round(amount)
+    totals[categorize(tx, assignments).category] += Math.round(amount)
   }
   const window = transactions.filter((tx) => tx.date >= from && tx.date <= to)
 

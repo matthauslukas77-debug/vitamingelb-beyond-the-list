@@ -5,6 +5,7 @@ import { formatDate } from '../../../lib/date'
 import { useSession } from '../../../app/session'
 import { Icon } from '../../../app/shell/Icon'
 import { deriveForPersona, monthProgress, monthStart, spendByCategory, type SlotEvidence } from '../derive'
+import { loadAssignments } from '../assign'
 import { BubbleField, BubbleLegend, bubbleTotals, type Bubble } from '../ui/BubbleField'
 import { amountOf, loadBudget, totalOf, type SavedBudget } from '../storage'
 import { slotKey as keyOf } from '../slots'
@@ -140,15 +141,21 @@ export function BudgetView() {
   const [loaded, setLoaded] = useState<Loaded | null>(null)
   const [explanation, setExplanation] = useState<Explanation | null>(null)
 
-  const derived = useMemo(
-    () => deriveForPersona(persona, { today: TODAY, months: 12 }),
-    [persona],
-  )
-
-  /* Neu lesen, sobald der Wizard zugeht: `stack` schrumpft dabei, und genau
-     das ist das Signal, dass gespeichert worden sein könnte. */
+  /* Neu lesen, sobald ein darübergelegter Bildschirm zugeht: `stack` schrumpft
+     dabei, und genau das ist das Signal, dass gespeichert worden sein könnte.
+     Gilt für das Budget aus dem Wizard wie für die Zuordnungen vom Brett —
+     ohne das stünde nach dem Zuordnen dieselbe Blase wie vorher da. */
   const [saved, setSaved] = useState<SavedBudget | null>(() => loadBudget(persona.id))
-  useEffect(() => setSaved(loadBudget(persona.id)), [persona.id, stack.length])
+  const [assignments, setAssignments] = useState(() => loadAssignments(persona.id))
+  useEffect(() => {
+    setSaved(loadBudget(persona.id))
+    setAssignments(loadAssignments(persona.id))
+  }, [persona.id, stack.length])
+
+  const derived = useMemo(
+    () => deriveForPersona(persona, { today: TODAY, months: 12, assignments }),
+    [persona, assignments],
+  )
 
   /* Wo ein Budget gesetzt ist, gilt es. Sonst der Vorschlag aus den Buchungen. */
   const plannedOf = (key: string) =>
@@ -191,8 +198,9 @@ export function BudgetView() {
         from: monthStart(TODAY),
         to: TODAY,
         ownName: persona.name,
+        assignments,
       }),
-    [persona],
+    [persona, assignments],
   )
   const progress = monthProgress(TODAY)
   const bubbles: Bubble[] = CATEGORY_KEYS.map((key) => ({

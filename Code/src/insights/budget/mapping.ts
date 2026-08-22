@@ -1,7 +1,7 @@
 import type { Category, Transaction } from '../../data/types'
 import { resolveBrand } from '../../data/brands'
-import { parseBooking, prettyName } from '../../domain/booking'
-import { pretty } from '../../app/screens/Recurring'
+import { assignedSlot, NO_ASSIGNMENTS, type Assignments } from './assign'
+import { CASH } from './merchant'
 import type { BudgetSlot, CategoryKey } from './slots'
 
 /**
@@ -187,9 +187,6 @@ function matchesAtWordBoundary(haystack: string, needle: string): boolean {
   return pattern.test(haystack)
 }
 
-/** Bargeldbezug am Automaten — Verwendung nicht erkennbar. */
-const CASH = /(BARGELDBEZUG|POSTOMAT|BANCOMAT|GELDAUTOMAT|ATM)/i
-
 /**
  * Der Text, gegen den die Regeln laufen. Der aufgelöste Markenname kommt
  * dazu — aus «ADOBE *CREATIVE CLOUD INC» macht die Registry «Adobe Creative
@@ -206,7 +203,16 @@ function haystackOf(tx: Transaction): string {
  * Reihenfolge: Regeln, dann die Kategorie der Bank, dann eine Heuristik, die
  * ihre Unsicherheit ausweist statt sie zu verstecken.
  */
-export function categorize(tx: Transaction): Categorization {
+export function categorize(tx: Transaction, assignments: Assignments = NO_ASSIGNMENTS): Categorization {
+  /* Von Hand gesetzt schlägt alles. Wer «LANDI» einmal nach Wohnen gezogen
+     hat, soll es dort wiederfinden — auch wenn wir morgen eine LANDI-Regel
+     hinzufügen, die etwas anderes meint. Das ist der Unterschied zwischen
+     einer Antwort und einem Vorschlag. */
+  const own = assignedSlot(tx, assignments)
+  if (own) {
+    return { ...own, confidence: 1, matchedBy: 'von dir zugeordnet', needsReview: false }
+  }
+
   /* Bargeld zuerst, noch vor den Regeln. Sonst löst «BARGELDBEZUG POSTOMAT
      BERN» über die Markenregistry auf «Die Post» auf, trifft dort eine Regel
      und gilt plötzlich als sicher zugeordnete Konsumausgabe. Ein Bezug am
@@ -255,22 +261,4 @@ export function categorize(tx: Transaction): Categorization {
     matchedBy: 'kein Regeltreffer',
     needsReview: true,
   }
-}
-
-/**
- * Der lesbare Name der Gegenpartei — eine Stelle für alle, die ihn brauchen.
- *
- * Erst die Marke aus der Registry: Sie kennt den Namen besser als der
- * Buchungstext («Adobe Creative Cloud» statt «ADOBE *CREATIVE CLOUD INC»).
- * Sonst der Händler, den `parseBooking` aus dem Text schneidet — er steht in
- * der Zeile ganz hinten, hinter Zahlungsart, Datum und Kartennummer. Ohne
- * diesen Schritt steht auf einer Signalkarte «Kauf/online-shopping VOM
- * 07.08.2026 Karten NR. Xxxx9042 Microspot» statt «Microspot».
- */
-export function merchantName(tx: Transaction): string {
-  const brand = resolveBrand(tx.text)
-  if (brand) return brand.brand.name
-  const counterparty = parseBooking(tx).counterparty
-  if (counterparty) return prettyName(counterparty)
-  return pretty(tx.text)
 }
