@@ -304,6 +304,8 @@ Texte und Rechenlogik des Rechners, rekonstruiert aus seinem Angular-Bundle und 
 | `benchmark.ts` | Die **einzige** Stelle, an der Rappen und Franken aufeinandertreffen |
 | `storage.ts` | Gespeichertes Budget je Persona, mit «von dir gesetzt»-Merkern |
 | `forecast.ts` | Zwei Geraden über fünf Jahre: was der Plan verspricht, was bisher wirklich gespart wurde |
+| `pack.ts` | Circle Packing nach Wang et al. — ausgeschrieben, weil die App ohne Diagrammpaket auskommt |
+| `ui/BubbleField.tsx` | Die Blasen: Ring = Budget, Füllung = verbraucht, Strichring = Monatsfortschritt |
 | `explain.ts` | Der Satz daneben — gerechnet, und wenn erreichbar von Apertus formuliert |
 | `screens/Wizard.tsx` | Der Wizard in drei Schritten: zwei Fragen → Regler → Ausblick |
 | `ui/Slider.tsx` | Betrag schieben oder tippen, mit der abgeleiteten Zahl als Marke |
@@ -322,6 +324,32 @@ Gemessen an den vier Personas: **87 – 98 %** der Ausgabenfranken sind sicher z
 **7 bis 14** der neunzehn Felder füllen sich von selbst. Der Rest ist zu vier Fünfteln
 Bargeld — und dafür gibt es keine Lösung ausser der Rückfrage. Sie steht als solche im
 Bildschirm.
+
+#### Die Blasen
+
+Oben in der Budget-Ansicht steht der laufende Monat als Blasenhaufen — dort, wo der
+Nachbau den Doppelring über das ganze Jahr zeigt. Eine Blase je Kategorie, drei Angaben
+in jeder:
+
+* **Der Ring** ist das Budget. Der Durchmesser folgt der **Wurzel** des Betrags, damit
+  die Fläche proportional ist. Bei proportionalem Radius sähe ein doppeltes Budget
+  viermal so gross aus — der häufigste Fehler in Blasendiagrammen.
+* **Die Füllung** ist, was davon weg ist, ebenfalls flächentreu. Bis 85 % grün, bis
+  100 % orange, darüber rot, mit einem Bogen ausserhalb des Rings.
+* **Der feine Strichring** ist der Monatsfortschritt. Ohne ihn lügt jede
+  Verbrauchsanzeige in der Monatsmitte: Am 8. sind 25 % eines Budgets kein Rückstand,
+  sondern Vorsprung.
+
+Die Skala richtet sich **nur** nach den Budgets, nie nach dem Verbrauch. Bruno zahlt im
+August CHF 13'463 fürs Wohnen bei CHF 1'463 Budget; nähme die Blase diese Zahl, wäre sie
+neunmal so gross wie alle anderen zusammen und der Ring bedeutete zweierlei.
+
+Gepackt wird mit dem Verfahren aus Wang et al., «Visualization of Large Hierarchical Data
+by Circle Packing» — dasselbe, das `d3-hierarchy` benutzt, hier ausgeschrieben in
+[`pack.ts`](src/insights/budget/pack.ts). Deterministisch statt zufällig gemischt: Eine
+Demo, die zweimal anders aussieht, kostet mehr als die letzten Prozent Packungsdichte
+bringen. Achtzehn Tests halten fest, dass sich unter keiner Grössenverteilung zwei Kreise
+überlappen.
 
 #### Der Wizard
 

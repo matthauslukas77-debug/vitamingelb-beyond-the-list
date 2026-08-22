@@ -493,3 +493,57 @@ function iso(date: Date): string {
   const d = String(date.getDate()).padStart(2, '0')
   return `${date.getFullYear()}-${m}-${d}`
 }
+
+/**
+ * Was in einem Zeitraum je Kategorie wirklich ausgegeben wurde.
+ *
+ * Dieselben zwei Schritte wie in `deriveBudget` — Geldfluss prüfen, dann auf
+ * ein Detailfeld zuordnen —, nur ohne Belege und ohne Umlage auf den Monat.
+ * Gebraucht für die Blasen im Cockpit: Dort steht das Budget gegen das, was
+ * bis heute davon weg ist.
+ *
+ * Wichtig ist, dass es **dieselbe** Logik ist. Zwei Wege zu derselben Zahl
+ * wären zwei Wahrheiten über dasselbe Konto.
+ */
+export function spendByCategory(
+  transactions: Transaction[],
+  accounts: Account[],
+  { from, to, ownName }: { from: string; to: string; ownName?: string },
+): Record<CategoryKey, number> {
+  const context: FlowContext = { accounts, ownName }
+  const totals = Object.fromEntries(CATEGORY_KEYS.map((key) => [key, 0])) as Record<CategoryKey, number>
+
+  const window = transactions.filter((tx) => tx.date >= from && tx.date <= to)
+  for (const tx of window) {
+    if (moneyFlow(tx, context).flow !== 'out') continue
+    totals[categorize(tx).category] += Math.abs(tx.amount)
+  }
+
+  /* Der TWINT-Saldo unter Privaten, genau wie in `deriveBudget`: Wer mehr
+     auslegt als zurückbekommt, hat die Differenz ausgegeben. Ohne diese Zeile
+     stünden im Cockpit andere Zahlen als im Wizard — bei Nino sind das CHF 76
+     im Monat, und zwei Wahrheiten über dasselbe Konto sind schlimmer als eine
+     ungenaue. */
+  const lent = flowTotals(window, context).lent
+  if (lent < 0) totals.consumption += -lent
+
+  return totals
+}
+
+/**
+ * Wie weit der laufende Monat schon vorbei ist, 0..1.
+ *
+ * Die Zahl, ohne die eine Verbrauchsanzeige mitten im Monat lügt: Am 8. sind
+ * 25 % eines Budgets nicht «fast nichts», sondern Vorsprung — am 28. sind sie
+ * es nicht mehr. Die Blasen tragen sie als feinen Ring.
+ */
+export function monthProgress(today: string): number {
+  const [year, month, day] = today.split('-').map(Number)
+  const daysInMonth = new Date(year, month, 0).getDate()
+  return Math.min(1, day / daysInMonth)
+}
+
+/** Erster Tag des Monats, in dem `today` liegt. */
+export function monthStart(today: string): string {
+  return `${today.slice(0, 7)}-01`
+}

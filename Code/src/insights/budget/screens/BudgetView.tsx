@@ -4,7 +4,8 @@ import { formatAmount } from '../../../lib/money'
 import { formatDate } from '../../../lib/date'
 import { useSession } from '../../../app/session'
 import { Icon } from '../../../app/shell/Icon'
-import { deriveForPersona, type SlotEvidence } from '../derive'
+import { deriveForPersona, monthProgress, monthStart, spendByCategory, type SlotEvidence } from '../derive'
+import { BubbleField, BubbleLegend, bubbleTotals, type Bubble } from '../ui/BubbleField'
 import { amountOf, loadBudget, totalOf, type SavedBudget } from '../storage'
 import { slotKey as keyOf } from '../slots'
 import {
@@ -17,7 +18,8 @@ import {
 } from '../benchmark'
 import { bottomTip, topTip, TIP_TEXT, type TipKey } from '../pf-model'
 import { explainBudget, localSummary, type Explanation } from '../explain'
-import { CATEGORIES, fieldLabel, slotKey, type CategoryKey } from '../slots'
+import { CATEGORIES, CATEGORY_KEYS, fieldLabel, slotKey, type CategoryKey } from '../slots'
+import { formatMonth } from '../../../lib/date'
 
 /**
  * ── Unsere Schicht ─────────────────────────────────────────────────────────
@@ -180,6 +182,26 @@ export function BudgetView() {
     }
   }, [persona, derived])
 
+  /* Der laufende Monat: was bis heute weg ist, gegen das, was budgetiert ist.
+     Dieselbe Zuordnung wie die Ableitung — zwei Wege zu derselben Zahl wären
+     zwei Wahrheiten über dasselbe Konto. */
+  const spent = useMemo(
+    () =>
+      spendByCategory(persona.transactions, persona.accounts, {
+        from: monthStart(TODAY),
+        to: TODAY,
+        ownName: persona.name,
+      }),
+    [persona],
+  )
+  const progress = monthProgress(TODAY)
+  const bubbles: Bubble[] = CATEGORY_KEYS.map((key) => ({
+    key,
+    budget: plannedCategory(key),
+    spent: spent[key],
+  }))
+  const month = bubbleTotals(bubbles)
+
   const factor = yearView ? 12 : 1
   const rows = loaded?.rows
   const scale = Math.max(
@@ -197,6 +219,41 @@ export function BudgetView() {
 
   return (
     <div className="screen__inner bud">
+      {/* Die Blasen stehen dort, wo im Nachbau der Doppelring steht. Er zeigt
+          Einnahmen gegen Ausgaben über das ganze Jahr — eine Zahl, die man
+          nicht mehr beeinflussen kann. Hier steht der laufende Monat. */}
+      <section className="bud-month">
+        <div className="bud-month__head">
+          <span className="bud-month__title">{formatMonth(TODAY)}</span>
+          <span className="bud-month__progress">
+            Der Monat ist zu {Math.round(progress * 100)} % um
+          </span>
+        </div>
+
+        <BubbleField bubbles={bubbles} progress={progress} selected={open} onSelect={setOpen} />
+
+        <div className="bud-month__total">
+          <span className="num">{chf(month.spent)}</span>
+          <span>
+            von {chf(month.budget)} verbraucht
+            {month.budget > 0 && ` · ${Math.round(month.share * 100)} %`}
+          </span>
+        </div>
+
+        <BubbleLegend
+          bubbles={bubbles}
+          selected={open}
+          onSelect={(key) => setOpen(open === key ? null : key)}
+          format={(rappen) => chf(rappen)}
+        />
+      </section>
+
+      <div className="section-head">
+        <span className="section-head__title">
+          {saved ? 'Dein Budget' : 'Vorschlag aus deinen Buchungen'}
+        </span>
+      </div>
+
       {/* Monat oder Jahr — im Original zwei getrennte Kartensätze, hier eine
           Ansicht und ein Faktor. Die Zahlen bleiben dieselben. */}
       <div className="bud-toggle" role="group" aria-label="Zeitraum">

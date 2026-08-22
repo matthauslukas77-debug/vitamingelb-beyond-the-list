@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { PERSONAS, findPersona } from '../../../data/personas'
 import { TODAY } from '../../../data/types'
-import { deriveForPersona } from '../derive'
+import { deriveForPersona, monthProgress, monthStart, spendByCategory } from '../derive'
 import { CATEGORY_KEYS, SLOT_COUNT, slotKey } from '../slots'
 import { categorize } from '../mapping'
 
@@ -189,5 +189,63 @@ describe('Zuordnung auf die Detailfelder', () => {
     })
     expect(result.needsReview).toBe(true)
     expect(result.confidence).toBeLessThan(0.5)
+  })
+})
+
+describe('Der laufende Monat', () => {
+  it('kennt den Monatsfortschritt', () => {
+    // Ohne diese Zahl lügt jede Verbrauchsanzeige in der Monatsmitte.
+    expect(monthProgress('2026-08-22')).toBeCloseTo(22 / 31, 6)
+    expect(monthProgress('2026-02-28')).toBe(1)
+    expect(monthProgress('2026-01-01')).toBeCloseTo(1 / 31, 6)
+    // Nie über 1, auch wenn ein Datum über das Monatsende hinausliegt.
+    expect(monthProgress('2026-04-31')).toBe(1)
+  })
+
+  it('beginnt den Monat am Ersten', () => {
+    expect(monthStart(TODAY)).toBe('2026-08-01')
+  })
+
+  it('rechnet den Verbrauch mit derselben Logik wie die Ableitung', () => {
+    /* Zwei Wege zu derselben Zahl wären zwei Wahrheiten über dasselbe Konto.
+       Deshalb: derselbe Zeitraum wie die Ableitung muss dieselbe Summe geben. */
+    for (const persona of PERSONAS) {
+      const derived = deriveForPersona(persona, options)
+      const spent = spendByCategory(persona.transactions, persona.accounts, {
+        from: derived.from,
+        to: derived.to,
+        ownName: persona.name,
+      })
+      for (const key of CATEGORY_KEYS) {
+        /* Steuern werden in der Ableitung über die volle Historie geglättet —
+           dort darf es abweichen, und genau deshalb steht es hier als Ausnahme. */
+        if (key === 'taxes') continue
+        /* Die Ableitung rundet je Detailfeld und summiert danach, hier wird
+           einmal gerundet. Ein Rappen Unterschied je Feld ist die Folge und
+           kein Widerspruch — mehr darf es nicht sein. */
+        const perMonth = spent[key] / derived.months
+        expect(
+          Math.abs(perMonth - derived.categoryTotals[key]),
+          `${persona.id}/${key}: ${perMonth} gegen ${derived.categoryTotals[key]}`,
+        ).toBeLessThanOrEqual(5)
+      }
+    }
+  })
+
+  it('lässt Umbuchungen auch im Monatsverbrauch draussen', () => {
+    /* Livias Dauerauftrag geht am 26. — im laufenden August (Stichtag der 22.)
+       ist er also noch nicht gelaufen. Geprüft wird deshalb an einem vollen
+       Monat; genau dafür gibt es den Strichring in den Blasen, der sagt, wie
+       weit der Monat überhaupt ist. */
+    const livia = findPersona('livia')!
+    const july = { from: '2026-07-01', to: '2026-07-31', ownName: livia.name }
+    const spent = spendByCategory(livia.transactions, livia.accounts, july)
+
+    const total = CATEGORY_KEYS.reduce((sum, key) => sum + spent[key], 0)
+    const naive = livia.transactions
+      .filter((tx) => tx.date >= july.from && tx.date <= july.to && tx.amount < 0)
+      .reduce((sum, tx) => sum - tx.amount, 0)
+
+    expect(naive - total).toBeGreaterThan(40_000)
   })
 })

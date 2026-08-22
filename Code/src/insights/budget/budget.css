@@ -688,3 +688,126 @@
 /* Damit die Rechnung auch bei kurzem Inhalt unten sitzt und nicht direkt
    unter dem letzten Absatz klebt. */
 .wz-sliders { flex: 1; }
+
+/* ── Die Blasen ──────────────────────────────────────────────────────────── */
+
+.bud-month { padding-bottom: var(--s-6); }
+
+.bud-month__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-bottom: var(--s-4);
+}
+
+.bud-month__title { font-size: 17px; font-weight: 700; color: var(--text-strong); }
+.bud-month__progress { font-size: 12px; color: var(--text-muted); }
+
+.bub {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Auf sehr breiten Bildschirmen soll der Haufen nicht die halbe Seite
+     einnehmen — er ist eine Übersicht, kein Poster. */
+  max-height: 300px;
+  overflow: visible;
+}
+
+.bub__g { cursor: pointer; }
+
+/* Der Ring ist das Budget. Er bleibt ruhig, damit die Füllung die Aussage
+   trägt — sonst konkurrieren zwei Kreise um dieselbe Aufmerksamkeit. */
+.bub__ring {
+  fill: var(--surface-card);
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+}
+
+.bub__fill {
+  stroke: none;
+  transition: r 260ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Der Monatsfortschritt: fein, gestrichelt, im Hintergrund. Wer ihn nicht
+   sucht, sieht ihn nicht — wer ihn kennt, liest daran den Vorsprung ab. */
+.bub__pace {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+  opacity: 0.55;
+}
+
+/* Über dem Limit: ein Bogen ausserhalb des Rings. */
+.bub__over {
+  fill: none;
+  stroke: var(--danger3);
+  stroke-width: 2;
+  opacity: 0.85;
+}
+
+.bub__g--ok .bub__fill { fill: var(--success3); }
+.bub__g--tight .bub__fill { fill: var(--pending2); }
+.bub__g--over .bub__fill { fill: var(--danger3); }
+
+/* Das Sinnbild steht standardmässig auf der Kartenfläche und ist deshalb
+   dunkel. Erst wenn die Füllung darunter liegt, dreht der Kontrast — auf
+   Grün und Rot weiss, auf Orange dunkel, weil Weiss auf #FFA500 nicht liest. */
+.bub__icon { color: var(--text-strong); pointer-events: none; }
+.bub__g--ok .bub__icon--inverse,
+.bub__g--over .bub__icon--inverse { color: var(--weiss); }
+.bub__g--tight .bub__icon--inverse { color: var(--petrol10); }
+
+.bub__g.is-selected .bub__ring {
+  stroke: var(--petrol8);
+  stroke-width: 2.5;
+}
+
+/* Die Liste unter den Blasen — die eigentliche Bedienung. */
+
+.bub-legend { margin-top: var(--s-5); }
+
+.bub-legend__row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  width: 100%;
+  padding: var(--s-3) var(--s-4);
+  border-radius: var(--CornerRadius-R-8);
+}
+
+.bub-legend__row:active { background: var(--tap); }
+.bub-legend__row.is-selected { background: var(--surface-sunken); }
+
+.bub-legend__dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.bub-legend__row--ok .bub-legend__dot { background: var(--success3); }
+.bub-legend__row--tight .bub-legend__dot { background: var(--pending2); }
+.bub-legend__row--over .bub-legend__dot { background: var(--danger3); }
+
+.bub-legend__main { flex: 1; min-width: 0; text-align: left; }
+.bub-legend__title { display: block; font-size: 14px; color: var(--text-strong); }
+.bub-legend__sub { display: block; margin-top: 1px; font-size: 11px; color: var(--text-muted); }
+.bub-legend__row--over .bub-legend__sub { color: var(--danger3); }
+
+.bub-legend__amount {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-strong);
+  white-space: nowrap;
+  text-align: right;
+}
+
+.bub-legend__of { display: block; font-size: 10px; font-weight: 400; color: var(--text-muted); }
+
+.bud-month__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  margin-top: var(--s-4);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.bud-month__total .num { font-size: 20px; font-weight: 700; color: var(--text-strong); }
