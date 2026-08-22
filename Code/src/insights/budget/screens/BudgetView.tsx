@@ -145,6 +145,8 @@ export function BudgetView() {
      dabei, und genau das ist das Signal, dass gespeichert worden sein könnte.
      Gilt für das Budget aus dem Wizard wie für die Zuordnungen vom Brett —
      ohne das stünde nach dem Zuordnen dieselbe Blase wie vorher da. */
+  const openCategory = (category: CategoryKey) => push({ name: 'budgetCategory', category })
+
   const [saved, setSaved] = useState<SavedBudget | null>(() => loadBudget(persona.id))
   const [assignments, setAssignments] = useState(() => loadAssignments(persona.id))
   useEffect(() => {
@@ -238,7 +240,10 @@ export function BudgetView() {
           </span>
         </div>
 
-        <BubbleField bubbles={bubbles} progress={progress} selected={open} onSelect={setOpen} />
+        {/* Ein Tipp auf eine Blase führt auf ihre Detailseite. Vorher setzte er
+            weiter unten ein Akkordeon auf — eine Wirkung 900 Pixel entfernt,
+            die man nur bemerkte, wenn man danach scrollte. */}
+        <BubbleField bubbles={bubbles} progress={progress} onSelect={openCategory} />
 
         <div className="bud-month__total">
           <span className="num">{chf(month.spent)}</span>
@@ -248,12 +253,7 @@ export function BudgetView() {
           </span>
         </div>
 
-        <BubbleLegend
-          bubbles={bubbles}
-          selected={open}
-          onSelect={(key) => setOpen(open === key ? null : key)}
-          format={(rappen) => chf(rappen)}
-        />
+        <BubbleLegend bubbles={bubbles} onSelect={openCategory} format={(rappen) => chf(rappen)} />
       </section>
 
       <div className="section-head">

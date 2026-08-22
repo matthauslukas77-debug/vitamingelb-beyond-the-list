@@ -3,6 +3,7 @@ import type { Account, PendingOrder, Persona, StandingOrder, Transaction } from 
 import type { BreakdownDirection } from '../domain/breakdown'
 import { sortByDateDesc } from '../data/generate'
 import { DEFAULT_SETTINGS, loadSettings, saveSettings, type Settings, type SettingsSection } from './settings'
+import type { CategoryKey } from '../insights/budget/slots'
 
 /** Die fünf Tabs der v6-Navigation. */
 export type Tab = 'home' | 'payments' | 'invest' | 'offers' | 'services'
@@ -28,6 +29,11 @@ export type Screen =
   /* Der Budget-Wizard. Eigener Bildschirm, weil er einen eigenen Stapel hat:
      «Zurück» geht im Wizard einen Schritt zurück, nicht aus ihm heraus. */
   | { name: 'budgetWizard' }
+  /* Eine einzelne Budgetkategorie. Die Übersicht sagt «wie stehe ich», diese
+     Seite «warum» — zwölf Monate Verlauf, der Richtwert und die Detailfelder.
+     Ein eigener Bildschirm und kein Aufklapper: Der Verlauf braucht Platz, und
+     ein Akkordeon mitten in einer Liste bekommt ihn nie. */
+  | { name: 'budgetCategory'; category: CategoryKey }
   /* Signale — was sich verändert hat. Das Gegenstück zum Cockpit: dort die
      Instrumente, hier die Leuchten. */
   | { name: 'signals' }

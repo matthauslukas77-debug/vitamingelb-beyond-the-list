@@ -4,6 +4,7 @@ import { PersonaPicker } from './app/PersonaPicker'
 import type { Screen, Tab } from './app/session'
 import type { SettingsSection } from './app/settings'
 import { findPersona } from './data/personas'
+import { CATEGORY_KEYS } from './insights/budget/slots'
 import type { Persona } from './data/types'
 
 /**
@@ -55,6 +56,16 @@ function readScreen(name: string, params: URLSearchParams, persona: Persona): Sc
 
   /* Der Wizard direkt — für Demo und Videoaufnahme. */
   if (name === 'budget') return { name: 'budgetWizard' }
+
+  /* Eine einzelne Budgetkategorie: `?screen=category&category=reside`.
+     Für die Videoaufnahme, die sonst erst das Cockpit öffnen und dann eine
+     Blase treffen müsste. Ein unbekannter Schlüssel führt auf die Übersicht
+     statt auf eine leere Seite. */
+  if (name === 'category') {
+    const key = CATEGORY_KEYS.find((entry) => entry === params.get('category'))
+    return key ? { name: 'budgetCategory', category: key } : { name: 'cockpit', view: 'budget' }
+  }
+
   if (name === 'signals') return { name: 'signals' }
   /* Das Zuordnungsbrett — sonst nur über die Signale erreichbar. */
   if (name === 'assign') return { name: 'assign' }
@@ -87,7 +98,7 @@ function writeUrl(persona: Persona | null) {
   const url = new URL(window.location.href)
   if (persona) url.searchParams.set('persona', persona.id)
   else {
-    for (const key of ['persona', 'tab', 'screen', 'account', 'series', 'section', 'view']) url.searchParams.delete(key)
+    for (const key of ['persona', 'tab', 'screen', 'account', 'series', 'section', 'view', 'category']) url.searchParams.delete(key)
   }
   window.history.replaceState(null, '', url)
 }

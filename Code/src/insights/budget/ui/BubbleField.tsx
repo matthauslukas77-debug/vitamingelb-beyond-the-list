@@ -181,6 +181,45 @@ const ICON_RADIUS = 26
  */
 const ICON_COVERED = 18
 
+/**
+ * Ab dieser Grösse steht die **Zahl** in der Blase, mit dem Sinnbild darüber.
+ *
+ * Bis hierher war die Blase stumm: Sie trug ein Sinnbild, und die Zahl dazu
+ * stand in der Liste darunter. Wer wissen wollte, wie voll die gelbe ist,
+ * musste erst Symbol auf Zeile abbilden. Bei Reto sind fünf von sechs Blasen
+ * fast gleich gelb — 96, 99, 100, 110 Prozent —, und dort trägt die Farbe die
+ * Unterscheidung schon nicht mehr. Genau da muss die Zahl hin.
+ *
+ * Prozent und nicht Franken: Prozente sind über alle sechs Blasen
+ * vergleichbar, Franken nicht. Dass Wohnen mehr Geld ist als Mobilität, sagt
+ * schon die Fläche; was der Blick dort sucht, ist «wie viel Spielraum ist
+ * noch».
+ */
+const LABEL_RADIUS = 32
+/**
+ * Ab dieser Füllung liegt die **zweizeilige** Beschriftung darauf.
+ *
+ * Höher als `ICON_COVERED`, weil Sinnbild plus Zahl gut 30 Einheiten hoch
+ * stehen statt 22 — die untere Kante der Zahl liegt weiter draussen als die
+ * Ecke eines Sinnbildes.
+ */
+const LABEL_COVERED = 30
+
+/**
+ * Was in der Blase steht — oder `null`, wo keine Zahl hineingehört.
+ *
+ * Ohne Budget gibt es keinen Anteil. Dort **schweigt** die Blase, statt «0 %»
+ * zu behaupten: Wer nichts budgetiert hat, hat auch nichts zu 0 Prozent
+ * verbraucht. Diese Blasen sind ohnehin die leeren Ringe im Bild.
+ */
+export function bubbleLabel(bubble: Bubble): string | null {
+  if (bubble.budget <= 0) return null
+  /* Schmales geschütztes Leerzeichen (U+202F) vor dem Prozentzeichen — die
+     Schweizer Schreibweise, und im Kreis der Unterschied zwischen «96 %» und
+     einer Zahl, die von ihrem Zeichen wegdriftet. */
+  return `${Math.round(shareOf(bubble) * 100)}\u202f%`
+}
+
 export function BubbleField({
   bubbles,
   progress,
@@ -294,16 +333,59 @@ export function BubbleField({
               />
             )}
 
-            {outer >= ICON_RADIUS && (
-              <g
-                className={
-                  'bub__icon' + (iconOnDark(share, fill >= ICON_COVERED) ? ' bub__icon--inverse' : '')
+            {/* Die Beschriftung, in drei Stufen nach Platz: Sinnbild und Zahl,
+                nur Zahl, gar nichts. Beide Teile liegen in **einer** Gruppe
+                und kippen deshalb gemeinsam auf Weiss — ein weisses Sinnbild
+                über einer dunklen Zahl wäre zweierlei Grund für ein Ding. */}
+            {(() => {
+              const label = bubbleLabel(bubble)
+              const twoLine = outer >= LABEL_RADIUS && label !== null
+              if (outer < ICON_RADIUS) return null
+
+              const inverse = iconOnDark(share, fill >= (twoLine ? LABEL_COVERED : ICON_COVERED))
+              const cls = 'bub__label' + (inverse ? ' bub__label--inverse' : '')
+
+              /* Nur Zahl: die kleineren Blasen. Das Sinnbild wäre dort neben
+                 der Zahl ein Fleck, und die Zahl ist die Aussage. */
+              if (!twoLine) {
+                if (label === null) {
+                  return (
+                    <g className={cls} transform="translate(-11 -11)">
+                      <Icon name={categoryDef(bubble.key).icon} size={22} />
+                    </g>
+                  )
                 }
-                transform="translate(-11 -11)"
-              >
-                <Icon name={categoryDef(bubble.key).icon} size={22} />
-              </g>
-            )}
+                return (
+                  <g className={cls}>
+                    <text className="bub__pct" y="5" textAnchor="middle">
+                      {label}
+                    </text>
+                  </g>
+                )
+              }
+
+              return (
+                <g className={cls}>
+                  <g transform="translate(-8 -23)">
+                    <Icon name={categoryDef(bubble.key).icon} size={16} />
+                  </g>
+                  {/* Eine Stufe kleiner, wo die Zahl sonst an den Ring stösst:
+                      immer ab sechs Zeichen, in den kleineren Blasen schon ab
+                      fünf — «104 %» in einer Blase mit Radius 34 lässt links
+                      und rechts sonst kein Weiss mehr stehen. */}
+                  <text
+                    className={
+                      'bub__pct' +
+                      (label.length > 5 || (outer < 40 && label.length > 4) ? ' bub__pct--long' : '')
+                    }
+                    y="11"
+                    textAnchor="middle"
+                  >
+                    {label}
+                  </text>
+                </g>
+              )
+            })()}
           </g>
           </g>
         )
@@ -319,6 +401,10 @@ export function BubbleField({
  * die Zahlen im Klartext, hier ist der Tap-Bereich gross genug, und hier
  * findet eine Vorlesehilfe etwas vor. Die Grafik darüber zeigt das Verhältnis,
  * die Liste die Beträge — beide aus derselben Quelle, also nie zwei Wahrheiten.
+ *
+ * Jede Zeile führt auf die Detailseite ihrer Kategorie, genau wie die Blase
+ * darüber. Zwei Wege auf dasselbe Ziel, weil eine Blase mit Radius 29 kein
+ * Tap-Ziel ist — die Grafik ist die schnelle Geste, die Liste die sichere.
  */
 export function BubbleLegend({
   bubbles,
@@ -363,6 +449,11 @@ export function BubbleLegend({
               {bubble.budget > 0 && (
                 <span className="bub-legend__of">von {format(bubble.budget)}</span>
               )}
+            </span>
+            {/* Der Winkel sagt, dass hier etwas dahinterliegt. Ohne ihn ist die
+                Zeile eine Anzeige, die sich zufällig antippen lässt. */}
+            <span className="bub-legend__go">
+              <Icon name="chevronRight" size={16} />
             </span>
           </button>
         )

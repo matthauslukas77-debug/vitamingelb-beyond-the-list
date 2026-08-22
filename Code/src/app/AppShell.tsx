@@ -11,6 +11,7 @@ import { Offers } from './screens/Offers'
 import { Payments } from './screens/Payments'
 import { Recurring } from './screens/Recurring'
 import { BudgetWizard } from '../insights/budget/screens/Wizard'
+import { CategoryDetail } from '../insights/budget/screens/CategoryDetail'
 import { Cockpit } from '../insights/screens/Cockpit'
 import { Tips } from '../insights/screens/Tips'
 import { Signals } from '../insights/screens/Signals'
@@ -76,6 +77,7 @@ function screenFor(screen: Screen) {
     case 'account': return <AccountDetail accountId={screen.accountId} />
     case 'cockpit': return <Cockpit view={screen.view} />
     case 'budgetWizard': return <BudgetWizard />
+    case 'budgetCategory': return <CategoryDetail category={screen.category} />
     case 'signals': return <Signals />
     case 'assign': return <Assign />
     case 'tips': return <Tips />

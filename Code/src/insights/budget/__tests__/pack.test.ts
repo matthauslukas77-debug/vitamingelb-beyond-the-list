@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { boundsOf, packCircles, radiusFor, type PackedCircle } from '../pack'
-import { bubbleTotals, fillRamp, glowOf, iconOnDark, overshootOf, shareOf, stateOf } from '../ui/BubbleField'
+import { bubbleLabel, bubbleTotals, fillRamp, glowOf, iconOnDark, overshootOf, shareOf, stateOf } from '../ui/BubbleField'
 
 /** Überlappen sich zwei Kreise wirklich — mit etwas Luft für Rundung? */
 function overlaps(a: PackedCircle<unknown>, b: PackedCircle<unknown>): boolean {
@@ -243,5 +243,36 @@ describe('Die Skala der Blasen', () => {
     // Kein Kreis ist mehr als doppelt so gross wie der kleinste — die Anzeige
     // bleibt lesbar, auch wenn eine Kategorie neunfach überzogen ist.
     expect(Math.max(...radii) / Math.min(...radii)).toBeLessThan(2)
+  })
+})
+
+describe('Die Zahl in der Blase', () => {
+  it('nennt den Anteil am Budget in ganzen Prozent', () => {
+    expect(bubbleLabel({ key: 'reside', budget: 95_000, spent: 95_000 })).toBe('100\u202f%')
+    expect(bubbleLabel({ key: 'health', budget: 32_463, spent: 31_040 })).toBe('96\u202f%')
+  })
+
+  it('schreibt die Überschreitung aus, statt bei 100 abzuschneiden', () => {
+    /* Brunos Wohnen: CHF 13'463 auf CHF 1'463 Budget. Der rote Bogen deckelt
+       bei 200 %, die Zahl darf das nicht — sie ist die einzige Stelle, an der
+       das wahre Ausmass steht. */
+    expect(bubbleLabel({ key: 'reside', budget: 146_300, spent: 1_346_300 })).toBe('920\u202f%')
+  })
+
+  it('schweigt, wo kein Budget gesetzt ist', () => {
+    /* «0 %» wäre dort eine Behauptung: Wer nichts budgetiert hat, hat auch
+       nichts zu null Prozent verbraucht. Diese Blasen sind die leeren Ringe. */
+    expect(bubbleLabel({ key: 'taxes', budget: 0, spent: 0 })).toBeNull()
+    expect(bubbleLabel({ key: 'taxes', budget: 0, spent: 44_000 })).toBeNull()
+  })
+
+  it('sagt aber sehr wohl «0 %», wo ein Budget steht und noch nichts weg ist', () => {
+    expect(bubbleLabel({ key: 'taxes', budget: 115_435, spent: 0 })).toBe('0\u202f%')
+  })
+
+  it('setzt ein schmales geschütztes Leerzeichen vor das Prozentzeichen', () => {
+    // Schweizer Schreibweise — und im Kreis der Unterschied zwischen einer
+    // Zahl mit ihrem Zeichen und einer Zahl, die davon wegdriftet.
+    expect(bubbleLabel({ key: 'reside', budget: 100, spent: 50 })).not.toContain(' %')
   })
 })

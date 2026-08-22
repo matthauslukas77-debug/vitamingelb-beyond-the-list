@@ -802,11 +802,31 @@
   animation-delay: calc(var(--i, 0) * 55ms + 320ms);
 }
 
-/* Das Sinnbild steht standardmässig dunkel auf heller Fläche. Wann es kippt,
-   entscheidet `iconOnDark()` an der Rampe — auf petrol4 wäre Weiss zu schwach,
-   auf Orange und Gelb unleserlich. */
-.bub__icon { color: var(--petrol8); pointer-events: none; transition: color 200ms ease; }
-.bub__icon--inverse { color: var(--weiss); }
+/* Die Beschriftung steht standardmässig dunkel auf heller Fläche. Wann sie
+   kippt, entscheidet `iconOnDark()` an der Rampe — auf petrol4 wäre Weiss zu
+   schwach, auf Orange und Gelb unleserlich. Sinnbild und Zahl liegen in
+   derselben Gruppe und kippen deshalb zusammen. */
+.bub__label { color: var(--petrol8); pointer-events: none; transition: color 200ms ease; }
+.bub__label--inverse { color: var(--weiss); }
+
+/* Die Zahl in der Blase. `currentColor` statt eines eigenen Tokens, damit sie
+   dem Umschlag der Gruppe folgt statt ihn zu wiederholen.
+
+   Die Grösse steht in Einheiten des `viewBox`, nicht in Bildschirmpixeln: Sie
+   wächst und schrumpft mit dem Blasenhaufen, und das ist genau richtig — die
+   Zahl soll zur Blase passen, nicht zum Gerät. */
+.bub__pct {
+  fill: currentColor;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  /* Zahlen mit gleicher Laufweite: Sonst wandert «96 %» gegenüber «100 %»
+     sichtbar aus der Mitte, obwohl beide zentriert sind. */
+  font-variant-numeric: tabular-nums;
+}
+
+/* «920 %» ist ein Zeichen länger als «100 %» und stösst sonst an den Ring. */
+.bub__pct--long { font-size: 15px; }
 
 /* Die Zustandsklasse trägt keine Farbe mehr — die kommt aus der Rampe. Sie
    bleibt am Element, weil sie den Zustand im DOM ablesbar macht. */
@@ -856,6 +876,10 @@
 
 .bub-legend__of { display: block; font-size: 10px; font-weight: 400; color: var(--text-muted); }
 
+/* Der Winkel am Zeilenende. Blass, weil er nur die Möglichkeit anzeigt und
+   nicht um Aufmerksamkeit mit dem Betrag daneben streiten soll. */
+.bub-legend__go { flex: none; color: var(--petrol4); }
+
 .bud-month__total {
   display: flex;
   flex-wrap: wrap;
@@ -896,4 +920,126 @@
   .bub__g,
   .bub__fill,
   .bub__over { animation-delay: 0ms !important; }
+}
+
+/* ── Die Detailseite einer Kategorie ─────────────────────────────────────── */
+
+/* Die Blase oben ist dieselbe Grafik wie auf der Übersicht, nur allein. Der
+   Deckel hält sie davon ab, auf einem breiten Gerät die halbe Seite zu füllen —
+   `.bub` erlaubt 300px, hier sind 190 genug: Darunter kommt die Zahl noch
+   einmal im Klartext, und die Grafik soll sie nicht überschreien. */
+.bud-detail__hero {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  padding: var(--s-4) 0 var(--s-6);
+}
+
+.bud-detail__hero .bub {
+  flex: none;
+  width: 132px;
+  max-height: 132px;
+}
+
+.bud-detail__figures {
+  flex: 1;
+  min-width: 0;
+}
+
+.bud-detail__spent {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.bud-detail__of {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.bud-detail__rest {
+  display: block;
+  margin-top: var(--s-3);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-body);
+}
+
+.bud-detail__rest.is-over { color: var(--danger3); }
+
+/* Die Hochrechnung steht ohne Karte auf dem Grund: Sie ist ein Satz, keine
+   Kennzahl, und eine Karte würde sie zu einer machen. */
+.bud-detail__pace {
+  margin: 0 0 var(--s-5);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-body);
+}
+
+.bud-detail__pace strong { color: var(--text-strong); }
+
+.bud-detail__history { padding: var(--s-6) var(--s-5) var(--s-5); }
+
+.bud-detail__note {
+  margin: var(--s-5) 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-body);
+}
+
+.bud-detail__note strong { color: var(--text-strong); }
+
+.bud-detail__bench { padding: var(--s-6); }
+
+.bud-detail__fields { padding: var(--s-2) var(--s-5); }
+
+/* Der Einstieg in den Wizard steht am Fuss der Seite und braucht Luft darüber:
+   Sonst klebt er an der letzten Feldzeile und liest sich als deren Teil. */
+.bud-detail .bud-cta { margin-top: var(--s-5); }
+
+/* ── Der Verlauf über zwölf Monate ───────────────────────────────────────── */
+
+.hbar {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Die Balken tragen die Grundfarbe der Marke, nicht die Rampe der Blasen: Sie
+   zeigen Beträge, keine Auslastung. Zwölf verschieden eingefärbte Balken
+   sähen nach einer Aussage aus, die sie nicht machen. */
+.hbar__bar { fill: var(--petrol4); }
+
+/* Der laufende Monat ist schraffiert statt blass. Blass liest sich als
+   «wenig», schraffiert als «noch nicht fertig» — und Letzteres ist gemeint.
+   Ein halber Monat, der neben elf ganzen als niedriger Balken steht, ist die
+   häufigste stille Lüge in solchen Grafiken. */
+.hbar__bar--partial { fill: url(#hbar-partial); }
+.hbar__hatch-bg { fill: var(--surface-sunken); }
+.hbar__hatch { stroke: var(--petrol4); stroke-width: 2.5; }
+
+.hbar__base { stroke: var(--line); stroke-width: 1; }
+
+/* Der übliche Monat als Strichlinie — der Median, nicht der Mittelwert.
+   `--text-strong` und nicht `--petrol8`: Im dunklen Modus ist petrol8 fast
+   genau die Kartenfläche (#004B5A auf #00373D), Linie und Beschriftung wären
+   dort unsichtbar. Das Textpaar dreht mit dem Modus. */
+.hbar__typical {
+  stroke: var(--text-strong);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+}
+
+.hbar__typical-label {
+  font-size: 9px;
+  font-weight: 700;
+  fill: var(--text-strong);
+}
+
+.hbar__tick {
+  font-size: 9px;
+  fill: var(--text-muted);
 }
