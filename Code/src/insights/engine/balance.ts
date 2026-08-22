@@ -8,7 +8,7 @@ import { detectRecurring, type RecurringSeries } from '../../domain/recurring'
  *
  * Grundsatz für den vorderen Teil: Prognostiziert wird ausschliesslich, was
  * bereits feststeht — erkannte Zahlungsreihen und pendente Aufträge. Keine
- * Hochrechnung von Gewohnheiten. Michael im Interview 07: «Einfach plausibel
+ * Hochrechnung von Gewohnheiten. Bruno im Interview 07: «Einfach plausibel
  * müsste es sein.» Eine Kurve, die rät, verliert genau dieses Vertrauen.
  */
 

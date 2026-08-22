@@ -1,0 +1,548 @@
+Flow Summary
+
+Nutzerinterview mit Bruno (59, verteilte Bankbeziehungen) zu Finanzverhalten, App-Nutzung und Wünschen: reaktive App-Nutzung, Wunsch nach besserer Gruppierung, Ortsspur, Projektplattform für Nachbarprojekte und KI-gestützten Anlageempfehlungen.
+
+
+
+Profil & Bankenlandschaft
+
+Bruno, 59, [Ort] ([Kanton]), 100% angestellt bei einer kantonalen Bildungsinstitution, Arbeitsregion [Region]
+
+Konten stark verteilt: 2-3 Banken für Alltag (PostFinance, Valiant), weitere 3 für Säule 3A
+
+App-Nutzung reaktiv: öffnet PostFinance meist bei E-Rechnungs-Notification, Kontobewegungen selten
+
+
+
+Zahlungsmittel & App-Nutzung
+
+Apple Pay im Alltag, Twint viel (u.a. Hofladen mit Foto/Beziehung), Debit primär, Kredit für Internet/international, PayPal häufig
+
+Nutzt GNU Taler (an einer kantonalen Bildungsinstitution mitentwickelt), lokales Privacy-Wallet
+
+Für Nachbar-Heizungsabrechnung monatlich exakte Kontrolle der Kontobewegungen nötig
+
+CO2-Rechner und Beleg-Klassifikation im Dashboard interessieren; Kategorisierung wurde deutlich besser
+
+
+
+Vorsorge, Anlagen & Beratung
+
+Kein Budget mehr (Steuern verzerren alles); Säule 3A als Zwangssparen, gestaffelt auf mehreren Banken für Steueroptimierung
+
+Aktuell ein Vorsorgeplan bei einer Bank; Wechsel nach Ausschöpfung des Limits
+
+Depot bei Swissquote/PostFinance, Accumulating-Fonds plus einzelne Aktien aus fachlichem Interesse; USD ok, GBP-Fonds wegen falschem Steuerkurs abgestossen
+
+Beratung regional (Hypothek, Pensionierungsplanung); TER der Fonds nicht präsent
+
+War Beistand für Tante: dort echtes Budget/Journal auf den Rappen nötig, Fokus Liquidität vor Rendite
+
+
+
+Wünsche & Feature-Ideen
+
+Gruppierung Alltag vs. Grossausgaben (Steuern, GA), Vorjahresvergleich/YTD-Charts
+
+Ortsbezogene Ausgabenspur (Ferien, Strandcafé), Geofencing beidseitig für Sicherheit
+
+Plattform für gemeinsame Nachbarprojekte (Heizung, 6-stellig): Topf, Zahlungsstand, Projektabwicklung
+
+KI-Assistenz für konkrete Fragen: z.B. 40'000 CHF in 1,5 Jahren optimal parken; Steuer-Vorauszahlung sinnvoll?
+
+Erwartung: plausible, nachvollziehbare Rechnung, keine Blackbox
+
+
+
+Sonstiges
+
+QR-Import Wertschriften in Steuererklärung als grösster Fortschritt, könnte kaufentscheidend für Bank sein
+
+Eigenmietwert-Änderung noch nicht vertieft, geringer erwarteter Einfluss auf eigene Situation
+
+KI (Claude, Coden, Marketing-Texte) alle paar Stunden genutzt; persönliche Beratung 1-2x/Jahr weiter geschätzt
+
+
+
+
+
+
+
+
+
+You: 
+
+
+
+
+Äh, ich gucke einfach kurz auf das Profil, das muss ich nochmal kurz— Ähm, wie du heißt?
+You:  Ja.
+You:  Wie alt du bist?
+You:  Ja.
+You:  Was du schaffst, und wo du wohnst.
+You:  Ja.
+You:  Das ist mir einfach so demografische Grunddaten: Nachname braucht es nicht, einfach—
+You:  Sehr gut.
+You:  Also, Bruno, äh, Alter 59, ich wohne [Ort], [Kanton].
+You:  Ja.
+You:  Und arbeite— ja, so vielleicht 3, 4 Tage pro Woche in [Ort], in der [Region].
+You:  Ja.
+You:  Das ist so ein bisschen arbeitsreich.
+You:  Ja.
+You:  Genau. [Ort]?
+You:  Ja.
+You:  100% angestellt, vielleicht.
+You:  Ja.
+You:  Ja.
+You:  Ja, nicht selbstständig.
+You:  An der kantonalen Organisation.
+You:  Okay.
+You:  BFA, ja.
+You:  Ja, okay.
+You:  Genau.
+You:  Ja, merci.
+You:  Ja.
+You:  Ähm, ja, da kommen wir schon direkt zu den Finanzen.
+You:  Ja.
+You:  Äh, Konten: Wo hast du Konten?
+You:  Sehr verteilt. Also, ich würde sagen, ungefähr so das tägliche— ja, Züge einkaufen, Zahlungen machen oder so, sind vielleicht 2 oder 3 Banken.
+You:  Mhm.
+You:  Und dann habe ich einfach für Säule 3a oder so ist extra noch einmal vielleicht so auf 3 weiteren Banken.
+You:  Mhm.
+You:  Also wirklich sehr verteilt.
+You:  Okay.
+You:  Genau.
+You:  Okay.
+You:  Ja.
+You:  Welche Bank hast du in deinem täglichen Konto?
+You:  Äh, Post.
+You:  Ja.
+You:  Genau.
+You:  Zum Beispiel. Und ähm, was haben wir noch?
+You:  Regional Valiant ist einfach so die klassische Regionalbank, wo ich mein erstes Bankbüchlein habe bekommen, wo man halt dort dann vorbeiläuft, gerade und so.
+You:  Ja.
+You:  Ja.
+You:  Genau.
+You:  Okay. Und in einem— aber du hast ja auch eine App auf dem Handy, wahrscheinlich.
+You:  Ja, ja.
+You:  Hast du schon die täglich geöffnet?
+You:  Nein.
+You:  Wöchentlich?
+You:  Ja.
+You:  Okay. Einfach die normalen—
+You:  Ich tue sie öfter, wenn ich zum Beispiel eine Zahlung bekomme per E-Mail. Jetzt gerade heute: Zahnarzt steckt Rechnung, die tue ich Postfinance auf, App, gehe dann zur E-Mail, gehe öfter in die Postfinance-App, tue Zahlungen und so.
+You:  Das ist so ein bisschen— aber das ist einfach, wenn ich eine Rechnung bekomme oder Benachrichtigung über E-Mail, tue ich eine neue Zahlung oder irgendwie eine neue Rechnung bekomme, die tue ich mir einfach mehr auf Post. Also, ich werde wirklich die Notification bekommen und gehe nachher reagieren, eher so.
+You:  Ja.
+You:  Das ist eigentlich fast schon die Hälfte der Sachen. So Kontobewegungen nachher schauen, mache ich selten.
+You:  Monatsabrechnungen muss ich jetzt zu meiner Mutter, die wirklich alle Monate— das tut sie— alle Belege schön zusammen ziehen, schauen, dass der Vater im Mikro nicht mehr ausgeht.
+You:  Ja, alles.
+You:  Nein.
+You:  Okay.
+You:  Okay.
+You:  Aber wenn wir es einfach gerade dabei sind: Du hast eigentlich Kontobewegungen auch immer angeschaut, wenn du drauf bist.
+You:  Ich tue— also, wenn ich drauf gehe, genau, Kontobewegungen anschauen. Ähm, was vielleicht auch noch ist: Ich habe— also, wir haben uns so eine Heizung, mit mehreren Nachbarn zusammen, und da abrechnen, und dort muss ich wirklich haargenau jeden Monat draufgehen, weil das sind vielleicht im ganzen Jahr 10 Bewegungen. Aber das ist wirklich dort, wo ich drauf schaue.
+You:  Okay.
+You:  Weil es einfach halt muss stimmen, weil in anderen muss Rechenschaft liefern und so.
+You:  Ja.
+You:  Und beim eigenen Konto ist es einfach mehr so ein bisschen Plausibilität.
+You:  Ähm, und was mich eigentlich so ein bisschen lächelt beim einen Konto, habe ich so CO2-Rechner. Du hast 100% weniger CO2 als der Durchschnitt, generiert ja, weil ich einfach nicht Bewegungen drauf mache oder einfach es ist— ja, also das Konto, wenn ich einmal davon zahle.
+You:  Aber sicher nicht Sandwiches kaufen oder saftigen Steak, wo dann gerade voll auf Rot ist bei CO2-Bilanz. Das sieht man dort nicht, oder?
+You:  Darum lache ich halt ein bisschen darüber. Aber manchmal schaue ich wirklich an, also gerade Beispiel, also das ist nicht zu erwähnen: Postfinance, irgendwie wo das so aufgekommen ist, habe ich wirklich auch systematisch geschaut, wer den Beleg richtig klassifiziert, ist das wirklich, wenn ich dort etwas 16 angekauft, ist es irgendein Essen oder wie ist es drinnen.
+You:  Also das hat mich durchaus interessiert.
+You:  Ja.
+You:  Okay.
+You:  Okay.
+You:  Ja.
+You:  Da gehst du einfach auch auf das Dashboard schauen.
+You:  Ja.
+You:  Ja.
+You:  Okay.
+You:  Ja.
+You:  Ja.
+You:  Und ich würde sagen, da fehlt etwas, oder?
+You:  Nein, ich denke, es ist viel raffinierter geworden als früher. Es braucht viel weniger Nachpflegeaufwand.
+You:  Ähm, was halt einfach— okay, das ist jetzt mein Problem halt eben kantonsangestellter, wo halt man zahlt halt einfach sehr viel Steuer, und das ist dann bei weitem die größte Ausgabe. Das ist halt einmal pro Jahr, und das macht man alles kaputt.
+You:  Okay.
+You:  Das ist so ein bisschen das. Also, wenn man jetzt einfach könnte sagen, so täglicher Bedarf, irgendwie, da kommt vielleicht ein Monatslohn versus täglicher Bedarf, der wäre das eine Gruppierung, wo ein bisschen Zeit nachher ist.
+You:  Ja.
+You:  Weil Steuern kann man nicht aus— oder irgendwie ein größeres Abi hat, irgendwie ein GA oder irgendetwas, das gerade plumm so viel aus im Vergleich zu—
+You:  Ja, ja, klar.
+You:  —täglichen Ausgaben. Das hätte mich eigentlich—
+You:  Ja.
+You:  —ist einfach vom Verhältnis immer schöne Charts hat oder so, ist dann so ein bisschen misleading.
+You:  Ja.
+You:  Genau.
+You:  Okay.
+You:  Aber wir können viel machen. Vorjahresvergleich beispielsweise oder—
+You:  Ja, ja.
+You:  —ähm.
+You:  Year to day.
+You:  Genau, solche Sachen einfach. Du hast mehr— einfach so, ja, weil so Fitness-Apps, du bewegst dich mehr als vor einer Woche oder irgendwie so.
+You:  Ja.
+You:  Genau.
+You:  Ja, okay.
+You:  Ja.
+You:  Das ist cool.
+You:  Ja.
+You:  Gut.
+You:  Ähm, in einem— aber du schaust ab und zu auf Buchungen.
+You:  Ja.
+You:  Und hast du auch schon Buchungen gesehen, wo du gesagt hast: "Hey, was ist das?" Oder—
+You:  Ja.
+You:  —was ist da ausgegeben worden?
+You:  Ja, ja, ja. Und dann ist es halt eigentlich erklärbar immer.
+You:  Okay.
+You:  Weil eben zum Teil ist dann halt Zahlungsbeziehung, wo man sieht, ist nicht der Name vom Laden, wo man ist drin gewesen oder irgendwie. Also das ist so ein bisschen die übliche Idee.
+You:  Ja, da muss man dann genauer nachschauen.
+You:  Ja, ja, ja.
+You:  Okay.
+You:  Also sehr cool ist, was natürlich könnte ein cooles Feature sein, in den Ferien. Also ich zahle ja nur noch Apple Watch, Apple Watch hier, dort, an diesem Strand, Kaffee an dem.
+You:  Also wenn man so wie eine Spur haben könnte, irgendwie, wo war ich auch, ein cooler Strand, Kaffee. Vielleicht irgendwie auch, weiß ich nicht, exportieren ein Fotoalbum oder irgendwie so.
+You:  Okay.
+You:  Einfach so ein bisschen ein Track haben von diesen Orten, wo man wirklich halt Geld hat ausgegeben oder so. So etwas Spannendes.
+You:  Ja, das ist cool.
+You:  Einfach, ja, ist ja auch das Thema, ja, Fancing vor allem, dass ich nicht einfach ausgeraubt werde aus irgendwie, ich weiß nicht, Südamerika oder so. Dass ich sage: "Nein, nur Europa.
+You: " Aber auch das Umgekehrte, einfach: Wo tue ich was, konsumiere ich, das könnte dann interessante Perspektiven sein.
+You:  Ja, okay.
+You:  Und welche Zeitpfähle oder so. Das ist— was wäre jetzt außergewöhnlich am 2.
+You:  am Morgen, gehe ich bei deinen, ja, ist das nicht so meins, weil okay, hier ist— ja, okay.
+You:  Ja.
+You:  Und genau.
+You:  Aber wenn wir gerade bei den Zahlungsmitteln sind, was hast du da aus?
+You:  Ja.
+You:  Für irgendwie Apple Pay?
+You:  Also genau.
+You:  Oder Apple Watch?
+You:  Ja, einfach vor allem Apple Pay, wo ich im Alltag brauche. Wir haben Kantine, wo ich gerne damit zahle.
+You:  Ja.
+You:  Ich habe den GNU-Taler, eine kleine Werbung zu machen. Das ist eine digitale Währung, die mir selber erfunden haben an der Schule.
+You:  Und das ist einfach eine ganz normale, es ist ein Wallet, wo man aufladen kann, wo dann wirklich alles einfach voll lokal ist. Es ist nur lokal, es ist keine Blockchain, es ist— hallo, es ist nichts.
+You:  Man kann hier in verschiedenen Währungen digitale Abbilde haben, und man kann dann darauf zahlen. Also es ist wirklich einfach Privacy, ist wirklich gewahrt, es ist—
+You:  Also einfach—
+You:  —es ist—
+You:  —on-prem für private.
+You:  —es ist einfach wirklich, genau, es ist wirklich auf dem Handy nur. Okay, es ist im Backup vom Handy, also wenn das Handy ins Wasser fällt, in das Backup, ist das Geld noch da.
+You:  Aber es ist eigentlich nur darauf, und niemand weiß eigentlich, für was, dass ich mein Geld ausgebe. Auf der anderen Seite ist nicht die Geldwäscherei das Problem.
+You:  Man hat wirklich eigentlich Kontrolle darüber, ohne dass man schießen kann, ohne dass man Steuern hinterziehen kann oder so. Das ist wirklich eine coole Sache.
+You:  Ja.
+You:  Also mit dem zahle ich auch.
+You:  Ja.
+You:  —mit was zahle ich noch? Mit— nein, das ist es eigentlich.
+You:  Ja.
+You:  —sehr selten bar. Soll das irgendwie—
+You:  Ja.
+You:  —und sonst habe ich eigentlich—
+You:  Ich finde—
+You:  —die Winde brauche ich sehr viel, ja. Genau.
+You:  Ich hoffe, viel bitte.
+You:  Ja.
+You:  —und dort tue ich dann auch mit Winde irgendwie, wo es gut integriert ist.
+You:  Ja.
+You:  —ist wirklich eine coole Sache. Postfinance, die Winde-App, irgendwie.
+You:  Ja.
+You:  —im Hofläden. Zahlen, Foto machen, merci vielmals, wie du letztes Käse genommen hast oder so.
+You:  Das ist so ein bisschen das, wo ich auch noch cool finde, wo eben— also eigentlich der Zahlungsanbieter auch der Track hat, mit wem hast du irgendwie Handbetrieb oder so.
+You:  Ja.
+You:  —das ist auch noch cool.
+You:  Ja.
+You:  —mache ich noch gerne. Wirklich das Foto, hey, wir haben das und das gekauft, merci vielmals, wenn man mal bei so einem Hofläden etwas Cooles sieht oder so.
+You:  Das ist auch so, finde ich auch gut. Und dann, wenn sie noch antworten, irgendwie, weil sie ja können, oder: "Ah, danke, auch" und so.
+You:  Ja, das ist cool, ja.
+You:  Ja, cool.
+You:  —ist eben so ein bisschen Beziehung, irgendwie.
+You:  Ja.
+You:  —verkäufer, ja.
+You:  Ja, okay.
+You:  —gut.
+You:  Kreditkarten?
+You:  Ja.
+You:  —Debitkarten?
+You:  Ähm, es ist vor allem Debit. Kreditkarten auch, klar, so für APIs, Internetkäufe oder so, international hilft das.
+You:  Ja, okay.
+You:  —genau, genau. Ja.
+You:  Okay.
+You:  —PayPal auch.
+You:  Ja.
+You:  —sehr viel PayPal eigentlich.
+You:  Okay.
+You:  —auch mit unserem lokalen Buchladen. Das ist irgendwie so ein Merchant, irgendwie eine Plattform angeschlossen, wo sie einfach Bücherbank hat, Kreditkarten und PayPal.
+You:  Dort ist auch das PayPal.
+You:  Okay, cool, gut.
+You:  Wenn du etwas jetzt nochmal zur App ein bisschen mehr, wenn du etwas irgendwie in einer App hast, wo du nicht siehst, aber gerne wissen willst, wie kommst du an diese Informationen?
+You:  Ich habe auch schon Nachforschungen angefordert. Kann man ja irgendwie belegen, Nachforschung oder so.
+You:  Das habe ich einmal gemacht, irgendwie. Ähm, genau. Weil wir eine Zahlung nicht, eine Zahlung nicht klar war.
+You:  Eben gerade bei den Nachbarn, wer hat das genau eingezahlt? Einzahlungsscheine, all die Referenzen.
+You:  Aber sonst eigentlich, nein, habe ich nie nachfragen müssen. Sonst eigentlich klar.
+You:  Ja, ist gut, gut. Und jetzt Budgetplan, hast du einen?
+You:  Nein.
+You:  Nein?
+You:  Nicht, nicht darum. Also nicht in der App, aber Excel oder so oder irgendwie mit einer KI oder App.
+You:  Was?
+You:  Ich habe es mal gehabt, aber genau. Eben die Steuern, so teuer sind.
+You:  Hast du kein Budget mehr?
+You:  Da habe ich eigentlich gar kein Budget mehr. Ja, ja.
+You:  Okay.
+You:  Ja.
+You:  Aber Sparkonto?
+You:  Sparkonto, also sparen, einfach ja. Ja.
+You:  Einfach Zwangssparen, 3a irgendwie. Das ist einfach so eine Routine, wo das immer dran ist.
+You:  Ja. Da hast du ja drei Konten?
+You:  Ja.
+You:  Bankkonto Versicherung?
+You:  Äh, es ist nur eine Bank.
+You:  Nur eine Bank?
+You:  Nur eine Bank.
+You:  Und du hast drei Banklösungen, das kannst du am Schluss anders auszahlen wegen Steueroptimierung?
+You:  Genau. Also ja, ja.
+You:  Also oder auch, bei gleicher Bank.
+You:  Bei gleicher Bank, bei den Konten?
+You:  Bei den Konten. Man kann Staffeln auflösen.
+You:  Und dort bist du einfach zu deinem Bankberater, der dich hat beraten dort? Oder hast du sonst einen Finanzberater, der mit dir in Themen bespricht?
+You:  Äh, also es geht jeder zum Vermögenszentrum, irgendwie so.
+You:  Zum Vollzett?
+You:  —55, genau.
+You:  Ja, okay.
+You:  Äh, ich jetzt nicht.
+You:  Aber ja, wir haben einfach so Gesamtbankberatung gemacht, wo wir das halt so machen, irgendwie. Aber an sich, ja, irgendwie systemisch ist es nicht endlos kompliziert.
+You:  Ja.
+You:  Was ich zehn Jahre schon sowieso nicht und es ist eigentlich.
+You:  Ja, ja. Bei Bank hast du Vorsparplan oder hast du, was hast du dort?
+You:  Ja, Vorsparplan. Also beim einen habe ich Vorsparplan.
+You:  Ja.
+You:  Und einfach, ja, es ist einfach gerne so ein bisschen, was ist die Mitte mal gewesen? Irgendwie 50.
+You: 000 oder so. Okay, du musst einfach 30 Jahre sparen oder so.
+You:  Und dann einfach alle paar Jahre hast du das ausgeschöpft oder alle sieben Jahre ist es ausgeschöpft und dann wechselt man halt zum nächsten.
+You:  Ja, für Steueroptimierung. Du kannst ja länger reinkommen.
+You:  Ja, aber es macht dann nicht mehr Sinn, oder so, aber das wäre einfach von der Progression schon nicht. Und dort habe ich einfach jetzt das Aktuelle ist wirklich ein Vorsparplan.
+You:  Ja.
+You:  —wo ich vorgehe, genau.
+You:  Ja, dort hast du die Informationen bekommen, du weißt, wie viel Prozent ist in welchem Land oder welcher Fond drin ist oder so, zum Beispiel.
+You:  Ja, ja, das ist wirklich, Entschuldigung.
+You:  —sagt dir etwas?
+You:  Ja, also wir haben, also es ist wirklich dort Beratung zur Risikoprofil sowieso. Also irgendwie verteilt durch die verschiedenen Banken wissen nichts voneinander, irgendwie.
+You:  Und dann bin ich einfach, also wirklich bei jedem größeren irgendwie jemand, weil so nicht 100.000 oder nein, es muss weniger sein, so fange ich gleich nicht. Aber einfach ab einem bestimmten Betrag wird man ja wirklich regelmäßig gescreenet, dass ich das eben drauf habe, hey, mit diesen Wegschriften, mit diesen Fonds hast du das und das Risiko, ist es tragbar und das ist wirklich sehr professionell für alle Banken.
+You:  Ja.
+You:  —wirklich gut. Also ich habe noch keinen, also Kantonalbank, [Bank], habe ich aktuellen Fonds, wo dort läuft, Hausbank und so.
+You:  Und die haben eigentlich alle so.
+You:  Ja. Und du weißt so die jährlichen Kosten von diesem Fonds?
+You:  Nein.
+You:  Nein.
+You:  —weißt du nicht?
+You:  Also theoretisch schon, aber wie viel es genau ausmacht oder so, nein.
+You:  —weißt du nicht, okay. Und ist eine Beratung aber vorgekommen?
+You:  Ja, ja, ja.
+You:  Okay. Ja, ja.
+You:  Nein, aber eben schwankend das Risiko ist viel größer, währungsrisiko, keine Ahnung, es ist, ja, es ist abhängig.
+You:  —ja, ja.
+You:  Dort war es halt mühsam machen. Ich bin Beistand gewesen, Verkehrs, für meine Tante.
+You:  Und dort haben wirklich auf einer App genau Journal geführt, alles genau, alles genau. Dort haben wir auch Budget gemacht und alles.
+You:  Also dort bin ich sehr froh gewesen, um die Funktion wirklich geplant, mit mehr als Excel und dort ist es wirklich nerdig gewesen und da haben wir einfach geguckt, dass eben Wertschriften risikoprofil, wirklich Auszahlung, Profil, wirklich Abbau, wo im Heim braucht man einfach jedes jeden Monat fünf bis zehn Mill, wo einfach weg müssen können. Und dort ist es wirklich auf Abbau.
+You:  Aber sonst, ja, einfach eine Mischung sowieso innerhalb, was ich auch gerne habe, ist eigentlich die Aktie. Also wirklich Fonds, wo ich genau von denen.
+You:  —ist ein eigenes Portfolio noch?
+You:  —genau, mehrere. Also einfach die Aktie, wo die, die, die am Schluss hat man auch gleich einen SL und weiß nicht was, aber Pensionskassenprofil ist noch wenig witzig.
+You:  Aber ich finde es noch gut, also ein bisschen Börsen nachrichten zu bekommen, weil habe ich so ein bisschen fachliches Interesse.
+You:  Ja.
+You:  —gewisse Branchen. Und dort habe ich einzelne Titel, was mir auch normal auch nicht macht.
+You:  Aber das interessiert mich.
+You:  Ja. Und wenn jetzt solche Informationen würdest du mehr wissen oder das Thema eintauchen, wo informierst du dich?
+You:  Äh, Finanzmarkt, Swiss Cloud, einfach so, die loggen. Also ja, bei Swiss Cloud oder eben Post hat ja auch Swiss Cloud und der hat mir eigentlich genügend Infos, wo man gerade direkt sieht, aktuelle Statements, Prognosen, die sie haben und so weiter.
+You:  Ja.
+You:  Ja. Und Thema Versicherungen, schaut ihr dort selber oder mit dem Bankberater oder dort hast du sonst einen Finanzberater, so Thema Krankenkassenwechsel oder Hausratversicherung oder?
+You:  —genau, das sind einfach alles Trends, so ein bisschen, aber eben, es ist alle paar Jahre, ja, so Hausrat und ja, auch so mit Haus zu tun hat, ist schon noch wichtig. Also eben Gebäudeversicherung, Zusatzversicherung, Gebäudeversicherung, haben wir alle paar Jahre auch Beratungstermine.
+You:  Okay.
+You:  —ja.
+You:  Und gerade eben zum gleichen Finanzberater, den du kennst und wo du es vielleicht machst?
+You:  —nein, nein, nein.
+You:  Also jetzt aktuell eben so mit Perspektiven, Pensionierung, musst du ja eben irgendwie. Und dort.
+You:  Haben wir einfach mal eben nicht Vollzett dafür, einfach die regionale Bank, wo man die Hypothek hat und das eine größere Posten ist oder um das wirklich logisch. Ja.
+You:  Und dort sind wir wirklich von drei Frauen, wo eine ist, nein, die Diplomierung zur Finanzberaterin oder so, nein, so mehr als nicht abgeschlossene Arbeit oder so, dort gerechnet und so.
+You:  Okay. Ja, ja, spannend.
+You:  Ja.
+You:  —nein, aber das finde ich cool. Also es ist wirklich eine gute, es ist ein spannender Job.
+You:  —und so.
+You:  —gute Beratung.
+You:  —Thema Vorsorge, so Vorsorgeauftrag oder eben gerade jetzt bei CashBudget das Thema, so die verschiedenen Verträge, Hinterlegen, hast du das jemals mit deiner Familie Frau angeschaut und mal gemacht oder ist das nie ein Thema groß gewesen, das?
+You:  —ja, es ist einfach schwierig, bei der Tante irgendwie, sie sagen zwar auch immer so, aber dann hat man so, es bringt eben nichts. Warum kann ich nicht entscheiden?
+You:  Wenn jetzt irgendjemand, wo also irgendwie weiß ich auch nicht, dement, also nicht selber entscheiden mehr und jetzt muss man sagen, also jetzt steht da drin nicht, hey, wenn ich die Hand breche, tut mir nicht ins Spital. Also es ist nur so schwierig abzuschätzen, auch als Angehörige, die dürfen oder sollen entscheiden.
+You:  Ja, das kann ich jetzt nicht sagen. Oder irgendwie die Hüfte brechen, das ist furchtbar, aber wenn es nämlich, hey, die Chance gibt oder so, es ist schon schwierig.
+You:  Es ist schon schwierig.
+You:  —ja.
+You:  —einfach wichtig ist ja, jemand darf entscheiden für einen, jemand hat Kontozugriff vor allem, dass nicht alles gesperrt ist irgendwie, dass man liquid bleibt. Das ist sowieso immer das A und O, liquid bleiben, verschiedene Währungen und so weiter, Liquidität sichergestellt und Rendite kommt irgendwie dann ein bisschen nachher.
+You:  Also das ist so ein bisschen.
+You:  —ja.
+You:  —ja, das stimmt.
+You:  —okay. Und du hast Kinder?
+You:  —nein.
+You:  —nein? Okay.
+You:  —von dem her, keine Vorsorge oder Erbenplanung irgendwie oder vorzogen irgendetwas. Aber einfach soll ich sagen, mit der Frau zusammen stehe ich kompliziert nachher Pensionierung irgendwie vom Pacing her, von den ganzen Effekten, die nachher kommen, stehe ich recht aufwendig.
+You:  —ja, okay. Ja, jetzt hörst du vielleicht, nein, nein, das ist gut, das ist egal, aber du kannst das später eben einsteigen, wo wir sie über.
+You:  —Entschuldigung, ja.
+You:  —nein, nein, das ist sehr gut.
+You:  —cool, detailliert.
+You:  Das meiste ist halt schon gekommen, aber das Einzige, was halt noch so ein bisschen ist, hast du noch irgendwelche Ziele so von finanziellen, weiß ich auch nicht, sparst du noch gerade auf etwas her oder so?
+You:  —oder hast du mal gehabt, weißt du, so vielleicht früher oder.
+You:  —zu Hause oder so?
+You:  —eine Reise.
+You:  —ja, ja, ja.
+You:  —solche Themen.
+You:  —nein, es ist mehr irgendwie renovieren.
+You:  —ich glaube, das ist banaler gewesen oder so, Renovation, genau. Also aktuell sollten wir eben unsere Heizung erneuern, weil so und dort ist es dann vor allem mehr auch mit den Nachbarn irgendwie so ein bisschen geplant.
+You:  Also das gemeinsame Projekt planen mit anderen, und ja, es gibt einfach so Kosten, Nutzen, Möglichkeiten, finanzielle von allen. Und dort wäre es schon irgendwie cool gewesen, wenn man so Plattformen hätte, wo man einfach kann, weiß ich auch nicht, das Projekt ein bisschen planen, dass man vielleicht auch sieht, gerade jetzt zahlt, weil die vier Nachbarn oder so müssen nachher irgendwie auch einen Topf einzahlen, dass man nachher grün geht, das Projekt, dass man wieder auch kann, ja, weiß ich auch nicht, year to date, also Projekt, wenn es mal gestartet ist, schauen, wo stehen wir oder wo hält es die Abwicklung und so.
+You:  Also es wäre dort auch nicht schlecht.
+You:  —ja.
+You:  —irgendwie so etwas. Und dort geht es nachher um sechsstellige Beträge, sofort die Bauprojekte, und dort wäre es gut.
+You:  —ja. Du hast schon Mietwohnungen, die du besitzt, oder hast du einfach eigene Immobilien für die, die du dann wohnst?
+You:  —es ist eine Wohnung, die wir vermieten, also wo ich im Auftrag vermiete, genau.
+You:  —okay.
+You:  —ja, und dort ist es auch so ein bisschen, ja, was hat man dort? Einfach Mietkautionskonto, wo man eigentlich verwaltet, aber selber keinen Zugriff hat.
+You:  Und nachher ist.
+You:  Es eigentlich nicht wahnsinnig anders als ein eigenes Privatkonto, rein von der finanziellen Abwicklung.
+You:  —ja. Und du hast ja selber noch ein Haus mit Hypothek, oder?
+You:  —ja.
+You:  —wo ziehst du die Infos, wo hast du die, ist das die gleiche App, ist das am gleichen Ort oder ist es separat?
+You:  Und hast du dort Infos oder ist das wie, mühsam oder wie ein PDF hast du oder irgendwo andere Sicht oder ist das die gleiche App ersichtlich?
+You:  —nein, es ist eigentlich, ich würde jetzt mit zu informieren nicht in eine App schauen, für solche Sachen. Auch bei Wegschriften nicht.
+You:  Also die haben wirklich, und zwar absichtlich, ihre Wesen-PDFs irgendwie, wo dynamisch genug sind. Und ich bin so der typische Wenn es wirklich darum geht, Anlagen von A oder B, dann schaue ich wirklich den Prospekt an, groß, vorne bis hinten, drucken wir es manchmal schon noch aus, irgendwie.
+You:  Das ist mehr so.
+You:  —ja. Und nicht auf dem Handy.
+You:  Für die Background kannst du natürlich auch die Zahlen gut verstehen in der Papier und abschätzen. Das ist, ja, okay.
+You:  —ja.
+You:  —ja, wow.
+You:  Der coolste Moment ist immer die Steuererklärung. Weil das finde ich eigentlich, das ist die meiste Innovation gewesen, einfach, dass ich Wegschriften praktisch bei allen wirklich einfach QR-Code reinziehen kann.
+You:  Und das ist eine Höllenarbeit, eine Mail zu tippen hat oder so. Und das ist jetzt wirklich in den letzten zwei, drei Jahren hat es wirklich super.
+You:  Und das können dann Entscheidungen für eine Bank, dass ich dort wirklich einfach die Angaben liefere und ohne großes Drama auch.
+You:  Ja, das ist schon sehr spannend. Und du weißt auch von Erfahrungswert, wie viele Steuern du rechnen kannst.
+You:  —ja.
+You:  —aber ich meine, man hat ja die ganzen Steuersätze, die ganze Schweiz bei allem eigentlich, und eigentlich könnte man eine Steuervorcaste anzeigen. Das wäre eigentlich nicht das Problem.
+You:  Wäre das für dich, also weißt du, würdest du sie interessant, oder?
+You:  —ja, genau, genau.
+You:  Also einfach auf der anderen Seite interessant ist, mit der Steuererklärung, also einfach Ende Jahr, sieht man auch, ah shit, die haben ja gar keinen Gewinn gemacht oder so. Also Unternehmensperformance, merkt man nachher, ah das ist jetzt das und das passiert.
+You:  Oder sie haben ein Split gemacht oder sie haben einen Merger gemacht. Das ist auch noch sehr spannend.
+You:  Eigentlich das erste, die Steuer, gut, ich kann jederzeit darauf schauen, es ist wieder Neues passiert. Aber einfach, das ist sicher der Punkt im Jahr, wo ich ganz gezielt alle Positionen sehe und überlege, kaufen, verkaufen, das ist so ein bisschen das.
+You:  —ja. Und wenn du selber entscheidest, gehst du mehr auf Accumulating Fonds oder auf solche, die auszahlen?
+You:  Oder hast du Rollfonds?
+You:  —ja, Accumulating.
+You:  —Accumulating, ja. Machst du steuertechnisch ja eigentlich Sinn.
+You:  —ja, ist einfacher und es generiert so viel Belege in der Zeit. Und nachher eigentlich die Delta und ja.
+You:  —ja, okay.
+You:  —ja, ich liebe das.
+You:  —ja.
+You:  —wobei jetzt eben mit der Steuerintegration QR-Code zum Einlesen ist es eigentlich nicht so extrem.
+You:  —ja, okay.
+You:  —und Franken nicht gefunden. Und ja keine US-Dollar geht noch, aber die Scheißfonds, gerade beim Bernischen Steuerprogramm tut es immer den falschen Kurs geben.
+You:  Die hat die alle gekillt, nur deswegen.
+You:  —okay, ja.
+You:  Und hast du schon, es ist ja das neue Gesetz gekommen, wo wie ändert, wie Immobilien, wie es ist mit der, was kannst du abziehen von der Steuer und so.
+You:  —eigene Mietwagen.
+You:  —das stört schon, informiert und weißt du, was es für dich für einen Einfluss hat, nicht.
+You:  —eigentlich nicht.
+You:  —also es hat garantiert eine riesige Einfluss auch gerade eben auf Handwechsel, von Hauseigentumsmarkt, das wird sicher ganz anders sein, aber für uns glaube ich nicht. Du kannst mir eh nicht kommen, aber du bist angebunden an unsere Blüte.
+You:  —ja, du kannst eine GmbH gründen und dort das Haus übernehmen und dann hast du ganz andere Konditionen, aber das ist.
+You:  —ja, und dann hast du wieder Liquidierungsprobleme oder so.
+You:  —ja.
+You:  —ja, GmbH ist schon keine schlechte Wahl. Also wenn du diese GmbH, yes, zumindest das Wort gehört und jetzt noch super, aber eben du hast eigentlich gleich, also irgendwie Liquidierung, Vererbung, Statuswechsel, es gibt diese Regeln.
+You:  Also der Kanton holt sich das Geld sowieso. Das ist nur eine Frage der Zeit.
+You:  —ja, das ist gut. Das haben wir noch eine Abschlussfrage, oder?
+You:  —ja. Also das Einzige wäre noch so, nutze ich irgendwelche Features irgendwie mit KI oder so?
+You:  —also irgendso eine normale Bank-App, die ich mir wünsche.
+You:  —nein, nein, was, ist das etwas gebraucht oder was ist das?
+You:  —Feature im Schweizer Fonds.
+You:  —nein, weil die Frage ist das.
+You:  —das ist vor allem allgemein. Nutze ich eine App, irgendwelche Features?
+You:  —bei deinen Apps. Bankkontakt.
+You:  —Kontoauszug, gut E-Bill und so, eher so die elektronische Rechnungsstellung. Aufladen.
+You:  Es ist noch immer nicht einfach so einfach. Aufladen von PrePay-Guthaben oder PrePay-Guthaben, telefonieren PrePay, aufladen jedes Mal an anders irgendwie bei meinen Eltern, jedes Mal an anders.
+You:  Das ist so ein bisschen ein Pain.
+You:  Sonst eben Security finden, ich mache sie sehr guten Job, Verbindung von Karten für Apple Pay ist wirklich super gemacht.
+You:  —ja.
+You:  —Fan.
+You:  Sein genug ist es, was ich auch cool finde, bei PostFinance ist es wirklich auf dem Webbrowser und in der App, nein, so wirklich aussieht. Das ist sehr gut gemacht.
+You:  —ah, das ist lustig.
+You:  —oder so Handover, also wenn ich eben auf einem Gerät irgendwie über das Handy auf dem Gerät einloggen, das ist wirklich etwas, was ich cool finde, das ist gut gemacht.
+You:  —ja, ja.
+You:  —genau, sonst Features, es weckt mich, es schickt mir einen Alert, wenn irgendetwas ist, wenn ich so etwas machen muss, könnte man vielleicht irgendwie, dass ich mir wie eine Jahresplan machen kann oder so. Also jetzt einfach der Komfort der Bankberatung, dass man wirklich die von der Bank anruft, wenn man etwas machen muss, das ist wirklich cool.
+You:  —ja, ja.
+You:  —kann ich einfach warten, dann sagen sie, hey, jetzt müsst ihr das und das auflösen oder macht jetzt das. Aber das könnte man vielleicht auch elektronisch.
+You:  —das ist noch ein spannender Punkt. Wie wichtig ist dir dort Empathie?
+You:  Weißt du, findest du es cool, dass sich jemand persönlich um dich kümmert mit dem Kontakt hat? Oder würdest du lieber einfach können selber technisch und ist dir das menschlich auch nicht so wichtig in dem Moment, in dem Thema?
+You:  —es ist noch nicht schlecht. Also gerade bei so Sachen, vielleicht ein bis zweimal Kontakt pro Jahr und dann hat man gerade eine Frage oder wie seht ihr irgendwie, Hypothekverlängerung, habt ihr drei oder fünf Jahre, wie seht ihr so, müssen wir jetzt, sollen wir jetzt.
+You:  Das finde ich eigentlich noch gut, dass man das mit der Bank noch. Oder eigentlich möchte ich gerne eben drei Anfonds und dann diskutiert man, ja, wann kommt jetzt der KI-Crash?
+You:  Shit, ich sollte es eigentlich konvertieren, aber wenn es jetzt gerade crasht, hat man wirklich ein riesiges Zwei und dann kann man einfach so ein bisschen austauschen, das finde ich noch gut.
+You:  —ja, ja.
+You:  —weil Investitions- oder irgendwie Entscheide oder so.
+You:  —ja, und gerade in dem Fall jetzt noch gerade, weil KI irgendwie außerhalb der Apps.
+You:  Mhm.
+You:  —nutze ich da irgendwelche Apps oder KI, die dir hilft irgendwie? Oder wenn du irgendwie Fragen hast.
+You:  —nutze ich KI schon. Nein, einfach allgemein.
+You:  —allgemein Apps?
+You:  —nein, einfach brauchst du KI.
+You:  —ja.
+You:  —und wie oft?
+You:  —KI, ja.
+You:  —ja, auch zwei Stunden. Das stimmt.
+You:  —ja, okay.
+You:  Okay.
+You:  —aber einfach mehr zum Code und.
+You:  —ja, genau.
+You:  —und den Texten, generell Marketing-Texte.
+You:  —ja, ja.
+You:  —Claude-Plugin in Word, logisch. Das ist Social Media.
+You:  —ja, ja.
+You:  —ja, keine Ahnung.
+You:  —ja.
+You:  —und wenn jetzt es ist eben eine spannende Frage, wir haben es schon einmal vor, du hast ChatGPT und du sollst alles über deine finanziellen Daten, alles, alles. Was wäre die Frage, die du stellen würdest?
+You:  Wow, einfach Projektbezogen. Wir haben jetzt ein Projekt, Heizungserneuerung, es geht um die zwei Jahre Baugesuch, Wortspaß.
+You:  Es geht endlos und dann macht man es und dann hat man gewisse Risiken. Und jetzt ist eben die Frage, muss ich irgendwie Geld speziell parkieren oder nicht?
+You:  Ich brauche in anderthalb Jahren 40'000 Steine irgendwie, wo bekomme ich die am schleusten her, damit ich es nicht einfach auf dem Privatkonto liegen lasse, sondern dass ich genau Termin auf das habe. Das wäre jetzt eine Frage, die ich jetzt stellen würde.
+You:  —ja.
+You:  —bei größeren Ausgaben oder auch bei den Steuern, was macht Sinn, soll ich jetzt wirklich der Kanton gibt einem ja ein bisschen Vorauszahlungszins und so, macht das wirklich Sinn oder was meinst du?
+You:  —ja.
+You:  —und dann würde ich mich einfach darauf verlassen, wenn er sagt, okay, er kann das rechnen oder er sagt das und das, ja, alternativ hätte ich dort einen Fonds irgendwie, wo du auf neun Monate das anlegen kannst, statt jetzt schon einzahlen, rentiert mehr. Ich würde glauben.
+You:  —das ist ein extremes Upselling-Potenzial für die App so.
+You:  —ja.
+You:  —das ist insane, ja, okay, spannend.
+You:  —einfach plausibel müsste es sein, es müssen Bescheide sein, um die Zinsgeld noch ein bisschen hoch erwartungsarm zu haben und ja.
+You:  —ja, okay, ja.
+You:  —also das bin ich meistens zu Fuß von Hand zu rechnen. Und wenn er mir das macht, dann wäre das sehr gut.
+You:  —ja, und im besten Fall tut es dir auch die Rechnung so anzeigen, dass es nachvollziehbar ist, wenn du herausfindest, dann kannst du sie verstehen und macht Sinn und ja.
+You:  —ja, ja.
+You:  —schaut nachher ein bisschen das Problem so, wer haftet, wenn die KI einen Fehler macht für die finanziellen Entscheidungen, das ist noch so ein bisschen.
+You:  —ja, ja, ja.
+You:  —aber das ist spannend, ja, okay.
+You:  —ja.
+You:  —ja, das ist cool.
+You:  —ja.
+You:  —dann haben wir noch eine Abschlussfrage, oder?
+You:  —ja, also, da kommen wir auch schon zum Abschluss. Jetzt.
+You:  Anhand von unserem Gespräch oder auch allgemein, was fällt dir für drei Wörter ein, wenn du jetzt das Thema Geld denkst?
+You:  Die ersten drei, die dir einfach kommen?
+You:  —einfach unüberlegt.
+You:  —Geld.
+You:  —die ersten drei.
+You:  SAP, der Konzern ist unser Portal, SAP-Portal, wo die ganze Abrechnung drin ist, wo ich muss den Lohnbeleg herunterladen und so. Sehr viele Kollegen haben nicht gecheckt.
+You:  Zwei Jahre später haben wir es schon wieder, es kommt. Okay, SAP.
+You:  Nachher, ja.
+You:  Schwierig, es ist schwierig zu greifen, es ist schnell fort irgendwie, es ist, es ist so ein bisschen Gewöhnungseffekt und so, ist einfach schwierig, ja, ist noch schwierige Vorstellung.
+You:  Und auf.
+You:  Der anderen Seite ist es einfach lange nicht alles, es ist eine Art von Werten, aber es ist irgendwie, ja, einfach, wenn man sieht, was kann ich machen, wenn ich jetzt 100'000 habe, was kann ich jetzt machen oder so, dann ist es eigentlich wenig Geld nachher das, sondern ich habe Anlagen, ich habe Erwartungen, ich habe das Geld in ein Privatprojekt, wo ich stecke oder so, aber meistens ist das Geld nicht einfach Geld, also ich sehe es im Portemonnaie, wenn ich baden gehe, aber nachher irgendwie, jeden Monat irgendwie 5'000 Steine, die reinkommen, Lohn oder so, das ist nachher irgendwie sofort am anderen Ort. Also Geld ist relativ wenig, wenn man das Gesamte einfach finanziell Exposition verpflichten kann oder so hat, das ist, es ist nicht gerade relativ wenig.
+You:  Es ist einfach so Zwischenphase, irgendwie zwischen idealerweise Job, den man hat, wo Geld reinspielt oder irgendwie, und nachher rausgeht, ja. Aber es ist ein wichtiger Phase, logisch.
+You:  —ja.
+You:  —also schwierig, aber wichtig.
+You:  —tough.
+You:  —genau. Gut.
+You:  —mal ist gut.
+You:  —denkst du mir noch etwas Wichtiges vergessen, oder?
+You:  —nein, also, die gehen jetzt so richtig Experience-Verbesserung, innovative Nutzung.
+You:  —machen.
+You:  —Finanzdaten oder so.
+You:  —also wir müssen bei PostFinance ja unseren Case und jetzt haben wir einfach wie, einfach Interviews geführt mit sechs Leuten, um einfach mal grundsätzlich zu verstehen, wie wäre die Sache genutzt, wie geht es mit Finanzen um, was beschäftigt es auch, was wünschen sie sich. Und es ist wie du auch noch wichtig gewesen, wo wir jetzt vor allem mit Leuten unter 20, um die 20 geredet und das ist auch spannend, ob er älter ist, dass wir wie das komplette Bild haben und wegen dem, merci vielmals.
+You:  —ja, vielen Dank.
+You:  —sehr wertvoll gewesen.
+You:  —super.
+You:  —Information.
+You:  —viel Erfolg, ich bin gespannt.
+You:  —ja, merci.
+You:  —hey, merci vielmals.
+You:  —das war fein. Schönen Abend.
+You:  —ja, alles gut.
+You:  —bye.

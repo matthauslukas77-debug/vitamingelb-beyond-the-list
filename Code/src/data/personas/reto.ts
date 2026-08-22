@@ -1,8 +1,8 @@
 import type { Account, Persona } from '../types'
-import { fritzTransactions } from './fritz.data'
+import { retoTransactions } from './reto.data'
 
-const PRIVATE = 'fritz-private'
-const SAVINGS = 'fritz-savings-bkb'
+const PRIVATE = 'reto-private'
+const SAVINGS = 'reto-savings-bkb'
 
 const accounts: Account[] = [
   {
@@ -25,14 +25,14 @@ const accounts: Account[] = [
   },
 ]
 
-export const fritz: Persona = {
-  id: 'fritz',
-  name: 'Fritz Wolmert',
+export const reto: Persona = {
+  id: 'reto',
+  name: 'Reto Bühler',
   role: '22 · Informatiker · kein Budget, Bauchgefühl',
   quote: '«Ich komme gut durch, aber ich habe einfach noch nie so geplant.»',
   source: 'Interview 01',
   accounts,
-  transactions: fritzTransactions,
+  transactions: retoTransactions,
   standingOrders: [
     { id: 'f-so-1', accountId: PRIVATE, recipient: 'Sparkonto BKB', amount: -30_000, currency: 'CHF', nextExecution: '2026-08-26' },
   ],

@@ -43,12 +43,12 @@ describe('Personas', () => {
 
   it('tragen jede ein Muster aus den Interviews', () => {
     const byId = Object.fromEntries(PERSONAS.map((persona) => [persona.id, persona]))
-    // Fritz: das Abo, das still teurer wurde
-    const adobe = byId.fritz.transactions.filter((tx) => tx.seriesId === 'f-adobe')
+    // Reto: das Abo, das still teurer wurde
+    const adobe = byId.reto.transactions.filter((tx) => tx.seriesId === 'f-adobe')
     expect(new Set(adobe.map((tx) => tx.amount)).size).toBe(2)
-    // Katja: Dauerauftrag auf das eigene Sparkonto
-    expect(byId.katja.transactions.some((tx) => tx.category === 'transfer' && tx.counterAccountId)).toBe(true)
-    // Michael: der grosse Jahresposten
-    expect(byId.michael.transactions.some((tx) => tx.category === 'taxes' && tx.amount < -1_000_000)).toBe(true)
+    // Livia: Dauerauftrag auf das eigene Sparkonto
+    expect(byId.livia.transactions.some((tx) => tx.category === 'transfer' && tx.counterAccountId)).toBe(true)
+    // Bruno: der grosse Jahresposten
+    expect(byId.bruno.transactions.some((tx) => tx.category === 'taxes' && tx.amount < -1_000_000)).toBe(true)
   })
 })

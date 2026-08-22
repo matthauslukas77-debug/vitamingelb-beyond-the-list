@@ -1,0 +1,536 @@
+Flow Summary
+
+Design-Thinking-Interview für Beyond the List (PostFinance): Reto (22, Informatiker) schildert sein Finanzverhalten — kein Budget, UBS + BKB als Sparkonto, kein Interesse an Investieren, wünscht sich übersichtlichere Ausgabenanalyse.
+
+
+
+Setup & Stammdaten
+
+Interview für Design Thinking zu Beyond the List / PostFinance, Fragen noch in Arbeit
+
+Reto Bühler, 22, Informatiker, wohnt in [Ort]; UBS (täglich) + BKB (Sparkonto)
+
+
+
+Finanzverhalten
+
+Kein Budget, keine Planung; kauft spontan, kommt aber 'gut durch'
+
+Sparauftrag monatlich; Sparkonto 'heilig', legt nicht an außer ~2000 für Rente
+
+Bei zu viel Ausgaben: weniger Burger
+
+Abos ~300/Monat (Adobe, ChatGPT, Spotify, Handy), im Griff via kurzfristigem Kündigen
+
+Kein Investment-Interesse, kennt Aktie, nicht Fonds/ETF; 3a vermutlich UBS, Inhalt unbekannt
+
+
+
+Bedürfnisse & Produkt-Insights
+
+Bank-Ausgabenübersicht als versteckt/unübersichtlich empfunden, würde bei gutem Design mehr nutzen
+
+Zieldefinition mit Bild (z.B. Traumauto) + Progress-Anzeige wäre attraktiv
+
+Widget-Idee: Ausgaben live aus Twint/Karte im Home-Screen-Widget
+
+KI-Fragen an Finanzdaten: 'was am meisten/unnötigsten ausgegeben'; Persönlichkeitsanalyse uninteressant
+
+
+
+Nächste Schritte
+
+(Speaker 1) 3a-Vorsorge bei UBS prüfen, ob Aktien enthalten sind
+
+komplett
+
+You: Wir müssen objektiv die dritte Aufnahme nehmen.
+You:  Ja, ja, so fix, ja, fix, fix, fix.
+You:  Alles kommt gut.
+You:  Vielleicht können wir bis dann schon ein paar Fragen haben.
+You:  Ja, also.
+You:  Thomas, du kannst jetzt in den zweiten Dings.
+You:  Ähm, ja, erst gleich.
+You:  Ja, du kannst mal sagen.
+You:  Kann ich aber jetzt auf Deutsch, ist gut.
+You:  Ja, ja, sag einfach. Du kannst auch noch "Wispr" runterladen, aber du kannst mal reinschreiben.
+You:  Ja, schreib einfach.
+You:  Ich brauche es eben nicht jetzt.
+You:  Ah, okay.
+You:  Ähm, also ich zeige Fragen. Wir brauchen für eine Design Thinking Process Advertise Interview Fragen.
+You:  Für vielleicht diejenigen, die gut sind.
+You:  Und dann findet man echt ein paar.
+You:  Das ist immer so die Fragen, warum man kein Budget hat, warum man das Gefühl hat, er ist schlecht mit Geld, ob er gerne über seine Finanzen verbessern will, einfach einen Weg gibt, ob er schon Vorsorge hat, ob er 3A hat, ob er weiß, was Aktien sind, und wir können auch Schulungsplattformen integrieren, theoretisch, wo die Leute auch Ausbildung bekommen über Finanzen.
+You:  Und so dieses Zeug.
+You:  Yes, sir.
+You:  Jetzt haben wir schon das erste Opfer.
+You:  Und der hier nimmt alles auf, was wir sagen.
+You:  Mhm.
+You:  Und trotzdem.
+You:  Ich habe jetzt auch gesehen, wo er schon mal Beispielfragen gegeben hat.
+You:  Ja, ja, das ist gut.
+You:  Also noch nicht von mir, das ist noch nicht von mir von Zeug gekommen.
+You:  Ja, ja, das ist gut.
+You:  Für Wissen und Daten.
+You:  Ja.
+You:  Das ist wie mal ein paar Sachen auf.
+You:  Ich selber. Also das eine ist so ein bisschen.
+You:  Welche Bank?
+You:  Das ist so Einstieg-Dings.
+You:  Ähm, äh, welche Alter. Ja, ja, doch.
+You:  Alter.
+You:  Äh, Job.
+You:  Wohnort.
+You:  Mhm.
+You:  Nachher, ähm, welche Zahlungsmethoden?
+You:  So, Pause.
+You:  Jetzt hat er auch genau diese Interview-Frage.
+You:  Ja, ja, voll.
+You:  Sehr gut.
+You:  Können wir schon kommen?
+You:  Nein.
+You:  Vorsorge.
+You:  Ziele.
+You:  Ähm, okay.
+You:  Okay, okay.
+You:  Jetzt haben wir uns getränkt.
+You:  Noch eine Minute.
+You:  Willst du, willst du etwas trinken? Ein Bier?
+You:  Nein, alles gut. Merci.
+You:  Okay.
+You:  Brauchst du schon noch etwas zu trinken?
+You:  Ich gehe danach.
+You:  Okay.
+You:  Alles.
+You:  Ich brauche das.
+You:  Ja, egal. Das kommt danach.
+You:  In den Zimmerrücken.
+You:  Ja.
+You:  Das ist der beste Spray.
+You:  Ich kann danach anfangen, wenn du eine gute hast, die man wie abwechslungsweise und man kann dann. Also wir sind eigentlich noch im Prozess, im Interviewfragenarbeit, weil dann bist du auch ein bisschen früher.
+You:  Okay.
+You:  Aber wir fangen eigentlich mal an und dann schauen wir.
+You:  Alles okay.
+You:  Ist gut.
+You:  Ist gut.
+You:  Also, wie heißt es?
+You:  Äh, noch schnell eine Sekunde.
+You:  Alles.
+You:  Wir müssen schnell.
+You:  Ah, du musst schauen, dass es. Also fix.
+You:  Ja.
+You:  Es geht ja so 5 bis 10 Minuten.
+You:  Ja, aber easy.
+You:  Easy.
+You:  Mhm.
+You:  Hat Zeit.
+You:  Du kannst schon schauen, ob ich im Frame bin, das kann ich selber senden.
+You:  Ja, das ist aber geil.
+You:  Mhm. Kennen wir die?
+You:  Ist DJI?
+You:  Ja.
+You:  Genau, lass mal.
+You:  Lass mal posten. Genau, die Schwurige muss.
+You:  Ja, schon mit dieser Zeit.
+You:  Mhm.
+You:  Erst Mathematiker.
+You:  Also bist du Mathematiker?
+You:  Genau.
+You:  Hä?
+You:  Bist du nicht falsch da?
+You:  Äh, nein. Also würde.
+You:  Ja.
+You:  So.
+You:  Hä?
+You:  Ähm, jetzt sehen wir das.
+You:  Jetzt sehen wir das.
+You:  Äh, ich glaube, es geht noch ein bisschen runter.
+You:  So ein bisschen weiter.
+You:  Mhm.
+You:  Ja, ja, sollte gehen. Also.
+You:  Toll.
+You:  Gut, dann tschüss. Also.
+You:  Also, wie heißt du?
+You:  Also der Reto wohnt. Genau.
+You:  Freut mich.
+You:  Weißt du, wie alt bist du?
+You:  Ich bin jetzt 22.
+You:  Okay, das ist gut.
+You:  Was arbeitest du?
+You:  Ich bin Informatiker.
+You:  Und wo wohnst du?
+You:  In [Ort].
+You:  Okay, jetzt haben wir so, das ist nur für Personen-Dings, das ist nicht, das ist nur Stammdaten.
+You:  Mhm.
+You:  Jetzt mal, du hast gesagt UBS. Äh, bist du eine Bank? Hast du noch andere Bankkonten an verschiedenen Orten?
+You:  Äh, ja, noch BKB habe ich noch.
+You:  Ja.
+You:  Genau.
+You:  Und hast du so Aufträge oder Sparkonten, Normalkonte, oder brauchst du einfach beide? Oder brauchst du eins und das andere ist wie einfach mal ein Standort, brauchst du.
+You:  Die täglichen Konten, die ich brauche.
+You:  Ja.
+You:  Und mein BKB ist einfach so mein Sparkonto, dort bin ich auch zufällig.
+You:  Das heißt, du hast schon wie ein Setup, sozusagen, eigentlich, wo du, und du hast ein aktives, hast du ein Sparauftrag jeden Monat, der rausgeht?
+You:  Mhm.
+You:  Okay.
+You:  Du hast vorhin gesagt, du hast kein Budget.
+You:  Mhm.
+You:  Das heißt, du hast gesagt, du bist selber schlecht mit Geld ausgeben.
+You:  Ja.
+You:  Warum würdest du sagen, weshalb, also anhand würdest du sagen, du hast eigentlich keine Übersicht, oder du gibst viel Geld für Sachen aus, die du eigentlich nicht würdest wollen, Sachen ausgeben, oder du bist eher knapp und kannst nicht, was ist da dein Punkt dort?
+You:  Ähm, ich würde sagen, ich tue nichts richtig planen, wie ich jetzt mein Geld am GG ausgebe. Ich tue einfach meine Lohn genau und nachher gehe ich, wenn ich Bock habe, das zu essen, wenn ich das zu essen, also nicht wirklich so einen Plan haben, ich tue jetzt diesen Monat einfach 300 Stunden fürs Essen, diesen Monat irgendwie, keine Ahnung, 50 Franken Kleider und so, einfach wenn ich etwas will, dann kaufe ich es.
+You:  Ja.
+You:  Genau.
+You:  Und warum kein Budget, einerseits, weil du das Gefühl hast, wäre sehr mühsam, zum Herangehen zu überlegen, und zweitens, weil du es nicht einhalten kannst, oder was sind deine?
+You:  Also eigentlich, wir haben auch schon mal gedacht, GG eigentlich nochmal etwas machen, aber wir haben noch nie darum getan.
+You:  Du hast nie darum getan?
+You:  Noch nie, genau.
+You:  Okay, okay.
+You:  Und wenn du jetzt würdest sagen, du würdest überlegen, du würdest schon etwas machen, wie würdest du da hergehen, was würdest du, mit was würdest du starten, oder wie würdest du es angehen?
+You:  Eigentlich selber.
+You:  Eigentlich selber?
+You:  Genau.
+You:  Okay.
+You:  Und dann würdest du dich eigentlich manuell nachher führen, und.
+You:  Genau.
+You:  Okay, und das hast du schon mal angefangen mit Excel, und dann wieder aufgehört.
+You:  Ja, aber ich habe noch nie dran.
+You:  Das ist noch nie etwas gemacht.
+You:  Noch nie.
+You:  Okay, okay.
+You:  Aber eigentlich, weißt du, ich komme gut durch, aber ich habe einfach noch nie so geplant, jetzt gebe ich mein Geld so, so, so aus.
+You:  Ja, genau.
+You:  Ich habe einfach etwas Bauchgefühl, würde ich sagen, genau.
+You:  Äh, wie viele Abos hast du?
+You:  Abo, boah, tonnenweise.
+You:  Tonnenweise?
+You:  Tonnenweise, ja.
+You:  Kannst du das aufzählen?
+You:  Äh, Adobe, Creative Cloud.
+You:  Ja.
+You:  Äh, ChatGPT.
+You:  Ja.
+You:  Äh, Spotify.
+You:  Ja.
+You:  Handy-Abo.
+You:  Und dann auch noch irgendwie, ja, Discos und, okay. Weißt du, wie viel ausgibst du im Monat mit Abos?
+You:  Ich würde sagen, so geschätzt so etwas wie 300, würde ich sagen.
+You:  Okay.
+You:  Genau.
+You:  Bist du schon mal erschrocken, wo die Zahlung gekommen ist, vom Abo, und gedacht hast, ah fuck, das habe ich doch gekündigt?
+You:  Nein, das, die Abos, wenn ich etwas nur einfach kurz wette, dann tue ich es einfach kaufen und dann gehe ich wieder kündigen.
+You:  Okay, und dann denkst du einfach im Kopf dran.
+You:  Genau.
+You:  Okay.
+You:  Also du, wenn ich etwas nur für einen Monat oder so wette, kaufe ich es, weil du hast diesen Monat nicht und jetzt gehe ich wieder kündigen. Also meine Abos, würde ich sagen, habe ich recht im Griff.
+You:  Ja.
+You:  Genau.
+You:  Und dann Geld ist ja wie, eigentlich etwas mühsames Mittel, um es weg, aber trotzdem ist es extrem wichtig für langfristige deine Ziele. Hast du so Ziele im Leben, wo du sagst, keine Ahnung, Eigenheim, Reise machen, Ausbildung, was hast du so ein bisschen Ziele, wo du Traumauto, keine Ahnung.
+You:  Also Traumauto wäre schon ein Stück Wand, wäre auch fresh, genau.
+You:  Was hast du noch so?
+You:  Autorad.
+You:  Auto?
+You:  Ja.
+You:  Auto, okay.
+You:  Und hast du so ein bisschen im Blick, wie viel du würdest verbrauchen und was bräuchtest du, dass du dort herkommst?
+You:  Nein, da bin ich noch, noch gar nicht dort, nein.
+You:  Okay.
+You:  Genau, so Züge denken wir ja irgendwann, wenn ich, wenn ich.
+You:  Ja.
+You:  Wenn ich so 30 werde oder so.
+You:  Wie hast du, du hast investieren?
+You:  Hm, nein.
+You:  Hast du, warum nicht?
+You:  Ich weiß, mich nicht interessiert.
+You:  Dich interessiert gar nicht?
+You:  Gar nicht.
+You:  Okay. Hast du irgendwelche Infos in der Schule bekommen oder irgendwo mal, um was es geht, wie es funktioniert, es geht ja langfristig investieren, kurzfristig, es gibt mehr Gambler, aber es gibt einfach Vermögensaufbau.
+You:  Ja.
+You:  Also wir haben mal in der Schule gehabt, aber ich muss sagen, das ist nicht so mein Lieblingsfach, das ist einfach etwas, was mich wirklich nicht so unbedingt interessiert.
+You:  Okay, genau. Hast du 3 Jahre Vorsorge?
+You:  Ja, glaube ich.
+You:  Und die ist wo?
+You:  Keine Ahnung.
+You:  Okay.
+You:  Mhm.
+You:  Ähm, hast du dort Aktien drin? Also hast du bei der Bank oder bei Versicherungen?
+You:  Äh, Bevölkerungsfonds, keine Ahnung.
+You:  Keine Ahnung, okay. Hast du eine Finanzberaterin?
+You:  Nein.
+You:  Okay.
+You:  Das ist okay.
+You:  Nein, nein, nein, das ist genau wichtig. Also bei der UB, also das heißt, du hast, hast du vielleicht bei der UBS eine oder wo könnte die sein?
+You:  3 Jahre. Weißt du das, weißt du das dritte Schuljahr?
+You:  Ja, bei der UBS würde ich sagen.
+You:  Bei der UBS, wahrscheinlich. Also hast du eine Bankenlösung, okay.
+You:  Sehr wahrscheinlich sind die Aktien drin. Musst mal prüfen.
+You:  Wahrscheinlich investierst du.
+You:  Mhm.
+You:  Aber ohne dass du weißt.
+You:  Ohne dass du weißt.
+You:  Aber das, aber das kannst du mal prüfen, das wäre noch spannend, ja, ja. Ähm, hast du irgendwelche Fragen, die sinnvoll sind?
+You:  Nein, es hat nicht so gut gefunden, aber was mich noch so bewundert nimmt, aber du tust nachher, gehst du viel, aber immer auf das Bankkonto schauen, einfach.
+You:  Mhm.
+You:  Okay, und hast du das Gefühl, du kommst aber nachher auch nachher, so, wie meinst du nachher?
+You:  Ja, so von der Zahl her oder so.
+You:  Ja, so jetzt einfach mein Konto schauen.
+You:  Okay. Und dann ist es aber so ein bisschen durch und so.
+You:  Mhm.
+You:  Okay.
+You:  Also meine Ausgaben, oder wie?
+You:  Okay, und auf was schaust du nachher, einfach so ein bisschen, ob, wie viel du jetzt noch kannst durchgehen, oder was, was ist so?
+You:  Key Indicator, da haben wir noch 2 News gegeben.
+You:  Okay.
+You:  Genau.
+You:  Okay. Was machst du, wenn zu wenig hast, äh, zu wenig hast ausgegeben?
+You:  Dann kaufe ich mir etwas.
+You:  Dann kaufst du dir etwas. Was ist, wenn?
+You:  Nein, ich spare es ab, genau.
+You:  Dann tust du einfach noch etwas mehr auf die Seite. Und was ist, wenn zu wenig, äh, wenn zu viel ausgegeben hast und wie nichts mehr hast, aber hast noch gegessen?
+You:  Dann tue ich ab und zu weniger essen, dann habe ich mir ab und zu weniger Burger weniger, genau.
+You:  Also du hast nicht, du tust wirklich, das Sparkonto ist wie heilig, du tust es wie nicht anhängen, du tust wie.
+You:  Ich tue nicht alles.
+You:  Du tust nicht anhängen.
+You:  Ich tue nur noch, wenn ich, wenn ich so weiß, jetzt will ich es gerade zum Beispiel halb 7, dann habe ich es angehängt, weil das ist das Zeug, aber, äh, sonst tue ich es eigentlich nicht an. Und wenn ich jetzt weiß, ja, das ist Investition, dann ist es.
+You:  Ja, okay.
+You:  Genau, und ich soll es Investition haben.
+You:  Ja, ja, ja.
+You:  Und hast du mit dem Sparkonto das Ziel, auf eine Summe, die du hoch willst?
+You:  So hoch wie möglich.
+You:  So hoch wie möglich. Also es ist einfach.
+You:  Das Ziel einfach muss sein.
+You:  Und definiert und, okay.
+You:  Ja.
+You:  Okay.
+You:  Hast du, weißt du, wie viel Geld für was ausgibst, etwa?
+You:  Also ohne nachher zu schauen, jetzt direkt so.
+You:  Ja, ja.
+You:  Ja, also ich würde sagen, so, äh, vielleicht 500, soll ich nachher schauen?
+You:  Also ich würde sagen, so brauche ich vielleicht 500 fürs Essen, so, äh, dann ab und zu, weißt du, so, einfach so Zeug in die Kamera, sage ich vielleicht auch so 500, 500 bis 800, Gadgets, alles das.
+You:  Okay.
+You:  Genau.
+You:  Kleider kaufe ich nicht so viel, vielleicht ja, würde ich sagen, vielleicht auch 100 im Monat für Kleider.
+You:  Ja.
+You:  Genau.
+You:  Okay.
+You:  Primär ist das Essen, meinst du irgendwie?
+You:  Ja.
+You:  Also noch überlegen, wir haben schon recht viel, wir haben schon recht viele coole Sachen, wo weißt du, was unsere Challenge geht, überhaupt?
+You:  Nein.
+You:  Also hast du schon gut so. Nehmen wir die Challenge, geht es echt darum, ähm, nehmen wir, wir sagen es am Schluss, wir sagen es am Schluss.
+You:  Mhm, wenn ich eine Zuordnung habe, das hast du schon.
+You:  Ja, aber du hast auch deine Buchungen, ja, wie nicht zuordnen, ja, im Sinn von, ähm, was würdet ihr, wenn nicht, würdest du sagen, du würdest gerne ein bisschen mehr Kontrolle haben, aber du hast wie eine Buchung, wirklich etwas zu machen?
+You:  Mhm.
+You:  Was denkst du, was, äh, ja, aber das ist eine dumme Frage, das müssen wir, das müssen wir dringend machen. Was denkst du, was könnte dir helfen?
+You:  Ja, Finanzberater, würde ich sagen.
+You:  Finanzberater? Würdest du mit einem Finanzberater gehen?
+You:  Nein, nachher, ich würde schon noch jetzt nicht gehen.
+You:  Ja, nein, eigentlich nicht.
+You:  Was denkst du von Finanzbranche?
+You:  Von Finanzbranche?
+You:  Ja, ja.
+You:  Ja, nicht viel.
+You:  Nicht viel?
+You:  Nicht viel.
+You:  Okay.
+You:  Weißt du, was eine Aktie ist?
+You:  Ja.
+You:  Was ist eine Aktie?
+You:  Äh, Anteil von einem Unternehmen.
+You:  Okay.
+You:  Nicht?
+You:  Moment, ja, das ist perfekt, nein, du weißt, das ist gut, das ist gut, das ist gut, das ist gut. Weißt du, was ein Fonds ist?
+You:  Äh, nein, das, nicht.
+You:  Nein, okay. Weißt du, was ein Tier ist?
+You:  Nein.
+You:  Okay. Äh, wie machst du mit Versicherungen, Krankenkasse, hast du irgendwelche sonstigen Versicherungen, hast du da einen Überblick, geht es da zu einem Berater?
+You:  Wie machst du das?
+You:  Also auf Grundversicherung habe ich glaube ich noch Zusatzversicherung irgendwie für, was weiß ich noch, 10 oder so.
+You:  Ja.
+You:  Genau.
+You:  Da schaust du eigentlich selber, oder wie machst du das?
+You:  Da schaue ich selber, genau.
+You:  Okay.
+You:  Da schaue ich einfach, was bin ich zuerst, erst bin ich gegangen, gesagt, dass ich das dann.
+You:  Ja.
+You:  Das geben.
+You:  Ja, hast du Prämien verglichen?
+You:  Ja.
+You:  Okay.
+You:  Und dann die.
+You:  Prämien von, oder wie hast du?
+You:  Hä?
+You:  Auf Prämien von, oder bist du auf Comparis, oder?
+You:  Comparis.
+You:  Comparis bist du. Und dann zuerst hast du günstig gewesen und dann hast du wieder vorgeschlagen dort.
+You:  Aber nicht unbedingt am günstigsten, aber ich sage das, weil ich bin halb 7 auf die Heim gegangen zum Machen und dann das, ist das gewesen, wo alles drin ist.
+You:  Okay. Was machst du für Kampfsport?
+You:  MMA.
+You:  Okay, geil.
+You:  Cool.
+You:  Also jetzt hier in der Schweiz machst du.
+You:  In Wien, ja.
+You:  Okay.
+You:  Okay.
+You:  Warte, macht ihr da?
+You:  Ja, ja.
+You:  Also ja, beide. Also jetzt wieder angefangen vor 2 Wochen.
+You:  Cool, sehr gut.
+You:  Mit Judo, mit Würgen mal gemacht und du machst.
+You:  BJJ, aber nicht viel, also ich habe es einfach angefangen, eben wie jetzt noch ein bisschen im Future.
+You:  Sehr cool.
+You:  Fusion, kenne ich.
+You:  Ja?
+You:  Also bist du im Fusion?
+You:  Ja, aber ich bin Anfänger.
+You:  Aber ja, einmal am Monat, äh, solche Kampfwettkämpfe.
+You:  Ah, ja, ja, jetzt glaube ich, das sind die Turniere.
+You:  Ja, sorry, ich weiß.
+You:  Ja, das ist gut.
+You:  Genau.
+You:  Cool, sehr cool.
+You:  Cool, danke.
+You:  Okay.
+You:  Ähm, wenn du aber, also hättest du gerne irgendwie so Sachen, wo du dann so Abschluss gesehen hast vom Monat oder so, dass du das ein bisschen kannst analysieren und so, was hast du für Ausgaben gemacht und so?
+You:  Also anonym, sagen wir mal so.
+You:  Was du für Ausgaben gemacht hast und so, wo du könntest wirklich schön analysieren und so.
+You:  Mhm.
+You:  Also das kann man ja.
+You:  Ich würde gerne, also das kann man glaube ich.
+You:  Das gibt, das genügt.
+You:  Also grob, aber ich habe gesehen, dass man das für uns Altes, für Essen.
+You:  Okay, und das schaust du an oder nicht?
+You:  Nein.
+You:  Nein, aber ja, ja, fix. Okay, aber würdest du, würdest du anschauen, wäre es detaillierter?
+You:  Vielleicht würde es, ja, vielleicht würde man erst, wenn man besser draufkommt, zugreifen.
+You:  Ja.
+You:  Also es ist immer so ein bisschen versteckt, so ein bisschen.
+You:  Ja.
+You:  Mhm.
+You:  Untergegangen.
+You:  Mhm.
+You:  Aber ich würde sagen, wenn es, keine Ahnung, gäbe ich keinen Aufruf, wenn es übersichtlich wäre, wenn es gut würde aussehen, weil das Design ist so scheiße bei denen.
+You:  Okay.
+You:  Mhm.
+You:  Dann würde ich es auch mehr anschauen.
+You:  Ja.
+You:  Okay.
+You:  Und wenn jetzt irgendwie kein Stil definieren, wie zum Beispiel Traumauto eingehen, hast du ein Bild vom Baumauto und dann kannst du wie etwas dort reinsparen und du siehst so den Progress. Würdest du das viel oder nicht?
+You:  Boah, das wäre geil.
+You:  Das wäre geil?
+You:  Das wäre geil, ja.
+You:  Das wäre geil, okay.
+You:  Okay.
+You:  Ja. Wenn jetzt einfach nochmal, die ersten paar Wörter, die dir reinkommen, wäre das Thema Geld, denkst du?
+You:  Mhm.
+You:  Die ersten paar Wörter, schaffen, äh, Autos, auf Ferien, fliegen.
+You:  Okay.
+You:  Okay.
+You:  Ja.
+You:  Cool.
+You:  Ja, haben wir noch irgendetwas? Gut, wir haben schon recht viel gesagt.
+You:  Ich glaube, es ist schon mal geil.
+You:  Ja.
+You:  Eben so mit Content und so, hast du schon, du hast einfach bei UBS gegangen.
+You:  Okay.
+You:  UBS, genau, und dort war mein täglicher Konto, U oder Revolut oder so Sachen.
+You:  Habe ich nicht gern.
+You:  Okay.
+You:  Äh, das ist doch, glaube ich, für irgendwie auf Vorbezahlung, dass man dann.
+You:  Na, Revolut ist, Revolut ist einfach, äh, wo du kannst einfach, ist wie Twint, aber für international, basically, und du kannst virtuelle Karten so machen, aber.
+You:  Okay.
+You:  Ähm, hast du Kreditkarten?
+You:  Ja.
+You:  Okay.
+You:  Brauchst du mehr Debit oder Kredit?
+You:  Äh, ich brauche mehr Debit.
+You:  Debit.
+You:  Wie hast du Apple Pay oder?
+You:  Nein.
+You:  Nicht?
+You:  Nur Twint.
+You:  Okay, hast du Twint?
+You:  Aber du hast ein iPhone, oder?
+You:  Ja, iPhone.
+You:  Und du hast mehr mit Twint zahlen oder mit dem Kärtchen direkt?
+You:  Meistens mit dem Kärtchen.
+You:  Okay. Brauchst du Spargeld noch?
+You:  Nochmal?
+You:  Brauchst du noch Bargeld?
+You:  Uff, selten.
+You:  Selten?
+You:  Ab und zu schon, aber mehr, wenn ich sage, wenn einer mir Bargeld gibt, weil ich es nicht kann, weil ich kein Twint habe, so.
+You:  Okay.
+You:  Ja, ja, fix, fix.
+You:  Ähm, ja.
+You:  Warum UBS?
+You:  Wieso? Gute Frage, aber ich kann viel zu wenig sein, meine Eltern haben mir mein Kärtchen gegeben.
+You:  Ja, fix.
+You:  Deswegen bin ich bei UBS, aber ich muss sagen, UBS ist gut.
+You:  Ja, ja.
+You:  Weil die anderen, zum Beispiel BKB, wo ich bin eigentlich auch nicht so gut.
+You:  Ja, ja, fix. Okay.
+You:  Okay.
+You:  Ähm, ja.
+You:  Ja, ja.
+You:  Ja, haben wir etwas Wichtiges nicht gefragt?
+You:  Ich glaube, also du würdest eigentlich alles fragen.
+You:  Ich habe alles gefragt, also.
+You:  Ja.
+You:  Ja, aber das glaube ich ist gut.
+You:  Nein, glaube ich ist gut.
+You:  Ja, danke vielmals.
+You:  Top. Also, für was ist das gewesen?
+You:  Ähm, Beyond the List ist vor PostFinance.
+You:  Mhm.
+You:  Und das sind einfach die ganzen vielen Zahlen, die sie haben. Und sie wollen sich überlegen, wie können wir am Nutzer helfen, die Daten besser interpretieren, vielleicht auf Ziel zugeschnitten, sozusagen.
+You:  Ähm, wie wird es actually gebraucht und wie bringen sie einen Benefit. Und natürlich ist es immer Interesse, so bessere Zahlen zu haben, wie Leute ihr Geld ausgeben, aber andererseits, oder Benefit, eben zum Beispiel, das kann alles möglich sein, müssen sie sich überlegen, was, wegen dem machen wir Interviews, kann alles möglich sein, kann ein Budget wesentlich sein, wo du dich auf dein Budget machen, deine Ziele definieren, deine Ausgaben, wo der UBS-Tracker, wenn er mal anschaut, oder bei PostFinance sind wir so, das ist echt verbugged, wo gewisse Sachen kannst du wieder zuordnen und dort wieder überlegen, wie kann man es besser zuordnen.
+You:  Es geht echt darum, die Daten, die einfach stumpf dargestellt werden, erlebbar und verständlich zu machen.
+You:  Mhm.
+You:  Vielleicht kann ich da noch etwas sagen, wie nichts, also wenn nichts jetzt angeblich steht, auf dem Handy einfach switchen, so ich will ja gerne meine Widgets so, das Ding setzen, wo man dann alles Twint, Karten, was auch immer, einfach immer etwas draufgeht, wird es automatisch dazu und dann sieht man auf dem Widget direkt, was hat man ausgegeben, das sind wir ja live aktualisiert, so.
+You:  Ja, ja, Widget ist ein guter Punkt, ja.
+You:  Und Kollegen und so machen das auch ja, so mit Widgets.
+You:  Ja.
+You:  Du weißt das. Also, weil sie hätten noch nie gefragt, aber ich persönlich habe gerne Widgets.
+You:  Also so.
+You:  Ich bin auch einfach, äh, schnell übersichtlich und ich schnell kann draufschauen.
+You:  Ja.
+You:  Und dann sieht man es, genau.
+You:  Okay.
+You:  Oder zum Beispiel hier drüben, da zum Beispiel.
+You:  Was ist das?
+You:  Widget im Seed, genau, Strom.
+You:  Ja.
+You:  Und so, so oft.
+You:  Brauchst du, brauchst du keine Tools?
+You:  Ja.
+You:  Okay. Wenn du jetzt überlegen würdest, du kannst jetzt all deine Finanzdaten, die du in den letzten paar Jahren hättest, exportieren und KI wüsste es, welche, welche Fragen würdest du stellen?
+You:  Welche Fragen würde ich stellen?
+You:  Äh, gute Frage. Auch, was habe ich am meisten ausgegeben?
+You:  Ja.
+You:  Was habe ich, was ist das Unnötigste, was ich ausgebe?
+You:  Ja.
+You:  Genau. Vielleicht dann müsste ich aber auch wissen, genau was, dass ich gekauft habe, genau.
+You:  Dann kann ich direkt fragen, was ist das Dümmste, was ich gekauft habe?
+You:  Ja.
+You:  Äh, und dann kann ich vielleicht seine Meinung auf, wenn ich dann weiß, äh, das, was ich dann gekauft habe und dann selber gemerkt habe, das ist verdammt dumm gewesen, dann kann ich ihm das schreiben und er weiß es dann.
+You:  Würdest du interessant finden, so, er erzähl mir mal, was für eine Person ich bin, anhand von meinen Finanzen?
+You:  Ja.
+You:  Wo ich anhand von meinem Ausgabenverhalten würdest du das interessant finden?
+You:  Eigentlich gar nicht.
+You:  Eigentlich gar nicht? Überhaupt nicht? Okay.
+You:  Nein.
+You:  Okay.
+You:  Ja, vielleicht schon, also für mich persönlich würde ich es nicht, aber ich sehe durchaus, dass Leute vielleicht interessanter finden.
+You:  Okay, ja.
+You:  Ja.
+You:  Ja.
+You:  Das ist schon mal gut.
+You:  Äh, boah, ja, ich glaube es ist gut. Danke vielmals.
+You:  Ist schon alles.
+You:  Ich glaube es ist alles.
+You:  Also top, danke vielmals.
+You:  Ja, danke dir.
+You:  Danke.
+You:  Danke.
+

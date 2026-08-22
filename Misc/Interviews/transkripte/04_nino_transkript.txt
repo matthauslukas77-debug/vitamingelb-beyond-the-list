@@ -1,0 +1,336 @@
+Flow Summary
+
+Nutzerinterview mit Nino (19, Mediamatiker) zu Bankverhalten und Finanzübersicht. UBS als Hauptbank, Capital für Investments; wünscht sich Widget und ansprechendere Ausgabenübersicht.
+
+
+
+Profil & Banken
+
+Nino, 19, Mediamatiker, Wohnort [Ort]
+
+UBS für Lohn/Sparen (per Zufall gewählt), Capital für Investments (bewusst wegen Spreads)
+
+Zahlt hauptsächlich mit Apple Pay via Jugendkonto
+
+
+
+Nutzung UBS-App & Übersicht
+
+App ~4x/Woche, meist nur Kontostand; Analysen/Budget-Tools werden nicht genutzt
+
+Dashboard als langweilig empfunden, reine Liste statt Kuchen-/Balkendiagramm
+
+Login via Passkey wirkt als Hürde, Face-ID-Widget mit Kontostand wäre ideal
+
+Excel-Budget einmal detailliert geführt, nach ~2 Monaten eingeschlafen
+
+
+
+Finanzverhalten & Einstellung
+
+Selbsteinschätzung: schlecht mit Geld, öfter im Minus; grösster Posten Essen (als schlechte Ausgabe eingestuft)
+
+~7 Abos, geschätzt ~280/Monat
+
+Kein Vertrauen in Finanzberatung („absolute Null, alles Provisionen“)
+
+KI-Fragen: „Wofür am meisten ausgegeben?“, „Wo unnötige Kosten sparen?“
+
+
+
+
+
+You: Ja.
+You:  Frage hast du oder nicht?
+You:  Ja, eine Mächtige Verforderung.
+You:  Ja, aber hör zu.
+You:  Ja, also—
+You:  Du kannst nicht alles hören, ja.
+You:  Ich muss sie wie du nicht stoppen? Ah, ich stoppe einfach.
+You:  Gar nicht. Ja, kannst du echt auch stoppen, genau.
+You:  Bis nachher.
+You:  Bis nachher.
+You:  Also, ich komme auch wieder früher rein, bevor es fertig ist.
+You:  Ja.
+You:  Soll ich vielleicht noch ein Bier bringen, oder?
+You:  Sehr gern. Sehr gern.
+You:  Ciao, Nino.
+You:  Danke.
+You:  Ciao.
+You:  Kannst du heute?
+You:  Ja, ja, ist gut.
+You:  Okay, top. Merci.
+You:  Hey, wir sind— wir sind auch diese Woche gerade im Flow, gell? Also, ich frage— ich frage dich die Frage, und ja.
+You:  Ähm, also: Ich habe gedacht, wir starten einfach gut. Was ist dein Vorname?
+You:  Nino.
+You:  Nino, okay. Ähm, Alter?
+You:  19.
+You:  Beruf: Mediamatiker. Wohnort: [Ort].
+You:  Großofstetten. Okay.
+You:  Du bist ja eine Privatperson, ist deine Rolle?
+You:  Mhm.
+You:  Deine— was ist deine Hauptbank?
+You:  UBS.
+You:  Okay.
+You:  Hast du noch weitere Konten?
+You:  Kommt darauf an, was. Also, Bankkonten?
+You:  Ja.
+You:  Ja, einfach verschiedene bei UBS.
+You:  Okay. Sparkonten, äh, normale Jugendkonto, so etwas?
+You:  Ja, genau.
+You:  Okay. Hast du noch irgendwie Revolut, You, Neon?
+You:  Äh, nein, Capital.
+You:  Okay.
+You:  Äh, und wozu dienen die Konten?
+You:  Capital für Investment und UBS für Lohn und Sparen.
+You:  Okay.
+You:  Bist du zufrieden mit deiner Bank?
+You:  Äh, ja.
+You:  Und wie bist du der Bank oder Delta oder— hast du den genauen, genauen Überlegungen gemacht dann?
+You:  UBS, das ist doch nicht die erste Lösung gewesen, und so die bekannteste Lösung.
+You:  Okay.
+You:  Würde ich sagen.
+You:  Aber Capital habe ich mir gute Gedanken gemacht, vor allem wegen dem Spread.
+You:  Ja.
+You:  Oder Investments und so.
+You:  Okay. So, Credit, du hast ja Kreditkarten, Debitkarten, nehme ich an, Twin testen.
+You:  Apple Pay auch, oder?
+You:  Mhm.
+You:  Und Bargeld hast du ja auch. Also, mit was bezahlst du am meisten?
+You:  Äh, Apple Pay.
+You:  Okay, über dein normales Debitkonto? Also, äh, normales Zeug, eine Jugendkonto.
+You:  Ist das, glaube ich.
+You:  Ja, ja.
+You:  Okay.
+You:  Würde ich sagen.
+You:  Ähm, wie oft tust du Banking vor UBS App, also die App öffnen täglich?
+You:  Nee, nee, ich tue es nicht mal täglich auf.
+You:  Okay.
+You:  Ich würde sagen, 4-mal, 4-mal die Woche.
+You:  4-mal die Woche, okay. Gut.
+You:  Äh, hast du dort irgendwie Pitche, äh, Budget oder Finanztools, die du nutzt?
+You:  Nein, auf UBS nicht.
+You:  Aber allgemein sonst hast du?
+You:  Es kommt jetzt darauf an. Also, was auch immer zu UBS, UBS Seite angeht.
+You:  Ja.
+You:  Nein, habe ich nicht.
+You:  Okay.
+You:  Okay. Ähm, jetzt erst mal so ein bisschen kurze Drei: Deine Kontobewegungen, wann hast du sie zuletzt mal angeschaut?
+You:  Gestern.
+You:  Und was ist der Anlass gewesen?
+You:  Ähm, was ist es jetzt gewesen? Ich habe etwas tracken, ob ich eine Rechnung schon bezahlt habe oder nicht, weil eine Mahnung auf dem Tisch ist, glaube ich.
+You:  Okay.
+You:  Okay. Äh, und wenn du jetzt Bank, Bank, die App öffnest, was machst du dann genau? Du gehst drauf, schaust dir den Kontostand, gehst dann auch noch drauf schauen, was die letzten Zahlungen gewesen sind?
+You:  Nein, eigentlich, weil meistens ist es wirklich gerade nur der Kontostand, schauen wir mal.
+You:  Okay, dann schaust du nicht nach etwas Spezifischem oben?
+You:  Nein, meistens nicht. Jetzt einfach gestern ist es gerade Zufall gewesen.
+You:  Okay.
+You:  Ähm, was passiert, wenn du merkst, du hast diesen Monat zu viel ausgegeben?
+You:  Das Problem ist einfach, ich habe wirklich viel ins Minus gehabt.
+You:  Okay.
+You:  Wirklich das Problem.
+You:  Ähm, was passiert, ja, dann muss ich selber Maßnahmen treffen.
+You:  Okay.
+You:  Und dann ist es nächsten Monat ein bisschen mehr auf zu sparen, auf die Seite zu schauen von Anfang an.
+You:  Okay, okay. Das ist gut.
+You:  Ähm, so ein Moment vom Nicht-Verstehen: Was hast du denn so— was bei einer Buchung, die du nicht gewusst hast, was hast du da gemacht oben? Weil irgendeine Buchung einfach ist gekommen, du hast nicht gewusst, was es ist.
+You:  Dann bin ich drauf gegangen und dann habe ich geschaut, was der Name vom— man hat gesagt, ja, aber das Kartenlesegerät.
+You:  Mhm.
+You:  Oder man hat gesagt, zum Beispiel bei großen— bei großen Vertrieben, da siehst du ja meistens wirklich gerade das Coop, und dann siehst du, was verkauft ist.
+You:  Okay.
+You:  Oder einfach der Betrag.
+You:  Also, ich nehme nochmal die Übung.
+You:  Ja.
+You:  Dann machst du auch wieder ein paar Übsätze, 2 Teams in einem Raum, dann machst du weiter.
+You:  Okay, nein, ist gut. Hey, ciao.
+You:  Ciao.
+You:  Ähm, okay, sorry.
+You:  Ähm, okay. Und wie findest du es, außer wenn am Monat normal war oder nicht?
+You:  So, du hast— du hast irgendwie auch Analysen angeschaut oben in der App, in der UBS, oder so? Eben nicht, gell?
+You:  Äh, nein, nein.
+You:  Okay. Dann schaust du eigentlich gar nicht.
+You:  Also, ich sehe einfach so ein bisschen, ich weiß ungefähr, wie viel es im Monat auf die Seite tut, und dann sehe ich eben aber, ob ich im Minus bin oder nicht.
+You:  Okay.
+You:  Und wenn du etwas wissen willst, was die App gar nicht sagt, tust du das selber? Wie kommst du an diese Information?
+You:  Oder machst du das überhaupt? Gehst du irgendwie über Excel?
+You:  Tust du Kopfrechnen, machst du Screenshots oder so?
+You:  Nein, nein, nein. Nein, also, ich muss auch sagen, ich bin im UBS-Ding selber gar nicht drin, ich brauche das wirklich nur für Lohnzahlungen und Sparen.
+You:  Also, so es gibt jetzt nicht viel, wo ich— wo ich gerne wüsste, wo ich nicht wissen kann über die App.
+You:  Okay, okay. Und jetzt so zum Budget und so zur Konten: Hast du ein Budget oder einen Plan, so eine Budgetplan?
+You:  Ja, ganz grob, ganz grob.
+You:  Okay. Nutzt du es dann?
+You:  Nein, einfach selten.
+You:  Okay. Würdest du— würdest du sagen, du bist gut mit Geld oder nicht?
+You:  Ganz schlecht.
+You:  Okay.
+You:  Weil wirklich, also ernst gemeint, ich bin wirklich gut mit Geld.
+You:  Okay. Hast du da irgendeine App benutzt?
+You:  Oder Excel oder so? Oder Notizen?
+You:  Für so eine Budgetplan?
+You:  Ja.
+You:  Hast du da Übersicht geschaffen?
+You:  Ähm, Excel, ja.
+You:  Okay.
+You:  Aber also, mit Excel habe ich mir auch ganz detailliert gemacht, aber das ist nachher etwa 2 Wochen oder 2 Monate gekommen.
+You:  Mhm. Und was würde dir am meisten helfen?
+You:  Eigentlich, jetzt ohne unsere App.
+You:  Eine App, okay.
+You:  Ja.
+You:  Okay.
+You:  Äh, hast du monatliche Abos, nehme ich an? Einfach monatliche Ausgaben?
+You:  Okay.
+You:  Ja.
+You:  Und wie viele Abos, wenn du jetzt eigentlich gerade so hast?
+You:  Wie viele hast du, etwa so?
+You:  7.
+You:  7. Okay.
+You:  Und pro Monat, was kostet das alles zusammen?
+You:  Ohne nachher zu schauen, jetzt mal.
+You:  Dann zusammen so 280.
+You:  Okay.
+You:  Vielleicht.
+You:  Okay. Bist du schon mal so erschrocken bei so einer Abo-Abbuchung?
+You:  Das hast du doch gekündigt gehabt, oder was ist das überhaupt für ein Abo?
+You:  Ähm, nein.
+You:  Nicht bei einem Abo, aber zum Teil recht, also zahle ich die Produkte, die ich auf Rechnung gekauft habe.
+You:  Okay.
+You:  Du hast schon im Nachhinein noch gemerkt: "Fuck Gott, ich habe die noch nicht bezahlt."
+You:  Mhm. Okay.
+You:  Okay, okay. Und jetzt so: Ohne nachher zu schauen, was würdest du sagen, was gehst du am meisten raus?
+You:  Essen.
+You:  Okay.
+You:  Okay. Und denkst du, das ist eine gute Ausgabe?
+You:  Ähm, nein.
+You:  Okay.
+You:  Cool.
+You:  Nein, und jetzt mehr so ein bisschen zur Zielspar- und Zukunft: Hast du finanzielle Ziele, nehme ich an, schon, oder?
+You:  Ja.
+You:  Okay.
+You:  Eigenheim, Auto, Reisen, Ausbildung, reich sein? Selbstständigkeit?
+You:  Ja.
+You:  Okay.
+You:  Äh, und was würdest du jetzt— was würdest du jetzt sagen, was das nächste Ziel ist, und wie weit bist du davon entfernt?
+You:  Äh, 100 km Victoria.
+You:  Okay.
+You:  Okay.
+You:  Cool.
+You:  Und dann wäre es am besten, wie weit man dann schon ist.
+You:  Ja, aber das werden wir hinten sagen.
+You:  Sorry, ich habe—
+You:  Ja, reicht.
+You:  Äh,.
+You:  Okay.
+You:  Cool.
+You:  Äh, Vorsorge— äh, Vorsorge, investierende, also so— ja, Vorsorge. Hast du 3 Jahre?
+You:  Wie viele 3 Jahre schon?
+You:  Hm, also, ja, nein, nicht so, wie man es kennt, aber eher so für mein persönliches eben auf, also auf Capital.
+You:  Ja.
+You:  Habe ich noch mein Rentenziel geschrieben.
+You:  Ja. Und wegen dem nehme ich an, du weißt, was Aktienfonds sind, ja?
+You:  Mhm.
+You:  Okay.
+You:  Mhm.
+You:  Gut.
+You:  Äh, tust du investieren?
+You:  Investieren.
+You:  Tust du investieren?
+You:  Alle investieren.
+You:  Ja.
+You:  Okay. Ich frage eine weitere Frage, aber das ist gut.
+You:  Weißt du, das ist eigentlich schon wichtig für ein Interview, so dass wir— dass das Wissen haben. Äh, hast du eine Finanzberaterin?
+You:  Nicht eine offizielle.
+You:  Okay.
+You:  Aber würdest du— also, gehst du zu einem, oder würdest du zu dem gehen?
+You:  Nein.
+You:  Okay.
+You:  Was hältst du vor der Finanzbranche?
+You:  Absoluter Müll.
+You:  Okay.
+You:  Okay.
+You:  Ja, das ist gut.
+You:  Also, was Finanzberatung angeht, absoluter Müll. Das ist alles nur auf Provisions.
+You:  Okay.
+You:  Okay.
+You:  Dann würdest du in diesem Fall nicht zu einem gehen?
+You:  Nein.
+You:  Ah so. Ah fuck.
+You:  Äh, Versicherung: Krankenkasse und so. Hast du da einen Überblick?
+You:  Oder machen das noch deine Eltern momentan?
+You:  Ja, habe ich den Überblick schon. Elsana.
+You:  Okay.
+You:  Okay, aber du zahlst noch nicht, oder?
+You:  Ein Teil noch.
+You:  Okay.
+You:  Ähm, ja.
+You:  Dann schon relativ viel. Jetzt zum Beispiel so: Widgets, nutzt du Widgets?
+You:  Äh, also Widgets auf dem Handy?
+You:  Ja.
+You:  Ja.
+You:  Ja, mal. Was würdest du davon halten, wenn du so ein Post-Finanz— äh, nicht Post-Finanz, wenn du so ein UBS-Widget hättest, wo du so die Ausgaben siehst und so?
+You:  Ja, das wäre top. Das wäre wirklich top.
+You:  Okay. Und sofort—
+You:  Ja, dann geht es auch schnell, weil dann kommt es schnell darauf ab, ob ich wirklich— ich weiß nicht, wie das passieren kann, aber ab, ob ich zu viel die UBS-App öffne und ich muss darum immer mit einem Passkey rein. Und das Anmelden ist direkt mit meiner App, aber meine finanziellen Dinge zu checken.
+You:  Mhm.
+You:  Das klingt verdammt dumm, aber es ist wirklich so.
+You:  Okay. Aber wäre es dir genug sicher, wenn du einfach das Handy mit Code oder Gesichtserkennung öffnen musst und dann siehst du direkt schon deine Kontostände?
+You:  Das wäre okay.
+You:  Ja. Das wäre mir zu helfen.
+You:  Hättest du kein Problem?
+You:  Nein.
+You:  Ah so. Okay, gut.
+You:  Jetzt noch so zu KI und so: Wenn du jetzt quasi deine ganzen Ausgaben seit— also seit den letzten paar Jahren könntest ChatGPT geben, was würdest du ihn fragen?
+You:  Für was habe ich am meisten Geld ausgegeben? Aber das würde Essen sein, also.
+You:  Okay.
+You:  Okay.
+You:  Aber was kann man noch? Oder wo könnte ich unnötige Kosten sparen?
+You:  Das wäre—
+You:  Okay.
+You:  Das ist gut.
+You:  Ähm, ja, das würdest du sonst noch weitere Fragen stellen?
+You:  Nein.
+You:  An ChatGPT oder so? Nicht auch, oder?
+You:  Gar nicht davon? In diesem Fall?
+You:  Ähm,.
+You:  Das kann man jetzt gerade spontan nicht sagen.
+You:  Okay. Nein, das ist gut, das ist gut.
+You:  Das ist schon cool, dass du so zwei, drei Antworten hast gehabt. Jetzt noch so ein bisschen zum Abschluss: Welche drei Wörter, ohne nachher zu denken, fallen dir jetzt gerade am meisten gerade als erstes ein zum Thema Geld?
+You:  Geld,.
+You:  Schwierig,.
+You:  Nimm Geld raus.
+You:  Ähm, ich sage mal: schwierig,.
+You:  Schwierig, mächtig, hm.
+You:  Schwierig, mächtig, und.
+You:  Ja, digga, schwierig.
+You:  Es muss wirklich— kannst du jetzt gerade nochmal drei Wörter sagen, und es muss wirklich nicht— sie müssen wirklich nicht genau sein. Sag: "Das, was du dir als erstes einfällt.
+You: " Das kann wirklich auch geil sein. Weißt du, also das ist nicht wirklich—
+You:  Tempo.
+You:  Wichtig, mächtig.
+You:  Schwierig, schwierig, widerspenstig, aber ich meine es. Ich meine es im Namen.
+You:  Ah so. Nein, das ist gut.
+You:  Das ist gut.
+You:  Tempo, mächtig, schwierig.
+You:  Ah so. Ähm, jetzt noch kurz das Gleiche: Wenn du zum Beispiel eine UBS in einem— dort hat es ja so ein bisschen eine Übersicht von deinen— von deinen Ausgaben, also hat es ja so eine Dashboard.
+You:  Ja. Ja, so einfach.
+You:  Ja, so eine Liste.
+You:  Nutzt du das?
+You:  Nutze ich das.
+You:  Nein.
+You:  Nein, das von UBS wirklich selbst.
+You:  Ist es dir zu wenig detailliert?
+You:  Es ist mir nicht zu langweilig. Also, es ist nicht— es ist nicht so genug.
+You:  Zu langweilig?
+You:  Muss, also.
+You:  Also spannendere Sachen müsst ihr haben. Okay.
+You:  Also, es sind jetzt wie so eine Dopamin-Schanke, aber irgendwie, weißt du, es ist so—
+You:  Mhm.
+You:  Es ist einfach die Ausgaben sind so verdammt stur. In einer Liste aufgeführt.
+You:  Oh mein Gott.
+You:  Okay.
+You:  Und nicht mal in so einem, weißt du, Kuchendiagramm oder Balkendiagramm oder weiß nicht was.
+You:  Okay.
+You:  Cool. Nein, das ist gut.
+You:  Merci.
+You:  Wirklich gut.
+You:  Äh, ich glaube, das war's.
+
+

@@ -6,7 +6,7 @@ import { findPersona } from './data/personas'
 import type { Persona } from './data/types'
 
 /**
- * `?persona=fritz` öffnet die App direkt, `&screen=analysis` zusätzlich einen
+ * `?persona=reto` öffnet die App direkt, `&screen=analysis` zusätzlich einen
  * bestimmten Bildschirm. Praktisch für Demo, Videoaufnahme und Screenshots.
  */
 const TABS: Tab[] = ['home', 'payments', 'invest', 'offers', 'services']
@@ -21,10 +21,14 @@ function readUrl(): { persona: Persona | null; tab?: Tab; screen?: Screen } {
   const screen: Screen | undefined =
     name === 'account'
       ? { name: 'account', accountId: params.get('account') ?? persona.accounts[0].id }
-      : name === 'analysis' || name === 'scan' || name === 'pay' || name === 'transfer' ||
-          name === 'search' || name === 'subscriptions'
-        ? { name }
-        : undefined
+      : // «subscriptions» bleibt gültig: der Bildschirm hiess mal «Meine Abos»,
+        // und alte Demo-Links sollen nicht ins Leere laufen.
+        name === 'subscriptions' || name === 'recurring'
+        ? { name: 'recurring' }
+        : name === 'analysis' || name === 'scan' || name === 'pay' ||
+            name === 'transfer' || name === 'search'
+          ? { name }
+          : undefined
 
   return { persona, tab, screen }
 }

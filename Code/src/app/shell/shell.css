@@ -547,6 +547,12 @@ button.row:active { background: var(--tap); }
   flex: none;
 }
 
+/* Echtes Händlerlogo statt Kategoriesymbol. Weisser Grund, weil viele
+   Marken-Icons ihn voraussetzen; Wortmarken brauchen zusätzlich Luft. */
+.abo__icon--logo { background: #fff; box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; }
+.abo__icon--logo img { width: 100%; height: 100%; object-fit: contain; }
+.abo__icon--wordmark img { padding: 5px; }
+
 .abo__main { flex: 1; min-width: 0; }
 .abo__title { display: block; font-size: 15px; font-weight: 700; color: var(--text-strong); }
 .abo__sub { display: block; margin-top: 2px; font-size: 13px; color: var(--text-muted); }
@@ -811,3 +817,24 @@ button.tx:active { background: var(--tap); }
 /* Jede Kontokarte auf Home bekommt denselben Abstand, unabhängig davon,
    ob sie als Verlaufskarte oder als schlichte Zeile erscheint. */
 .account-slot + .account-slot { margin-top: var(--s-6); }
+
+/* Was für eine Art wiederkehrende Buchung das ist — Abo, Dauerauftrag, Lohn.
+   Steht an der Zeile, weil das Logo den Platz des Kategoriesymbols einnimmt
+   und die Gruppenüberschrift beim Scrollen aus dem Bild ist. */
+.kind {
+  display: inline-block;
+  margin-right: var(--s-3);
+  padding: 1px 7px;
+  border-radius: var(--CornerRadius-R-4);
+  background: var(--surface-sunken);
+  color: var(--text-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  vertical-align: 1px;
+}
+
+.kind--income { background: var(--hellblau1, var(--surface-sunken)); color: var(--text-credit); }
+.kind--subscription { background: var(--postfinancegelb); color: #2b2000; }
+.kind--standingOrder { background: var(--surface-sunken); color: var(--text-body); }
+.kind--bill { background: var(--pending1); color: var(--pending3); }

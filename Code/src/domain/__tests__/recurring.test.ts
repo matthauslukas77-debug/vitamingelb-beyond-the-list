@@ -52,9 +52,9 @@ describe('detectRecurring — gegen die Referenz aus den Mock-Daten', () => {
 
   it('hält unregelmässige Einkäufe heraus', () => {
     // Zufallskäufe bei Coop/Migros dürfen nicht als Abo durchgehen.
-    const detected = detectRecurring(byId.fritz.transactions, { today: TODAY })
+    const detected = detectRecurring(byId.reto.transactions, { today: TODAY })
     const seriesIds = new Set(
-      byId.fritz.transactions.filter((tx) => tx.seriesId).map((tx) => normaliseMerchant(tx.text)),
+      byId.reto.transactions.filter((tx) => tx.seriesId).map((tx) => normaliseMerchant(tx.text)),
     )
     const falsePositives = detected.filter((entry) => !seriesIds.has(entry.key))
     expect(falsePositives.map((entry) => entry.key)).toEqual([])
@@ -62,18 +62,18 @@ describe('detectRecurring — gegen die Referenz aus den Mock-Daten', () => {
 })
 
 describe('detectRecurring — Eigenschaften der Reihen', () => {
-  const fritz = detectRecurring(byId.fritz.transactions, { today: TODAY })
+  const reto = detectRecurring(byId.reto.transactions, { today: TODAY })
 
   it('erkennt den monatlichen Rhythmus', () => {
-    const adobe = fritz.find((entry) => entry.key.includes('ADOBE'))!
+    const adobe = reto.find((entry) => entry.key.includes('ADOBE'))!
     expect(adobe.cadence).toBe('monthly')
     expect(adobe.intervalDays).toBeGreaterThanOrEqual(28)
     expect(adobe.intervalDays).toBeLessThanOrEqual(32)
   })
 
   it('findet die stille Preiserhöhung', () => {
-    // Fritz' Adobe-Abo steigt im März von 71.90 auf 79.90 (Interview 01).
-    const adobe = fritz.find((entry) => entry.key.includes('ADOBE'))!
+    // Reto' Adobe-Abo steigt im März von 71.90 auf 79.90 (Interview 01).
+    const adobe = reto.find((entry) => entry.key.includes('ADOBE'))!
     expect(adobe.priceChange).toBeDefined()
     expect(adobe.priceChange!.from).toBe(-7_190)
     expect(adobe.priceChange!.to).toBe(-7_990)
@@ -81,32 +81,32 @@ describe('detectRecurring — Eigenschaften der Reihen', () => {
   })
 
   it('meldet keine Preisänderung, wo der Betrag gleich blieb', () => {
-    const spotify = fritz.find((entry) => entry.key.includes('SPOTIFY'))!
+    const spotify = reto.find((entry) => entry.key.includes('SPOTIFY'))!
     expect(spotify.priceChange).toBeUndefined()
   })
 
   it('trennt Lohn, Dauerauftrag, Rechnung und Abo', () => {
-    expect(fritz.find((entry) => entry.key.includes('LOHN'))?.kind).toBe('income')
-    expect(fritz.find((entry) => entry.key.includes('SPARAUFTRAG'))?.kind).toBe('standingOrder')
-    expect(fritz.find((entry) => entry.key.includes('MIETZINS'))?.kind).toBe('bill')
-    expect(fritz.find((entry) => entry.key.includes('SPOTIFY'))?.kind).toBe('subscription')
+    expect(reto.find((entry) => entry.key.includes('LOHN'))?.kind).toBe('income')
+    expect(reto.find((entry) => entry.key.includes('SPARAUFTRAG'))?.kind).toBe('standingOrder')
+    expect(reto.find((entry) => entry.key.includes('MIETZINS'))?.kind).toBe('bill')
+    expect(reto.find((entry) => entry.key.includes('SPOTIFY'))?.kind).toBe('subscription')
     // Fitnessabo: die Bank verbucht es unter Freizeit, es ist trotzdem ein Abo.
-    expect(fritz.find((entry) => entry.key.includes('FITNESS'))?.kind).toBe('subscription')
+    expect(reto.find((entry) => entry.key.includes('FITNESS'))?.kind).toBe('subscription')
   })
 
   it('rechnet auf den Monat um', () => {
-    const spotify = fritz.find((entry) => entry.key.includes('SPOTIFY'))!
+    const spotify = reto.find((entry) => entry.key.includes('SPOTIFY'))!
     expect(spotify.monthlyAmount).toBeCloseTo(spotify.amount, -2)
   })
 
   it('sagt die nächste Belastung nach dem letzten Vorkommen voraus', () => {
-    for (const entry of fritz) {
+    for (const entry of reto) {
       expect(entry.nextExpected > entry.lastSeen).toBe(true)
     }
   })
 
   it('sortiert die teuersten Belastungen nach oben', () => {
-    const expenses = fritz.filter((entry) => entry.monthlyAmount < 0)
+    const expenses = reto.filter((entry) => entry.monthlyAmount < 0)
     for (let i = 1; i < expenses.length; i++) {
       expect(expenses[i - 1].monthlyAmount <= expenses[i].monthlyAmount).toBe(true)
     }
@@ -115,7 +115,7 @@ describe('detectRecurring — Eigenschaften der Reihen', () => {
 
 describe('upcoming', () => {
   it('liefert nur, was im Fenster liegt, chronologisch', () => {
-    const series = detectRecurring(byId.michael.transactions, { today: TODAY })
+    const series = detectRecurring(byId.bruno.transactions, { today: TODAY })
     const next = upcoming(series, TODAY, 30)
     for (const entry of next) {
       expect(entry.nextExpected >= TODAY).toBe(true)

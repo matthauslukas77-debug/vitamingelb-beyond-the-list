@@ -1,0 +1,563 @@
+Flow Summary
+
+Design-Thinking-Interview mit Speaker 2 zu Finanzverhalten: nutzt v.a. Bosch Finance, kein Budgetplan, wünscht sich Aboübersicht und Handy-Widget, skeptisch gegenüber Finanzberatern. Weitere Interviews geplant.
+
+
+
+Setup & Kontext
+
+Design-Thinking-Interview zu Finanzen mit Speaker 2, wohnhaft [Ort], Deployed Engineer bei einem Technologieunternehmen
+
+Tailscale-VPN-Zugriff auf Speaker 1's Mac für gemeinsames Arbeiten via Arbeitslaptop eingerichtet
+
+
+
+Banking- & Ausgabenverhalten
+
+Nutzt Bosch Finance (primär) und Alternative Bank Schweiz; keine Kreditkarte, Bosch-Karte fungiert als Kreditkarte ohne Minus
+
+Schaut regelmässig Kontostand und letzte Bewegungen, aber keine Monatsauswertung
+
+Bosch-Finance-Dashboard 3–4 Mal genutzt
+
+Unbekannte Firmennamen gelegentlich gegoogelt
+
+Kein Budgetplan, keine fixen Ausgaben ausser Essen; würde Plan einhalten wenn klar definiert
+
+
+
+Bedürfnisse & Einstellungen
+
+Wunsch: Übersicht laufender Abos, Widget auf Handy mit Face-ID-Schutz für schnellen Überblick
+
+Für KI-Analyse relevant: wo/wann Geld ausgegeben, Verlauf über Zeit, Muster nach Firma/Wochentag
+
+Skeptisch gegenüber CH-Finanzbranche (Scams, Produktverkauf statt Beratung); Finanzwissen v.a. via YouTube und ChatGPT
+
+Drei Assoziationen zu Geld: Sparen, Übersicht, Planbarkeit
+
+
+
+Nächste Schritte
+
+(Speaker 2) eine Finanzberaterin (Finanzberater) für ein weiteres Interview anrufen
+
+(Speaker 2) Weitere Interviewpartner kontaktieren: ein Bekannter, ein Bekannter, Papa, eine Bekannte, ein Bekannter
+
+
+
+
+
+complete
+
+
+You: Ja.
+You:  Jag har.
+You:  Haft stygna rader i läsaren här.
+You:  What does that mark?
+You:  En fil.
+You:  Also, wir richten auch jetzt schnell den Mac ein, das ist besser. Lass mal Tails scalen, aber im Internet.
+You:  Äh, Tail, T-A-I-L.
+You:  Ja.
+You:  Mhm.
+You:  Hm.
+You:  Also, ich kann nur sagen, was ich hier zeige. Fragen, weißt du.
+You:  Ich glaube, wir gehen.
+You:  Ja, ich glaube, wir gehen. Ich mache jetzt den Scaler.
+You:  Ähm, also, es ist nicht immer ein bisschen buggy,.
+You:  Bra kebabkarta.
+You:  Das ist ja immer so ein Glück.
+You:  Okay.
+You:  Sie geht jetzt schon heim und ich gehe nicht weiterarbeiten.
+You:  Ich weiß nicht, keine Ahnung. Ich meine, morgen ist ja der Big Day.
+You:  Ja.
+You:  Aber ich finde trotzdem noch krass, dass ich noch gar keinen Plan habe.
+You:  Das ist vielleicht, ich weiß nicht, was... ja, vielleicht. Ich weiß nicht.
+You:  Okay.
+You:  Äh, Gesundheit, ja.
+You:  Na ja.
+You:  Bei diesen Baddies kann man noch ein paar Mal vorbeikommen, aber sie sind aber gar nicht so tough.
+You:  Ja.
+You:  Die eine ist noch cute, aber.
+You:  Ja, ja, ein bisschen hineingeschissen einfach.
+You:  Warum?
+You:  Ich glaube, das war es.
+You:  Warum?
+You:  Ich habe keine Ahnung, ich bin gerade so konzentriert, dass ich gar nicht konnte.
+You:  Ah, okay.
+You:  Ja, egal.
+You:  Egal.
+You:  Genau. Merci.
+You:  Alles gut.
+You:  Mhm.
+You:  Ah, der ist auch eine gute Rita, die Sicher.
+You:  Ja.
+You:  Ähm,.
+You:  Also, jetzt gehen wir nämlich... jetzt stoppen wir sozusagen den Prozess hier und gehen einfach hier mit dem Bärnhäckt-Ordner.
+You:  Ähm, hier mit Weibrennen oder was?
+You:  Ja, genau. Du musst nämlich mit meinem Google-Account rein.
+You:  Das heißt, wir machen was?
+You:  Ich weiß nicht, weil es halt der Arbeitslaptop ist, aber hier.
+You:  Oh, ist gut.
+You:  Also, das kannst du.
+You:  Ja, aber das geht.
+You:  Und das ist aber der neue, und da haben sie mehr Zugriff als sonst.
+You:  Äh, okay.
+You:  Ähm, soll ich das Login starten?
+You:  Ja.
+You:  Okay.
+You:  Ich war noch nicht sicher, ob das Setup perfekt ist.
+You:  Aber schauen wir mal.
+You:  Ähm,.
+You:  Das ist das eine Glück, oder?
+You:  Ähm, ich weiß nicht, ob es dran ist oder nicht.
+You:  Na gut.
+You:  Und du?
+You:  Du gehst jetzt in Mees.
+You:  Das ist jetzt halt... musst du dich wieder abmelden.
+You:  Aber jetzt machen wir wie... äh, Ultra.
+You:  Also wieso, aber das ist nicht auf dich.
+You:  Ja, weil.
+You:  Ich kläre das schnell. Tailscale ist eine private VPN.
+You:  Weißt du, VPN?
+You:  Ja.
+You:  Die privates Netzwerk. Und ich habe das auf meinem Computer zu Hause laufen.
+You:  Ja.
+You:  Und was wir jetzt freigegeben haben, du kannst auf meinem Mac von hier aus. Und dann anschauen und darauf arbeiten.
+You:  Und gleichzeitig auch mit dem SSH kann ich rein. Und so bist du dann wie im Ding drin.
+You:  Proski.
+You:  Ja.
+You:  Hast du Zeit, 10 Minuten?
+You:  Ja, ja.
+You:  Also, lass schon.
+You:  Du hast so ein bisschen Design Thinking.
+You:  Mhm.
+You:  Das ist auch schon mal gehört, auch.
+You:  Ja.
+You:  Ähm, hast du Fragen? Aber nicht ready jetzt, oder?
+You:  Nein.
+You:  Okay.
+You:  Ich bin blöd.
+You:  Also, ähm, dann machen wir auch Silvan.
+You:  Du bist... ja, du bist etwa 8 Monate, oder?
+You:  Ja, ja.
+You:  Äh, du heißt Silvan.
+You:  Ja, ja.
+You:  Du warst in [Ort].
+You:  Ja.
+You:  Und du arbeitest bei [Arbeitgeber] IT.
+You:  Ja.
+You:  Als Upcoming Deploy Engineer.
+You:  Weil, ähm, das ist einfach zu transkribieren. Da haben wir schon alle Stammdaten, so.
+You:  Ähm, also, wir fangen mal ganz simpel an. Bei welcher Bank hast du Kontos?
+You:  Äh, PostFinance.
+You:  Und alternative Bank Schweiz.
+You:  That's it.
+You:  That's it. The rest is habe ich aufgelöst, ja.
+You:  Die haben wir wirklich nicht gehabt.
+You:  Okay.
+You:  Welche brauchst du am meisten? Hast du Fragen?
+You:  Mhm.
+You:  PostFinance.
+You:  Okay.
+You:  Du hast es so gestartet.
+You:  Ja, das ist gut. Du machst dich eine Vorlesung.
+You:  Das ist gut. Ähm, hey, ciao.
+You:  Ciao.
+You:  Ich hasse Kubernetes. Okay, gut.
+You:  Ähm, wann hast du eigentlich... also jetzt mal zuerst, weil das ist ein bisschen ein Warm-up. Wann hast du so das letzte Mal dein Konto-Bewegungen angeschaut?
+You:  Bewegungen?
+You:  Ja.
+You:  Äh, heute.
+You:  Okay.
+You:  Und was ist der Anlass gewesen? Hast du einfach überprüft, oder was?
+You:  Ich glaube, dass ich Geld habe.
+You:  Also, so die letzten 45 Tage, was ich gemacht habe.
+You:  Mhm. Okay.
+You:  Ähm, und du hast auch PostFinance, hast du gesagt, oder?
+You:  Ja.
+You:  Und wann öffnest du? Was machst du dann als Erstes?
+You:  Schaust du einfach auf den Kontostand, oder?
+You:  Kontostand, ja, ja.
+You:  Okay.
+You:  Und sonst irgendwelche anderen Funktionen nutzt du dann nicht? Du schaust dann nicht noch, was genau die genauen Ausgaben sind gewesen oder so?
+You:  Äh, ich schaue den Kontostand, und dann siehst du so auf dem Dashboard, und die Zahlungen siehst du erst, wenn du draufdrückst.
+You:  Mhm.
+You:  Konto, da hast du mehrere Konten zum Teil.
+You:  Mhm.
+You:  Und dort drücke ich meistens drauf und schaue dann schnell, also dort sehe ich die letzten paar Bewegungen mehr nicht.
+You:  Okay.
+You:  Das ist... ja.
+You:  Okay, du schaust aber nicht nach irgendeiner bestimmten Bewegung. Du schaust einfach die Überschläge und schaust, ja, genau so viel ausgehen und ja.
+You:  Ja.
+You:  Okay.
+You:  Außer die Suche etwas, aber das selten, ja.
+You:  Mhm. Okay.
+You:  Ähm, hast du auch schon so Buchungen gehabt, wo du nicht verstanden hast?
+You:  Wo du nicht mal gewusst hast, was für was genau das war gewesen, oder was?
+You:  Ja, habe ich auch schon erlebt.
+You:  Okay.
+You:  Ja, ja, ja. Weil ich manchmal so komische Adressen oder komische Firmennamen.
+You:  Mhm.
+You:  Wo nicht dort, wo ich es gekauft habe, da bin ich aber verwirrt.
+You:  Okay, gehst du dann auch googeln, was es ist, oder was?
+You:  Das habe ich auch schon gemacht, ja.
+You:  Okay.
+You:  Aber zwei, drei Mal vielleicht so.
+You:  Mhm.
+You:  Okay.
+You:  Ja.
+You:  Ähm, und wie findest du heraus, ob ein Monat normal oder nicht normal war bei dir, von den Ausgaben her?
+You:  Gar nicht.
+You:  Okay.
+You:  Also, da tust du eigentlich... da tust du eigentlich so, wie du jetzt gesagt hast, immer die Zahlungen draufschauen und mehr eigentlich nicht.
+You:  Ja.
+You:  Okay.
+You:  Ich gehe nicht groß.
+You:  Mhm.
+You:  Schaue, was ich diesen Monat für Ausgaben hatte, insgesamt oder so.
+You:  Mhm.
+You:  Und jetzt noch so ein bisschen zu Budget. Ähm, so für Kontrollen her und so. Hast du einen Budgetplan?
+You:  In einem Mal, auch schon ein bisschen, oder?
+You:  Nein.
+You:  Nicht?
+You:  Nein.
+You:  Okay.
+You:  Nein.
+You:  Warum nicht?
+You:  Weil irgendwie große Einnahmen habe bis jetzt.
+You:  Ja.
+You:  Und nicht wirklich, äh, fixe Ausgaben habe.
+You:  Mhm.
+You:  Meine Ausgaben.
+You:  Etwas gekauft wäre, aber da ich keine Fixausgaben habe, fixe Konten, sozusagen, habe ich nicht wirklich Plan.
+You:  Vorbudgetierung, die ich brauche.
+You:  Mhm.
+You:  Ja.
+You:  Okay.
+You:  Oder wo ich wüsste, ja. Vielleicht brauche ich schon, aber nicht gerade die größten Punkte in dem.
+You:  Aber würdest du sagen, du könntest es einhalten, hä, Chase?
+You:  Ähm, wenn ich eigentlich super aufstellen würde, klare definieren, wieso ich das brauche.
+You:  Dann würde ich es schon umsetzen, würde ich sagen, ja.
+You:  Okay.
+You:  Okay, und hast du schon mal irgendwie versucht, ich meine, ich glaube, in der Schule hat man das sicher auch, im Gym hat man das sicher auch schon gemacht, dass man so einen Budgetplan hat gemacht.
+You:  Ja.
+You:  Hast du das schon mal versucht?
+You:  Ja.
+You:  Nein.
+You:  Weil eben irgendwie nicht wirklich.
+You:  Okay. Noch gar nie gemacht.
+You:  Mhm.
+You:  Okay.
+You:  Okay, cool.
+You:  Ja.
+You:  Ja, also.
+You:  Aber es ist schlussendlich, es ist ja nur für Fragen, also du musst auch nicht genaue Antworten oder so haben.
+You:  Ähm, und wenn du.
+You:  Anfangen würdest, wie würdest du es angehen? Irgendein Tool oder so, das du kennst, oder so?
+You:  Oder hast du da noch eben noch gar nicht informiert?
+You:  Wenn ich einen Budgetplan mache.
+You:  Ja.
+You:  Oder auch allgemein so, wenn du wissen willst, für was deine genauen Ausgaben sind gewesen und so.
+You:  Ja, dann würde ich... das habe ich auch schon gemacht, PostFinance.
+You:  Okay.
+You:  Da gibt es so ein Dashboard, da kannst du auch einfach los... das habe ich auch schon geschaut, so.
+You:  Okay.
+You:  Die größte ist ja besser, so.
+You:  Ja.
+You:  Wenn ich einen Plan machen würde, würde ich auch mit Chat vielleicht.
+You:  Ja.
+You:  Oder Chat fragen, was es für Tools gibt, gute.
+You:  Okay.
+You:  Wo ich das machen kann.
+You:  Okay, cool. Gut.
+You:  Ja.
+You:  Ja. Ähm, und meistens helfen, denkst du, wenn du eben das jetzt wirklich ein bisschen mehr Ausgaben hast und meistens würde dir auch eben einfach so ein genaues Dashboard helfen, oder?
+You:  Ja.
+You:  Okay.
+You:  Dashboard oder...
+You:  Okay.
+You:  Gut.
+You:  App oder so, es könnte wie einen Plan nehmen und verknüpfen und man sieht direkt.
+You:  Okay. Und jetzt nochmal so ein bisschen zu der vorherigen Frage.
+You:  Du hast ja sicher eben, du hast ja schon Ausgaben gehabt, die du nicht so genau gewusst hast. Hast du schon so Abos gehabt, oder einfach du hast sicher ja laufende Abos?
+You:  Ja.
+You:  Okay. Und da weißt du auch einfach genau, was es ist?
+You:  Gym und alles?
+You:  Ja, ja. Ich habe nicht so viele laufende Abos.
+You:  Mhm.
+You:  Aber es wäre noch geil, wenn ich sehen würde, welche genau ich habe.
+You:  Mhm.
+You:  Okay.
+You:  Das sehe ich nicht so, aber es sind vielleicht drei, vier Abos oder so. Ja, es ist ein bisschen mehr.
+You:  Okay.
+You:  Es stimmt, es wäre noch geil, wenn ich gesehen hätte.
+You:  Und bist du da schon mal erschrocken, wo du dann irgendwie so Abos hast gesehen? Oder du weißt eben, meistens schon, was es ist, oder?
+You:  Äh, ist mir auch schon passiert, dass ich etwas nicht mehr will und dann habe ich es später erst gemerkt.
+You:  Okay.
+You:  Aber das sind kleine Beträge, 20, 30 Stück, so.
+You:  Okay.
+You:  Okay. Ja, also eben das heißt, das sind so Abos, die eigentlich nicht ja, die nicht so schlimm sind, nicht teure Abos, ja.
+You:  Mhm.
+You:  Okay.
+You:  Das schockiert in dem Sinne nicht.
+You:  Ja. Okay.
+You:  Cool.
+You:  Ähm, jetzt mehr so ein bisschen zu den Zielen und so. Hast du irgendwie finanzielle Ziele, eben so zum Beispiel ein Auto, oder eine Reise, die du planen willst, auf so etwas hereinsparen?
+You:  Oder hast du das überhaupt?
+You:  Ähm, so ein klares finanzielles Ziel im Sinne von, ich will ein Auto oder so, im Moment nicht.
+You:  Mhm.
+You:  Oder ich will schon Geld verdienen.
+You:  Mhm.
+You:  Aber.
+You:  Ja, also etwas, wo ich darauf hereinspare, im Moment nicht.
+You:  Okay.
+You:  Etwas Großes.
+You:  Okay.
+You:  Also in dem Fall weißt du eigentlich nicht so für was. Ähm, und du würdest dich schon noch nicht so wie ja, eben, einfach möglichst viel Geld verdienen, ja. Okay.
+You:  Aber sparen und so, tust du auch. Hast du irgendeine Tour aufgetragen oder so, für ein Konto oder so?
+You:  Nein, weil eben bis jetzt habe ich nicht wirklich fixe Konten. Sobald ich den Kontostand erreiche, was ein bisschen eben planbar und fixer ist, dann würde ich dann eben so langsetzen, ja.
+You:  Okay.
+You:  Also. Und.
+You:  Ja, so ein bisschen, aber wie eben da irgendwie so ein gewisses klares fixe Konto habe ich jetzt.
+You:  Ist wie nicht die Frage gar nicht aufgetaucht, sozusagen.
+You:  Okay. Okay.
+You:  Und so, jetzt nochmal so zu den Ausgaben. Hast du zum Teil so wenn du jetzt ohne würdest nachschauen oder so wüsstest, für was das am meisten ausgibst oder so.
+You:  Du weißt so ein bisschen eben, ähm, für das hast du am meisten aus Essen so, wie du schon hast gesagt, aber du wüsstest, also du kannst kannst mir das genau sagen.
+You:  Ja, also das, was am meisten ist, dann funktioniert sicher das Essen, ja.
+You:  Okay.
+You:  Aber das ist mehr vom Gefühl und von ja, so investieren oder so, tust du?
+You:  Nein, auch nicht groß.
+You:  Okay.
+You:  Ich habe eine Zeit lang mal, aber so eben kleine Beträge nur, weil aufgrund von meinen Konten.
+You:  Okay, ich glaube, die Frage tue ich ein bisschen überspringen, oder? Wegen so Finanzberater und so.
+You:  Und frag sie mal, einfach keine Ahnung, frag sie einfach, das ist chillig, es wird eigentlich Lucas vielleicht nein und so antworten, aber es ist gleich gut, wenn man es dokumentiert und es geht kurz.
+You:  Ja, okay. Weißt du, was eine Aktie ist?
+You:  Ja.
+You:  Fonds?
+You:  Ja.
+You:  Ähm, weißt du, was ein Fonds sein?
+You:  Ja, also einfach äh, also eine Gruppe von Aktien, sozusagen, eine Auswahl von Aktien, die zusammengeführt sind und dann in das investiert, das heißt, in die Gesamtaktien würde ich investieren, nicht nur in eine Aktie, sondern in eine Firma.
+You:  Okay.
+You:  Hast du das?
+You:  In einem Markt, du hast sicher auch schon eben vielleicht über Finanzen gelernt. Hast du schon etwas gelernt darüber?
+You:  Im Gym?
+You:  Schon einmal Budgetplan gemacht.
+You:  Okay.
+You:  Zwei Jahre geschaut, was Aktien sind und so.
+You:  Aber nicht groß.
+You:  Okay.
+You:  Okay, und so von einfach von den Eltern und so hast du viel mitbekommen?
+You:  Nein.
+You:  Auch nicht wirklich.
+You:  Eher von Kaspar?
+You:  Ja, von.
+You:  YouTube?
+You:  Animatory oder halt.
+You:  Medien, ja.
+You:  Okay.
+You:  Hast du eine Finanzberater?
+You:  Eine persönliche?
+You:  Ja, [Berater] Matthis.
+You:  Okay.
+You:  Okay.
+You:  Was hältst du von der Finanzbranche?
+You:  Ja, ist ein bisschen.
+You:  Es gibt sehr viele Games halt.
+You:  Okay.
+You:  Und oft sind Produkte oder Software oder Gesellschaften haben einfach das Motiv, die Leute zu beraten und zu helfen, individuell, sondern einfach es wird ein Produkt verkauft und dadurch ist halt das Gesamtbild in der Schweiz von der Finanzberatung nicht von der Finanzbranche nicht riesig gut.
+You:  Und darum geht es auch bei Viga, aber ja.
+You:  Okay.
+You:  Das ist eher skeptisch.
+You:  Okay.
+You:  Das ist schwierig, aber.
+You:  Also skeptisch, aber du könntest dir theoretisch vorstellen, zu wem zu gehen.
+You:  Äh, ja, wenn die Person, wenn die eine gute Motivation hat und nicht einfach das Skript abgelabert von einer Gesellschaft, und wirklich das Motiv hat mehr zu beraten, individuell, dann ja, fix.
+You:  Okay.
+You:  Und so mehr wissen, und dann ist es wissen, und dadurch kann es einen wirklich Mehrwert bieten.
+You:  Okay.
+You:  Cool, ja.
+You:  Und so, so Krankenkasse und so, bezahlst du das auch noch immer?
+You:  Nein, ich mache es mit meiner Mutter.
+You:  Okay.
+You:  Hast du auch schon ein bisschen Überblick, für wen es nachkommt oder so?
+You:  Boah, nein.
+You:  Okay.
+You:  Ja.
+You:  Okay.
+You:  Ähm, und jetzt noch so ein bisschen zu Konten und so. Ich meine, du hast also Twint hast du ja, du hast eine Kreditkarte, oder?
+You:  Kreditkarte habe ich tatsächlich nicht.
+You:  Aha, okay. Debit einfach.
+You:  Okay.
+You:  Ah, du PostFinance-Karte gilt, das ist ein bisschen komisch, glaube ich. Die gilt wie eine Kreditkarte, aber du kannst nicht ins Minus.
+You:  Ja.
+You:  Aber sie wird wie als Kreditkarte angesehen, aber.
+You:  Okay.
+You:  Ich habe keine Karte, die ins Minus gehen kann, so.
+You:  Okay.
+You:  Und You oder so, hast du den?
+You:  Äh, nein.
+You:  Okay.
+You:  Und so, eben, du hast ja vor allem einfach für die PostFinance, hast du gesagt, gell?
+You:  Mhm.
+You:  Okay.
+You:  Ja, nein, okay. Und so, Widgets oder so, brauchst du den?
+You:  Von PostFinance? Ich meine, du brauchst sicher so von Spotify oder so, brauchst du den so auf dem Handy, Widgets auch oder?
+You:  Nein, egal, ich weiß, dass es gibt. Nein, brauche ich nicht.
+You:  Widgets?
+You:  Ja, also Widgets von PostFinance, da habe ich gewusst, dass es gibt.
+You:  Okay.
+You:  Ich weiß auch nicht, ob es gibt.
+You:  Wir wissen es auch nicht, ob es gibt, aber fände ich es cool.
+You:  Aha, ja, sehr.
+You:  Okay. Weil dann haben wir so.
+You:  Ich hatte gerade die Frage, ob jemand noch das Handy von dir hat und.
+You:  Ja.
+You:  Wegen der Sicherheit, meinst du?
+You:  Ja.
+You:  Ja, mehr wegen Privatdings.
+You:  Ja, ja, okay. Aber theoretisch, jetzt so ein bisschen Überblick und so, würdest du cool finden, wenn du immer quasi das Handy hast und dann siehst du so, heute, zack, 2015 ist es oder so, aber was.
+You:  Ja, das würde ich so als Glückliches machen, er würde, ja, das Gesicht scannen, okay.
+You:  Ja.
+You:  Okay.
+You:  Ähm, eben, in einem Markt, das hast du ja vorher schon gesagt, im PostFinance, die Analyseansicht vom, das Dashboard kennst du ja, oder?
+You:  Ja.
+You:  Hast du es schon viel benutzt?
+You:  Boah, das geht.
+You:  Drei, viermal.
+You:  Okay.
+You:  Ja. Ja, zu diesem Chat, eigentlich sind wir ja vorher schon gekommen.
+You:  Also wenn du jetzt zum Beispiel all deine Ausgaben und so, äh, Chat-GPT kannst du geben und dann, eben, was würdest du ihm so für Fragen stellen?
+You:  Was würde dich interessieren, von deinen Ausgaben her?
+You:  Ja, stell dir vor, du kannst alle Finanzdaten, die du jemals ausgegeben hast, einfach chatten, würde es wissen, dann würde es ein paar Fragen stellen. Was wären die?
+You:  Was würde dich interessieren?
+You:  Sicher mal, wo gebe ich am meisten Geld aus?
+You:  Ja.
+You:  Also, ich weiß nicht, welche Domain.
+You:  Mhm.
+You:  Ich würde sagen, nein, stell dir vor, zu welcher Uhrzeit gebe ich am meisten Geld aus?
+You:  Zu welcher was?
+You:  Uhrzeit.
+You:  Ah, ja, okay.
+You:  Zu welcher Jahreszeit?
+You:  Ich weiß nicht, an Wochentagen, echt so Perioden, wo ich wo gebe ich am meisten, wo und wann gebe ich am meisten Geld aus?
+You:  Mhm.
+You:  Okay.
+You:  Und dann auch in den Verlauf von Ausgaben, also wie so eine Grafik, wenn eben über längere Zeitraum, ähm, vielleicht bei spezifischen, äh, Firmen oder Unternehmen, wo ich immer wieder Geld ausgebe, so ein bisschen so.
+You:  Okay.
+You:  Okay. Das ist jetzt auch Sachen, wo du.
+You:  Ja.
+You:  Das ist jetzt auch so Sachen, wo du quasi würdest zulassen, äh, Budget, aber hat es so Sachen, wo ihr gar nicht dürft stellen, so Fragen oder wissen? Allgemein.
+You:  Also Chat würde ich sicher auch eh nicht geben.
+You:  Ja.
+You:  Aber.
+You:  Boah, gar nicht. Also, wenn ich irgendwie alles würde geben, würde ich ja eh alles sehen.
+You:  Ja.
+You:  Aber wenn er so Rückfragen würde stellen, würdest du irgendwann auch sagen, hey, das geht gar nicht?
+You:  Boah, nein, nicht unbedingt.
+You:  Okay.
+You:  Okay.
+You:  Okay, gut. Ja, jetzt kommen wir noch zum Abschluss, würde ich sagen.
+You:  Oder hast du noch etwas Fragen?
+You:  Ja, ich muss noch überlegen, vorher ein bisschen, aber nimm du mal, machen wir Abschluss mit den ein paar Fragen noch.
+You:  Also, ich frage nur dich ein paar Fragen, so ein bisschen, jetzt zuerst mal, nach unserem Gespräch, allgemein auch, welche drei Wörter fallen dir jetzt zum Thema, zum Thema Geld gerade direkt ein? Einfach ohne zu überlegen, einfach nur schnell, schnell.
+You:  Sparen, Übersicht, Planbarkeit.
+You:  Okay.
+You:  Also, gut.
+You:  Wenn ich jetzt, ähm, hast du, wenn ich jetzt würdest, äh, sagen, du hättest ein paar Sachen über Finanzen wissen, keine Ahnung, du würdest Weiterbildung, ich weiß nicht was, oder etwas wissen, wo, wo, wo findest du die Infos?
+You:  Naviga, Podcast.
+You:  Ja.
+You:  Lol.
+You:  Nein, aber Chatti, am meisten.
+You:  Das ist Chatti-Frage.
+You:  Chatti oder YouTube? Oder halt.
+You:  Äh, ja, doch, eben, YouTube.
+You:  Okay, top.
+You:  Ja.
+You:  Danke. Jetzt, nach unserem Gespräch, etwas Wichtiges habe ich noch nicht gefragt.
+You:  Ähm, jetzt hast du noch eine Frage, bitte.
+You:  Mhm. Und er ist ja so der von Unternehmen, aber wie nicht so ein Typ.
+You:  Was ich nur interessiere.
+You:  Oh.
+You:  Und, also, denkst du, etwas Wichtiges nicht gefragt?
+You:  Äh, nein.
+You:  Okay.
+You:  Also nichts, was.
+You:  Ähm, wir wären es auch immer noch reden, und das Interview führen.
+You:  Mit dem eine Finanzberaterin?
+You:  Okay, ja, fix anrufen.
+You:  Mit dem ein Bekannter?
+You:  Ja, okay, wow.
+You:  Mit dem Ramun?
+You:  Ja, wow.
+You:  Das geht.
+You:  Äh, mit dem Papa?
+You:  Ja.
+You:  Ähm, mit der eine Bekannte?
+You:  Ja.
+You:  Gen Z Mini-Auto?
+You:  Mit dem ein Bekannter?
+You:  Mit dem ein Bekannter?
+You:  Ja.
+You:  Profit Mini-Auto? Was?
+You:  Ich weiß auch nicht.
+You:  Also ja.
+You:  Also gut, jetzt haben wir noch ein paar, wir haben schon recht lange, wir machen jetzt noch ein paar.
+You:  Was ist noch spannend, wäre jetzt für MTA Gravity, zum Beispiel, jetzt geht es noch, es geht auch um Unternehmensview. Das ist jetzt ein bisschen schwierig, weil es ist so deep, aber jetzt stell dir mal vor, jetzt, ähm, ähm.
+You:  Wer kümmert sich bei deinem Unternehmen um das Geld?
+You:  Kaspar.
+You:  Ähm, wenn jetzt jemand, wenn jetzt irgendjemand fragt, wenn wir uns etwas leisten können, wie würdest du antworten?
+You:  Ähm, auf unseren Budgetplan würde ich was nicht geben.
+You:  Nein, auf unser Konto schauen.
+You:  Und nein, beide hätten wir das uns leisten können oder nicht.
+You:  Okay.
+You:  Und das sind kommende Zahlungen, die noch offen sind.
+You:  Ja.
+You:  Weisst du, unser Kontostand in 30 bis 90 Tagen aussieht?
+You:  Wie eigen, privat?
+You:  Ähm, ja, als Unternehmen und privat. Sag mal beides.
+You:  Also, bis jetzt kann ich sagen, wir werden es sein.
+You:  Ja, voll.
+You:  Äh, nein, tatsächlich nicht.
+You:  Okay.
+You:  Ähm, ja.
+You:  Okay. Ja, mal ist gut, ist gut.
+You:  Also, merci, Bro. Merci vielmals.
+You:  Merci, Bro.
+You:  Äh, ja, macht's gut.
+You:  Let's go.
+You:  Wenn wir heute heimkommen.
+You:  Wenn du heute heimkommst, ja.
+You:  Hey, vielleicht gegen die 11, jemand.
+You:  Okay.
+You:  Bist du dann noch wach?
+You:  Boah.
+You:  Aber nicht.
+You:  Also, du wirst am Morgen noch.
+You:  Okay, dann gehst du morgen wieder raus.
+You:  Äh.
+You:  Früh.
+You:  Auch so 7:21, vielleicht.
+You:  Aber wir können 12 Uhr raus.
+You:  Ah, vielleicht so, keine Ahnung, zwischen auch so nach der 7, irgendwann.
+You:  Okay, okay.
+You:  Du?
+You:  Ja, ich gehe morgen erst 8:51.
+You:  Okay.
+You:  Also ja.
+You:  Ja, Jungs, gebt Gas, viel Spaß, seid geil.
+You:  Ja, merci, merci, es kommt sehr gut.
+You:  Ciao.
+You:  Thank you, Bro.
+You:  Tschüss.
+You:  Tschüss.
+You:  Ciao.
+You:  Ah, sorry, ich habe abgehängt. Also, ich glaube, äh, soll ich schnell eine Finanzberaterin anrufen?
+You:  Ich weiß, das ist eine Finanzberaterin oder was?
+You:  Ja, voll.
+You:  Okay.
+You:  Dann wirst du auch immer Fragen stellen.
+You:  Nein, du kannst, also ja, du kannst. Mach du.
+You:  Mhm.
+You:  Oder ich kann, aber ich muss es sehen, halt.
+You:  Ja.

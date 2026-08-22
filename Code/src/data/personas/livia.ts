@@ -1,8 +1,8 @@
 import type { Account, Persona } from '../types'
-import { katjaTransactions } from './katja.data'
+import { liviaTransactions } from './livia.data'
 
-const PRIVATE = 'katja-private'
-const SAVINGS = 'katja-savings'
+const PRIVATE = 'livia-private'
+const SAVINGS = 'livia-savings'
 
 const accounts: Account[] = [
   {
@@ -26,14 +26,14 @@ const accounts: Account[] = [
   },
 ]
 
-export const katja: Persona = {
-  id: 'katja',
-  name: 'Katja Berger',
+export const livia: Persona = {
+  id: 'livia',
+  name: 'Livia Berger',
   role: 'Lernende bei einer Bank · spart auf 50’000',
   quote: '«500 Franken aufs Sparkonto — dann ist das wie quasi als Ausgabe.»',
   source: 'Interview 05',
   accounts,
-  transactions: katjaTransactions,
+  transactions: liviaTransactions,
   standingOrders: [
     { id: 'k-so-1', accountId: PRIVATE, recipient: 'Sparkonto', amount: -50_000, currency: 'CHF', nextExecution: '2026-08-26' },
   ],

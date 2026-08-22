@@ -8,7 +8,7 @@ import { Home } from './screens/Home'
 import { Invest } from './screens/Invest'
 import { Offers } from './screens/Offers'
 import { Payments } from './screens/Payments'
-import { Subscriptions } from './screens/Subscriptions'
+import { Recurring } from './screens/Recurring'
 import { TransactionDetail } from './screens/TransactionDetail'
 import { Services } from './screens/Services'
 
@@ -70,7 +70,7 @@ function CurrentSheet() {
     case 'pay': return <Pay />
     case 'transfer': return <Transfer />
     case 'search': return <Search />
-    case 'subscriptions': return <Subscriptions />
+    case 'recurring': return <Recurring />
     case 'transaction': return <TransactionDetail transactionId={top.transactionId} />
   }
 }

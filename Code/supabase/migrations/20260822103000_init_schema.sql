@@ -147,7 +147,7 @@ create index messages_conversation_idx on public.messages (conversation_id, crea
 
 -- ── 4 · Planung ────────────────────────────────────────────────────────────
 
--- Sparziel mit Bild und Fortschritt — die Idee kam von Fritz selbst
+-- Sparziel mit Bild und Fortschritt — die Idee kam von Reto selbst
 -- (Interview 01: «Boah, das wäre geil»).
 create table public.goals (
   id             uuid primary key default gen_random_uuid(),

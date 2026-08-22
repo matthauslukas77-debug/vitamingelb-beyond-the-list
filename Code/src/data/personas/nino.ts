@@ -1,8 +1,8 @@
 import type { Account, Persona } from '../types'
-import { janicTransactions } from './janic.data'
+import { ninoTransactions } from './nino.data'
 
-const PRIVATE = 'janic-private'
-const CUSTODY = 'janic-custody'
+const PRIVATE = 'nino-private'
+const CUSTODY = 'nino-custody'
 
 const accounts: Account[] = [
   {
@@ -11,7 +11,7 @@ const accounts: Account[] = [
     iban: 'CH42 0900 0000 3100 7788 1',
     kind: 'youth',
     currency: 'CHF',
-    // Knapp — Janic war «wirklich viel im Minus» (Interview 04).
+    // Knapp — Nino war «wirklich viel im Minus» (Interview 04).
     balance: 4_270,
     source: { type: 'postfinance' },
   },
@@ -27,14 +27,14 @@ const accounts: Account[] = [
   },
 ]
 
-export const janic: Persona = {
-  id: 'janic',
-  name: 'Janic Roth',
+export const nino: Persona = {
+  id: 'nino',
+  name: 'Nino Roth',
   role: '19 · Mediamatiker · war oft im Minus',
   quote: '«Die Ausgaben sind so verdammt stur in einer Liste aufgeführt.»',
   source: 'Interview 04',
   accounts,
-  transactions: janicTransactions,
+  transactions: ninoTransactions,
   standingOrders: [],
   pendingOrders: [
     { id: 'j-po-1', accountId: PRIVATE, recipient: 'Zahnarztpraxis Lehmann', amount: -34_500, currency: 'CHF', execution: '2026-08-24' },

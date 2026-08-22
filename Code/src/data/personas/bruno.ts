@@ -1,13 +1,13 @@
 import type { Account, Persona } from '../types'
-import { michaelTransactions } from './michael.data'
+import { brunoTransactions } from './bruno.data'
 
-const PRIVATE = 'michael-private'
-const SAVINGS = 'michael-savings'
-const VALIANT = 'michael-valiant'
-const PILLAR3A = 'michael-3a'
-const MORTGAGE = 'michael-mortgage'
+const PRIVATE = 'bruno-private'
+const SAVINGS = 'bruno-savings'
+const VALIANT = 'bruno-valiant'
+const PILLAR3A = 'bruno-3a'
+const MORTGAGE = 'bruno-mortgage'
 
-/** Michael: «sehr verteilt» — sechs Beziehungen über mehrere Institute (Interview 07). */
+/** Bruno: «sehr verteilt» — sechs Beziehungen über mehrere Institute (Interview 07). */
 const accounts: Account[] = [
   {
     id: PRIVATE,
@@ -58,14 +58,14 @@ const accounts: Account[] = [
   },
 ]
 
-export const michael: Persona = {
-  id: 'michael',
-  name: 'Michael Aebischer',
+export const bruno: Persona = {
+  id: 'bruno',
+  name: 'Bruno Aebischer',
   role: '59 · angestellt · sechs Bankbeziehungen',
   quote: '«Vom Verhältnis her sind die schönen Charts dann ein bisschen misleading.»',
   source: 'Interview 07',
   accounts,
-  transactions: michaelTransactions,
+  transactions: brunoTransactions,
   standingOrders: [
     { id: 'm-so-1', accountId: PRIVATE, recipient: 'Vorsorgekonto 3a', amount: -60_000, currency: 'CHF', nextExecution: '2026-08-26' },
   ],

@@ -1,0 +1,10 @@
+# Decisions log (newest on top)
+
+| When | Decision | Why |
+|---|---|---|
+| Sa 22.08 ~11:30 | **Feature-Set steht: Widget · Tricount · Budget-Wizard · Money Map · Goal Tracker · Finanzwissen.** Je ein Dokument nach gleicher Vorlage in `08_features/`; Reihenfolge Umbuchungs-Erkennung → Goal Tracker → Widget → Budget-UI → «Warum?» → Tricount → Money Map | Sechs Features brauchen eine Reihenfolge, nicht sechs Baustellen. Die Umbuchungs-Erkennung ist der Flaschenhals (3 Features hängen daran); nach dem Widget ist das Video drehbar. Die Doku ist zugleich die Rohfassung des Challenger-Dokuments und der T2-Scope-Begründung — inkl. der beiden unbequemen Befunde: Money Map ist unbelegt (n=0), Finanzwissen in seiner naheliegenden Form durch H12 widerlegt |
+| Sa 22.08 ~09:30 | **Zielpersona: der gemeinsame Kern aller vier Personas** («Ist dieser Monat normal, und reicht es?»), Demo auf P2 «Knapp dran», Skalierungsbeweis über P4 «Verteilt». KMU bleibt als P5 offen deklariert | 6/6 Interviews öffnen die App nur für den Saldo und niemand kennt seinen 30–90-Tage-Stand. Eine Persona zu bedienen hiesse drei zu verlieren. KMU ist unbelegt (n=0) — behaupten wäre bei T2 teurer als die Lücke zu benennen. Karten: `02_design_thinking/personas/` |
+| Sa 22.08 ~00:45 | KI-Architektur: **Erkennung deterministisch im Code, Formulierung durch Apertus**. 8B für JSON/Tools/Chat, 70B für sichtbare Texte (ohne `response_format`) | Test zeigt: beide Modelle rechnen falsch (3193.70 → 1021.65 bzw. 3084.70) und verpassen Muster in Rohdaten, formulieren aber sauber aus vorberechnetem Fakt. Zahlen aus dem Modell wären in einer Banking-App der schlimmste Fehlertyp |
+| Fri 21.08 ~20:45 | Jury-Vorgaben im SUBMISSION-Repo dokumentiert (Ordner-READMEs, CONTRIBUTING, Doku-Skelette nach Vorlage) | T4 "Handwerk" wird bewertet; Vorgaben müssen dort stehen, wo gearbeitet wird — nicht nur im WORKSPACE |
+| Fri 21.08 ~20:00 | Two-folder setup: WORKSPACE (ours) / SUBMISSION (jury repo) | Keep jury view clean; conscious promotion |
+| Fri 21.08 ~20:00 | Challenge: PostFinance "Beyond the List" | — |

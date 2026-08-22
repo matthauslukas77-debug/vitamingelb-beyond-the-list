@@ -60,7 +60,7 @@ export const CATEGORY_GROUP: Record<Category, string> = {
 
 /**
  * Umbuchungen auf eigene Konten sind kein Konsum.
- * Die heutige Auswertung zählt sie trotzdem mit — genau das hat Katja im
+ * Die heutige Auswertung zählt sie trotzdem mit — genau das hat Livia im
  * Interview 05 beschrieben. Der Nachbau bildet den Ist-Zustand ab; die
  * Unterscheidung existiert hier nur als Flag, damit wir sie später nutzen können.
  */

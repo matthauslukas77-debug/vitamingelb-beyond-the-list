@@ -168,11 +168,11 @@ export function Analysis() {
             </span>
           </button>
 
-          <button className="listrow" onClick={() => push({ name: 'subscriptions' })}>
+          <button className="listrow" onClick={() => push({ name: 'recurring' })}>
             <span className="listrow__icon"><Icon name="calendar" size={24} accent /></span>
             <span>
-              <span className="listrow__title">Meine Abos</span>
-              <span className="listrow__sub">Wiederkehrende Transaktionen erkunden</span>
+              <span className="listrow__title">Wiederkehrende Buchungen</span>
+              <span className="listrow__sub">Abos, Daueraufträge, Rechnungen und der Lohn</span>
             </span>
           </button>
 

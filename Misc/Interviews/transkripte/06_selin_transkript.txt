@@ -1,0 +1,268 @@
+
+
+
+Flow Summary
+
+Kurzes Interview mit der 17-jährigen Selin (Bio-Lehre, [Ort]) über Kontonutzung, Budget und Finanzwissen. Sie nutzt BKB, kein Budget-Tool, wäre aber offen für Dashboard, Widget und Investieren.
+
+
+
+Profil & Kontonutzung
+
+Selin, 17, [Ort], 3. Lehrjahr Biologielaborantin
+
+Nur BKB: Konto + Sparkonto; Twint und Apple Pay (Kreditkarte aufs Handy)
+
+Schaut mehrmals wöchentlich aufs Konto; unklare Buchungen meist Apple, wird nicht weiter recherchiert
+
+
+
+Budget & Ziele
+
+Kein Budget-Tool, nur fixer monatlicher Übertrag aufs Sparkonto; wohnt daheim, wenig Fixkosten
+
+Abos (Netflix, Spotify) laufen über die Eltern; selber nur Handy-Abo
+
+Ziel: nach Lehre BM, dann Zwischenjahr/Reisen; will mehr sparen, kein Zielbetrag
+
+
+
+Investieren & Tools
+
+Aktien-Grundverständnis vorhanden, Fonds unklar; Infoquelle wäre ChatGPT oder Eltern
+
+Offen für Dashboard und Bank-Widget; ChatGPT-Frage wäre Budgetplanung, aber keine sensiblen Daten teilen
+
+Drei Wörter zu Geld: Bank, sparen, investieren
+
+
+
+
+
+
+
+
+
+
+You: Nachbarn abgesehen nicht weit beantwortet, das ist auch— Aber das ist eigentlich die schwierige Frage, das ist nicht so die— Also, ja.
+You:  Good.
+You:  Äh, zuerst machen wir— dass wir so ein bisschen wissen von eurem Alter und von wo, was wir zuordnen können, ist zuerst mal: Wie heißt du?
+You:  Selin.
+You:  Selin.
+You:  Ja.
+You:  Und wie alt bist du?
+You:  17.
+You:  17.
+You:  Okay. Und du wohnst—
+You:  In [Ort].
+You:  In [Ort]. Und du arbeitest, oder machst du eine Lehre aus, oder gibst du mir—
+You:  Lehre aus Biologie-Laborantin.
+You:  Okay.
+You:  Ja.
+You:  Cool.
+You:  Ähm, aber wie schon gesagt—
+You:  Wie schon gesagt, es geht halt sehr, sehr viel um Finanzen.
+You:  Mhm.
+You:  Ähm, und du hast schon gesagt, eine Lehre bist du. Ähm, wegen dem möchte ich zuerst mal so ein bisschen— es geht jetzt so ein bisschen um Kontobewegungen und Konto allgemein. Ähm, wann hast du das letzte Mal so auf dein Konto geschaut?
+You:  Vor ein paar Tagen, glaube ich.
+You:  Okay.
+You:  Und vor— also du würdest sagen, du hast eigentlich wöchentlich ein paar Mal geschaut?
+You:  Ja, das ist schon—
+You:  Okay. Und woher hast du die Konten?
+You:  Also bei welcher Bank?
+You:  Mhm.
+You:  BKB.
+You:  Okay. Und dort hast du Barkonto normal— also irgendein Konto, nehme ich an?
+You:  Ja, genau, ich habe ein normales Konto und ein Sparkonto.
+You:  Ja.
+You:  Okay.
+You:  Nur dort, sonst keine anderen.
+You:  Nein, sonst nicht.
+You:  Okay.
+You:  Okay. Und sonst irgendwie, eben, du nutzt auch, nehme ich an, Twind?
+You:  Ja.
+You:  Ähm, Apple Pay? Hast du ein iPhone?
+You:  Ja, ich habe ein iPhone, aber—
+You:  Apple Pay.
+You:  Also wir haben einfach Kreditkarten, also echt Karte aufs Handy geladen, darum sind wir meistens mit dem.
+You:  Ja.
+You:  Das war mein— okay, ja.
+You:  Okay. Dann ist gut.
+You:  Ähm, wie— aber.
+You:  Täglich tust du es eigentlich nicht oft, also wöchentlich ein paar Mal.
+You:  Ähm, irgendwelche Finanztools oder so nutzt du?
+You:  Oder Budget-Tools?
+You:  Nicht wirklich, nein.
+You:  Okay.
+You:  Okay.
+You:  Also hast du ein Budget?
+You:  Ja, so halb. Also ich habe einfach so fixe Übertragungen, die ich mir halt jeden Monat auf mein Sparkonto tue.
+You:  Ja. Okay.
+You:  Aber sonst nicht.
+You:  Aber du hast nicht wie einen Plan oder irgendetwas, weil du wohnst auch noch daheim, du hast nicht so fixe Ausgaben, wegen dem ist es einfach okay.
+You:  Genau.
+You:  Ja.
+You:  Gut.
+You:  Ähm, ja. Hast du—
+You:  Irgendwie— weil du jetzt mal draufschaust oder so, hast du auch schon Buchungen gesehen, oder gar nicht bist du klargekommen, oder gar nicht gewusst, dass das jetzt war?
+You:  Ja, manchmal so von Apple oder so, wenn es eben irgendetwas abzieht, von irgendetwas.
+You:  Ja. Aber dann einfach so Apple steht, aber—
+You:  Ja, genau.
+You:  Und dann musst du genau schauen für— gehst du nach oben, irgendwie ins Internet suchen oder findest du es meistens raus?
+You:  Das ist ja so—
+You:  Nein, meistens ist es einfach Apple oder Facebook wird es da irgendetwas von dem, aber ich schaue es nicht genau an.
+You:  Okay, okay, okay.
+You:  Sonst— also du hast nach oben nicht weiter—
+You:  Nein, nicht unbedingt.
+You:  Und deine Gefühle dabei sind so: nervt es dich, oder ist es so unerwartet, oder ist es so—
+You:  Ich glaube nein.
+You:  Aber—
+You:  Unerwartet jetzt nicht, aber—
+You:  Okay.
+You:  Wenn du die Abbuchungen siehst.
+You:  Das ist eigentlich okay. Ja, okay.
+You:  Ja.
+You:  Okay. Aber so der Kontostand hat dich auch schon überrascht, plötzlich unenttäuscht, oder plötzlich ist der Lohn gekommen, und dann ist mehr gewesen, als du dir eigentlich gedacht hast, oder so?
+You:  Ja, mehr auch schon, wenn es— also wenn ich länger nicht mehr draufgeschaut habe, oder wenn irgendwelche— also wenn ich mehr Lohn bekommen habe, irgendwie.
+You:  Mhm.
+You:  Okay.
+You:  Aber es ist nicht speziell.
+You:  Okay.
+You:  Ähm, aber du hast schon gesagt, Budgetplan hast du eigentlich nicht so. Dann nutzt du es irgendwie nicht Excel-Listen oder so?
+You:  Nein.
+You:  Oder mit ChatGPT oder so, hast du schon so ein Budget?
+You:  Nein.
+You:  Nein. Okay.
+You:  Mhm.
+You:  Wärst du bereit dazu?
+You:  Ja, doch, eigentlich schon.
+You:  Okay. Wenn du jetzt zum Beispiel in deiner— äh, in deiner Bank-App so ein Dashboard oder so hättest, würdest du das brauchen?
+You:  Ja, hätte ich das.
+You:  Okay. Was müsstest du haben, für dass du das interessant würdest finden?
+You:  Eine gute Frage.
+You:  Okay.
+You:  So eine Frage ist nicht so wichtig, weil wir sind Frauen, die die Probleme finden, aber das ist schon gut, das ist schon gut.
+You:  Ähm, aber Budget haben wir schon geredet.
+You:  Mhm.
+You:  Ähm, Abos. Hast du Abos?
+You:  Nein.
+You:  Irgendwelche KI-Tools, Netflix-Abo, Gym-Abo oder so?
+You:  Ähm, ja, so Netflix, Spotify und so Zeug.
+You:  Okay.
+You:  Aber das verlinke ich euch nicht.
+You:  Ah, das läuft über deine Eltern?
+You:  Ja.
+You:  Okay.
+You:  Okay, ja. Dann müssen wir da eigentlich nicht weiter—
+You:  Aber weißt du, von Abos, dass sie für dich zahlen?
+You:  Also so Handy-Abos, so zahle ich selber, aber eben so Netflix und Spotify, wo man so kann teilen, so zahlen.
+You:  Ja. Und die Abos, die du selber hast, weißt du, von denen hast du?
+You:  Ja.
+You:  Und wie viel?
+You:  Nur Handy-Abo.
+You:  Nur Handy-Abo?
+You:  Ja.
+You:  Okay. Und weißt du genau, wie viel das kostet?
+You:  Ja.
+You:  Und das überrascht ja nie das plötzlich teurer ist, oder?
+You:  Nein, eigentlich nicht.
+You:  Okay.
+You:  Mhm.
+You:  Gut.
+You:  Ähm, so ein bisschen Ziel. Hast du irgendein finanzielles Ziel in deinem Leben?
+You:  Ja.
+You:  Das kann jetzt euch nahe Zukunft sein oder ein Auto oder ein Haus.
+You:  Ähm, ja, oder irgendeine Ferien, teure Ferien oder so?
+You:  Oder auch einfach sonst gar nichts haben.
+You:  Ja, nichts Spezielles in der Lehre verdiene ich jetzt nicht wahnsinnig viel, da sind wir jetzt gerade so—
+You:  Okay.
+You:  Okay. Aber irgendwie wenn, weißt du, so keine Ahnung, 30.
+You:  Hast du irgendwie, du sagst, du möchtest 6 Familienhaus oder du möchtest irgendwie ein Strohmaul oder du möchtest mal auch ein Zwischenjahr machen und reisen. Hast du irgendwie so einen Traum oder so ein bisschen ein Ziel in deinem Leben irgendwann?
+You:  Ja, so also nach der Lehre möchte ich die BA machen und dann mal ein Zwischenjahr machen.
+You:  Ja.
+You:  Und darum möchte ich jetzt schon— also ich bin jetzt gerade im dritten Lehrjahr und dann möchte ich schon ein bisschen mehr Geld auf die Seite tun.
+You:  Ja.
+You:  Und dann habe ich jetzt schon viel, was ich eigentlich für irgendetwas ausgeben kann und—
+You:  Ja.
+You:  Ich brauche eigentlich nicht so viel.
+You:  Okay.
+You:  Okay.
+You:  Ja.
+You:  Gut, gut.
+You:  Ähm, der Stamm von jetzt so einem Zielbetrag auf dem Konto oder so, oder wo schon?
+You:  Nein, jetzt ein spezieller Zielbetrag, aber ich habe schon ein bisschen mehr auf dem Sparkonto.
+You:  Ja. Okay.
+You:  Äh, in einem investieren oder so, du stehst vorher noch nicht so?
+You:  Nein.
+You:  Okay.
+You:  Ähm, weißt du aber, dass Fonds oder Aktien oder so sind?
+You:  Ja, so ungefähr. Also ich kenne nicht so mega damit aus, aber—
+You:  Und was ist eine Aktie?
+You:  Das ist eine schwierige Frage.
+You:  Versuchst du zu schreiben, in deinen Worten einfach?
+You:  Ja.
+You:  Ähm, ja, wir hatten das schon mal angeschaut. Also du hast ja wie so— also du kannst ja Aktien kaufen und dann gehört er wie ein Teil von— also wie sagt man das?
+You:  Ja.
+You:  Ja, von einem Unternehmen.
+You:  Ja, genau.
+You:  Ja, verstehe, verstehe.
+You:  Gut.
+You:  Okay. Weißt du, was ein Fonds ist?
+You:  Ja, das kenne ich nicht gleich in Richtung, aber ich kann nicht genau sagen, was das ist.
+You:  Okay. Ja, das ist schon gut.
+You:  Schon gut.
+You:  Okay.
+You:  Ähm, aber du wärst bereit, dazu irgendwann zu investieren oder so?
+You:  Ja.
+You:  Würdest du dich ein bisschen mehr mit dem Thema befassen?
+You:  Mhm.
+You:  Okay.
+You: Okay, ähm, da kann ich weiterspringen.
+You:  Ja.
+You:  Nutze ich irgendwelche Widgets oder so, du hast ja iPhone, hast du gesagt.
+You:  Mhm.
+You:  Okay. Nutze ich da Wetter-Widgets und so, wahrscheinlich nicht mehr.
+You:  Ja.
+You:  Okay.
+You:  Würde es cool finden, wenn du irgendein Widget von deiner Bankkonto-App hättest oder so, oder den Betrag und so darauf siehst?
+You:  Ja, das wäre schon cool. Da muss ich immer die App aufmachen, dann merkt er das nicht.
+You:  Okay. Aber so mit der Sicherheit, dass nicht irgendjemand plötzlich jemand auf deinem Handy ist oder schaut, hättest du kein Problem damit, wenn er dann—
+You:  Ja, solange, also, ich habe mit dem Betrag selber eigentlich kein Problem, wenn man nicht direkt aufs Konto zugreifen kann oder so.
+You:  Okay.
+You:  Ja.
+You:  Dann ist es gut.
+You:  Ist nicht so viel.
+You:  Ja.
+You:  Ähm, ja, nutze ich irgendwelche, eben, mit KI so Analysen und so, nutze ich es nicht so, hast du gesagt.
+You:  Nein, jetzt spitze ich.
+You:  Okay. Und so in der App, hast du, ich weiß nicht, ob es hat es bei euch so ein Dashboard, wo du quasi so siehst, hey, das ist die letzte, letzten Monat ist das die größte Ausgabe gewesen oder so.
+You:  Ja, oder so ein bisschen nach Themenbereich, so wie viel ist Haushalt, wie viel ist Restaurant, wie viel ist—
+You:  Also, nein, das nicht speziell.
+You:  Okay.
+You:  Okay.
+You:  Mhm.
+You:  Ja.
+You:  Ähm, wenn du jetzt, äh, ChatGPT, deine ganze Ausgabe und Einnahme von deinem Bankkonto könntest geben, was würdest du für Fragen stellen?
+You:  Also, wenn sie alles wüsste, du kannst einfach fragen, er hat es wieder zur Antwort gegeben.
+You:  Ich weiß gar nicht.
+You:  Ja, vielleicht könnte ich es besser irgendwie einteilen oder so.
+You:  Okay.
+You:  Oder würde man nachher eine Budgetplanung fragen, was man so empfehlen würde.
+You:  Das ist gut, ja.
+You:  Ähm, und so, würdest du ihm vertrauen, so mit deinem Edge, oder hättest du Angst, dass er plötzlich etwas weiß, was du nicht willst, dass—
+You:  Ja.
+You:  Du musst nicht antworten, was du nicht willst.
+You:  Also, manchmal mit Kontobetrag ist—
+You:  Okay.
+You:  Also, finde ich es nicht so wichtig, oder so, mega die persönlichen Daten und so, wenn es nicht rein tut.
+You:  Ja. Ja, okay.
+You:  Und jetzt noch so ein bisschen, hast du noch gerade eine Frage?
+You:  Ja, ja, mach weiter. Das ist gut.
+You:  Dann würden wir aber schon zum Abschluss kommen.
+You:  Ja, ist gut.
+You:  Ähm, jetzt die ersten drei Wörter, die du gerade einfallen lässt, wenn du jetzt das Thema Geld denkst.
+You:  Ähm, ja, Bank, dann sparen, vielleicht eben investieren.
+You:  Okay.
+You:  Okay.
+You:  Ist gut.
+You:  Ist gut.

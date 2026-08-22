@@ -1,8 +1,8 @@
 import type { Persona } from '../types'
-import { fritz } from './fritz'
-import { janic } from './janic'
-import { katja } from './katja'
-import { michael } from './michael'
+import { reto } from './reto'
+import { nino } from './nino'
+import { livia } from './livia'
+import { bruno } from './bruno'
 
 /**
  * Die vier Demo-Personas. Jede bildet eine Person aus unseren Interviews ab —
@@ -13,7 +13,7 @@ import { michael } from './michael'
  * 24 Monate im PostFinance-Format aus
  * WORKSPACE/04_experiments/postfinance_template_data/_generator/.
  */
-export const PERSONAS: Persona[] = [fritz, janic, katja, michael]
+export const PERSONAS: Persona[] = [reto, nino, livia, bruno]
 
 export function findPersona(id: string): Persona | undefined {
   return PERSONAS.find((persona) => persona.id === id)
