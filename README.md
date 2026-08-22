@@ -43,10 +43,18 @@ eine Bank tatsächlich hat:
 | Was | Wo | Was es beantwortet |
 |---|---|---|
 | **Erkennung wiederkehrender Zahlungen** | [`Code/src/domain/recurring.ts`](Code/src/domain/recurring.ts) | Was ist regelmässig? |
+| **Zerlegung des Buchungstexts** | [`Code/src/domain/booking.ts`](Code/src/domain/booking.ts) | Was steht da überhaupt? |
 | **Kontostand-Verlauf mit Prognose** | [`Code/src/insights/engine/balance.ts`](Code/src/insights/engine/balance.ts) | Was verändert sich? |
 | **Kontokarte statt Kontozeile** | [`Code/src/insights/cards/`](Code/src/insights/cards/) | Wo es sichtbar wird |
 
-Zwei Entscheide, auf die wir Wert legen:
+Der Buchungstext ist der Kern der Challenge. «APPLE PAY KAUF/DIENSTLEISTUNG VOM 03.09.2024
+KARTEN NR. XXXX7731 COOP BERN BAHNHOF (CH)» enthält alles — Zahlungsart, Kaufdatum, Karte,
+Händler, Land — aber in der Liste ist nur der Anfang sichtbar, und der Händler fällt hinten weg.
+Vier von sechs Interviewten haben genau das beschrieben. Dieselben Daten, anders gelesen, ergeben
+die Detailansicht ([`TransactionDetail.tsx`](Code/src/app/screens/TransactionDetail.tsx)) und die
+Abo-Übersicht ([`Recurring.tsx`](Code/src/app/screens/Recurring.tsx)).
+
+Drei Entscheide, auf die wir Wert legen:
 
 - Die Abo-Erkennung liest **nicht** die `seriesId` aus unseren Mock-Daten. Die gibt es in echten
   Kontodaten nicht. Erkannt wird aus Buchungstext, Betrag und Abstand — aus dem, was eine Bank
@@ -54,6 +62,9 @@ Zwei Entscheide, auf die wir Wert legen:
 - Die Prognose rechnet **nur** mit dem, was feststeht: erkannte Zahlungsreihen und pendente
   Aufträge. Keine Hochrechnung von Gewohnheiten. Bruno hat im Interview gesagt: «Einfach
   plausibel müsste es sein.» Eine Kurve, die rät, verliert genau dieses Vertrauen.
+- Abo-Erkennung und Textzerlegung liegen in [`Code/src/domain/`](Code/src/domain/), nicht in
+  unserer Insights-Schicht. PostFinance hat «Meine Abos» und eine Detailansicht bereits — das
+  gehört in den Nachbau. Wir beanspruchen nur, was wirklich von uns ist.
 
 ### Die Trennlinie
 
@@ -87,7 +98,7 @@ ab, wenn keine Konfiguration da ist.
 | `npm test` | Tests |
 | `npm run build` | Typprüfung und Produktionsbuild |
 
-Für Demo und Videoaufnahme lässt sich jeder Einstieg direkt ansteuern, z. B.
+Für Demo und Screenshots lässt sich jeder Einstieg direkt ansteuern, z. B.
 `?persona=reto&screen=analysis`. Alle Varianten stehen im [`Code/README.md`](Code/README.md).
 
 ## Wo man zu lesen anfängt

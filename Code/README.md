@@ -31,7 +31,7 @@ randlos, mit den echten sicheren Bereichen von iOS (Notch, Home-Indikator) statt
 simulierten Statusleiste. Am Schreibtisch bleibt der Rahmen, damit die Proportionen stimmen.
 
 **«Zum Home-Bildschirm» hinzufügen** gibt der App ein eigenes Icon und startet sie im
-Vollbild ohne Safari-Leisten — das ist die Ansicht für die Videoaufnahme. Voraussetzung ist
+Vollbild ohne Safari-Leisten — das ist die Ansicht für die Live-Demo. Voraussetzung ist
 eine HTTPS-URL (z. B. über `tailscale serve`) oder `localhost`.
 
 ## Woher die Buchungen kommen
@@ -74,7 +74,7 @@ Getroffen werden je nach Persona 81–90 % der Buchungen. Was übrig bleibt, sin
 
 ## Direktlinks
 
-Für Demo, Videoaufnahme und Screenshots lässt sich jeder Einstieg per URL ansteuern:
+Für Demo und Screenshots lässt sich jeder Einstieg per URL ansteuern:
 
 ```
 ?persona=reto                    Persona direkt öffnen
@@ -86,7 +86,8 @@ Zusätzlich `&tab=payments` für den Startreiter.
 
 Personas: `reto` · `nino` · `livia` · `bruno`.
 Reiter: `home` · `payments` · `invest` · `offers` · `services`.
-Bildschirme: `account` · `analysis` · `scan` · `pay` · `transfer` · `search`.
+Bildschirme: `account` · `analysis` · `recurring` · `scan` · `pay` · `transfer` · `search`.
+`recurring` hiess früher `subscriptions` — alte Demo-Links funktionieren weiter.
 
 ## Konfiguration
 
@@ -230,7 +231,7 @@ Damit gilt:
 | | Schrift |
 |---|---|
 | Lokal (`npm run dev`, `npm run preview`) | PostFinance Grotesk |
-| Videoaufnahme und Jury-Walkthrough | PostFinance Grotesk |
+| Live-Demo und Jury-Walkthrough | PostFinance Grotesk |
 | vitamingelb.ch (öffentlich) | Inter als Fallback |
 
 Das Team hat sich entschieden, die Schrift für BärnHäckt 2026 einzusetzen, obwohl die
