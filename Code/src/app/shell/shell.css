@@ -549,8 +549,9 @@ button.row:active { background: var(--tap); }
 /* Die Zeile führt auf die Detailansicht der Reihe. */
 .abo--tap { cursor: pointer; }
 .abo--tap:active { background: var(--tap); }
-/* Der Chevron zieht sich in den Zeilenabstand hinein: Sonst wird die
-   Unterzeile «monatlich · nächste 02.09.» um 24 Pixel schmaler und bricht um. */
+
+/* Zieht sich in den Zeilenabstand hinein, damit die Zeile so breit bleibt wie
+   im Nachbau ohne Chevron. */
 .abo__chevron {
   align-self: center;
   margin-left: calc(-1 * var(--s-4));
@@ -640,6 +641,7 @@ button.row:active { background: var(--tap); }
 
 .phase__main { flex: 1; min-width: 0; }
 .phase__amount { font-size: 16px; font-weight: 700; color: var(--text-strong); white-space: nowrap; }
+.phase__amount--credit { color: var(--text-credit); }
 .phase__when { display: block; margin-top: 2px; font-size: 13px; color: var(--text-muted); }
 .phase__count { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
 

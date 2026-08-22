@@ -10,6 +10,7 @@ import { Invest } from './screens/Invest'
 import { Offers } from './screens/Offers'
 import { Payments } from './screens/Payments'
 import { Recurring } from './screens/Recurring'
+import { SeriesDetail } from '../insights/screens/SeriesDetail'
 import { TransactionDetail } from './screens/TransactionDetail'
 import { Services } from './screens/Services'
 
@@ -72,6 +73,7 @@ function CurrentSheet() {
     case 'transfer': return <Transfer />
     case 'search': return <Search />
     case 'recurring': return <Recurring />
+    case 'series': return <SeriesDetail seriesKey={top.seriesKey} />
     case 'transaction': return <TransactionDetail transactionId={top.transactionId} />
     case 'breakdown': return <Breakdown direction={top.direction} />
   }

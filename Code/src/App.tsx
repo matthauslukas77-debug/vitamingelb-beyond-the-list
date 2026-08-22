@@ -25,7 +25,12 @@ function readUrl(): { persona: Persona | null; tab?: Tab; screen?: Screen } {
         // und alte Demo-Links sollen nicht ins Leere laufen.
         name === 'subscriptions' || name === 'recurring'
         ? { name: 'recurring' }
-        : // Die beiden Detailseiten der Analysen heissen in der URL nach ihrer
+        : // Eine einzelne wiederkehrende Reihe. Der Schlüssel ist der
+          // normalisierte Händlername, wie ihn `detectRecurring` bildet:
+          // `?screen=series&series=SPOTIFY%20AB`.
+          name === 'series' && params.get('series')
+          ? { name: 'series', seriesKey: params.get('series')! }
+          : // Die beiden Detailseiten der Analysen heissen in der URL nach ihrer
           // Richtung — «income» und «expenses» statt eines Parameters.
           name === 'income' || name === 'expenses'
           ? { name: 'breakdown', direction: name }
@@ -41,7 +46,7 @@ function writeUrl(persona: Persona | null) {
   const url = new URL(window.location.href)
   if (persona) url.searchParams.set('persona', persona.id)
   else {
-    for (const key of ['persona', 'tab', 'screen', 'account']) url.searchParams.delete(key)
+    for (const key of ['persona', 'tab', 'screen', 'account', 'series']) url.searchParams.delete(key)
   }
   window.history.replaceState(null, '', url)
 }

@@ -19,6 +19,7 @@ export type Screen =
   | { name: 'transfer' }
   | { name: 'search' }
   | { name: 'recurring' }
+  | { name: 'series'; seriesKey: string }
   | { name: 'transaction'; transactionId: string }
   | { name: 'breakdown'; direction: BreakdownDirection }
 

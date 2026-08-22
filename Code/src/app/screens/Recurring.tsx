@@ -34,7 +34,7 @@ const GROUP_LABEL: Record<SeriesKind, string> = {
 }
 
 /** Was an der einzelnen Zeile steht — Einzahl, und beim Lohn beim Namen genannt. */
-function kindLabel(series: RecurringSeries): string {
+export function kindLabel(series: RecurringSeries): string {
   if (series.kind === 'income') return /LOHN|SALAER|SALAIRE/.test(series.key) ? 'Lohn' : 'Einnahme'
   if (series.kind === 'subscription') return 'Abo'
   if (series.kind === 'standingOrder') return 'Dauerauftrag'
@@ -42,7 +42,7 @@ function kindLabel(series: RecurringSeries): string {
   return 'Wiederkehrend'
 }
 
-const KIND_ICON: Record<SeriesKind, IconName> = {
+export const KIND_ICON: Record<SeriesKind, IconName> = {
   income: 'billPending',
   subscription: 'clock',
   bill: 'document',
@@ -52,7 +52,7 @@ const KIND_ICON: Record<SeriesKind, IconName> = {
 
 const ORDER: SeriesKind[] = ['subscription', 'standingOrder', 'bill', 'income', 'other']
 
-const CADENCE_LABEL: Record<RecurringSeries['cadence'], string> = {
+export const CADENCE_LABEL: Record<RecurringSeries['cadence'], string> = {
   weekly: 'wöchentlich',
   biweekly: 'alle zwei Wochen',
   monthly: 'monatlich',
@@ -83,7 +83,7 @@ const SPELLING: Record<string, string> = {
 /** Bindewörter bleiben klein, sonst steht dort «Uebertrag AUF Sparkonto». */
 const LOWERCASE = new Set(['AUF', 'AN', 'VON', 'UND', 'FUER', 'PER', 'IM', 'DER', 'DIE', 'DAS', 'MIT'])
 
-function pretty(label: string): string {
+export function pretty(label: string): string {
   const merchant = label.replace(/^.*vom \d{2}\.\d{2}\.\d{4},\s*/i, '')
   return merchant
     .replace(/[*_]+/g, ' ')
@@ -100,14 +100,18 @@ function pretty(label: string): string {
     .join(' ')
 }
 
-function SeriesRow({ series }: { series: RecurringSeries }) {
+/* Die Zeile führt neu auf die Detailansicht der Reihe (`src/insights/screens/
+   SeriesDetail.tsx`): seit wann, wie oft, insgesamt. Das ist der einzige
+   Eingriff unserer Schicht in diesen Bildschirm — die Liste selbst bleibt der
+   Nachbau. */
+function SeriesRow({ series, onOpen }: { series: RecurringSeries; onOpen: () => void }) {
   const match = resolveBrand(series.label)
   // Die Marke kennt den Namen besser als der Buchungstext: «Adobe Creative
   // Cloud» statt «Adobe *creative Cloud Inc».
   const title = match ? match.brand.name : pretty(series.label)
 
   return (
-    <div className="abo">
+    <button className="abo abo--tap" onClick={onOpen}>
       {match ? (
         <span className={'abo__icon abo__icon--logo' + (match.logo.endsWith('.svg') ? ' abo__icon--wordmark' : '')}>
           <img src={match.logo} alt="" loading="lazy" width={40} height={40} />
@@ -137,12 +141,15 @@ function SeriesRow({ series }: { series: RecurringSeries }) {
       <span className={'abo__amount num' + (series.amount > 0 ? ' abo__amount--credit' : '')}>
         {formatAmount(series.amount)}
       </span>
-    </div>
+      <span className="abo__chevron">
+        <Icon name="chevronRight" size={16} />
+      </span>
+    </button>
   )
 }
 
 export function Recurring() {
-  const { persona, pop } = useSession()
+  const { persona, pop, push } = useSession()
 
   const series = useMemo(
     () => detectRecurring(persona.transactions, { today: TODAY }),
@@ -192,7 +199,10 @@ export function Recurring() {
             </div>
             <p style={{ margin: '14px 0 0', fontSize: 13, lineHeight: 1.45, color: 'var(--text-muted)' }}>
               {series.length} wiederkehrende Zahlungen erkannt, davon {subscriptionCount} Abos —
-              aus Buchungstext, Betrag und Abstand. Nichts davon ist hinterlegt oder gepflegt.
+              aus Buchungstext, Betrag und Abstand. Nichts davon ist hinterlegt oder gepflegt.{' '}
+              <strong style={{ fontWeight: 700, color: 'var(--text-body)' }}>
+                Antippen zeigt, seit wann du zahlst und was es insgesamt war.
+              </strong>
             </p>
           </div>
         </section>
@@ -206,7 +216,11 @@ export function Recurring() {
             <section className="card">
               <div style={{ padding: 'var(--s-2) var(--s-5)' }}>
                 {group.entries.map((entry) => (
-                  <SeriesRow key={entry.key} series={entry} />
+                  <SeriesRow
+                    key={entry.key}
+                    series={entry}
+                    onOpen={() => push({ name: 'series', seriesKey: entry.key })}
+                  />
                 ))}
               </div>
             </section>
