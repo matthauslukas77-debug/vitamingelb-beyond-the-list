@@ -407,6 +407,12 @@ in jeder:
   petrol8. Erst kurz vor dem Limit wechselt die Achse auf Orange, darüber auf Gelb mit
   einem roten Bogen auf dem Ring. Kein Grün: Die Marke kennt keines, und ein zu zwei
   Dritteln verbrauchtes Budget ist kein Warnzustand.
+
+  Die Farbe **gleitet**, sie springt nicht: `fillRamp()` liefert zwei Tokennamen und ein
+  Mischverhältnis, gemischt wird in CSS mit `color-mix(in oklab, …)`. Damit bleiben die
+  Farbwerte in `theme/tokens.css` und ein geändertes Token wirkt durch. Bei 44 % und 46 %
+  ist gleich viel weg — zwei merklich verschiedene Farben dafür wären eine Behauptung.
+  Auch der Schein schwillt stetig an, von 85 % bis 100 %.
 * **Der rote Bogen** misst die Überschreitung, nicht den Verbrauch — 135 % ergeben gut
   ein Drittel des Rings, ab 200 % ist er voll. Die Blase selbst bleibt so gross wie ihr
   Budget.

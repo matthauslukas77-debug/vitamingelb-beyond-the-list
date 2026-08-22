@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, type CSSProperties } from 'react'
 import { Icon } from '../../../app/shell/Icon'
 import { categoryDef, type CategoryKey } from '../slots'
 import { boundsOf, packCircles, radiusFor } from '../pack'
@@ -76,6 +76,83 @@ export function stateOf(share: number): BubbleState {
   if (share > 0.45) return 'mid'
   if (share > 0) return 'low'
   return 'empty'
+}
+
+/**
+ * Die Farbe der Füllung — stetig, nicht in Stufen.
+ *
+ * Die Zustände oben sind Entscheidungen (weisses oder dunkles Sinnbild, Punkt
+ * in der Liste); die **Fläche** darf gleiten. Ein Budget wächst schliesslich
+ * auch nicht in Sprüngen: Bei 44 % und bei 46 % ist gleich viel weg, und zwei
+ * merklich verschiedene Farben dafür wären eine Behauptung.
+ *
+ * Zurückgegeben werden zwei **Tokennamen** und ein Mischverhältnis, nie ein
+ * Farbwert. Gemischt wird in CSS mit `color-mix()` — so bleiben die Werte dort,
+ * wo sie hingehören, in `theme/tokens.css`, und ein geändertes Token wirkt hier
+ * mit.
+ *
+ * Die Stützstellen sind die des Entwurfs. Zwischen petrol8 und Orange liegt
+ * bewusst nur ein schmales Band: Zwei so verschiedene Farben ergeben in der
+ * Mitte einen stumpfen Ton, und der soll kein Dauerzustand sein. Innerhalb der
+ * Petrol-Familie — dort, wo die meisten Werte liegen — gleitet es dagegen weit.
+ */
+const RAMP: { at: number; token: string }[] = [
+  { at: 0, token: '--petrol3' },
+  { at: 0.3, token: '--petrol4' },
+  { at: 0.6, token: '--petrol6' },
+  { at: 0.85, token: '--petrol8' },
+  { at: 0.96, token: '--pending2' },
+  { at: 1, token: '--postfinancegelb' },
+]
+
+export interface FillRamp {
+  /** Tokenname der unteren Stützstelle. */
+  from: string
+  /** Tokenname der oberen. */
+  to: string
+  /** Anteil der oberen, 0..100. */
+  mix: number
+}
+
+export function fillRamp(share: number): FillRamp {
+  const value = Math.min(Math.max(share, 0), 1)
+  for (let i = 0; i < RAMP.length - 1; i++) {
+    const low = RAMP[i]
+    const high = RAMP[i + 1]
+    if (value <= high.at) {
+      const span = high.at - low.at
+      return {
+        from: low.token,
+        to: high.token,
+        mix: span === 0 ? 100 : ((value - low.at) / span) * 100,
+      }
+    }
+  }
+  const last = RAMP[RAMP.length - 1]
+  return { from: last.token, to: last.token, mix: 100 }
+}
+
+/**
+ * Wie stark die Blase leuchtet, 0..1 — ebenfalls stetig.
+ *
+ * Der Schein setzt bei 85 % ein und ist bei 100 % voll. Er ist der einzige
+ * Ort, an dem die Anzeige die Stimme hebt, und er soll sie heben, nicht
+ * anschalten.
+ */
+export function glowOf(share: number): number {
+  return Math.min(Math.max((share - 0.85) / 0.15, 0), 1)
+}
+
+/**
+ * Steht das Sinnbild auf dunklem Grund und braucht deshalb Weiss?
+ *
+ * Zwei Bedingungen: Die Füllung muss überhaupt darunter liegen, und sie muss
+ * dunkel genug sein. Die obere Grenze folgt der Rampe, nicht dem Zustand —
+ * über 93 % ist die Farbe schon überwiegend Orange, und Weiss auf Orange liest
+ * niemand. Genau so steht es im Entwurf: bei 85 % weiss, bei 97 % dunkel.
+ */
+export function iconOnDark(share: number, covered: boolean): boolean {
+  return covered && share > 0.45 && share <= 0.93
 }
 
 /**
@@ -158,7 +235,7 @@ export function BubbleField({
       role="img"
       aria-label={`Budget nach Kategorie. ${summary}.`}
     >
-      {packed.map((circle) => {
+      {packed.map((circle, index) => {
         const bubble = circle.data
         const share = shareOf(bubble)
         const state = stateOf(share)
@@ -170,13 +247,28 @@ export function BubbleField({
         const fill = outer * Math.sqrt(Math.min(share, 1))
         const pace = outer * Math.sqrt(Math.min(progress, 1))
         const overshoot = overshootOf(share)
+        const ramp = fillRamp(share)
         const isSelected = selected === bubble.key
+        const circumference = 2 * Math.PI * outer
 
         return (
+          /* Zwei Gruppen: die äussere setzt den Platz, die innere trägt
+             Zustand und Bewegung. So skaliert die Animation um den Mittelpunkt
+             der Blase, ohne die Position mitzuziehen. */
+          <g key={bubble.key} transform={`translate(${circle.x} ${circle.y})`}>
           <g
-            key={bubble.key}
             className={`bub__g bub__g--${state}` + (isSelected ? ' is-selected' : '')}
-            transform={`translate(${circle.x} ${circle.y})`}
+            style={
+              {
+                '--from': `var(${ramp.from})`,
+                '--to': `var(${ramp.to})`,
+                '--mix': `${ramp.mix.toFixed(1)}%`,
+                '--glow': glowOf(share).toFixed(3),
+                /* Versetzter Einsatz: Die Blasen ziehen nacheinander auf,
+                   nicht alle im selben Moment. */
+                '--i': index,
+              } as CSSProperties
+            }
             onClick={onSelect ? () => onSelect(bubble.key) : undefined}
           >
             {/* Der Ring: das Budget. */}
@@ -196,20 +288,23 @@ export function BubbleField({
                 className="bub__over"
                 r={outer}
                 transform="rotate(-90)"
-                strokeDasharray={`${overshoot * 2 * Math.PI * outer} ${2 * Math.PI * outer}`}
+                strokeDasharray={`${overshoot * circumference} ${circumference}`}
+                /* Der Bogen zeichnet sich beim Aufziehen selbst. */
+                style={{ '--arc': `${overshoot * circumference}` } as CSSProperties}
               />
             )}
 
             {outer >= ICON_RADIUS && (
               <g
-                /* Liegt das Zeichen auf der Füllung, braucht es deren
-                   Gegenfarbe — sonst steht Weiss auf Weiss. */
-                className={'bub__icon' + (fill >= ICON_COVERED ? ' bub__icon--inverse' : '')}
+                className={
+                  'bub__icon' + (iconOnDark(share, fill >= ICON_COVERED) ? ' bub__icon--inverse' : '')
+                }
                 transform="translate(-11 -11)"
               >
                 <Icon name={categoryDef(bubble.key).icon} size={22} />
               </g>
             )}
+          </g>
           </g>
         )
       })}

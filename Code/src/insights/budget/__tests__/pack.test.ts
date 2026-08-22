@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { boundsOf, packCircles, radiusFor, type PackedCircle } from '../pack'
-import { bubbleTotals, overshootOf, shareOf, stateOf } from '../ui/BubbleField'
+import { bubbleTotals, fillRamp, glowOf, iconOnDark, overshootOf, shareOf, stateOf } from '../ui/BubbleField'
 
 /** Überlappen sich zwei Kreise wirklich — mit etwas Luft für Rundung? */
 function overlaps(a: PackedCircle<unknown>, b: PackedCircle<unknown>): boolean {
@@ -159,6 +159,58 @@ describe('Der Zustand einer Blase', () => {
     // Ab doppelt so viel ist der Bogen voll und hätte nichts mehr zu wachsen.
     expect(overshootOf(2)).toBe(1)
     expect(overshootOf(9.2)).toBe(1)
+  })
+
+  it('nennt nur Tokennamen, nie Farbwerte', () => {
+    /* Gemischt wird in CSS. Käme hier ein Hexwert heraus, läge die Farbe an
+       zwei Orten und ein geändertes Token wirkte nicht mehr durch. */
+    for (let share = 0; share <= 1.5; share += 0.01) {
+      const ramp = fillRamp(share)
+      expect(ramp.from, String(share)).toMatch(/^--/)
+      expect(ramp.to, String(share)).toMatch(/^--/)
+      expect(ramp.mix).toBeGreaterThanOrEqual(0)
+      expect(ramp.mix).toBeLessThanOrEqual(100)
+    }
+  })
+
+  it('trifft an den Stützstellen des Entwurfs genau die Tokenfarbe', () => {
+    // 30 % ist petrol4, 60 % petrol6, 85 % petrol8 — so steht es im Sheet.
+    expect(fillRamp(0.3)).toMatchObject({ to: '--petrol4', mix: 100 })
+    expect(fillRamp(0.6)).toMatchObject({ to: '--petrol6', mix: 100 })
+    expect(fillRamp(0.85)).toMatchObject({ to: '--petrol8', mix: 100 })
+  })
+
+  it('gleitet dazwischen, statt zu springen', () => {
+    const a = fillRamp(0.44)
+    const b = fillRamp(0.46)
+    // Beide liegen im selben Abschnitt und unterscheiden sich nur im Anteil.
+    expect(a.from).toBe(b.from)
+    expect(a.to).toBe(b.to)
+    expect(b.mix - a.mix).toBeGreaterThan(0)
+    expect(b.mix - a.mix).toBeLessThan(10)
+  })
+
+  it('bleibt über dem Limit bei Gelb', () => {
+    expect(fillRamp(1)).toMatchObject({ to: '--postfinancegelb', mix: 100 })
+    expect(fillRamp(9.2)).toMatchObject({ to: '--postfinancegelb', mix: 100 })
+  })
+
+  it('lässt den Schein anschwellen, statt ihn anzuschalten', () => {
+    expect(glowOf(0.5)).toBe(0)
+    expect(glowOf(0.85)).toBe(0)
+    expect(glowOf(0.925)).toBeCloseTo(0.5, 6)
+    expect(glowOf(1)).toBe(1)
+    expect(glowOf(9.2)).toBe(1)
+  })
+
+  it('kippt das Sinnbild dort, wo die Farbe kippt', () => {
+    // Im Entwurf: bei 30 % dunkel, bei 60 % und 85 % weiss, bei 97 % dunkel.
+    expect(iconOnDark(0.3, true)).toBe(false)
+    expect(iconOnDark(0.6, true)).toBe(true)
+    expect(iconOnDark(0.85, true)).toBe(true)
+    expect(iconOnDark(0.97, true)).toBe(false)
+    // Und nie, wo gar keine Füllung darunterliegt.
+    expect(iconOnDark(0.6, false)).toBe(false)
   })
 
   it('rechnet ohne Budget keinen Anteil aus, statt durch null zu teilen', () => {

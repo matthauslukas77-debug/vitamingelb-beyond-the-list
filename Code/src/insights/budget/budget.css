@@ -727,7 +727,16 @@
   overflow: visible;
 }
 
-.bub__g { cursor: pointer; }
+.bub__g {
+  cursor: pointer;
+  /* Der Schein ist stetig: `--glow` läuft von 0 bei 85 % auf 1 bei 100 %.
+     Bei 0 ist er unsichtbar, es braucht also keine eigene Klasse dafür. */
+  filter: drop-shadow(0 0 calc(var(--glow, 0) * 10px) rgba(255, 204, 0, calc(var(--glow, 0) * 0.6)));
+  /* Aufziehen: erst der Ring, dann die Füllung. Versetzt nach `--i`, damit die
+     Blasen nacheinander erscheinen und man dem Haufen beim Entstehen zusieht. */
+  animation: bub-pop 380ms cubic-bezier(0.22, 1.15, 0.4, 1) both;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
 
 /* Der Ring ist das Budget. Dünn und dunkel, damit die Füllung die Aussage
    trägt — zwei kräftige Kreise würden um dieselbe Aufmerksamkeit streiten. */
@@ -739,21 +748,15 @@
 
 .bub__fill {
   stroke: none;
-  fill: var(--petrol6);
-  transition: r 260ms cubic-bezier(0.22, 0.61, 0.36, 1), fill 260ms ease;
+  /* Rückfall für Browser ohne `color-mix`: die obere Stützstelle. Die
+     Deklaration darunter überschreibt sie, wo es geht. */
+  fill: var(--to, var(--petrol6));
+  fill: color-mix(in oklab, var(--from), var(--to) var(--mix));
+  transition: r 320ms cubic-bezier(0.22, 0.61, 0.36, 1), fill 320ms ease;
+  /* Die Füllung wächst nach dem Ring heraus. */
+  animation: bub-fill 620ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 55ms + 140ms);
 }
-
-/* Die Rampe. Vier Stufen bis zum Limit, dann die zwei Warnfarben. */
-.bub__g--low .bub__fill { fill: var(--petrol4); }
-.bub__g--mid .bub__fill { fill: var(--petrol6); }
-.bub__g--high .bub__fill { fill: var(--petrol8); }
-.bub__g--tight .bub__fill { fill: var(--pending2); }
-.bub__g--over .bub__fill { fill: var(--postfinancegelb); }
-
-/* Ab «knapp» bekommt die Blase einen Schein — das ist der einzige Ort, an dem
-   die Anzeige die Stimme hebt. */
-.bub__g--tight,
-.bub__g--over { filter: drop-shadow(0 0 9px rgba(255, 204, 0, 0.55)); }
 
 /* Der Monatsfortschritt: fein, gestrichelt, im Hintergrund. Wer ihn nicht
    sucht, sieht ihn nicht — wer ihn kennt, liest daran den Vorsprung ab. */
@@ -772,14 +775,19 @@
   stroke: var(--danger3);
   stroke-width: 3;
   stroke-linecap: round;
+  /* Zeichnet sich selbst, statt fertig dazustehen. */
+  animation: bub-arc 720ms cubic-bezier(0.33, 1, 0.68, 1) both;
+  animation-delay: calc(var(--i, 0) * 55ms + 320ms);
 }
 
-/* Das Sinnbild steht standardmässig dunkel auf heller Fläche. Weiss wird es
-   nur, wo eine dunkle Füllung darunter liegt — auf petrol4 wäre Weiss zu
-   schwach, auf Orange und Gelb unleserlich. */
-.bub__icon { color: var(--petrol8); pointer-events: none; }
-.bub__g--mid .bub__icon--inverse,
-.bub__g--high .bub__icon--inverse { color: var(--weiss); }
+/* Das Sinnbild steht standardmässig dunkel auf heller Fläche. Wann es kippt,
+   entscheidet `iconOnDark()` an der Rampe — auf petrol4 wäre Weiss zu schwach,
+   auf Orange und Gelb unleserlich. */
+.bub__icon { color: var(--petrol8); pointer-events: none; transition: color 200ms ease; }
+.bub__icon--inverse { color: var(--weiss); }
+
+/* Die Zustandsklasse trägt keine Farbe mehr — die kommt aus der Rampe. Sie
+   bleibt am Element, weil sie den Zustand im DOM ablesbar macht. */
 
 .bub__g.is-selected .bub__ring {
   stroke-width: 3;
@@ -1285,7 +1293,16 @@
   overflow: visible;
 }
 
-.bub__g { cursor: pointer; }
+.bub__g {
+  cursor: pointer;
+  /* Der Schein ist stetig: `--glow` läuft von 0 bei 85 % auf 1 bei 100 %.
+     Bei 0 ist er unsichtbar, es braucht also keine eigene Klasse dafür. */
+  filter: drop-shadow(0 0 calc(var(--glow, 0) * 10px) rgba(255, 204, 0, calc(var(--glow, 0) * 0.6)));
+  /* Aufziehen: erst der Ring, dann die Füllung. Versetzt nach `--i`, damit die
+     Blasen nacheinander erscheinen und man dem Haufen beim Entstehen zusieht. */
+  animation: bub-pop 380ms cubic-bezier(0.22, 1.15, 0.4, 1) both;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
 
 /* Der Ring ist das Budget. Er bleibt ruhig, damit die Füllung die Aussage
    trägt — sonst konkurrieren zwei Kreise um dieselbe Aufmerksamkeit. */
@@ -1382,3 +1399,31 @@
 }
 
 .bud-month__total .num { font-size: 20px; font-weight: 700; color: var(--text-strong); }
+
+/* Aufziehen der Blasen. `transform-origin` steht in SVG auf dem Nullpunkt des
+   Benutzerkoordinatensystems — und der ist hier der Mittelpunkt der Blase,
+   weil alle Kreise auf 0,0 liegen. Es wächst also aus der Mitte. */
+@keyframes bub-pop {
+  from { transform: scale(0.55); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bub-fill {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+@keyframes bub-arc {
+  from { stroke-dashoffset: var(--arc, 0); }
+  to { stroke-dashoffset: 0; }
+}
+
+/* `base.css` kürzt bei reduzierter Bewegung jede Animationsdauer auf fast
+   null, rührt aber die Verzögerung nicht an. Ohne diese Zeile blieben die
+   Blasen eine halbe Sekunde unsichtbar und erschienen dann schlagartig —
+   genau der Effekt, den die Einstellung vermeiden soll. */
+@media (prefers-reduced-motion: reduce) {
+  .bub__g,
+  .bub__fill,
+  .bub__over { animation-delay: 0ms !important; }
+}
