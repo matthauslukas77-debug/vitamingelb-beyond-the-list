@@ -57,6 +57,25 @@ python3 generate_synthetic.py && python3 to_app.py
 Von Hand gepflegt bleibt `src/data/personas/<id>.ts`: Konten, Rolle, Zitat,
 Daueraufträge und offene Aufträge — alles, was aus dem Interview kommt.
 
+### Das Adressbuch
+
+Der Zahlungsauftrag braucht Empfänger mit Adresse, Bank und IBAN — Angaben, die im
+Buchungstext nicht stehen. Sie liegen in `src/data/personas/<id>.beneficiaries.ts`,
+je Persona vier Einträge.
+
+Erfunden ist daran nur, was eine Bank nicht in den Auszug schreibt. **Wen** eine
+Persona bezahlt, kommt aus ihren eigenen Buchungen: Nino zahlt Miete an die
+«WG Länggasse» und schickt TWINT an Tobias Frei, Bruno zahlt Steuern an den Kanton
+Bern. Das Feld `match` ist das Textfragment, über das der Fluss die frühere Zahlung
+wiederfindet — daraus entsteht «Daten der bestehenden Zahlung kopieren» mit echtem
+Betrag und echtem Datum. Ein Test hält fest, dass jeder Empfänger wirklich in den
+Buchungen oder Aufträgen dieser Persona vorkommt.
+
+Die IBANs sind erfunden, aber strukturell gültig: Prüfziffern nach ISO 7064
+Mod 97-10, echte Clearing-Nummer der genannten Bank. Auch die Konten der Personas —
+sie stehen jetzt in der Zusammenfassung einer Zahlung und wären mit falschen
+Prüfziffern ein Fehler, den man sieht.
+
 ## Händlerlogos
 
 In der Buchungsliste steht links das echte Logo des Händlers, sobald der Buchungstext
@@ -69,6 +88,31 @@ kein Modell — ein falsches Logo wäre schlimmer als keines.
 * Bilddateien: `public/logos/`, auf 128 px verkleinert (4.1 MB gesamt).
 * Darstellung: [`src/app/shell/BrandAvatar.tsx`](src/app/shell/BrandAvatar.tsx) —
   Logo, sonst die Farbscheibe der Persona, sonst das Kategoriesymbol.
+* Scheibenfarbe: [`src/data/logo-backgrounds.ts`](src/data/logo-backgrounds.ts),
+  190 der 400 Logos. **Generiert** von
+  `WORKSPACE/05_assets_scratch/abo_logos/_tools/logo_backgrounds.mjs`.
+
+### Warum die Scheibe eine Farbe hat
+
+Ein Logo ist quadratisch, sein Platz in der Liste ist rund. Bei einem breiten Logo
+wie TWINT passt die App es oben und unten ein — und auf weissem Grund schaute dort
+das Weiss heraus: ein eckiges Logo mit hellen Rändern im runden Feld.
+
+Statt 400 Grafiken zu beschneiden nimmt die Scheibe die Farbe an, die das Logo an
+seinem Rand ohnehin hat. Der Kreis wird zur Maske, das Logo liegt darin, der Rest
+trägt dieselbe Farbe — die Kante verschwindet. Gemessen wird an den Bilddateien:
+der häufigste Randfarbwert, nicht der Mittelwert, denn ein schwarzer Balken mit
+farbigem Zeichen ergibt im Mittel ein schmutziges Grau.
+
+Die Farbe wird nicht geglaubt, sondern geprüft. Manche Bildmarken laufen selbst bis
+an den Rand — das «n» von Negishi steht mit Stamm und Fuss auf der Kante. Dort ist
+die Randfarbe die des *Zeichens*, und die Scheibe darin würde das Logo auslöschen.
+Der Erzeuger stellt deshalb jede Scheibe nach, legt das Logo darüber und zählt, was
+sich noch abhebt. Über alle 400 Logos ist Negishi der einzige Fall, der dabei auf
+null fällt; der nächste liegt bei 0.082. In dieser Lücke steht die Schwelle.
+
+Ohne Farbe bleiben: freigestellte Logos (durchsichtiger Rand), Verläufe ohne eine
+Farbe, und alle, deren Rand ohnehin weiss ist — das ist der Standard der Scheibe.
 
 Getroffen werden je nach Persona 81–90 % der Buchungen. Was übrig bleibt, sind
 `SIX Payment <Nr>`-Terminals, lokale Betriebe ohne Marke und generische Texte wie
@@ -165,6 +209,7 @@ src/
 ├── theme/base.css        Wie wir diese Werte einsetzen (inkl. Dark Mode)
 ├── theme/fonts.css       PostFinance Grotesk (Dateien nicht im Repository)
 ├── data/                 Typen, Personas mit fertigen Buchungen, Markenregister
+│                         logo-backgrounds.ts — Scheibenfarbe je Logo (generiert)
 ├── domain/               Fachlogik des Nachbaus, ohne UI:
 │                         recurring.ts (Abo-Erkennung) · booking.ts (Buchungstext)
 │                         breakdown.ts (Einnahmen/Ausgaben nach Oberkategorie)
