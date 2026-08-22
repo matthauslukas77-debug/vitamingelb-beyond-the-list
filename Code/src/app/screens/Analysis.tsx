@@ -5,7 +5,6 @@ import { formatPeriod, parseIso } from '../../lib/date'
 import { useSession } from '../session'
 import { Icon } from '../shell/Icon'
 import { Slot } from '../shell/Slot'
-import { Sheet } from '../shell/Sheet'
 import { CircleRow } from '../shell/parts'
 
 /**
@@ -19,6 +18,11 @@ import { CircleRow } from '../shell/parts'
  *   · Legende, dann Budgets und «Meine Abos»
  *
  * Bewusst rein deskriptiv — genau das ist der Ist-Zustand, den wir übertreffen wollen.
+ *
+ * Der Bildschirmrahmen liegt nicht mehr hier: Diese Ansicht ist eine von drei
+ * im Cockpit (`src/insights/screens/Cockpit.tsx`) und steht dort unter der
+ * Pille «Analyse» — unverändert, als Vergleich neben unserer eigenen. Was hier
+ * exportiert wird, ist deshalb der Inhalt ohne Kopfzeile.
  */
 
 const RING_GAP = 6
@@ -85,8 +89,8 @@ function DoubleRing({ totals }: { totals: Totals }) {
   )
 }
 
-export function Analysis() {
-  const { persona, pop, push } = useSession()
+export function AnalysisContent() {
+  const { persona, push } = useSession()
 
   // «Zusammengefasst» zeigt das laufende Jahr.
   const from = `${TODAY.slice(0, 4)}-01-01`
@@ -101,93 +105,91 @@ export function Analysis() {
   const perMonth = Math.round(balance / totals.months)
 
   return (
-    <Sheet title="Analysen" onBack={pop} action={<Icon name="settings" size={20} />}>
-      <div className="analysis">
-        <div className="analysis__top">
-          <button className="pill-select" style={{ width: 'auto', margin: '0 auto', padding: '0 24px' }}>
-            Zusammengefasst
-            <Icon name="chevronDown" size={16} />
-          </button>
+    <div className="analysis">
+      <div className="analysis__top">
+        <button className="pill-select" style={{ width: 'auto', margin: '0 auto', padding: '0 24px' }}>
+          Zusammengefasst
+          <Icon name="chevronDown" size={16} />
+        </button>
 
-          <Slot name="analysis.aboveDonut" />
+        <Slot name="analysis.aboveDonut" />
 
-          <div className="analysis__ring">
-            <DoubleRing totals={totals} />
-            <div className="analysis__center">
-              <div className="analysis__period">{formatPeriod(from, TODAY)}</div>
-              <div className="analysis__balance num">
-                <span style={{ fontWeight: 400 }}>CHF </span>
-                {formatAmount(balance)}
-              </div>
-              <div className="analysis__period">Durchschnitt pro Monat</div>
-              <div className="analysis__avg num">
-                <span style={{ fontWeight: 400 }}>CHF </span>
-                {formatAmount(perMonth)}
-              </div>
+        <div className="analysis__ring">
+          <DoubleRing totals={totals} />
+          <div className="analysis__center">
+            <div className="analysis__period">{formatPeriod(from, TODAY)}</div>
+            <div className="analysis__balance num">
+              <span style={{ fontWeight: 400 }}>CHF </span>
+              {formatAmount(balance)}
+            </div>
+            <div className="analysis__period">Durchschnitt pro Monat</div>
+            <div className="analysis__avg num">
+              <span style={{ fontWeight: 400 }}>CHF </span>
+              {formatAmount(perMonth)}
             </div>
           </div>
-
-          <CircleRow
-            actions={[
-              { icon: 'search', label: 'Suchen', outline: true, onClick: () => push({ name: 'search' }) },
-              { icon: 'co2', label: 'CO₂ Fussabdruck', outline: true },
-            ]}
-          />
         </div>
 
-        <div className="analysis__bottom">
-          {/* Beide Zeilen führen auf die Detailseite ihrer Richtung —
-              Vorlage IMG_1696 (Einnahmen) und IMG_1697 (Ausgaben). */}
-          <button className="legend" onClick={() => push({ name: 'breakdown', direction: 'income' })}>
-            <span className="legend__dot" style={{ background: 'var(--hellblau5)' }} />
-            <span className="legend__main">
-              <span className="legend__title">Einnahmen</span>
-              <span className="legend__sub">{totals.incomeCount} Transaktionen</span>
-            </span>
-            <span className="legend__amount num">
-              <span className="legend__cur">CHF</span> {formatAmount(totals.income, { sign: false })}
-            </span>
-            <span className="legend__chevron">
-              <Icon name="chevronRight" size={18} />
-            </span>
-          </button>
-
-          <button className="legend" onClick={() => push({ name: 'breakdown', direction: 'expenses' })}>
-            <span className="legend__dot" style={{ background: 'var(--petrol9)' }} />
-            <span className="legend__main">
-              <span className="legend__title">Ausgaben</span>
-              <span className="legend__sub">{totals.expenseCount} Transaktionen</span>
-            </span>
-            <span className="legend__amount num">
-              <span className="legend__cur">CHF</span> {formatAmount(totals.expenses, { sign: false })}
-            </span>
-            <span className="legend__chevron">
-              <Icon name="chevronRight" size={18} />
-            </span>
-          </button>
-
-          <button className="listrow">
-            <span className="listrow__icon"><Icon name="document" size={24} accent /></span>
-            <span>
-              <span className="listrow__title">Keine aktiven Budgets</span>
-              <span className="listrow__sub">
-                Budgets erfassen, um Ausgaben in Bezug auf Kategorien oder Labels nachzuverfolgen.
-              </span>
-            </span>
-          </button>
-
-          <button className="listrow" onClick={() => push({ name: 'recurring' })}>
-            <span className="listrow__icon"><Icon name="calendar" size={24} accent /></span>
-            <span>
-              <span className="listrow__title">Wiederkehrende Buchungen</span>
-              <span className="listrow__sub">Abos, Daueraufträge, Rechnungen und der Lohn</span>
-            </span>
-          </button>
-
-          <Slot name="analysis.belowLegend" />
-        </div>
+        <CircleRow
+          actions={[
+            { icon: 'search', label: 'Suchen', outline: true, onClick: () => push({ name: 'search' }) },
+            { icon: 'co2', label: 'CO₂ Fussabdruck', outline: true },
+          ]}
+        />
       </div>
-    </Sheet>
+
+      <div className="analysis__bottom">
+        {/* Beide Zeilen führen auf die Detailseite ihrer Richtung —
+            Vorlage IMG_1696 (Einnahmen) und IMG_1697 (Ausgaben). */}
+        <button className="legend" onClick={() => push({ name: 'breakdown', direction: 'income' })}>
+          <span className="legend__dot" style={{ background: 'var(--hellblau5)' }} />
+          <span className="legend__main">
+            <span className="legend__title">Einnahmen</span>
+            <span className="legend__sub">{totals.incomeCount} Transaktionen</span>
+          </span>
+          <span className="legend__amount num">
+            <span className="legend__cur">CHF</span> {formatAmount(totals.income, { sign: false })}
+          </span>
+          <span className="legend__chevron">
+            <Icon name="chevronRight" size={18} />
+          </span>
+        </button>
+
+        <button className="legend" onClick={() => push({ name: 'breakdown', direction: 'expenses' })}>
+          <span className="legend__dot" style={{ background: 'var(--petrol9)' }} />
+          <span className="legend__main">
+            <span className="legend__title">Ausgaben</span>
+            <span className="legend__sub">{totals.expenseCount} Transaktionen</span>
+          </span>
+          <span className="legend__amount num">
+            <span className="legend__cur">CHF</span> {formatAmount(totals.expenses, { sign: false })}
+          </span>
+          <span className="legend__chevron">
+            <Icon name="chevronRight" size={18} />
+          </span>
+        </button>
+
+        <button className="listrow">
+          <span className="listrow__icon"><Icon name="document" size={24} accent /></span>
+          <span>
+            <span className="listrow__title">Keine aktiven Budgets</span>
+            <span className="listrow__sub">
+              Budgets erfassen, um Ausgaben in Bezug auf Kategorien oder Labels nachzuverfolgen.
+            </span>
+          </span>
+        </button>
+
+        <button className="listrow" onClick={() => push({ name: 'recurring' })}>
+          <span className="listrow__icon"><Icon name="calendar" size={24} accent /></span>
+          <span>
+            <span className="listrow__title">Wiederkehrende Buchungen</span>
+            <span className="listrow__sub">Abos, Daueraufträge, Rechnungen und der Lohn</span>
+          </span>
+        </button>
+
+      <Slot name="analysis.belowLegend" />
+    </div>
+    </div>
   )
 }
 

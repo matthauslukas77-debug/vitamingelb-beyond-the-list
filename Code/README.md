@@ -1,9 +1,10 @@
 # Beyond the List — Prototyp
 
 Nachbau der PostFinance-App (v6) als Web-App, plus eine klar abgetrennte Schicht für
-unsere eigenen Funktionen. Stand: **der Nachbau läuft; aus unserer Schicht ist der
-Kontostand-Verlauf mit Prognose aktiv** (Slot `home.accountRow`). Alle übrigen Slots sind
-leer — dort zeigt der Prototyp weiterhin exakt den Ist-Zustand.
+unsere eigenen Funktionen. Stand: **der Nachbau läuft; aus unserer Schicht sind der
+Kontostand-Verlauf mit Prognose (Slot `home.accountRow`), die Abo-Detailseite und das
+Cockpit mit dem abgeleiteten Budget aktiv.** Die übrigen Slots sind leer — dort zeigt der
+Prototyp weiterhin exakt den Ist-Zustand.
 
 ## Starten
 
@@ -124,7 +125,8 @@ Für Demo und Screenshots lässt sich jeder Einstieg per URL ansteuern:
 
 ```
 ?persona=reto                    Persona direkt öffnen
-?persona=bruno&screen=analysis  zusätzlich einen Bildschirm
+?persona=bruno&screen=cockpit    zusätzlich einen Bildschirm
+?persona=bruno&screen=cockpit&view=analysis   direkt eine Cockpit-Ansicht
 ?persona=nino&screen=account     Kontodetail (optional &account=<id>)
 ?persona=bruno&screen=expenses  Ausgaben nach Oberkategorie
 ?persona=livia&screen=settings   Profil und Einstellungen
@@ -136,11 +138,14 @@ Zusätzlich `&tab=payments` für den Startreiter.
 
 Personas: `reto` · `nino` · `livia` · `bruno`.
 Reiter: `home` · `payments` · `invest` · `offers` · `services`.
-Bildschirme: `account` · `analysis` · `income` · `expenses` · `recurring` · `scan` · `pay` ·
+Bildschirme: `account` · `cockpit` · `income` · `expenses` · `recurring` · `scan` · `pay` ·
 `transfer` · `search` · `settings`.
+Ansichten von `cockpit`: `budget` · `analysis` · `recurring`, über `&view=`.
 Abschnitte von `settings`: `profile` · `login` · `notifications` · `accounts` · `payments` ·
 `invest` · `orders` · `app` · `twint` — ohne `&section` öffnet die Übersicht.
-`recurring` hiess früher `subscriptions` — alte Demo-Links funktionieren weiter.
+`recurring` hiess früher `subscriptions`, `cockpit` hiess `analysis` — alte Demo-Links
+funktionieren weiter. `?screen=analysis` öffnet das Cockpit direkt auf der Analyse-Ansicht,
+also genau dem Bildschirm, der früher dort stand.
 `search` findet Einstellungen und Funktionen so gut wie Buchungen: «twint», «dark mode»,
 «face id» führen an den Ort, nicht auf eine Liste von Belegen.
 `income` und `expenses` sind die beiden Detailseiten hinter der Legende der Analysen.
@@ -166,6 +171,45 @@ Der `service_role`-Key gehört niemals dorthin. `.env.local` ist in `.gitignore`
 
 `src/lib/supabase.ts` lädt die Bibliothek erst beim ersten Zugriff nach — ohne Konfiguration
 ist `isSupabaseConfigured()` schlicht `false`, die App läuft normal weiter.
+
+### Apertus — die Edge Function `explain`
+
+Der Satz neben dem Budget wird von **Apertus v1.5 70B** formuliert, dem Schweizer Modell.
+Gerechnet wird er nicht: Die Funktion bekommt fertige Zahlen und einen im Code
+ausgewählten Befund und gibt zwei Sätze zurück.
+
+```bash
+set -a; source ../../WORKSPACE/.secrets/apertus.env; set +a
+npx supabase secrets set APERTUS_URL="$APERTUS_URL" APERTUS_KEY="$APERTUS_KEY" \
+                         APERTUS_MODEL="$APERTUS_MODEL"
+npx supabase functions deploy explain --use-api
+```
+
+Warum überhaupt eine Function und nicht ein `fetch` aus dem Browser: Alles mit
+`VITE_`-Präfix landet im Bundle und wäre öffentlich, der Prompt liesse sich austauschen,
+und der LLM-Endpunkt schickt keine CORS-Header. Der Schlüssel liegt als Function-Secret
+und verlässt den Server nie.
+
+Drei Sicherungen, weil die Zahlen in einer Banking-App stimmen müssen:
+
+1. **Der gerechnete Satz entsteht zuerst** (`explain.ts`, `localSummary`) und braucht kein
+   Netz. Apertus ersetzt ihn nur bei Erfolg — ohne Schlüssel, ohne Netz oder nach 20
+   Sekunden bleibt er stehen. An der Karte steht sichtbar, welcher von beiden es ist.
+2. **Die Funktion nimmt keinen Prompt entgegen**, nur eine typisierte Nutzlast. Wer sie
+   aufruft, bestimmt *worüber* geschrieben wird, nicht *was*.
+3. **Die Zahlenwache** (`supabase/functions/explain/guard.ts`) verwirft jede Antwort, die
+   eine Zahl enthält, die nicht im Prompt stand. Sie hat beim ersten Lauf sofort etwas
+   gefunden: Das Modell schrieb «fast CHF 400», wo die Differenz 349 war. Sprachlich eine
+   Näherung, in einem Budget eine falsche Zahl. Getestet in
+   `src/insights/budget/__tests__/guard.test.ts`.
+
+Die Arbeitsteilung ist gemessen, nicht ideologisch: Der Fähigkeitstest in
+`WORKSPACE/03_research/16_Tooling_und_Zugaenge/APERTUS_CAPABILITY_TEST.md` hat beide
+Apertus-Grössen 14 Zahlen addieren lassen — der 8B kam auf 1'021 statt 3'193, der 70B auf
+3'084. Plausibel nah dran, und genau das ist der gefährlichste Fehlertyp. Aus fertigem
+Fakt formulieren sie dagegen sauber.
+
+Ohne Konfiguration läuft die App normal weiter und zeigt den gerechneten Satz.
 
 ### Datenbank-Schema
 
@@ -234,10 +278,47 @@ src/
 │   └── settings.ts       Was die Nutzerin selbst setzt, im localStorage
 └── insights/             ── UNSERE SCHICHT. Alles Neue kommt hierhin.
     ├── registry.tsx      Wo eine neue Funktion eingehängt wird
-    ├── engine/           balance.ts — Verlauf und Prognose
+    ├── engine/           balance.ts (Verlauf und Prognose) · tenure.ts (Abo-Dauer)
     ├── cards/            AccountBalanceCard — die Kontokarte auf Home
-    └── charts/           BalanceChart, Glättung
+    ├── charts/           BalanceChart, Glättung
+    ├── screens/          Cockpit · SeriesDetail
+    └── budget/           Das Budget aus den Buchungen — siehe unten
 ```
+
+### Das Budget
+
+`src/insights/budget/` leitet ein vollständiges Budget aus den Buchungen ab und stellt es
+dem Richtwert des öffentlichen [PostFinance-Budgetrechners](https://www.postfinance.ch/de/privat/anlegen/tools-rechner/budget-erstellen.html)
+gegenüber. Grundlage ist der Spike `WORKSPACE/04_experiments/pf-budget-wizard/`: Struktur,
+Texte und Rechenlogik des Rechners, rekonstruiert aus seinem Angular-Bundle und gegen
+**2'513 Live-Messpunkte** seiner API geprüft.
+
+| Datei | Inhalt |
+|---|---|
+| `slots.ts` | Die sechs Kategorien und neunzehn Detailfelder des Rechners, Beschriftung wörtlich |
+| `flow.ts` | Geldfluss-Achse `out · in · moved · settled · lent` — trennt Ausgabe von Umbuchung |
+| `mapping.ts` | Buchung → Detailfeld: Regelwerk plus die Kategorie, die die Bank schon vergeben hat |
+| `derive.ts` | `deriveBudget()` — Beträge, Belege, Abdeckung, offene Fragen |
+| `pf-model.ts` | **Portiert**, nicht nachgebaut: Nettolohn-Formel, `updateBudget`, Tippboxen. Rechnet in ganzen Franken |
+| `pf-reference.ts` | Der Richtwert für denselben Haushalt, aus `data/reference.json` (56 KB, nachgeladen) |
+| `benchmark.ts` | Die **einzige** Stelle, an der Rappen und Franken aufeinandertreffen |
+| `storage.ts` | Gespeichertes Budget je Persona, mit «von dir gesetzt»-Merkern |
+| `explain.ts` | Der Satz daneben — gerechnet, und wenn erreichbar von Apertus formuliert |
+
+Zwei Dinge, die dabei nicht schiefgehen dürfen und deshalb Tests haben:
+
+* **Der Dauerauftrag aufs eigene Sparkonto ist keine Ausgabe.** Die heutige Auswertung
+  zählt ihn mit — bei Livia sind das CHF 479 im Monat, bei Bruno CHF 1'792. Livia im
+  Interview 05: «500 Franken aufs Sparkonto — dann ist das wie quasi als Ausgabe.»
+* **Jahresrechnungen werden auf den Monat umgelegt**, Steuern über die volle Historie
+  geglättet. Steuerraten folgen der Steuerperiode, nicht dem Kalender: Brunos
+  Schlussrechnung ergäbe im Zwölfmonatsfenster CHF 1'883 pro Monat, im Fenster daneben
+  CHF 0.
+
+Gemessen an den vier Personas: **93.6 – 97.8 %** der Ausgabenfranken sind sicher
+zugeordnet, **7 bis 14** der neunzehn Felder füllen sich von selbst. Der Rest ist zu vier
+Fünfteln Bargeld — und dafür gibt es keine Lösung ausser der Rückfrage. Sie steht als
+solche im Bildschirm.
 
 ### Die Trennlinie
 
@@ -291,7 +372,9 @@ Das Repository ist öffentlich. Die PNG-Grössen daneben sind daraus erzeugt.
 
 - Kein Login und keine Sicherheitsebene — die Persona-Auswahl ersetzt beides.
 - Scannen, Zahlen und Übertragen sind vollständig gestaltet, lösen aber nichts aus.
-- Budgets sind in den Analysen als Leerzustand angelegt, aber nicht erfassbar.
+- Das abgeleitete Budget ist noch nicht von Hand änderbar — Schieberegler und
+  Speichern kommen als eigener Schritt. Der Leerzustand des Nachbaus steht weiterhin
+  unter der Pille «Analyse».
 - Kategorien sind fest am Datensatz hinterlegt statt automatisch erkannt.
 - Keine UI-Bibliothek und kein Diagrammpaket: Donut und Verlaufskurve sind von Hand
   gezeichnetes SVG, damit die Farben exakt den Tokens folgen. Laufzeitabhängigkeiten sind

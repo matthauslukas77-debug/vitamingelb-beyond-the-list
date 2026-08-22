@@ -1,0 +1,274 @@
+/* ── Unsere Schicht ────────────────────────────────────────────────────────
+   Cockpit und Budget.
+
+   Nur Tokens aus `theme/tokens.css` und die Anwendungsvariablen aus
+   `theme/base.css` — keine eigenen Farbwerte. Dadurch stimmt der dunkle Modus
+   von selbst, und die Ansicht sieht neben dem Nachbau nicht wie ein Fremdkörper
+   aus.
+
+   Grün, Orange und Rot kommen aus den semantischen Token-Rampen
+   (`--success3`, `--pending2`, `--danger3`). Die Petrol-Rampe der Marke kennt
+   kein Grün — der Zustand «im Rahmen / eng / drüber» braucht aber eine eigene
+   Achse, sonst konkurriert er mit der Kategoriefarbe.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* ── Die Pillen über dem Cockpit ─────────────────────────────────────────── */
+
+.cockpit__pills {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-5) var(--s-4);
+  background: var(--surface-app);
+}
+
+.cockpit__pill {
+  flex: 1;
+  height: 38px;
+  border-radius: var(--CornerRadius-R-100);
+  font-size: 14px;
+  color: var(--text-body);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.cockpit__pill[aria-selected='true'] {
+  background: var(--surface-inverse);
+  color: var(--weiss-petrol11);
+  font-weight: 700;
+  box-shadow: none;
+}
+
+/* ── Budget ──────────────────────────────────────────────────────────────── */
+
+.bud { padding-top: 0; }
+
+.bud-toggle {
+  display: flex;
+  gap: var(--s-2);
+  justify-content: center;
+  padding-bottom: var(--s-5);
+}
+
+.bud-toggle button {
+  padding: 6px 16px;
+  border-radius: var(--CornerRadius-R-100);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.bud-toggle button[aria-pressed='true'] {
+  background: var(--surface-sunken);
+  color: var(--text-strong);
+  font-weight: 700;
+}
+
+/* Kopfzahlen: Einnahmen, Ausgaben, Überschuss */
+
+.bud-head { padding: var(--s-6); }
+
+.bud-head__line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  font-size: 15px;
+  color: var(--text-body);
+}
+
+.bud-head__line + .bud-head__line { margin-top: var(--s-3); }
+
+.bud-head__line--total {
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.bud-head__line--total .num { font-size: 22px; }
+.bud-head__line--total.is-negative { color: var(--danger3); }
+
+.bud-head__note {
+  margin-top: var(--s-3);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.bud-head__note strong { color: var(--text-strong); }
+
+/* Der Satz — gerechnet oder von Apertus formuliert */
+
+.bud-say { margin-top: var(--s-5); padding: var(--s-6); }
+
+.bud-say__text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-body);
+}
+
+/* Woher der Satz kommt, steht an ihm dran. Wer nicht weiss, ob eine Zahl
+   gerechnet oder formuliert ist, glaubt am Ende keiner von beiden. */
+.bud-say__badge {
+  display: inline-block;
+  margin-top: var(--s-3);
+  padding: 2px 10px;
+  border-radius: var(--CornerRadius-R-100);
+  font-size: 11px;
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+}
+
+.bud-say__badge.is-model {
+  background: var(--postfinancegelb);
+  color: var(--petrol8);
+}
+
+/* Kategorien */
+
+.bud-cat + .bud-cat { border-top: 1px solid var(--line); }
+
+.bud-cat__head {
+  display: grid;
+  grid-template-columns: 40px 1fr auto 16px;
+  align-items: center;
+  gap: var(--s-4);
+  width: 100%;
+  padding: var(--s-5);
+}
+
+.bud-cat__head:active { background: var(--tap); }
+
+.bud-cat__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--surface-sunken);
+  color: var(--text-strong);
+}
+
+.bud-cat__main { min-width: 0; }
+
+.bud-cat__title {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.bud-cat__delta { display: block; margin-top: 4px; font-size: 12px; color: var(--text-muted); }
+.bud-cat__delta .is-over { color: var(--pending3); }
+.bud-cat__delta .is-under { color: var(--text-muted); }
+
+.bud-cat__amount { font-size: 16px; font-weight: 700; color: var(--text-strong); white-space: nowrap; }
+
+.bud-cat__chevron { color: var(--petrol4); transition: transform 160ms ease; }
+.bud-cat__chevron.is-open { transform: rotate(180deg); }
+
+/* Der Balken: Füllung ist dein Betrag, die Marke der Richtwert. */
+
+.bud-bar {
+  position: relative;
+  height: 6px;
+  margin-top: 6px;
+  border-radius: 3px;
+  background: var(--surface-sunken);
+  overflow: visible;
+}
+
+.bud-bar__fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--petrol6);
+  transition: width 200ms ease;
+}
+
+.bud-bar__fill--over { background: var(--pending2); }
+
+.bud-bar__mark {
+  position: absolute;
+  top: -3px;
+  width: 2px;
+  height: 12px;
+  border-radius: 1px;
+  background: var(--text-muted);
+}
+
+/* Detailfelder */
+
+.bud-cat__fields { padding: 0 var(--s-5) var(--s-5) 60px; }
+
+.bud-field {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-3) 0;
+}
+
+.bud-field + .bud-field { border-top: 1px solid var(--line); }
+
+.bud-field__main { min-width: 0; }
+.bud-field__label { display: block; font-size: 14px; color: var(--text-strong); }
+
+.bud-field__why {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--text-muted);
+}
+
+.bud-field__review {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  padding: 2px 8px;
+  border-radius: var(--CornerRadius-R-100);
+  font-size: 11px;
+  background: var(--pending1);
+  color: var(--pending3);
+}
+
+.bud-field__amount { font-size: 14px; color: var(--text-body); white-space: nowrap; }
+
+/* Tippboxen des Originals */
+
+.bud-tip {
+  display: flex;
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+  padding: var(--s-5);
+  border-radius: var(--CornerRadius-R-16);
+  background: var(--surface-sunken);
+}
+
+.bud-tip__icon { flex: none; color: var(--text-strong); }
+.bud-tip__title { display: block; font-size: 14px; font-weight: 700; color: var(--text-strong); }
+.bud-tip__body { display: block; margin-top: 2px; font-size: 13px; line-height: 1.45; color: var(--text-body); }
+
+/* Herkunft und offene Fragen */
+
+.bud-src { padding: var(--s-6); }
+
+.bud-src p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.bud-src p + p { margin-top: var(--s-4); }
+.bud-src strong { color: var(--text-body); }
+
+.bud-src__q { display: grid; gap: 2px; }
+.bud-src__q strong { font-size: 14px; color: var(--text-strong); }

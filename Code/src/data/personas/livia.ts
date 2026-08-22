@@ -33,6 +33,7 @@ export const livia: Persona = {
   role: 'Lernende bei einer Bank · spart auf 50’000',
   quote: '«500 Franken aufs Sparkonto — dann ist das wie quasi als Ausgabe.»',
   source: 'Interview 05',
+  birthYear: 2008,
   address: { street: 'Wachthausgasse 6', place: '3150 Schwarzenburg', country: 'Schweiz' },
   accounts,
   transactions: liviaTransactions,

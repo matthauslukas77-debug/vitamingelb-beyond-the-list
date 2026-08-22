@@ -32,6 +32,7 @@ export const reto: Persona = {
   role: '22 · Informatiker · kein Budget, Bauchgefühl',
   quote: '«Ich komme gut durch, aber ich habe einfach noch nie so geplant.»',
   source: 'Interview 01',
+  birthYear: 2004,
   address: { street: 'Sulgenauweg 21', place: '3007 Bern', country: 'Schweiz' },
   accounts,
   transactions: retoTransactions,

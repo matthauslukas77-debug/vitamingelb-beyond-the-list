@@ -65,6 +65,7 @@ export const bruno: Persona = {
   role: '59 · angestellt · sechs Bankbeziehungen',
   quote: '«Vom Verhältnis her sind die schönen Charts dann ein bisschen misleading.»',
   source: 'Interview 07',
+  birthYear: 1967,
   address: { street: 'Mettstrasse 88', place: '2504 Biel/Bienne', country: 'Schweiz' },
   accounts,
   transactions: brunoTransactions,

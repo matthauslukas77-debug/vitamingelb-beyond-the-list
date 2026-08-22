@@ -21,7 +21,7 @@ export function Home() {
           { icon: 'scan', label: 'Scannen', primary: true, onClick: () => push({ name: 'scan' }) },
           { icon: 'pay', label: 'Zahlen', onClick: () => push({ name: 'pay' }) },
           { icon: 'transfer', label: 'Übertragen', onClick: () => push({ name: 'transfer' }) },
-          { icon: 'analysis', label: 'Analysen', onClick: () => push({ name: 'analysis' }) },
+          { icon: 'analysis', label: 'Cockpit', onClick: () => push({ name: 'cockpit' }) },
         ]}
       />
 

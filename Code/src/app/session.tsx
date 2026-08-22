@@ -8,13 +8,23 @@ import { DEFAULT_SETTINGS, loadSettings, saveSettings, type Settings, type Setti
 export type Tab = 'home' | 'payments' | 'invest' | 'offers' | 'services'
 
 /**
+ * Die Ansichten des Cockpits. «analysis» ist der unveränderte Ist-Zustand —
+ * derselbe Doppelring, dieselben Zahlen, als Vergleichsansicht neben unserer.
+ */
+export type CockpitView = 'budget' | 'analysis' | 'recurring'
+
+/**
  * Bildschirme, die über den Tabs liegen (Push-Navigation wie in der App).
  * Bewusst ein kleiner eigener Stack statt eines Routers: kein zusätzliches
  * Paket, und Vor/Zurück verhält sich wie nativ.
  */
+
 export type Screen =
   | { name: 'account'; accountId: string }
-  | { name: 'analysis' }
+  /* Hiess «analysis», solange der Bildschirm nur die Analysen der App war.
+     Jetzt ist er das Dach über Budget, Analyse und wiederkehrenden Buchungen —
+     alte Demo-Links auf `?screen=analysis` funktionieren weiter. */
+  | { name: 'cockpit'; view?: CockpitView }
   | { name: 'scan' }
   | { name: 'pay' }
   | { name: 'transfer' }

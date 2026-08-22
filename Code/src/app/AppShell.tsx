@@ -2,7 +2,6 @@ import type { Persona } from '../data/types'
 import { SessionProvider, useSession, type Screen, type Tab } from './session'
 import { Icon, type IconName } from './shell/Icon'
 import { AccountDetail } from './screens/AccountDetail'
-import { Analysis } from './screens/Analysis'
 import { Breakdown } from './screens/Breakdown'
 import { Scan, Transfer } from './screens/Flows'
 import { Pay } from './screens/payment/PaymentFlow'
@@ -11,6 +10,7 @@ import { Invest } from './screens/Invest'
 import { Offers } from './screens/Offers'
 import { Payments } from './screens/Payments'
 import { Recurring } from './screens/Recurring'
+import { Cockpit } from '../insights/screens/Cockpit'
 import { SeriesDetail } from '../insights/screens/SeriesDetail'
 import { TransactionDetail } from './screens/TransactionDetail'
 import { Services } from './screens/Services'
@@ -70,7 +70,7 @@ function CurrentTab() {
 function screenFor(screen: Screen) {
   switch (screen.name) {
     case 'account': return <AccountDetail accountId={screen.accountId} />
-    case 'analysis': return <Analysis />
+    case 'cockpit': return <Cockpit view={screen.view} />
     case 'scan': return <Scan />
     case 'pay': return <Pay />
     case 'transfer': return <Transfer />

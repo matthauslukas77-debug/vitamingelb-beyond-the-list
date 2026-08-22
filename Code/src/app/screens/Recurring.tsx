@@ -155,8 +155,12 @@ function SeriesRow({ series, onOpen }: { series: RecurringSeries; onOpen: () => 
   )
 }
 
-export function Recurring() {
-  const { persona, pop, push } = useSession()
+/**
+ * Derselbe Inhalt ohne Bildschirmrahmen — so hängt ihn das Cockpit unter der
+ * Pille «Wiederkehrend» ein, ohne dass es die Liste ein zweites Mal gibt.
+ */
+export function RecurringContent() {
+  const { persona, push } = useSession()
 
   const series = useMemo(
     () => detectRecurring(persona.transactions, { today: TODAY }),
@@ -178,62 +182,70 @@ export function Recurring() {
   })).filter((group) => group.entries.length > 0)
 
   return (
-    <Sheet title="Wiederkehrende Buchungen" onBack={pop}>
-      <div className="screen__inner">
-        <section className="card">
-          <div className="card__body" style={{ paddingTop: 'var(--s-6)' }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12 }}>
-              <span style={{ fontSize: 15, color: 'var(--text-body)' }}>Fix pro Monat</span>
-              <span className="num" style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-strong)' }}>
-                {formatAmount(monthlyOut)}
-              </span>
-            </div>
-            {monthlyIn > 0 && (
-              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, marginTop: 10 }}>
-                <span style={{ fontSize: 15, color: 'var(--text-body)' }}>Regelmässig herein</span>
-                <span className="num abo__amount--credit" style={{ fontSize: 17, fontWeight: 700 }}>
-                  {formatAmount(monthlyIn)}
-                </span>
-              </div>
-            )}
-            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, marginTop: 14, paddingTop: 14, borderTop: '1px solid var(--line)' }}>
-              <span style={{ fontSize: 15, color: 'var(--text-body)' }}>
-                Nächste 30 Tage · {next30.length} Zahlungen
-              </span>
-              <span className="num" style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-strong)' }}>
-                {formatAmount(next30.reduce((total, entry) => total + entry.amount, 0))}
-              </span>
-            </div>
-            <p style={{ margin: '14px 0 0', fontSize: 13, lineHeight: 1.45, color: 'var(--text-muted)' }}>
-              {series.length} wiederkehrende Zahlungen erkannt, davon {subscriptionCount} Abos —
-              aus Buchungstext, Betrag und Abstand. Nichts davon ist hinterlegt oder gepflegt.{' '}
-              <strong style={{ fontWeight: 700, color: 'var(--text-body)' }}>
-                Antippen zeigt, seit wann du zahlst und was es insgesamt war.
-              </strong>
-            </p>
+    <div className="screen__inner">
+      <section className="card">
+        <div className="card__body" style={{ paddingTop: 'var(--s-6)' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12 }}>
+            <span style={{ fontSize: 15, color: 'var(--text-body)' }}>Fix pro Monat</span>
+            <span className="num" style={{ fontSize: 24, fontWeight: 700, color: 'var(--text-strong)' }}>
+              {formatAmount(monthlyOut)}
+            </span>
           </div>
-        </section>
+          {monthlyIn > 0 && (
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, marginTop: 10 }}>
+              <span style={{ fontSize: 15, color: 'var(--text-body)' }}>Regelmässig herein</span>
+              <span className="num abo__amount--credit" style={{ fontSize: 17, fontWeight: 700 }}>
+                {formatAmount(monthlyIn)}
+              </span>
+            </div>
+          )}
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12, marginTop: 14, paddingTop: 14, borderTop: '1px solid var(--line)' }}>
+            <span style={{ fontSize: 15, color: 'var(--text-body)' }}>
+              Nächste 30 Tage · {next30.length} Zahlungen
+            </span>
+            <span className="num" style={{ fontSize: 17, fontWeight: 700, color: 'var(--text-strong)' }}>
+              {formatAmount(next30.reduce((total, entry) => total + entry.amount, 0))}
+            </span>
+          </div>
+          <p style={{ margin: '14px 0 0', fontSize: 13, lineHeight: 1.45, color: 'var(--text-muted)' }}>
+            {series.length} wiederkehrende Zahlungen erkannt, davon {subscriptionCount} Abos —
+            aus Buchungstext, Betrag und Abstand. Nichts davon ist hinterlegt oder gepflegt.{' '}
+            <strong style={{ fontWeight: 700, color: 'var(--text-body)' }}>
+              Antippen zeigt, seit wann du zahlst und was es insgesamt war.
+            </strong>
+          </p>
+        </div>
+      </section>
 
-        {grouped.map((group) => (
-          <div key={group.kind}>
-            <div className="section-head">
-              <span className="section-head__title">{GROUP_LABEL[group.kind]}</span>
-              <span className="section-head__value">{group.entries.length}</span>
-            </div>
-            <section className="card">
-              <div style={{ padding: 'var(--s-2) var(--s-5)' }}>
-                {group.entries.map((entry) => (
-                  <SeriesRow
-                    key={entry.key}
-                    series={entry}
-                    onOpen={() => push({ name: 'series', seriesKey: entry.key })}
-                  />
-                ))}
-              </div>
-            </section>
+      {grouped.map((group) => (
+        <div key={group.kind}>
+          <div className="section-head">
+            <span className="section-head__title">{GROUP_LABEL[group.kind]}</span>
+            <span className="section-head__value">{group.entries.length}</span>
           </div>
-        ))}
-      </div>
+          <section className="card">
+            <div style={{ padding: 'var(--s-2) var(--s-5)' }}>
+              {group.entries.map((entry) => (
+                <SeriesRow
+                  key={entry.key}
+                  series={entry}
+                  onOpen={() => push({ name: 'series', seriesKey: entry.key })}
+                />
+              ))}
+            </div>
+          </section>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/** Als eigener Bildschirm, wenn jemand aus einer Liste hierher springt. */
+export function Recurring() {
+  const { pop } = useSession()
+  return (
+    <Sheet title="Wiederkehrende Buchungen" onBack={pop}>
+      <RecurringContent />
     </Sheet>
   )
 }

@@ -128,6 +128,14 @@ export interface Persona {
   quote: string
   /** Auf welches Interviewdokument sich diese Persona stützt. */
   source: string
+  /**
+   * Jahrgang. Steht im Kundenstamm jeder Bank und wird für die Nettolohn-
+   * Formel gebraucht (BVG-Abzug ist altersabhängig). Der öffentliche
+   * PostFinance-Budgetrechner kennt ihn nicht und rechnet deshalb für alle mit
+   * «aktuelles Jahr − 18», also ohne BVG-Abzug — bei 40 Jahren und 85'000
+   * Brutto sind das CHF 244/Monat zu viel Nettoeinkommen.
+   */
+  birthYear: number
   /** Wohnadresse — steht in der Zusammenfassung, wenn auf ein eigenes Konto geht. */
   address: Address
   accounts: Account[]

@@ -34,6 +34,7 @@ export const nino: Persona = {
   role: '19 · Mediamatiker · war oft im Minus',
   quote: '«Die Ausgaben sind so verdammt stur in einer Liste aufgeführt.»',
   source: 'Interview 04',
+  birthYear: 2007,
   address: { street: 'Länggassstrasse 63', place: '3012 Bern', country: 'Schweiz' },
   accounts,
   transactions: ninoTransactions,
