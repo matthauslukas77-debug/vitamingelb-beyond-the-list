@@ -7,7 +7,7 @@ import { formatDate, formatMonth } from '../../lib/date'
 import { formatAmount } from '../../lib/money'
 import { useSession } from '../../app/session'
 import { CADENCE_LABEL, KIND_ICON, kindLabel, pretty } from '../../app/screens/Recurring'
-import { Icon } from '../../app/shell/Icon'
+import { Icon, type IconName } from '../../app/shell/Icon'
 import { Sheet } from '../../app/shell/Sheet'
 import { dataWindowStart, seriesTenure } from '../engine/tenure'
 
@@ -24,28 +24,36 @@ import { dataWindowStart, seriesTenure } from '../engine/tenure'
  * neu erkannt (`detectRecurring`), damit es keinen zweiten Datenstand gibt.
  */
 
-/** Ein Wert in der Kachelreihe. `text` für Wortangaben, die mehr Platz brauchen. */
-function Cell({ label, value, note, credit, text }: {
+/**
+ * Eine Zeile der Kennzahlen: Symbol, Bezeichnung, Wert.
+ *
+ * Vorher standen die vier Zahlen als 2×2-Kacheln, jede mit einer grauen
+ * Erklärzeile darunter. Das hatte zwei Nachteile: Die längste Erklärung zog
+ * die ganze Rasterzeile hoch und liess neben sich ein Loch, und vier
+ * Kleingedruckte auf engem Raum liest niemand — sie machten die vier Zahlen
+ * unübersichtlich, um die es eigentlich geht.
+ *
+ * Jetzt vier gleich hohe Zeilen: links das Symbol als Anker fürs Auge, rechts
+ * der Wert. Was einschränkt statt erklärt, steht gesammelt als eine Fussnote
+ * unter der Karte — einmal statt viermal.
+ */
+function Metric({ icon, label, value, sub, credit }: {
+  icon: IconName
   label: string
   value: string
-  note?: string
+  /** Kurze Ergänzung direkt am Wert, nicht als eigene Zeile. */
+  sub?: string
   credit?: boolean
-  text?: boolean
 }) {
   return (
-    <span className="tenure__cell">
-      <span className="tenure__label">{label}</span>
-      <span
-        className={
-          'tenure__value' +
-          (text ? ' tenure__value--text' : ' num') +
-          (credit ? ' tenure__value--credit' : '')
-        }
-      >
-        {value}
+    <div className="metric">
+      <span className="metric__icon"><Icon name={icon} size={18} /></span>
+      <span className="metric__label">{label}</span>
+      <span className={'metric__value' + (credit ? ' metric__value--credit' : '')}>
+        <span className="num">{value}</span>
+        {sub && <span className="metric__sub">{sub}</span>}
       </span>
-      {note && <span className="tenure__note">{note}</span>}
-    </span>
+    </div>
   )
 }
 
@@ -117,35 +125,39 @@ export function SeriesDetail({ seriesKey }: { seriesKey: string }) {
 
       <div className="detail__body">
         {/* Die vier Zahlen, die es in der App heute nicht gibt. */}
-        <div className="tenure">
-          <Cell
+        <div className="metrics">
+          <Metric
+            icon="clock"
             label="Dabei seit"
-            text
             value={(tenure.atWindowEdge ? 'mind. ' : '') + tenure.label}
-            note={
-              tenure.atWindowEdge
-                ? `Älteste Buchung ${formatMonth(tenure.since)} — weiter zurück reichen die Daten nicht`
-                : `Erste Buchung ${formatDate(tenure.since)}`
-            }
           />
-          <Cell
+          <Metric
+            icon="list"
             label={income ? 'Eingänge' : 'Belastungen'}
             value={`${tenure.occurrences} ×`}
-            note={`alle ${series.intervalDays} Tage`}
+            sub={`alle ${series.intervalDays} Tage`}
           />
-          <Cell
+          <Metric
+            icon={income ? 'banknoteIn' : 'banknoteOut'}
             label={income ? 'Insgesamt erhalten' : 'Insgesamt bezahlt'}
             value={formatAmount(tenure.total, { sign: false })}
-            note={tenure.atWindowEdge ? 'mindestens — nur der belegte Zeitraum' : 'über die ganze Laufzeit'}
             credit={income}
           />
-          <Cell
+          <Metric
+            icon="calendar"
             label="Pro Jahr"
             value={formatAmount(tenure.perYear, { sign: false })}
-            note={`${CADENCE_LABEL[series.cadence]} × aktueller Betrag`}
+            sub={CADENCE_LABEL[series.cadence]}
             credit={income}
           />
         </div>
+
+        {/* Einmal statt viermal: Woher die Zahlen kommen und wo sie aufhören. */}
+        <p className="metrics__note">
+          {tenure.atWindowEdge
+            ? `Älteste Buchung ${formatMonth(tenure.since)} — weiter zurück reichen die Daten nicht, «Dabei seit» und «Insgesamt» sind deshalb Mindestwerte.`
+            : `Erste Buchung ${formatDate(tenure.since)}. «Pro Jahr» rechnet mit dem aktuellen Betrag.`}
+        </p>
 
         {series.priceChange && tenure.extraPerYear !== undefined && (
           <div className="detail__notice">

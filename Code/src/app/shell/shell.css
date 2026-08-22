@@ -806,26 +806,56 @@ button.row:active { background: var(--tap); }
    Die vier Zahlen, die die App heute nicht kennt: wie lange, wie oft, wie viel
    insgesamt, wie viel im Jahr. Aufbau wie `.liquidity` — zwei Spalten, damit
    sie auf einen Blick zusammen lesbar sind. */
-.tenure {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--s-3);
-  padding-top: var(--s-5);
-}
+/* Die Kennzahlen einer wiederkehrenden Reihe.
 
-.tenure__cell {
-  display: block;
-  padding: var(--s-4);
+   Vorher 2×2-Kacheln mit je einer grauen Erklärzeile. Die längste Erklärung
+   zog die Rasterzeile hoch und liess neben sich ein Loch, und vier
+   Kleingedruckte nebeneinander liest niemand. Jetzt eine ruhige Karte mit vier
+   gleich hohen Zeilen — Symbol, Bezeichnung, Wert — und einer Fussnote
+   darunter statt vier. */
+.metrics {
+  margin-top: var(--s-5);
   border-radius: var(--CornerRadius-R-16);
   background: var(--surface-sunken);
+  overflow: hidden;
 }
 
-.tenure__label { display: block; font-size: 11px; color: var(--text-muted); }
-.tenure__value { display: block; margin-top: 3px; font-size: 19px; font-weight: 700; color: var(--text-strong); }
-.tenure__value--credit { color: var(--text-credit); }
-/* Wortangaben wie «mind. 1 Jahr 11 Monate» brauchen eine Stufe weniger. */
-.tenure__value--text { font-size: 16px; line-height: 1.25; }
-.tenure__note { display: block; margin-top: 4px; font-size: 11px; line-height: 1.35; color: var(--text-muted); }
+.metric {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--s-5);
+}
+
+.metric + .metric { border-top: 1px solid var(--line); }
+
+.metric__icon { flex: none; display: grid; place-items: center; color: var(--petrol5); }
+.metric__label { flex: 1; min-width: 0; font-size: 14px; color: var(--text-body); }
+
+/* Der Wert trägt die Zeile: rechts, kräftig, mit Tabellenziffern. Die
+   Ergänzung («alle 31 Tage») steht daneben und nicht darunter — sie gehört
+   zur Zahl, nicht auf eine eigene Zeile. */
+.metric__value {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-strong);
+  white-space: nowrap;
+}
+
+.metric__value--credit { color: var(--text-credit); }
+.metric__sub { font-size: 12px; font-weight: 400; color: var(--text-muted); }
+
+.metrics__note {
+  margin: var(--s-3) 0 0;
+  padding: 0 var(--s-2);
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
 
 /* Betragsabschnitte und die Buchungsliste der Reihe. */
 .phase {
@@ -986,7 +1016,23 @@ button.row:active { background: var(--tap); }
 }
 
 .detail__logo--brand { background: var(--weiss); }
-.detail__logo img { width: 72px; height: 72px; object-fit: contain; }
+
+/* Das Logo ist quadratisch, die Scheibe rund — und 72px im Quadrat heisst:
+   Die Ecken liegen 50.9px vom Mittelpunkt, die Scheibe hat aber nur 48px
+   Radius. Ohne Beschnitt standen sie an vier Stellen sichtbar über den Kreis
+   hinaus; bei einer dunkel gefüllten Scheibe (Adobe, Spotify) sah man vier
+   spitze Ecken im Rund.
+
+   Beschnitten wird das Bild und nicht die Scheibe: `overflow: hidden` auf der
+   Scheibe würde die Uhr für vorgemerkte Zahlungen mitnehmen, die absichtlich
+   über den Rand ragt. Der Radius ist der der Scheibe — beide Werte stehen
+   zusammen in dieser Datei. */
+.detail__logo img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  clip-path: circle(48px);
+}
 
 .detail__amount { font-size: 30px; font-weight: 400; color: var(--text-strong); }
 .detail__cur { font-size: 22px; }
