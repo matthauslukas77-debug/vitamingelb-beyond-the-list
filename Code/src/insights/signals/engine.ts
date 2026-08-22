@@ -1,7 +1,8 @@
 import type { Account, Persona, Transaction } from '../../data/types'
 import { resolveBrand } from '../../data/brands'
-import { detectRecurring, normaliseMerchant, type RecurringSeries } from '../../domain/recurring'
+import { detectRecurring, normaliseMerchant, PER_YEAR, type RecurringSeries } from '../../domain/recurring'
 import { addDays, parseIso } from '../../lib/date'
+import { formatAmount } from '../../lib/money'
 import { pretty } from '../../app/screens/Recurring'
 import { categorize } from '../budget/mapping'
 import { merchantName } from '../budget/merchant'
@@ -141,6 +142,15 @@ export function suggestedSaving(amount: number): number {
 
 const chf = (rappen: number) => Math.round(Math.abs(rappen) / 100).toLocaleString('de-CH').replace(/\s/g, '’')
 
+/**
+ * Auf den Rappen — für Beträge, die woanders in der App exakt dastehen.
+ *
+ * `chf()` rundet auf ganze Franken; für «CHF 800 mehr Lohn» ist das richtig,
+ * weil dort niemand die Rappen sucht. Ein Abopreis dagegen steht zwei Zeilen
+ * weiter unten in der Liste mit Rappen. Dort muss es dieselbe Zahl sein.
+ */
+const exact = (rappen: number) => formatAmount(rappen, { sign: false })
+
 // ───────────────────────────────────────────────────────────────────────────
 // Die einzelnen Erkenner
 // ───────────────────────────────────────────────────────────────────────────
@@ -152,14 +162,21 @@ function priceSignals(series: RecurringSeries[], today: string): Signal[] {
     .map((entry) => {
       const change = entry.priceChange!
       const delta = Math.abs(change.to - change.from)
-      const perYear = Math.round(delta * (365 / entry.intervalDays))
+      /* Auf den Rappen und mit demselben Jahresfaktor wie das Abo-Detail
+         (`engine/tenure.ts`). Vorher stand hier «CHF 80 statt CHF 72 · CHF 94
+         mehr im Jahr» — auf ganze Franken gerundet und über den gemessenen
+         Abstand hochgerechnet. Direkt darunter steht in der Liste
+         «71.90 → 79.90». Zwei Zahlen für denselben Betrag auf einem
+         Bildschirm, und in einer Banking-App ist das keine Ungenauigkeit,
+         sondern ein Fehler. */
+      const perYear = delta * PER_YEAR[entry.cadence]
       return {
         id: `priceUp:${entry.key}:${change.since}`,
         kind: 'priceUp' as const,
         title: `${seriesName(entry)} ist teurer geworden`,
         body:
-          `Seit ${change.since.slice(8, 10)}.${change.since.slice(5, 7)}. zahlst du CHF ${chf(change.to)} ` +
-          `statt CHF ${chf(change.from)}. Das sind CHF ${chf(perYear)} mehr im Jahr.`,
+          `Seit ${change.since.slice(8, 10)}.${change.since.slice(5, 7)}. zahlst du CHF ${exact(change.to)} ` +
+          `statt CHF ${exact(change.from)}. Das sind CHF ${exact(perYear)} mehr im Jahr.`,
         date: change.since,
         amount: perYear,
         confidence: 0.9,

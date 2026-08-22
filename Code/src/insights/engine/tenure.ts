@@ -1,6 +1,6 @@
 import { parseIso } from '../../lib/date'
 import type { Transaction } from '../../data/types'
-import type { RecurringSeries } from '../../domain/recurring'
+import { PER_YEAR, type RecurringSeries } from '../../domain/recurring'
 
 /**
  * Wie lange läuft diese Reihe schon, und was hat sie insgesamt gekostet?
@@ -52,21 +52,6 @@ export interface SeriesTenure {
   phases: AmountPhase[]
   /** Was die Preiserhöhung im Jahr ausmacht, positiv = teurer geworden. */
   extraPerYear?: number
-}
-
-/**
- * Wie oft eine Reihe im Jahr kommt — aus dem erkannten Rhythmus, nicht über den
- * Median-Abstand. Sonst stünde bei einem Monatsabo von 79.90 «941.52 im Jahr»,
- * weil der gemessene Abstand 31 statt 30.44 Tage ist. Eine Zahl, die der Nutzer
- * im Kopf nachrechnet, muss aufgehen: 12 × 79.90 = 958.80.
- */
-const PER_YEAR: Record<RecurringSeries['cadence'], number> = {
-  weekly: 52,
-  biweekly: 26,
-  monthly: 12,
-  quarterly: 4,
-  semiannual: 2,
-  yearly: 1,
 }
 
 function daysBetween(fromIso: string, toIso: string): number {

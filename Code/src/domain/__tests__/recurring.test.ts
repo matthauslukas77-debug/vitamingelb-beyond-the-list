@@ -99,6 +99,22 @@ describe('detectRecurring — Eigenschaften der Reihen', () => {
     expect(spotify.monthlyAmount).toBeCloseTo(spotify.amount, -2)
   })
 
+  it('nimmt bei einem Monatsabo genau den Betrag, nicht 30.44/31 davon', () => {
+    /* Sonst summieren fünf Monatsabos zu einer Zahl, die neben den Zeilen
+       steht, aus denen sie entsteht — und nicht zu ihnen passt. Gerechnet wird
+       über den erkannten Rhythmus (`PER_YEAR`), nicht über den Median-Abstand. */
+    const monthly = reto.filter((entry) => entry.cadence === 'monthly')
+    expect(monthly.length).toBeGreaterThan(3)
+    for (const entry of monthly) expect(entry.monthlyAmount).toBe(entry.amount)
+  })
+
+  it('verteilt eine Jahresrechnung auf zwölf Monate', () => {
+    const yearly = reto.filter((entry) => entry.cadence === 'yearly')
+    for (const entry of yearly) {
+      expect(entry.monthlyAmount).toBe(Math.round(entry.amount / 12))
+    }
+  })
+
   it('sagt die nächste Belastung nach dem letzten Vorkommen voraus', () => {
     for (const entry of reto) {
       expect(entry.nextExpected > entry.lastSeen).toBe(true)

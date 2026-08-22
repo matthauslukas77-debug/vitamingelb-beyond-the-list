@@ -32,7 +32,11 @@ export interface RecurringSeries {
   intervalDays: number
   /** Aktueller Betrag in Rappen (negativ = Belastung). */
   amount: number
-  /** Auf einen Monat umgerechnet, damit Wöchentliches vergleichbar wird. */
+  /**
+   * Auf einen Monat umgerechnet, damit Wöchentliches und Jährliches
+   * vergleichbar werden — über den Rhythmus (`PER_YEAR`), nicht über den
+   * gemessenen Abstand. Bei einem Monatsabo ist das genau `amount`.
+   */
   monthlyAmount: number
   occurrences: number
   firstSeen: string
@@ -56,7 +60,23 @@ const CADENCES: { cadence: Cadence; days: number; tolerance: number }[] = [
   { cadence: 'yearly', days: 365, tolerance: 25 },
 ]
 
-const DAYS_PER_MONTH = 30.44
+/**
+ * Wie oft eine Reihe im Jahr kommt — aus dem erkannten Rhythmus, nicht aus dem
+ * gemessenen Abstand.
+ *
+ * Der Median-Abstand eines Monatsabos ist 30 oder 31 Tage, nie 30.44. Rechnete
+ * die Monatszahl damit, käme bei Livias fünf Abos und ihrem Dauerauftrag
+ * «630.21 pro Monat» heraus, während die Zeilen darunter sichtbar 641.80
+ * ergeben. Eine Zahl, die der Nutzer im Kopf nachrechnet, muss aufgehen.
+ */
+export const PER_YEAR: Record<Cadence, number> = {
+  weekly: 52,
+  biweekly: 26,
+  monthly: 12,
+  quarterly: 4,
+  semiannual: 2,
+  yearly: 1,
+}
 
 /**
  * Reduziert einen Buchungstext auf den Händler.
@@ -191,7 +211,7 @@ export function detectRecurring(
     if (stable.length / amounts.length < 0.6) continue
 
     const last = sorted[sorted.length - 1]
-    const perMonth = Math.round(last.amount * (DAYS_PER_MONTH / interval))
+    const perMonth = Math.round((last.amount * PER_YEAR[cadence]) / 12)
 
     out.push({
       key,

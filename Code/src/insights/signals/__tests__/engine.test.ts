@@ -54,6 +54,16 @@ describe('Signale — Schicht 1', () => {
     expect(signal.actions.some((action) => action.kind === 'openSeries')).toBe(true)
   })
 
+  it('nennt den Preis auf den Rappen und rechnet das Jahr mit dem Rhythmus', () => {
+    /* Der Satz steht auf demselben Bildschirm wie die Liste, in der «71.90 →
+       79.90» stehen. Rundete er auf ganze Franken, stritte die Karte mit der
+       Zeile darunter — und 12 × 8.00 muss 96.00 ergeben, nicht 94. */
+    const signal = signalsOf('reto').find((entry) => entry.kind === 'priceUp')!
+    expect(signal.body).toContain('CHF 79.90')
+    expect(signal.body).toContain('CHF 71.90')
+    expect(signal.body).toContain('CHF 96.00 mehr im Jahr')
+  })
+
   it('fragt bei Ninos zwei Buchungen, statt ein Abo zu behaupten', () => {
     const signal = signalsOf('nino').find((entry) => entry.kind === 'subscriptionSuspect')!
     expect(signal.title).toMatch(/\?$/)
