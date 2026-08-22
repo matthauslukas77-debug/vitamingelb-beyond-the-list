@@ -3,7 +3,7 @@ import { resolveBrand } from '../../data/brands'
 import { CATEGORY_LABELS } from '../../data/categories'
 import { TODAY } from '../../data/types'
 import { detectRecurring } from '../../domain/recurring'
-import { formatDate, formatMonth } from '../../lib/date'
+import { formatDate, formatMonth, formatMonthShort, formatUntil } from '../../lib/date'
 import { formatAmount } from '../../lib/money'
 import { useSession } from '../../app/session'
 import { CADENCE_LABEL, KIND_ICON, kindLabel, pretty } from '../../app/screens/Recurring'
@@ -34,8 +34,9 @@ import { dataWindowStart, seriesTenure } from '../engine/tenure'
  * unübersichtlich, um die es eigentlich geht.
  *
  * Jetzt vier gleich hohe Zeilen: links das Symbol als Anker fürs Auge, rechts
- * der Wert. Was einschränkt statt erklärt, steht gesammelt als eine Fussnote
- * unter der Karte — einmal statt viermal.
+ * der Wert. Die Ergänzung steht klein neben dem Wert und sagt, wie er zustande
+ * kommt («12 × 89.00») oder worauf er sich bezieht («seit Sept. 2024») — kein
+ * Kleingedrucktes, sondern der fehlende Teil der Zahl.
  */
 function Metric({ icon, label, value, sub, credit }: {
   icon: IconName
@@ -121,6 +122,22 @@ export function SeriesDetail({ seriesKey }: { seriesKey: string }) {
           <span className={`kind kind--${series.kind}`}>{kindLabel(series)}</span>
           {CATEGORY_LABELS[series.category]}
         </span>
+
+        {/* Die Frage, die vor jeder anderen kommt: Wann trifft es mich wieder?
+            Das Datum allein beantwortet sie nicht — niemand rechnet im Kopf
+            aus, wie weit der 2. September weg ist. Nur die Restzeit, denn das
+            Datum steht unten in «Nächste erwartete Buchung».
+
+            Liegt der Termin schon in der Vergangenheit, ist die Reihe zu Ende —
+            ein gekündigtes Abo, ein alter Arbeitgeber. Eine Restzeit wäre dann
+            eine Zusage, die niemand einhält, und die Zeile bleibt weg. */}
+        {series.nextExpected >= TODAY && (
+          <span className="detail__countdown">
+            <Icon name="clock" size={15} />
+            {income ? 'Nächster Eingang' : 'Nächste Zahlung'}{' '}
+            <strong>{formatUntil(TODAY, series.nextExpected)}</strong>
+          </span>
+        )}
       </div>
 
       <div className="detail__body">
@@ -129,7 +146,7 @@ export function SeriesDetail({ seriesKey }: { seriesKey: string }) {
           <Metric
             icon="clock"
             label="Dabei seit"
-            value={(tenure.atWindowEdge ? 'mind. ' : '') + tenure.label}
+            value={tenure.label}
           />
           <Metric
             icon="list"
@@ -141,23 +158,27 @@ export function SeriesDetail({ seriesKey }: { seriesKey: string }) {
             icon={income ? 'banknoteIn' : 'banknoteOut'}
             label={income ? 'Insgesamt erhalten' : 'Insgesamt bezahlt'}
             value={formatAmount(tenure.total, { sign: false })}
+            /* Der Zeitraum gehört an die Summe, die er begrenzt — vorher stand
+               er als Fussnote unter der Karte und musste dort erst erklären,
+               auf welche Zahl er sich bezieht. */
+            sub={`seit ${formatMonthShort(tenure.since)}`}
             credit={income}
           />
           <Metric
             icon="calendar"
             label="Pro Jahr"
             value={formatAmount(tenure.perYear, { sign: false })}
-            sub={CADENCE_LABEL[series.cadence]}
+            /* Vorher stand hier die Kadenz: «Pro Jahr 1'068.00 monatlich».
+               Jetzt die Rechnung, aus der die Jahreszahl entsteht — 12 × 89.00.
+               Bei einem Jahresabo wäre «1 × 89.00» nur Lärm, dort bleibt es weg. */
+            sub={
+              tenure.perYearCount > 1
+                ? `${tenure.perYearCount} × ${formatAmount(series.amount, { sign: false })}`
+                : undefined
+            }
             credit={income}
           />
         </div>
-
-        {/* Einmal statt viermal: Woher die Zahlen kommen und wo sie aufhören. */}
-        <p className="metrics__note">
-          {tenure.atWindowEdge
-            ? `Älteste Buchung ${formatMonth(tenure.since)} — weiter zurück reichen die Daten nicht, «Dabei seit» und «Insgesamt» sind deshalb Mindestwerte.`
-            : `Erste Buchung ${formatDate(tenure.since)}. «Pro Jahr» rechnet mit dem aktuellen Betrag.`}
-        </p>
 
         {series.priceChange && tenure.extraPerYear !== undefined && (
           <div className="detail__notice">
@@ -189,18 +210,38 @@ export function SeriesDetail({ seriesKey }: { seriesKey: string }) {
           </div>
         )}
 
-        <div className="detail__section">
-          <div className="detail__label">Nächste erwartete Buchung</div>
-          <div className="detail__row">
-            <span className="detail__icon"><Icon name="calendar" size={22} accent /></span>
-            <span className="detail__main">
-              <strong className="detail__strong">{formatDate(series.nextExpected)}</strong>
-              <span className="detail__sub">
-                Erwartet, nicht angekündigt — gerechnet aus dem Abstand der letzten Buchungen
+        {/* Liegt der erwartete Termin in der Vergangenheit, ist die Reihe zu
+            Ende — ein gekündigtes Abo, ein alter Arbeitgeber. Dann stand hier
+            «Nächste erwartete Buchung 25.02.2026», ein halbes Jahr nach dem
+            Datum: eine Zusage, die niemand einhält. Dieselbe Unterscheidung
+            trifft die Abo-Liste bereits. */}
+        {series.nextExpected < TODAY ? (
+          <div className="detail__section">
+            <div className="detail__label">Letzte Buchung</div>
+            <div className="detail__row">
+              <span className="detail__icon"><Icon name="calendar" size={22} accent /></span>
+              <span className="detail__main">
+                <strong className="detail__strong">{formatDate(series.lastSeen)}</strong>
+                <span className="detail__sub">
+                  Seither ist nichts mehr gekommen — die Reihe scheint beendet
+                </span>
               </span>
-            </span>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="detail__section">
+            <div className="detail__label">Nächste erwartete Buchung</div>
+            <div className="detail__row">
+              <span className="detail__icon"><Icon name="calendar" size={22} accent /></span>
+              <span className="detail__main">
+                <strong className="detail__strong">{formatDate(series.nextExpected)}</strong>
+                <span className="detail__sub">
+                  Erwartet, nicht angekündigt — gerechnet aus dem Abstand der letzten Buchungen
+                </span>
+              </span>
+            </div>
+          </div>
+        )}
 
         <div className="detail__section">
           <div className="detail__label">

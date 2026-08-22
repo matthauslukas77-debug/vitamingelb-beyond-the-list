@@ -849,13 +849,12 @@ button.row:active { background: var(--tap); }
 .metric__value--credit { color: var(--text-credit); }
 .metric__sub { font-size: 12px; font-weight: 400; color: var(--text-muted); }
 
-.metrics__note {
-  margin: var(--s-3) 0 0;
-  padding: 0 var(--s-2);
-  font-size: 12px;
-  line-height: 1.45;
-  color: var(--text-muted);
-}
+/* Der Preishinweis folgt direkt auf die Kennzahlen-Karte und bringt keinen
+   eigenen Abstand mit — den holte früher die Fussnote dazwischen. Die anderen
+   Abschnitte setzen ihren Abstand selbst (`.detail__section`), und in den
+   Bewegungsdetails steht der Hinweis zuoberst im Body und braucht ihn nicht.
+   Deshalb hier als Geschwisterregel und nicht am Hinweis selbst. */
+.metrics + .detail__notice { padding-top: var(--s-6); }
 
 /* Betragsabschnitte und die Buchungsliste der Reihe. */
 .phase {
@@ -1038,6 +1037,25 @@ button.row:active { background: var(--tap); }
 .detail__cur { font-size: 22px; }
 .detail__meta { margin-top: var(--s-3); font-size: 15px; color: var(--text-body); text-align: center; }
 .detail__meta strong { font-weight: 700; color: var(--text-strong); }
+
+/* «Nächste Zahlung in 11 Tagen» — die Restzeit als eigene Zeile unter der
+   Kategorie. Als Pille abgesetzt, weil sie nicht beschreibt, was die Buchung
+   ist, sondern was als Nächstes passiert: die einzige Angabe im Hero, die
+   morgen anders lautet. */
+.detail__countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+  padding: var(--s-2) var(--s-4);
+  border-radius: 999px;
+  background: var(--surface-card);
+  font-size: 14px;
+  color: var(--text-body);
+}
+
+.detail__countdown svg { color: var(--petrol5); }
+.detail__countdown strong { font-weight: 700; color: var(--text-strong); }
 
 .detail__body { padding: var(--s-6) var(--s-5) var(--s-9); background: var(--surface-card); }
 

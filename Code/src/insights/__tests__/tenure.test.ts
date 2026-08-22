@@ -108,6 +108,19 @@ describe('seriesTenure', () => {
     expect(seriesTenure(series, bookings, opts).label).toBe('1 Jahr 11 Monate')
   })
 
+  /* Ein gekündigtes Abo, ein alter Arbeitgeber: Der Zeitraum endet mit der
+     letzten Zahlung. Bis heute weiterzuzählen hiesse, eine Reihe wachsen zu
+     lassen, die es nicht mehr gibt. */
+  it('zählt bei beendeten Reihen nur bis zur letzten Buchung', () => {
+    const ended = { ...series, lastSeen: '2026-02-25', nextExpected: '2026-03-27' }
+    expect(seriesTenure(ended, bookings, opts).label).toBe('1 Jahr 5 Monate')
+  })
+
+  it('zählt bis heute, solange die nächste Buchung noch aussteht', () => {
+    const live = { ...series, nextExpected: '2026-08-25' }
+    expect(seriesTenure(live, bookings, opts).label).toBe('1 Jahr 11 Monate')
+  })
+
   it('markiert den Rand des Datenfensters', () => {
     expect(seriesTenure(series, bookings, opts).atWindowEdge).toBe(true)
   })

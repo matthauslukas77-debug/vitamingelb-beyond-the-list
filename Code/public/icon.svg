@@ -1,16 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <!-- Eigene Marke für den Prototyp: die Liste, aus der etwas heraussteigt.
-       Bewusst NICHT das PostFinance-Logo — Farbwelt ja, Marke nein. -->
-  <rect width="512" height="512" fill="#004B5A"/>
-  <g stroke="#FFFFFF" stroke-width="26" stroke-linecap="round" opacity="0.55">
-    <path d="M120 330h150"/>
-    <path d="M120 392h230"/>
-  </g>
-  <path d="M120 268h96" stroke="#FFFFFF" stroke-width="26" stroke-linecap="round" opacity="0.55"/>
-  <path d="M140 214 236 214" stroke="#FFFFFF" stroke-width="26" stroke-linecap="round" opacity="0"/>
-  <path d="M128 236 216 152 280 208 392 104"
-        fill="none" stroke="#FFCC00" stroke-width="30"
-        stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M312 104h80v80" fill="none" stroke="#FFCC00" stroke-width="30"
-        stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="512" height="512" role="img" aria-label="PostFinance">
+  <!-- App-Symbol für den Home-Bildschirm: das PostFinance-Zeichen auf Gelb,
+       wie bei der echten App. Der Prototyp gibt sich als PostFinance-App aus —
+       ein eigenes Zeichen auf dem Home-Bildschirm hätte die Illusion gebrochen,
+       auf die die ganze Demo baut.
+
+       Die Kontur ist nicht nachgezeichnet, sondern aus `logos/postfinance.png`
+       (128 × 128) vermessen: Lauflängen pro Pixelzeile, daraus die Eckpunkte,
+       die Kurven per Suchlauf angepasst. Deshalb steht hier auch das 128er
+       viewBox — jede Zahl unten ist eine gemessene Pixelkoordinate.
+       Abweichung zur Vorlage: 20 von 3094 Zeichen-Pixeln (0.65 %), alle am
+       Rand, also Kantenglättung.
+
+       Das Zeichen ist punktsymmetrisch: die untere Hälfte ist die um 180°
+       gedrehte obere (x → 128−x, y → 128−y). -->
+  <rect width="128" height="128" fill="#FFCC00"/>
+  <path fill="#004B5A" d="
+    M55 25 H79
+    C79 42 76 47.5 71.5 58
+    C77.5 54 89 52 101 52
+    V76
+    C83.5 76 73 78 73 103
+    H49
+    C49 86 52 80.5 56.5 70
+    C50.5 74 39 76 27 76
+    V52
+    C44.5 52 55 50 55 25
+    Z"/>
 </svg>

@@ -24,9 +24,9 @@ export interface AmountPhase {
 }
 
 export interface SeriesTenure {
-  /** Tage seit der ersten gefundenen Buchung. */
+  /** Tage von der ersten Buchung bis heute — bei beendeten Reihen bis zur letzten. */
   days: number
-  /** Volle Monate seit der ersten gefundenen Buchung. */
+  /** Volle Monate über denselben Zeitraum wie `days`. */
   months: number
   /** «2 Jahre 6 Monate» — die Angabe, die auf den Bildschirm gehört. */
   label: string
@@ -42,6 +42,12 @@ export interface SeriesTenure {
   total: number
   /** Aktueller Betrag × Häufigkeit im Jahr. */
   perYear: number
+  /**
+   * Wie oft die Reihe im Jahr kommt — der Faktor hinter `perYear`. Steht auf
+   * dem Bildschirm neben der Jahreszahl («12 × 89.00»), damit die Rechnung
+   * sichtbar ist statt nur ihr Ergebnis.
+   */
+  perYearCount: number
   /** Betragsabschnitte, ältester zuerst. */
   phases: AmountPhase[]
   /** Was die Preiserhöhung im Jahr ausmacht, positiv = teurer geworden. */
@@ -131,8 +137,13 @@ export function seriesTenure(
     .map((tx) => ({ date: tx.date, amount: tx.amount }))
     .sort((a, b) => (a.date < b.date ? -1 : 1))
 
-  const days = daysBetween(series.firstSeen, today)
-  const months = monthsBetween(series.firstSeen, today)
+  // Eine beendete Reihe wächst nicht weiter. Beim alten Arbeitgeber lief der
+  // Lohn von September 2024 bis Februar 2026 — das sind 1 Jahr 5 Monate, nicht
+  // 1 Jahr 10 Monate bis heute. Als beendet gilt, was der erkannte Rhythmus
+  // längst hätte nachliefern müssen: `nextExpected` liegt in der Vergangenheit.
+  const until = series.nextExpected < today ? series.lastSeen : today
+  const days = daysBetween(series.firstSeen, until)
+  const months = monthsBetween(series.firstSeen, until)
 
   // Fängt die Reihe im ersten Rhythmus des Datenfensters an, kann sie älter
   // sein. Mindestens 35 Tage, damit auch Monatsabos am Rand erfasst werden.
@@ -153,6 +164,7 @@ export function seriesTenure(
     occurrences: entries.length || series.occurrences,
     total: entries.reduce((sum, entry) => sum + entry.amount, 0),
     perYear: series.amount * PER_YEAR[series.cadence],
+    perYearCount: PER_YEAR[series.cadence],
     phases: amountPhases(entries),
     extraPerYear,
   }

@@ -61,6 +61,37 @@ const MONTHS_SHORT_DE = [
   'Juli', 'Aug.', 'Sept.', 'Okt.', 'Nov.', 'Dez.',
 ]
 
+/** «Sept. 2024» — Monat und Jahr, wo die ausgeschriebene Form die Zeile sprengt. */
+export function formatMonthShort(iso: string): string {
+  const date = parseIso(iso)
+  return `${MONTHS_SHORT_DE[date.getMonth()]} ${date.getFullYear()}`
+}
+
+/**
+ * Wie weit ein Termin weg ist, in der Form, in der man es sagt: «heute»,
+ * «morgen», «in 11 Tagen», «in 5 Monaten».
+ *
+ * Ab zwei vollen Monaten wird auf Monate umgestellt — «in 340 Tagen» ist keine
+ * Antwort auf die Frage, die jemand vor einem Jahresabo hat. Die Umschaltung
+ * hängt an den vollen Monaten und nicht an einer Tagesschwelle, sonst käme bei
+ * 60 Tagen über einen kurzen Monat «in 1 Monaten» heraus.
+ *
+ * Liegt `toIso` in der Vergangenheit, ist die Angabe sinnlos — das prüft der
+ * Aufrufer, hier kommt dann `heute` zurück.
+ */
+export function formatUntil(fromIso: string, toIso: string): string {
+  const from = parseIso(fromIso)
+  const to = parseIso(toIso)
+  const days = Math.round((to.getTime() - from.getTime()) / 86_400_000)
+  if (days <= 0) return 'heute'
+  if (days === 1) return 'morgen'
+
+  let months = (to.getFullYear() - from.getFullYear()) * 12 + (to.getMonth() - from.getMonth())
+  if (to.getDate() < from.getDate()) months -= 1
+  if (months < 2) return `in ${days} Tagen`
+  return months >= 12 ? 'in einem Jahr' : `in ${months} Monaten`
+}
+
 /**
  * Zeitraum wie in den Analysen: «Jan. – Aug. 2026». Ein einzelner Monat steht
  * ohne Bindestrich da, ein Zeitraum über den Jahreswechsel mit beiden Jahren.
