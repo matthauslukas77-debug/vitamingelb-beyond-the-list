@@ -16,7 +16,7 @@ Danach `http://localhost:5173` öffnen. Getestet mit Node 22+ (entwickelt auf No
 | Befehl | Zweck |
 |---|---|
 | `npm run dev` | Entwicklungsserver |
-| `npm test` | Testlauf (24 Tests) |
+| `npm test` | Testlauf |
 | `npm run build` | Typprüfung und Produktionsbuild nach `dist/` |
 | `npm run preview` | Produktionsbuild lokal ausliefern |
 
@@ -34,6 +34,23 @@ simulierten Statusleiste. Am Schreibtisch bleibt der Rahmen, damit die Proportio
 Vollbild ohne Safari-Leisten — das ist die Ansicht für die Videoaufnahme. Voraussetzung ist
 eine HTTPS-URL (z. B. über `tailscale serve`) oder `localhost`.
 
+## Händlerlogos
+
+In der Buchungsliste steht links das echte Logo des Händlers, sobald der Buchungstext
+sich auflösen lässt. Zuständig ist [`src/data/brands.ts`](src/data/brands.ts):
+eine Musterliste, längster Treffer gewinnt, Vergleich nur an Wortgrenzen. Kein Netz,
+kein Modell — ein falsches Logo wäre schlimmer als keines.
+
+* Registry: [`src/data/brands.data.ts`](src/data/brands.data.ts), 400 Marken.
+  **Generiert** aus `WORKSPACE/05_assets_scratch/abo_logos/logos.json` — nicht von Hand pflegen.
+* Bilddateien: `public/logos/`, auf 128 px verkleinert (3.3 MB gesamt).
+* Darstellung: [`src/app/shell/BrandAvatar.tsx`](src/app/shell/BrandAvatar.tsx) —
+  Logo, sonst die Farbscheibe der Persona, sonst das Kategoriesymbol.
+
+Getroffen werden je nach Persona 61–84 % der Buchungen. Was übrig bleibt, sind
+`SIX Payment <Nr>`-Terminals, lokale Betriebe ohne Marke und generische Texte wie
+`KRANKENKASSE PRAEMIE` — genau die Fälle, für die es die Rückfrage an den Nutzer braucht.
+
 ## Direktlinks
 
 Für Demo, Videoaufnahme und Screenshots lässt sich jeder Einstieg per URL ansteuern:
@@ -46,7 +63,7 @@ Für Demo, Videoaufnahme und Screenshots lässt sich jeder Einstieg per URL anst
 
 Zusätzlich `&tab=payments` für den Startreiter.
 
-Personas: `fritz` · `janic` · `katja` · `michael`.
+Personas: `fritz` · `janic` · `katja` · `michael` · `mia`.
 Reiter: `home` · `payments` · `invest` · `offers` · `services`.
 Bildschirme: `account` · `analysis` · `scan` · `pay` · `transfer` · `search`.
 

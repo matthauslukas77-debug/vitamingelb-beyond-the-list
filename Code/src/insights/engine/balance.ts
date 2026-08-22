@@ -151,7 +151,7 @@ export function buildTimeline({
   transactions,
   pendingOrders,
   today,
-  historyDays = 180,
+  historyDays = 90,
 }: TimelineOptions): BalanceTimeline {
   const own = transactions.filter((tx) => tx.accountId === account.id)
   const from = addDays(today, -historyDays)

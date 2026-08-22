@@ -3,7 +3,6 @@ import type { Account } from '../../data/types'
 import { TODAY } from '../../data/types'
 import { formatDayHeading } from '../../lib/date'
 import { formatAmount, formatMoney } from '../../lib/money'
-import { Icon } from '../../app/shell/Icon'
 import type { useSession } from '../../app/session'
 import { buildTimeline } from '../engine/balance'
 import { BalanceChart } from '../charts/BalanceChart'
@@ -43,8 +42,8 @@ export function AccountBalanceCard({
   const count = paymentsBeforeIncome.length
 
   return (
-    <button className="balance-card" onClick={onOpen}>
-      <span className="balance-card__head">
+    <div className="balance-card">
+      <button className="balance-card__head" onClick={onOpen}>
         <span className="balance-card__line">
           <span className="balance-card__name">{account.name}</span>
           <span className="balance-card__now num">
@@ -52,41 +51,33 @@ export function AccountBalanceCard({
           </span>
         </span>
         <span className="balance-card__iban">{account.iban}</span>
-      </span>
+      </button>
 
       <BalanceChart timeline={timeline} />
 
-      <span className={'balance-card__verdict' + (critical ? ' is-critical' : tight ? ' is-tight' : '')}>
-        <Icon name={critical ? 'bell' : 'analysis'} size={16} />
-        <span>
-          Tiefster Stand <strong className="num">{formatAmount(low.balance, { sign: false })}</strong>{' '}
-          am {formatDayHeading(low.date, TODAY).replace(/ \d{4}$/, '')}
-          {count > 0 && ` · ${count} ${count === 1 ? 'Zahlung' : 'Zahlungen'} vorher`}
+      <span className={'liquidity' + (critical ? ' is-critical' : tight ? ' is-tight' : '')}>
+        <span className="liquidity__cell">
+          <span className="liquidity__label">Tiefster Stand</span>
+          <span className="liquidity__value num">{formatAmount(low.balance, { sign: false })}</span>
+          <span className="liquidity__when">
+            {formatDayHeading(low.date, TODAY).replace(/ \d{4}$/, '')}
+            {count > 0 && ` · nach ${count} ${count === 1 ? 'Zahlung' : 'Zahlungen'}`}
+          </span>
         </span>
-      </span>
 
-      <span className="balance-card__rows">
         {nextIncome && (
-          <span className="balance-card__row">
-            <span className="balance-card__dot" style={{ background: 'var(--info2)' }} />
-            <span className="balance-card__label">
-              Nächster Eingang · {formatDayHeading(nextIncome.date, TODAY).replace(/ \d{4}$/, '')}
-            </span>
-            <span className="balance-card__value num" style={{ color: 'var(--text-credit)' }}>
+          <span className="liquidity__cell">
+            <span className="liquidity__label">Nächster Eingang</span>
+            <span className="liquidity__value num" style={{ color: 'var(--text-credit)' }}>
               {formatAmount(nextIncome.amount)}
             </span>
-          </span>
-        )}
-        {count > 0 && (
-          <span className="balance-card__row">
-            <span className="balance-card__dot" style={{ background: 'var(--postfinancegelb)' }} />
-            <span className="balance-card__label">
-              Geplant bis dahin · {count} {count === 1 ? 'Zahlung' : 'Zahlungen'}
+            <span className="liquidity__when">
+              {formatDayHeading(nextIncome.date, TODAY).replace(/ \d{4}$/, '')}
+              {count > 0 && ` · ${formatAmount(plannedSum, { sign: false })} vorher`}
             </span>
-            <span className="balance-card__value num">{formatAmount(plannedSum)}</span>
           </span>
         )}
       </span>
-    </button>
+    </div>
   )
 }
