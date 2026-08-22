@@ -1373,4 +1373,4 @@ button.set-row:active { background: var(--tap); }
 
 /* Der linke Platz in der Kopfzeile. Im Nachbau leer; was dort erscheint,
    kommt von aussen — siehe `TopBar` in `parts.tsx`. */
-.topbar__leading { display: flex; align-items: center; }
+.topbar__leading { display: flex; align-items: center; gap: var(--s-3); }

@@ -4,6 +4,7 @@ import { Icon } from '../shell/Icon'
 import { Slot } from '../shell/Slot'
 import { Card, CircleRow, Row, SectionHead, TopBar } from '../shell/parts'
 import { SignalsButton } from '../../insights/cards/SignalsButton'
+import { TipsButton } from '../../insights/cards/TipsButton'
 
 /**
  * Home — Tab 1.
@@ -14,7 +15,7 @@ export function Home() {
 
   return (
     <div className="screen">
-      <TopBar onSearch={() => push({ name: 'search' })} leading={<SignalsButton />} />
+      <TopBar onSearch={() => push({ name: 'search' })} leading={<><SignalsButton /><TipsButton /></>} />
       <h1 className="screen__title">Home</h1>
 
       <CircleRow

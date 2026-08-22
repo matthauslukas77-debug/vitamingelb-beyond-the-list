@@ -1,0 +1,127 @@
+/* ── Unsere Schicht ────────────────────────────────────────────────────────
+   «Das kann die App».
+
+   Nur Tokens aus `theme/tokens.css` und die Anwendungsvariablen aus
+   `theme/base.css`. Die Zeile ist absichtlich nah an `.metric` und `.set-row`
+   gebaut: Ein Bildschirm, der erklärt, darf nicht selbst wie eine Ausnahme
+   aussehen.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.tips__lead {
+  margin: 0 0 var(--s-6);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.tips {
+  border-radius: var(--CornerRadius-R-16);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.tip + .tip { border-top: 1px solid var(--line); }
+
+.tip__head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-4);
+  width: 100%;
+  padding: var(--s-5);
+  text-align: left;
+}
+
+.tip__head:active { background: var(--tap); }
+
+.tip__icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface-sunken);
+  color: var(--text-strong);
+}
+
+.tip__main { flex: 1; min-width: 0; }
+
+.tip__title {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+/* Der Punkt ist derselbe wie am Services-Reiter und am Signal-Knopf. Drei
+   Bedeutungen für eine Form wären zu viel — hier heisst er überall dasselbe:
+   «da ist etwas, das du noch nicht gesehen hast». */
+.tip__new {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--danger3);
+}
+
+.tip__what {
+  display: block;
+  margin-top: 3px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text-body);
+}
+
+.tip__chevron {
+  flex: none;
+  display: grid;
+  place-items: center;
+  padding-top: 8px;
+  color: var(--petrol4);
+  transition: transform 160ms ease;
+}
+
+.tip--open .tip__chevron { transform: rotate(180deg); }
+
+/* Der aufgeklappte Teil sitzt eingerückt unter dem Titel, auf der Achse des
+   Textes und nicht des Symbols — so liest er sich als Fortsetzung und nicht
+   als neuer Block. */
+.tip__body {
+  padding: 0 var(--s-5) var(--s-5) calc(var(--s-5) + 36px + var(--s-4));
+}
+
+.tip__how {
+  margin: 0 0 var(--s-4);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-body);
+}
+
+.tip__how-label {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Gelb, weil es die einzige Handlung auf diesem Bildschirm ist. */
+.tip__go {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 10px 18px;
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--action);
+  color: var(--action-ink);
+  font-size: 15px;
+  font-weight: 700;
+  transition: transform 120ms ease;
+}
+
+.tip__go:active { transform: scale(var(--press)); }

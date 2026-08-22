@@ -34,6 +34,9 @@ export type Screen =
   /* Das Zuordnungsbrett. Eigener Bildschirm, weil er als einziger nicht
      scrollt: Quellen und Töpfe müssen gleichzeitig sichtbar sein. */
   | { name: 'assign' }
+  /* «Das kann die App» — unsere Funktionen in je einem Satz. Ein Blatt und
+     kein Reiter: Man geht hin, liest, und ist wieder da, wo man war. */
+  | { name: 'tips' }
   | { name: 'scan' }
   /* `save` belegt den Zahlungsfluss vor — gesetzt von einer Signalkarte. */
   | { name: 'pay'; save?: number }
