@@ -1,174 +1,185 @@
-import { useMemo, useState } from 'react'
-import { CATEGORY_COLORS, CATEGORY_LABELS } from '../../data/categories'
-import { TODAY, type Category, type Transaction } from '../../data/types'
-import { addDays, formatMonth } from '../../lib/date'
-import { formatMoney } from '../../lib/money'
+import { useMemo } from 'react'
+import { TODAY, type Transaction } from '../../data/types'
+import { formatAmount } from '../../lib/money'
+import { parseIso } from '../../lib/date'
 import { useSession } from '../session'
 import { Icon } from '../shell/Icon'
 import { Slot } from '../shell/Slot'
 import { Sheet } from '../shell/Sheet'
-import { Card, CircleRow, Row } from '../shell/parts'
+import { CircleRow } from '../shell/parts'
 
-const WINDOW_DAYS = 90
+/**
+ * Analysen — der Bildschirm, um den es in der Challenge geht.
+ * Vorlage: PREP/07_screenshots (echtes Bildschirmfoto, August 2026)
+ *
+ * Aufbau der echten Ansicht:
+ *   · Auswahl «Zusammengefasst»
+ *   · Doppelring: aussen die Einnahmen, innen die Ausgaben plus der Saldo in Gelb
+ *   · Mitte: Zeitraum, Saldo, Durchschnitt pro Monat
+ *   · Legende, dann Budgets und «Meine Abos»
+ *
+ * Bewusst rein deskriptiv — genau das ist der Ist-Zustand, den wir übertreffen wollen.
+ */
 
-interface Segment {
-  category: Category
-  total: number
-  count: number
+const RING_GAP = 6
+
+interface Totals {
+  income: number
+  expenses: number
+  incomeCount: number
+  expenseCount: number
+  months: number
 }
 
-/** Ausgaben nach Kategorie, grösste zuerst. */
-function segmentsOf(transactions: Transaction[]): Segment[] {
-  const map = new Map<Category, Segment>()
+function totalsOf(transactions: Transaction[], months: number): Totals {
+  let income = 0
+  let expenses = 0
+  let incomeCount = 0
+  let expenseCount = 0
   for (const tx of transactions) {
-    if (tx.amount >= 0) continue
-    const entry = map.get(tx.category)
-    if (entry) {
-      entry.total += -tx.amount
-      entry.count += 1
+    if (tx.amount > 0) {
+      income += tx.amount
+      incomeCount += 1
     } else {
-      map.set(tx.category, { category: tx.category, total: -tx.amount, count: 1 })
+      expenses += -tx.amount
+      expenseCount += 1
     }
   }
-  return [...map.values()].sort((a, b) => b.total - a.total)
+  return { income, expenses, incomeCount, expenseCount, months }
 }
 
-/** Donut aus SVG-Bögen — kein Diagrammpaket, damit die Farben exakt den Tokens folgen. */
-function Donut({ segments, total }: { segments: Segment[]; total: number }) {
-  const size = 210
-  const stroke = 26
-  const radius = (size - stroke) / 2
-  const circumference = 2 * Math.PI * radius
-  let offset = 0
+/**
+ * Doppelring.
+ * Aussen die Einnahmen als voller Kreis — der Massstab.
+ * Innen die Ausgaben im Verhältnis dazu, der Rest ist der Saldo in Gelb.
+ */
+function DoubleRing({ totals }: { totals: Totals }) {
+  // Gemessen am echten Bildschirmfoto: Aussendurchmesser ~273, Loch ~189.
+  const size = 276
+  const outerStroke = 20
+  const innerStroke = 20
+  const outerR = (size - outerStroke) / 2
+  const innerR = outerR - outerStroke / 2 - RING_GAP - innerStroke / 2
+  const innerC = 2 * Math.PI * innerR
+
+  const reference = Math.max(totals.income, totals.expenses, 1)
+  const spentShare = Math.min(totals.expenses / reference, 1)
+  const spentLength = innerC * spentShare
 
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label="Ausgaben nach Kategorie">
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img"
+         aria-label="Einnahmen und Ausgaben im Verhältnis">
       <g transform={`rotate(-90 ${size / 2} ${size / 2})`}>
-        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="var(--surface-sunken)" strokeWidth={stroke} />
-        {segments.map((segment) => {
-          const length = total > 0 ? (segment.total / total) * circumference : 0
-          const dash = `${Math.max(length - 2, 0)} ${circumference}`
-          const element = (
-            <circle
-              key={segment.category}
-              cx={size / 2}
-              cy={size / 2}
-              r={radius}
-              fill="none"
-              stroke={CATEGORY_COLORS[segment.category]}
-              strokeWidth={stroke}
-              strokeDasharray={dash}
-              strokeDashoffset={-offset}
-            />
-          )
-          offset += length
-          return element
-        })}
+        {/* Aussen: Einnahmen */}
+        <circle cx={size / 2} cy={size / 2} r={outerR} fill="none"
+                stroke="var(--hellblau5)" strokeWidth={outerStroke} />
+        {/* Innen: der Saldo als Grundfarbe … */}
+        <circle cx={size / 2} cy={size / 2} r={innerR} fill="none"
+                stroke="var(--postfinancegelb)" strokeWidth={innerStroke} />
+        {/* … darüber die Ausgaben */}
+        <circle cx={size / 2} cy={size / 2} r={innerR} fill="none"
+                stroke="var(--petrol9)" strokeWidth={innerStroke}
+                strokeDasharray={`${spentLength} ${innerC}`} />
       </g>
     </svg>
   )
 }
 
-/**
- * Analysen — heute rein deskriptiv: Kategorien, Summe, Anzahl Buchungen.
- * Vorlage: PREP/03_Screens_and_Assets/playstore_android/postfinance_app/08.png
- *
- * Hinweis: Umbuchungen auf eigene Konten zählen hier bewusst als Ausgabe.
- * Genau so rechnet die App heute — siehe Interview 05.
- */
 export function Analysis() {
-  const { persona, pop } = useSession()
-  const [mode, setMode] = useState<'categories' | 'time'>('categories')
+  const { persona, pop, push } = useSession()
 
-  const from = addDays(TODAY, -WINDOW_DAYS)
+  // «Zusammengefasst» zeigt das laufende Jahr.
+  const from = `${TODAY.slice(0, 4)}-01-01`
   const recent = useMemo(
     () => persona.transactions.filter((tx) => tx.date >= from && tx.date <= TODAY),
     [persona, from],
   )
 
-  const segments = segmentsOf(recent)
-  const expenses = segments.reduce((total, segment) => total + segment.total, 0)
-  const income = recent.filter((tx) => tx.amount > 0).reduce((total, tx) => total + tx.amount, 0)
-  const balance = income - expenses
+  const months = parseIso(TODAY).getMonth() + 1
+  const totals = totalsOf(recent, months)
+  const balance = totals.income - totals.expenses
+  const perMonth = Math.round(balance / totals.months)
 
   return (
-    <Sheet title="Bilanz" onBack={pop} action={<Icon name="settings" size={20} />}>
-      <div className="screen__inner">
-        <div style={{ display: 'flex', gap: 4, padding: 4, margin: '0 auto 20px', width: 'fit-content', background: 'var(--surface-card)', borderRadius: 'var(--CornerRadius-R-100)' }}>
-          {(['categories', 'time'] as const).map((option) => (
-            <button
-              key={option}
-              onClick={() => setMode(option)}
-              style={{
-                padding: '8px 20px',
-                borderRadius: 'var(--CornerRadius-R-100)',
-                fontSize: 14,
-                background: mode === option ? 'var(--petrol8)' : 'transparent',
-                color: mode === option ? 'var(--weiss)' : 'var(--text-strong)',
-              }}
-            >
-              {option === 'categories' ? 'Kategorien' : 'Zeitverlauf'}
-            </button>
-          ))}
-        </div>
+    <Sheet title="Analysen" onBack={pop} action={<Icon name="settings" size={20} />}>
+      <div className="analysis">
+        <div className="analysis__top">
+          <button className="pill-select" style={{ width: 'auto', margin: '0 auto', padding: '0 24px' }}>
+            Zusammengefasst
+            <Icon name="chevronDown" size={16} />
+          </button>
 
-        <Slot name="analysis.aboveDonut" />
+          <Slot name="analysis.aboveDonut" />
 
-        {mode === 'categories' ? (
-          <>
-            <div style={{ position: 'relative', display: 'grid', placeItems: 'center', marginBottom: 20 }}>
-              <Donut segments={segments} total={expenses} />
-              <div style={{ position: 'absolute', textAlign: 'center' }}>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-                  {formatMonth(from)} – {formatMonth(TODAY)}
-                </div>
-                <div className="num" style={{ fontSize: 20, fontWeight: 700, color: 'var(--text-strong)' }}>
-                  {formatMoney(balance, 'CHF')}
-                </div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{recent.length} Buchungen</div>
+          <div className="analysis__ring">
+            <DoubleRing totals={totals} />
+            <div className="analysis__center">
+              <div className="analysis__period">Jan. – Aug. {TODAY.slice(0, 4)}</div>
+              <div className="analysis__balance num">
+                <span style={{ fontWeight: 400 }}>CHF </span>
+                {formatAmount(balance)}
+              </div>
+              <div className="analysis__period">Durchschnitt pro Monat</div>
+              <div className="analysis__avg num">
+                <span style={{ fontWeight: 400 }}>CHF </span>
+                {formatAmount(perMonth)}
               </div>
             </div>
+          </div>
 
-            <CircleRow
-              actions={[
-                { icon: 'search', label: 'Suche', outline: true },
-                { icon: 'co2', label: 'CO₂-Fussabdruck', outline: true },
-              ]}
-            />
+          <CircleRow
+            actions={[
+              { icon: 'search', label: 'Suchen', outline: true, onClick: () => push({ name: 'search' }) },
+              { icon: 'co2', label: 'CO₂ Fussabdruck', outline: true },
+            ]}
+          />
+        </div>
 
-            <Card>
-              <Row title="Einnahmen" sub={`${recent.filter((tx) => tx.amount > 0).length} Buchungen`} amount={formatMoney(income, 'CHF', { sign: false })} />
-              <Row title="Ausgaben" sub={`${recent.filter((tx) => tx.amount < 0).length} Buchungen`} amount={formatMoney(expenses, 'CHF', { sign: false })} />
-            </Card>
+        <div className="analysis__bottom">
+          <div className="legend">
+            <span className="legend__dot" style={{ background: 'var(--hellblau5)' }} />
+            <span className="legend__main">
+              <span className="legend__title">Einnahmen</span>
+              <span className="legend__sub">{totals.incomeCount} Transaktionen</span>
+            </span>
+            <span className="legend__amount num">
+              <span className="legend__cur">CHF</span> {formatAmount(totals.income, { sign: false })}
+            </span>
+          </div>
 
-            <div className="section-head"><span className="section-head__title">Kategorien</span></div>
-            <Card>
-              {segments.map((segment) => (
-                <Row
-                  key={segment.category}
-                  title={
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
-                      <span style={{ width: 12, height: 12, borderRadius: '50%', background: CATEGORY_COLORS[segment.category], flex: 'none' }} />
-                      {CATEGORY_LABELS[segment.category]}
-                    </span>
-                  }
-                  sub={`${segment.count} Buchungen`}
-                  amount={formatMoney(segment.total, 'CHF', { sign: false })}
-                />
-              ))}
-            </Card>
-          </>
-        ) : (
-          <Card>
-            <p className="empty">
-              Der Zeitverlauf ist im Nachbau nicht ausgeführt — heute zeigt er dieselben Summen
-              als Balken pro Monat.
-            </p>
-          </Card>
-        )}
+          <div className="legend">
+            <span className="legend__dot" style={{ background: 'var(--petrol9)' }} />
+            <span className="legend__main">
+              <span className="legend__title">Ausgaben</span>
+              <span className="legend__sub">{totals.expenseCount} Transaktionen</span>
+            </span>
+            <span className="legend__amount num">
+              <span className="legend__cur">CHF</span> {formatAmount(totals.expenses, { sign: false })}
+            </span>
+          </div>
 
-        <Slot name="analysis.belowLegend" />
+          <button className="listrow">
+            <span className="listrow__icon"><Icon name="document" size={24} accent /></span>
+            <span>
+              <span className="listrow__title">Keine aktiven Budgets</span>
+              <span className="listrow__sub">
+                Budgets erfassen, um Ausgaben in Bezug auf Kategorien oder Labels nachzuverfolgen.
+              </span>
+            </span>
+          </button>
+
+          <button className="listrow" onClick={() => push({ name: 'subscriptions' })}>
+            <span className="listrow__icon"><Icon name="calendar" size={24} accent /></span>
+            <span>
+              <span className="listrow__title">Meine Abos</span>
+              <span className="listrow__sub">Wiederkehrende Transaktionen erkunden</span>
+            </span>
+          </button>
+
+          <Slot name="analysis.belowLegend" />
+        </div>
       </div>
     </Sheet>
   )
 }
+

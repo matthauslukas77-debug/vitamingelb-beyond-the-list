@@ -21,7 +21,8 @@ function readUrl(): { persona: Persona | null; tab?: Tab; screen?: Screen } {
   const screen: Screen | undefined =
     name === 'account'
       ? { name: 'account', accountId: params.get('account') ?? persona.accounts[0].id }
-      : name === 'analysis' || name === 'scan' || name === 'pay' || name === 'transfer' || name === 'search'
+      : name === 'analysis' || name === 'scan' || name === 'pay' || name === 'transfer' ||
+          name === 'search' || name === 'subscriptions'
         ? { name }
         : undefined
 

@@ -1,0 +1,39 @@
+<svg height="120" viewBox="0 0 173 40" width="519" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <radialGradient id="a" cx="20.9209" cy="20.0265" gradientUnits="userSpaceOnUse" r="20.4795">
+    <stop offset="0" stop-color="#007c32"/>
+    <stop offset=".45" stop-color="#007a31"/>
+    <stop offset=".64" stop-color="#00732e"/>
+    <stop offset=".79" stop-color="#006628"/>
+    <stop offset=".92" stop-color="#00541f"/>
+    <stop offset="1" stop-color="#004317"/>
+  </radialGradient>
+  <radialGradient id="b" cx="26.7152" cy="11.9352" gradientUnits="userSpaceOnUse" r="22.8256">
+    <stop offset="0" stop-color="#fff" stop-opacity=".8"/>
+    <stop offset=".57" stop-color="#fff" stop-opacity="0"/>
+  </radialGradient>
+  <clipPath id="c">
+    <path d="m0 20c.07-11 9.41-20 20.88-20s20.94 9 20.87 20-9.28 20.08-20.87 20c-11.47.08-20.81-8.89-20.88-20"/>
+  </clipPath>
+  <linearGradient id="d" gradientUnits="userSpaceOnUse" x1="11.23" x2="36.3" y1="39.65" y2="14.58">
+    <stop offset="0" stop-color="#004317"/>
+    <stop offset=".19" stop-color="#005428"/>
+  </linearGradient>
+  <path d="m0 20c.07-11 9.41-20 20.88-20s20.94 9 20.87 20-9.28 20.08-20.87 20c-11.47.08-20.81-8.89-20.88-20" fill="url(#a)"/>
+  <path d="m0 20c.07-11 9.41-20 20.88-20s20.94 9 20.87 20-9.28 20.08-20.87 20c-11.47.08-20.81-8.89-20.88-20" fill="url(#b)"/>
+  <g clip-path="url(#c)">
+    <path d="m24.36 20-3.48 2.18-14.9-16.15 12.15 8.69z" fill="#005428"/>
+    <path d="m8.87 37.28-2.89-3.26 12.12-5.38 23.65-8.62z" fill="url(#d)"/>
+  </g>
+  <path d="m5.98 6.03 35.77 13.99h-9.27z" fill="#ffec00"/>
+  <path d="m5.98 6.03 26.5 13.99h-8.89z" fill="#f9b339"/>
+  <path d="m5.98 34.02 35.77-14h-9.27z" fill="#f9b339"/>
+  <path d="m5.98 34.02 26.5-14h-8.89z" fill="#ffec00"/>
+  <g fill="#007c32">
+    <path d="m54.72 20h6l7.28 19.2h-5.67l-1.53-4.41h-6.92l-1.56 4.41h-5.32zm.58 11h4.28l-2.05-6.62h-.06z"/>
+    <path d="m87.93 38.39a19 19 0 0 1 -7.67 1.36c-6.74 0-10.82-4.1-10.82-10.31 0-6 4.2-10 11.49-10a12.67 12.67 0 0 1 6.28 1.39l-1.59 3.6a9.78 9.78 0 0 0 -4.17-1c-3.79 0-6.63 2.41-6.63 6.1 0 3.46 2.26 6.21 6 6.21a3.84 3.84 0 0 0 2-.44l.18-6.52h5z"/>
+    <path d="m97.66 39.2h-5.27l.18-19.2h7.87c4.17 0 7.67 1.05 7.67 5.4a4.76 4.76 0 0 1 -4.8 5v.06c1.16.33 2 1.52 2.75 2.77l3.5 6h-5.87l-2.87-5.32c-.61-1.16-1.1-2-2.26-2h-.78zm-.09-11h2.34c1.24 0 3-.33 3-2.27 0-1.58-1-2.27-3.09-2.27h-2.13z"/>
+    <path d="m122 19.46c6.8 0 10.79 4.57 10.79 10.14s-4 10.14-10.79 10.14-10.82-4.57-10.82-10.14 4.04-10.14 10.82-10.14zm0 16.3c3 0 5.44-1.94 5.44-6.15s-2.44-6.16-5.44-6.16-5.41 1.94-5.41 6.15 2.41 6.16 5.41 6.16z"/>
+    <path d="m136.49 20h5.21l-.17 15h9l-.09 4.16h-14.13z"/>
+    <path d="m159.72 20h6l7.28 19.2h-5.67l-1.53-4.41h-6.91l-1.56 4.41h-5.33zm.58 11h4.28l-2.05-6.62h-.06z"/>
+  </g>
+</svg>

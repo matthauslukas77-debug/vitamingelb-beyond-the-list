@@ -3,6 +3,7 @@ import { TODAY, type Transaction } from '../../data/types'
 import { formatDate, formatDayHeading } from '../../lib/date'
 import { formatAmount, sum } from '../../lib/money'
 import { useSession } from '../session'
+import { BrandAvatar } from '../shell/BrandAvatar'
 import { Icon, type IconName } from '../shell/Icon'
 import { Slot } from '../shell/Slot'
 import { CircleRow } from '../shell/parts'
@@ -96,15 +97,7 @@ export function AccountDetail({ accountId }: { accountId: string }) {
               <div className="tx-list">
                 {day.items.map((tx) => (
                   <div className="tx" key={tx.id}>
-                    {tx.brand ? (
-                      <span className="tx__brand" style={{ background: tx.brand.bg, color: tx.brand.fg }}>
-                        {tx.brand.short}
-                      </span>
-                    ) : (
-                      <span className="tx-icon">
-                        <Icon name={iconFor(tx)} size={22} />
-                      </span>
-                    )}
+                    <BrandAvatar tx={tx} fallbackIcon={iconFor(tx)} />
                     <span className="tx__main">
                       <span className="tx__text">{tx.text}</span>
                     </span>
