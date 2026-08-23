@@ -1,4 +1,4 @@
-import type { Transaction } from '../types'
+import type { Category, Transaction } from '../types'
 
 /**
  * Werkzeug für die Ereignisse in den Persona-Dateien.
@@ -55,4 +55,179 @@ export function withJobChange(transactions: Transaction[], change: JobChange): T
   })
 
   return [...kept, ...replaced]
+}
+
+export interface Rename {
+  /** Woran die Buchungen zu erkennen sind. */
+  match: RegExp
+  /** Was stattdessen dasteht. */
+  text: string
+}
+
+/**
+ * Schreibt Buchungstexte um.
+ *
+ * Der Generator kennt die Gegenpartei nicht und schreibt «KRANKENKASSE
+ * PRAEMIE». Ein echter LSV-Auszug nennt die Kasse beim Namen — und erst damit
+ * findet die Markenregistry ein Logo, statt dass eine der grössten Blasen
+ * jeder Person gesichtslos bleibt.
+ *
+ * Die Umbenennung steht hier und nicht in `<id>.data.ts`: Die generierte Datei
+ * wird bei jedem Lauf neu geschrieben, und an dieser Stelle sieht man auf
+ * einen Blick, welche Kasse zu welcher Person gehört.
+ */
+export function withRenamed(transactions: Transaction[], ...renames: Rename[]): Transaction[] {
+  return transactions.map((tx) => {
+    const hit = renames.find((rename) => rename.match.test(tx.text))
+    return hit ? { ...tx, text: hit.text } : tx
+  })
+}
+
+export interface Raise {
+  /** Ab diesem Datum gilt der neue Betrag. */
+  since: string
+  /** Woran die Buchungen der Reihe zu erkennen sind. */
+  match: RegExp
+  /** Der neue Betrag in Rappen, positiv. */
+  amount: number
+  idPrefix: string
+}
+
+/**
+ * Dieselbe Reihe, ab einem Datum mit einem anderen Betrag — die Lohnerhöhung.
+ *
+ * Der Unterschied zu `withJobChange` ist der Text: Er **bleibt**. Damit bleibt
+ * es eine einzige Reihe, und `findPriceChange` sieht eine Veränderung statt
+ * zweier Arbeitgeber. Auf der Signalkarte ist das der Unterschied zwischen
+ * «CHF 200 mehr Lohn» und «neuer Arbeitgeber».
+ */
+export function withRaise(transactions: Transaction[], raise: Raise): Transaction[] {
+  return transactions.map((tx) =>
+    tx.amount > 0 && tx.date >= raise.since && raise.match.test(tx.text)
+      ? { ...tx, id: `${raise.idPrefix}-${tx.date}`, amount: raise.amount }
+      : tx,
+  )
+}
+
+export interface Omission {
+  /** Woran die Buchungen zu erkennen sind. */
+  match: RegExp
+  /** Ab diesem Datum, einschliesslich. */
+  from: string
+  /** Bis zu diesem Datum, einschliesslich. Fehlt es, bis ans Ende. */
+  to?: string
+}
+
+/**
+ * Lässt Buchungen weg — die Belastung, die nicht kam.
+ *
+ * Eine ausgebliebene Lastschrift ist kein fehlender Datensatz, sondern ein
+ * Ereignis: Entweder wurde gekündigt, oder das Konto war leer. Der Motor
+ * erkennt sie daran, dass eine monatliche Reihe ihren Termin überschritten hat
+ * (`missedSignals`) — dafür muss die Buchung im Datensatz wirklich fehlen.
+ */
+export function withoutBookings(transactions: Transaction[], omission: Omission): Transaction[] {
+  return transactions.filter(
+    (tx) =>
+      !(
+        omission.match.test(tx.text) &&
+        tx.date >= omission.from &&
+        (omission.to === undefined || tx.date <= omission.to)
+      ),
+  )
+}
+
+/** Letzter Tag des Monats — `new Date(y, m, 0)` ist der Tag vor dem Ersten. */
+function lastDayOf(year: number, month: number): number {
+  return new Date(year, month, 0).getDate()
+}
+
+function isoDate(year: number, month: number, day: number): string {
+  const clamped = Math.min(day, lastDayOf(year, month))
+  return `${year}-${String(month).padStart(2, '0')}-${String(clamped).padStart(2, '0')}`
+}
+
+export interface DayShift {
+  /** Woran die Buchungen der Reihe zu erkennen sind. */
+  match: RegExp
+  /** Der neue Tag im Monat. Kürzere Monate kürzen ihn. */
+  day: number
+  /** Stichtag. Was danach zu liegen käme, ist noch nicht gebucht und fällt weg. */
+  today: string
+}
+
+/**
+ * Verschiebt eine Reihe auf einen anderen Tag im Monat.
+ *
+ * Wozu: «Was bis Ende Monat noch abgeht» kann nur zeigen, was noch aussteht.
+ * Liegen alle Reihen einer Person am Monatsanfang, steht dort am 22. eine
+ * Null — richtig gerechnet und trotzdem keine Auskunft.
+ *
+ * Was hinter den Stichtag fällt, wird **entfernt** statt datiert: Eine
+ * Belastung, die erst in fünf Tagen kommt, steht nicht im Kontoauszug. Genau
+ * so wird sie zur Erwartung, die die Karte anzeigt.
+ */
+export function withShiftedDay(transactions: Transaction[], shift: DayShift): Transaction[] {
+  const out: Transaction[] = []
+  for (const tx of transactions) {
+    if (!shift.match.test(tx.text)) {
+      out.push(tx)
+      continue
+    }
+    const [year, month] = tx.date.split('-').map(Number)
+    const date = isoDate(year, month, shift.day)
+    if (date > shift.today) continue
+    out.push({ ...tx, date })
+  }
+  return out
+}
+
+export interface MonthlySeries {
+  idPrefix: string
+  accountId: string
+  /** Der Buchungstext, wie ihn der Auszug zeigt. */
+  text: string
+  /** Rappen. Negativ für eine Belastung. */
+  amount: number
+  category: Category
+  /** Tag im Monat. Kürzere Monate kürzen ihn. */
+  day: number
+  /** Erster und letzter Monat, `YYYY-MM`, beide einschliesslich. */
+  from: string
+  to: string
+  seriesId?: string
+}
+
+/**
+ * Eine monatliche Reihe von Hand — für alles, was der Generator nicht kennt.
+ *
+ * Drei Buchungen reichen `detectRecurring` für eine Reihe; zwei erzeugen
+ * bewusst nur den Abo-Verdacht. Wer hier ein Fenster wählt, wählt damit auch,
+ * welche der beiden Karten erscheint.
+ */
+export function monthly(spec: MonthlySeries): Transaction[] {
+  const [fromYear, fromMonth] = spec.from.split('-').map(Number)
+  const [toYear, toMonth] = spec.to.split('-').map(Number)
+  const out: Transaction[] = []
+
+  for (let index = 0; ; index++) {
+    const month = fromMonth + index
+    const year = fromYear + Math.floor((month - 1) / 12)
+    const inYear = ((month - 1) % 12) + 1
+    if (year > toYear || (year === toYear && inYear > toMonth)) break
+
+    const date = isoDate(year, inYear, spec.day)
+    out.push({
+      id: `${spec.idPrefix}-${date}`,
+      accountId: spec.accountId,
+      date,
+      text: spec.text,
+      amount: spec.amount,
+      currency: 'CHF',
+      category: spec.category,
+      ...(spec.seriesId ? { seriesId: spec.seriesId } : {}),
+    })
+  }
+
+  return out
 }

@@ -196,9 +196,15 @@ describe('Was auf dem Brett landet', () => {
   })
 
   it('legt hin, was nur aus der groben Bankkategorie kommt', () => {
-    /* Livias You.com-Abo wird über «shopping» zu «Kleider und Schuhe». */
+    /* Livias Kauf bei About You wird über «shopping» zu «Kleider und Schuhe» —
+       die Bankkategorie allein, ohne Regel und ohne Marke. Genau das gehört
+       zur Bestätigung vorgelegt.
+
+       Der Chip trug bis zur Registry-Korrektur «You.com»: «YOU» ist das
+       Domainmuster der KI-Suchmaschine und traf in «ABOUT YOU». Dass hier der
+       Händlername steht, ist Teil der Zusicherung. */
     const groups = openFor(livia)
-    expect(groups.map((group) => group.label)).toContain('You.com')
+    expect(groups.map((group) => group.label)).toContain('About You')
   })
 
   it('verschwindet, sobald die Frage beantwortet ist', () => {

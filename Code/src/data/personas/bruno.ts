@@ -1,6 +1,7 @@
 import type { Account, Persona, Transaction } from '../types'
 import { brunoTransactions } from './bruno.data'
 import { brunoBeneficiaries } from './bruno.beneficiaries'
+import { withRenamed } from './events'
 
 const PRIVATE = 'bruno-private'
 const SAVINGS = 'bruno-savings'
@@ -90,6 +91,43 @@ const events: Transaction[] = [
     currency: 'CHF',
     category: 'income',
   },
+  /*
+   * Drei Buchungen der laufenden Woche.
+   *
+   * Bruno kaufte in der Woche fünfmal Lebensmittel und sonst nichts — das
+   * Blasenfeld zeigte im Zeitraum «Woche» fünf Kreise, drei davon Coop und
+   * Migros. Discounter, Baumarkt und Apotheke gehören bei einem
+   * Hauseigentümer in Nidau dazu, und der LANDI-Einkauf ist zugleich der Fall,
+   * an dem das Zuordnungsbrett seinen Sinn zeigt: Beim Eigentümer ist das
+   * Unterhalt, beim Mieter Konsum — das kann nur er beantworten.
+   */
+  {
+    id: 'bruno-EV-2026-08-denner',
+    accountId: PRIVATE,
+    date: '2026-08-18',
+    text: 'APPLE PAY KAUF/DIENSTLEISTUNG VOM 18.08.2026 KARTEN NR. XXXX4417 DENNER NIDAU (CH)',
+    amount: -4_215,
+    currency: 'CHF',
+    category: 'groceries',
+  },
+  {
+    id: 'bruno-EV-2026-08-landi',
+    accountId: PRIVATE,
+    date: '2026-08-20',
+    text: 'KAUF/DIENSTLEISTUNG VOM 20.08.2026 KARTEN NR. XXXX4417 LANDI BIEL (CH)',
+    amount: -8_640,
+    currency: 'CHF',
+    category: 'other',
+  },
+  {
+    id: 'bruno-EV-2026-08-vitality',
+    accountId: PRIVATE,
+    date: '2026-08-21',
+    text: 'KAUF/DIENSTLEISTUNG VOM 21.08.2026 KARTEN NR. XXXX4417 COOP VITALITY APOTHEKE BIEL (CH)',
+    amount: -5_380,
+    currency: 'CHF',
+    category: 'health',
+  },
 ]
 
 export const bruno: Persona = {
@@ -101,7 +139,18 @@ export const bruno: Persona = {
   birthYear: 1967,
   address: { street: 'Mettstrasse 88', place: '2504 Biel/Bienne', country: 'Schweiz' },
   accounts,
-  transactions: [...brunoTransactions, ...events],
+  /*
+   * Die Kasse beim Namen: Bruno und seine Frau sind bei der Visana, einer
+   * Berner Kasse — «2 Personen» stand schon im Buchungstext, nur der Name der
+   * Kasse fehlte. Damit trägt die drittgrösste Blase des Jahres ein Logo.
+   */
+  transactions: [
+    ...withRenamed(brunoTransactions, {
+      match: /^KRANKENKASSE PRAEMIE 2P$/,
+      text: 'VISANA AG / PRAEMIE 2 PERSONEN',
+    }),
+    ...events,
+  ],
   beneficiaries: brunoBeneficiaries,
   standingOrders: [
     { id: 'm-so-1', accountId: PRIVATE, recipient: 'Vorsorgekonto 3a', amount: -60_000, currency: 'CHF', nextExecution: '2026-08-26' },

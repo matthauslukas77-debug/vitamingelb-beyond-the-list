@@ -1,7 +1,7 @@
-import type { Account, Persona, Transaction } from '../types'
+import { TODAY, type Account, type Persona, type Transaction } from '../types'
 import { ninoTransactions } from './nino.data'
 import { ninoBeneficiaries } from './nino.beneficiaries'
-import { withJobChange } from './events'
+import { withJobChange, withoutBookings, withRenamed, withShiftedDay } from './events'
 
 const PRIVATE = 'nino-private'
 const CUSTODY = 'nino-custody'
@@ -62,17 +62,62 @@ const events: Transaction[] = [
     currency: 'CHF',
     category: 'subscriptions',
   },
+  /*
+   * Der Sollzins im laufenden Monat — das dritte Mal in einem Jahr.
+   *
+   * Er steht hier und nicht in den generierten Daten, weil er zur selben
+   * Geschichte gehört wie die ausgebliebene Lastschrift zwei Tage vorher: Bei
+   * CHF 42.70 auf dem Konto ist beides dieselbe Ursache. Nino im Interview 04:
+   * «Ich war wirklich viel im Minus.»
+   */
+  {
+    id: 'nino-EV-2026-08-sollzins',
+    accountId: PRIVATE,
+    date: '2026-08-19',
+    text: 'SOLLZINS KONTOUEBERZUG',
+    amount: -1_420,
+    currency: 'CHF',
+    category: 'other',
+  },
 ]
 
-/** Wechsel per Ende Mai 2026: CHF 2'640 statt CHF 2'380. */
+/**
+ * Wechsel per Ende Mai 2026: CHF 2'640 statt CHF 2'380.
+ *
+ * Drei weitere Eingriffe, alle aus derselben Geschichte:
+ *
+ *   **Die Kasse heisst Atupri.** Der Generator schreibt «KRANKENKASSE
+ *   PRAEMIE»; ein LSV-Auszug nennt sie. Atupri sitzt in Bern — bei einem
+ *   19-Jährigen aus der Länggasse ist das die naheliegende Kasse.
+ *
+ *   **Der Beitrag fürs Gym ist im August nicht abgebucht worden.** Bei CHF
+ *   42.70 auf dem Konto ist das kein Zufall, sondern die Folge: Die
+ *   Lastschrift ist mangels Deckung zurückgegangen. Der Motor erkennt sie als
+ *   ausgeblieben (`missedSignals`) und fragt nach — die einzige Signalart, die
+ *   sonst in keiner Persona vorkam.
+ *
+ *   **Das Handyabo liegt auf dem 27.** Vorher lagen alle seine Reihen am
+ *   Monatsanfang, und die Karte «was bis Ende Monat noch abgeht» zeigte am 22.
+ *   eine Null. Jetzt zeigt sie, was sie zeigen soll: die Belastung, die noch
+ *   kommt, wenn ohnehin nichts mehr da ist.
+ */
 const transactions = [
-  ...withJobChange(ninoTransactions, {
-    since: '2026-05-01',
-    match: /^LOHN \/ Agentur Meridian AG$/,
-    text: 'LOHN / Studio Kreis GmbH',
-    amount: 264_000,
-    idPrefix: 'nino-EV-lohn',
-  }),
+  ...withShiftedDay(
+    withoutBookings(
+      withRenamed(
+        withJobChange(ninoTransactions, {
+          since: '2026-05-01',
+          match: /^LOHN \/ Agentur Meridian AG$/,
+          text: 'LOHN / Studio Kreis GmbH',
+          amount: 264_000,
+          idPrefix: 'nino-EV-lohn',
+        }),
+        { match: /^KRANKENKASSE PRAEMIE$/, text: 'ATUPRI GESUNDHEITSVERSICHERUNG / PRAEMIE' },
+      ),
+      { match: /^MMA GYM BERN/, from: '2026-08-01' },
+    ),
+    { match: /^SUNRISE GMBH$/, day: 27, today: TODAY },
+  ),
   ...events,
 ]
 

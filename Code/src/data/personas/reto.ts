@@ -1,7 +1,7 @@
 import type { Account, Persona, Transaction } from '../types'
 import { retoTransactions } from './reto.data'
 import { retoBeneficiaries } from './reto.beneficiaries'
-import { withJobChange } from './events'
+import { withJobChange, withRenamed } from './events'
 
 const PRIVATE = 'reto-private'
 const SAVINGS = 'reto-savings-bkb'
@@ -50,16 +50,66 @@ const events: Transaction[] = [
   },
 ]
 
-/** Wechsel per Ende Februar 2026: CHF 4'635 statt CHF 4'215. */
+/**
+ * Die letzten Tage — Vielfalt statt Menge.
+ *
+ * Reto hat in der laufenden Woche zwölf Buchungen, aber nur fünf
+ * Gegenparteien: fünfmal Migros, dazu Publibike, k kiosk, SBB, Spotify. Das
+ * Blasenfeld im Zeitraum «Woche» zeigt entsprechend fünf Kreise. Diese drei
+ * Buchungen sind kein Füllmaterial: Sie bringen drei Branchen ins Bild, die es
+ * bei ihm wirklich gibt — auswärts essen, Apotheke, Sport — und geben der
+ * Wochenansicht damit dieselbe Aussagekraft wie der Monatsansicht.
+ */
+const recentDays: Transaction[] = [
+  {
+    id: 'reto-EV-2026-08-tibits',
+    accountId: PRIVATE,
+    date: '2026-08-18',
+    text: 'APPLE PAY KAUF/DIENSTLEISTUNG VOM 18.08.2026 KARTEN NR. XXXX7731 TIBITS BERN (CH)',
+    amount: -2_680,
+    currency: 'CHF',
+    category: 'eatingOut',
+  },
+  {
+    id: 'reto-EV-2026-08-amavita',
+    accountId: PRIVATE,
+    date: '2026-08-20',
+    text: 'KAUF/DIENSTLEISTUNG VOM 20.08.2026 KARTEN NR. XXXX7731 AMAVITA APOTHEKE BERN (CH)',
+    amount: -3_450,
+    currency: 'CHF',
+    category: 'health',
+  },
+  {
+    id: 'reto-EV-2026-08-ochsner',
+    accountId: PRIVATE,
+    date: '2026-08-21',
+    text: 'APPLE PAY KAUF/DIENSTLEISTUNG VOM 21.08.2026 KARTEN NR. XXXX7731 OCHSNER SPORT BERN (CH)',
+    amount: -8_990,
+    currency: 'CHF',
+    category: 'shopping',
+  },
+]
+
+/**
+ * Wechsel per Ende Februar 2026: CHF 4'635 statt CHF 4'215.
+ *
+ * Dazu die Krankenkasse beim Namen: Der Generator schreibt «KRANKENKASSE
+ * PRAEMIE», ein echter LSV-Auszug nennt die Kasse. Reto ist bei der CSS —
+ * damit trägt seine zweitgrösste Blase ein Logo statt eines Sinnbilds.
+ */
 const transactions = [
-  ...withJobChange(retoTransactions, {
-    since: '2026-02-01',
-    match: /^LOHN \/ Arbeitgeber AG$/,
-    text: 'LOHN / Nordlicht Software AG',
-    amount: 463_500,
-    idPrefix: 'reto-EV-lohn',
-  }),
+  ...withRenamed(
+    withJobChange(retoTransactions, {
+      since: '2026-02-01',
+      match: /^LOHN \/ Arbeitgeber AG$/,
+      text: 'LOHN / Nordlicht Software AG',
+      amount: 463_500,
+      idPrefix: 'reto-EV-lohn',
+    }),
+    { match: /^KRANKENKASSE PRAEMIE$/, text: 'CSS VERSICHERUNG AG / PRAEMIE' },
+  ),
   ...events,
+  ...recentDays,
 ]
 
 export const reto: Persona = {

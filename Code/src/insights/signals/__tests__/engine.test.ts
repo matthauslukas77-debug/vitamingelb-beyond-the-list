@@ -130,8 +130,16 @@ describe('Jobwechsel und Jahreszahlungen', () => {
   })
 
   it('meldet den alten Arbeitgeber nicht als ausgeblieben', () => {
+    /* Geprüft wird der Lohn, nicht die Abwesenheit jeder Meldung: Ninos
+       Gym-Beitrag ist im August wirklich nicht abgebucht worden, und dass die
+       App das sagt, ist erwünscht. Falsch wäre nur, die alte Lohnreihe nach
+       dem Wechsel als ausgeblieben zu melden — sie ist nicht ausgeblieben,
+       sie ist abgelöst. */
     for (const id of ['reto', 'nino']) {
-      expect(signalsOf(id).some((entry) => entry.kind === 'missed'), id).toBe(false)
+      const missed = signalsOf(id).filter((entry) => entry.kind === 'missed')
+      for (const entry of missed) {
+        expect(entry.title, id).not.toMatch(/Lohn|Arbeitgeber|Meridian/i)
+      }
     }
   })
 
