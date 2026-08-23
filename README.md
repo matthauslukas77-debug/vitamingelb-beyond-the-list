@@ -14,7 +14,7 @@ sieht, was Banking heute zeigt und was es zeigen könnte.
 | **Code** | [`Code/`](Code/) — die lauffähige Lösung, [eigenes README](Code/README.md) mit Details |
 | **Material** | [`Misc/`](Misc/) — alle sieben Interviews, Synthese, die Vermessung des PF-Budgetrechners, der Apertus-Test |
 | **Dokumentation** | [`Documentation/`](Documentation/) |
-| **Pitch** | [`Presentation/`](Presentation/) |
+| **Pitch** | [`Presentation/pitch.html`](Presentation/pitch.html) — 15 Folien in einer Datei |
 
 ---
 
