@@ -7,6 +7,7 @@ sie aussieht, findet die Antwort in diesem Ordner und nicht im Code.
 Misc/
 ├── Interviews/
 │   ├── SYNTHESE.md        Querauswertung aller sechs Gespräche
+│   ├── pdf/               alle sieben Gespräche als aufbereitetes PDF
 │   ├── transkripte/       die vollständigen Gespräche, anonymisiert
 │   └── auswertungen/      strukturierte Notizen nach eigener Vorlage
 ├── Design-Thinking/
@@ -29,7 +30,20 @@ Alle am Freitag, 21.08.2026, geführt — vor der ersten Zeile Produktcode.
 | 06 | Selin | 17, Lernende Labor | BKB | [`06`](Interviews/transkripte/06_selin_transkript.txt) | — |
 | 07 | Bruno | 59, angestellt, Wohneigentum | PostFinance + 5 weitere | [`07`](Interviews/transkripte/07_bruno_transkript.txt) | — |
 
-Die Nummer 03 fehlt: ein Zählsprung, kein Gespräch.
+Die Nummer 03 fehlt: ein Zählsprung, kein Gespräch. Nummer 08 — Elias, Finanzberater — kam einen
+Tag später dazu und ist nur als PDF erfasst; im Anschluss an sein Gespräch gab er die erste
+externe Rückmeldung auf den Prototyp.
+
+## Die Gespräche als PDF
+
+In [`Interviews/pdf/`](Interviews/pdf/) liegen alle sieben Gespräche aufbereitet: Profiltabelle,
+Fragen und bereinigte Antworten, Kernzitate. Erzeugt aus denselben Quellen wie die Transkripte.
+
+**Zur Anonymisierung.** Die Namen sind durchgehend Pseudonyme, und sie sind dieselben wie in der
+App: Reto, Silvan, Nino, Livia, Selin, Bruno, Elias. Wohnorte stehen als `[Ort]`. Geschwärzt ist
+ausserdem, **wo jemand arbeitet** — Livia macht eine Banklehre, ihr Arbeitgeber heisst deshalb
+`[Bank]`, und Elias' Firma `[Arbeitgeber]`. Banken, bei denen jemand bloss Kunde ist, stehen offen
+da: Das ist keine Information, die eine Person auffindbar macht.
 
 **Wie weit die Auswertung reicht:** Alle sechs Gespräche sind geführt und vollständig
 transkribiert. Strukturiert ausgewertet sind drei (01, 02, 04), und die
