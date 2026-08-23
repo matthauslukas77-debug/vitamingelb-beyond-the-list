@@ -13,7 +13,7 @@ sieht, was Banking heute zeigt und was es zeigen könnte.
 | **Selbst starten** | `cd Code && npm install && npm run dev` → <http://localhost:5173> — ohne Schlüssel, ohne Backend |
 | **Code** | [`Code/`](Code/) — die lauffähige Lösung, [eigenes README](Code/README.md) mit Details |
 | **Material** | [`Misc/`](Misc/) — alle sieben Interviews, Synthese, die Vermessung des PF-Budgetrechners, der Apertus-Test |
-| **Dokumentation** | [`Documentation/`](Documentation/) |
+| **Dokumentation** | [Tech-Jury (PDF)](Documentation/Tech-Jury-Dokumentation.pdf) · [Challenger-Doc](Documentation/CHALLENGER_DOC.md) |
 | **Pitch** | [`Presentation/pitch.html`](Presentation/pitch.html) — 15 Folien in einer Datei |
 
 ---
