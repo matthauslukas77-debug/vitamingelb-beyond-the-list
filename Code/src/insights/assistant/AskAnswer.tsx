@@ -17,7 +17,7 @@ import './assistant.css'
  *
  * Kein eigener Bildschirm, kein siebter Reiter, kein Sprechblasensymbol. Der
  * Grund steht in der Interviewsynthese: Die Analysen sind faktisch tot —
- * Fritz «versteckt, untergegangen», Lukas drei- bis viermal in Jahren, Janic
+ * Reto «versteckt, untergegangen», Silvan drei- bis viermal in Jahren, Nino
  * nie. Ein Assistent als weitere Kachel wäre dasselbe Angebot noch einmal.
  *
  * Das Suchfeld dagegen wird benutzt, liegt auf Home und ist ein
@@ -47,7 +47,7 @@ export function AskSuggestions({ onPick }: { onPick: (question: string) => void 
       <div className="section-head">
         <span className="section-head__title">Frag deine Zahlen</span>
       </div>
-      {/* Ayana konnte auf «Was müsste in einem Dashboard stehen?» nur
+      {/* Selin konnte auf «Was müsste in einem Dashboard stehen?» nur
           antworten: «Eine gute Frage.» Von Nutzern die Spezifikation eines
           Features zu erwarten, das sie nie gesehen haben, führt ins Leere —
           also zeigen wir, was geht, statt danach zu fragen. */}

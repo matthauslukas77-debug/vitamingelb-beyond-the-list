@@ -19,7 +19,7 @@
 
 Die Challenge stellt drei Fragen: Was ist regelmässig? Was ist ungewöhnlich? Was verändert sich?
 Wir beantworten alle drei, aber das Gewicht liegt auf den beiden hinteren — weil es dafür heute
-**gar keine** Antwort gibt. Auf «Wie findest du heraus, ob ein Monat normal war?» antwortete Lukas
+**gar keine** Antwort gibt. Auf «Wie findest du heraus, ob ein Monat normal war?» antwortete Silvan
 in Interview 02 wörtlich: «Gar nicht.»
 
 **Für wen.** Privatpersonen zwischen 19 und 30, belegt aus acht eigenen Interviews. KMU haben wir
@@ -27,8 +27,8 @@ bewusst nicht bedient: Wir haben kein einziges KMU-Gespräch geführt, und eine 
 Beleg zu bauen hiesse raten. Das steht so auch in unserer Synthese.
 
 **Über welchen Kanal.** Nicht über ein weiteres Dashboard. Der härteste Befund der Interviews ist,
-dass die bestehenden Analysen faktisch tot sind — Fritz: «ist so ein bisschen versteckt,
-untergegangen»; Lukas hat sie in Jahren drei- bis viermal geöffnet; Janic nie. Alle drei öffnen
+dass die bestehenden Analysen faktisch tot sind — Reto: «ist so ein bisschen versteckt,
+untergegangen»; Silvan hat sie in Jahren drei- bis viermal geöffnet; Nino nie. Alle drei öffnen
 die App nur für den Saldo. Wer darauf mit einer weiteren Kachel antwortet, baut denselben Fehler
 noch einmal. Unsere Funktionen sitzen deshalb dort, wo ohnehin hingeschaut wird: auf Home, im
 Suchfeld und in einem Hinweis, der von selbst kommt.
@@ -125,10 +125,11 @@ selben Massstab und keine Behauptung.
 
 **Sparen ist keine Ausgabe.** Jede Buchung bekommt eine Achse: `out · in · moved · settled · lent`.
 Eine Umbuchung aufs eigene Sparkonto ist `moved`, die Kartenabrechnung `settled` — sonst zählt man
-sie doppelt. Der Anlass kam aus zwei unabhängigen Interviews mit fast demselben Satz. Katja, 17,
-Lernende bei einer Bank: «Ich tue 500 Franken auf das Sparkonto, dann ist das wie quasi als
-Ausgabe. Obwohl es eigentlich gar nicht weg ist.» Gabriel, 30, vom Fach, anderes Institut:
-«Es müsste auch noch Sparen gefiltert werden — weil die ist halt nachher nicht weg, oder?»
+sie doppelt. Der Anlass kam aus zwei unabhängigen Interviews mit fast demselben Satz. Livia, in einer
+Banklehre: «Ich tue 500 Franken auf das Sparkonto, dann ist das wie quasi als Ausgabe.
+Obwohl es eigentlich gar nicht weg ist.» Und der Finanzberater aus Interview 08, ein anderes
+Institut, ein anderes Leben: «Es müsste auch noch Sparen gefiltert werden — weil die ist halt
+nachher nicht weg, oder?»
 
 **Eine Antwort pro Quelle, nicht pro Buchung.** Beim Korrigieren einer Kategorie speichern wir am
 Händlerschlüssel, nicht an der Buchung. Bruno hat 20 LANDI-Einkäufe in zwölf Monaten; heute wären

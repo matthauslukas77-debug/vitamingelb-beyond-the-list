@@ -187,7 +187,7 @@ describe('Wo er schweigt', () => {
   })
 
   it('lehnt Urteile über die Person ab', () => {
-    /* Fritz hat die Persönlichkeitsanalyse ausdrücklich abgelehnt:
+    /* Reto hat die Persönlichkeitsanalyse ausdrücklich abgelehnt:
        «Für mich eigentlich gar nicht.» */
     const outcome = ask('Was für ein Typ bin ich?', contextFor(bruno))
     expect(outcome.kind).toBe('refused')

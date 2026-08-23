@@ -7,7 +7,7 @@ import { PER_YEAR, type RecurringSeries } from '../../domain/recurring'
  *
  * Die Abo-Liste der App beantwortet «was kommt als Nächstes» — nicht «seit
  * wann zahle ich das eigentlich». Genau das ist die Frage, die im Gespräch
- * niemand beantworten konnte: Fritz schätzte seine Abos auf «tonnenweise, ca.
+ * niemand beantworten konnte: Reto schätzte seine Abos auf «tonnenweise, ca.
  * 300 im Monat», aber niemand rechnet 31 × 12.95 im Kopf zusammen.
  *
  * Es kommt kein neues Feld dazu: `RecurringSeries` trägt `firstSeen`,

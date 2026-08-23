@@ -161,7 +161,7 @@ function expensesOf(context: AskContext, from: string, to: string): Transaction[
 
 /**
  * Die Frage, die vier von acht Gesprächspartnern als erste stellen — wörtlich
- * und unabhängig voneinander. Fritz, Lukas, Janic und Katja.
+ * und unabhängig voneinander. Reto, Silvan, Nino und Livia.
  */
 const topSpending: Tool = {
   name: 'topSpending',
@@ -234,7 +234,7 @@ const topSpending: Tool = {
 // ───────────────────────────────────────────────────────────────────────────
 
 /**
- * Der härteste Befund der Interviews: Lukas ist PostFinance-Kunde, die
+ * Der härteste Befund der Interviews: Silvan ist PostFinance-Kunde, die
  * Abo-Übersicht **existiert**, und er kennt sie nicht — «Es wäre noch geil,
  * wenn ich sehen würde, welche ich genau habe.»
  *
@@ -308,7 +308,7 @@ const subscriptions: Tool = {
 
 /**
  * Der einzige Schmerz, der wirklich täglich auftritt: unverständliche
- * Händlernamen. Lukas und Janic googeln sie, Ayana hat sich damit abgefunden
+ * Händlernamen. Silvan und Nino googeln sie, Selin hat sich damit abgefunden
  * («Ich schaue es nicht genau an»). Alle drei lösen es ausserhalb der App.
  */
 const merchantLookup: Tool = {
@@ -540,7 +540,7 @@ const whatsUnusual: Tool = {
 // ───────────────────────────────────────────────────────────────────────────
 
 /**
- * Gabriel und Michael, unabhängig voneinander: Einmaliges verfälscht die
+ * Der Berater aus Interview 08 und Bruno, unabhängig voneinander: Einmaliges verfälscht die
  * Statistik. «Wenn du jetzt irgendetwas Einmaliges hast … 5'000 Franken … das
  * willst du nicht drin haben.» Die Einordnung dafür gibt es schon
  * (`markings.ts`) — dieses Werkzeug zeigt, was darin liegt.
