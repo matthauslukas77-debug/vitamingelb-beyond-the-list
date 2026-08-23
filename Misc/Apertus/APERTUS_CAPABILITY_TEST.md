@@ -1,7 +1,7 @@
 # Apertus v1.5 — Fähigkeitstest
 
 _Getestet: Sa 22.08.2026, ~00:30. Beide Endpunkte live. Alle Tests mit **synthetischen** Daten._
-_Testskripte: `_tests/` · Zugang & Keys: [`APERTUS_API_ACCESS.md`](APERTUS_API_ACCESS.md)_
+_Die Prüfskripte und die Zugangsdaten liegen intern und nicht im Repository._
 
 ## TL;DR — die vier Sätze, die zählen
 

@@ -8,9 +8,11 @@ sieht, was Banking heute zeigt und was es zeigen könnte.
 
 | | |
 |---|---|
-| **Starten** | `cd Code && npm install && npm run dev` → <http://localhost:5173> |
+| **Live ausprobieren** | **<https://www.vitamingelb.ch>** — läuft im Browser, am besten auf dem Handy oder in der schmalen Fenstergrösse |
+| **Direkt zu den neuen Funktionen** | [Signale](https://www.vitamingelb.ch/?persona=bruno&screen=signals) · [Zuordnen](https://www.vitamingelb.ch/?persona=bruno&screen=assign) · [Budget](https://www.vitamingelb.ch/?persona=bruno&screen=cockpit&view=budget) · [Budget-Wizard](https://www.vitamingelb.ch/?persona=reto&screen=budget) · [Frag deine Zahlen](https://www.vitamingelb.ch/?persona=bruno&screen=search) |
+| **Selbst starten** | `cd Code && npm install && npm run dev` → <http://localhost:5173> — ohne Schlüssel, ohne Backend |
 | **Code** | [`Code/`](Code/) — die lauffähige Lösung, [eigenes README](Code/README.md) mit Details |
-| **Material** | [`Misc/`](Misc/) — sechs Interviews, Synthese, Design-Thinking-Prozess |
+| **Material** | [`Misc/`](Misc/) — alle sieben Interviews, Synthese, die Vermessung des PF-Budgetrechners, der Apertus-Test |
 | **Dokumentation** | [`Documentation/`](Documentation/) |
 | **Pitch** | [`Presentation/`](Presentation/) |
 
