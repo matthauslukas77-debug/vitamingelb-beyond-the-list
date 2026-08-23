@@ -4,12 +4,11 @@ import { detectRecurring, normaliseMerchant, PER_YEAR, type RecurringSeries } fr
 import { addDays, parseIso } from '../../lib/date'
 import { formatAmount } from '../../lib/money'
 import { pretty } from '../../app/screens/Recurring'
-import { categorize } from '../budget/mapping'
 import { merchantName } from '../budget/merchant'
 import { NO_ASSIGNMENTS, type Assignments } from '../budget/assign'
-import { moneyFlow } from '../budget/flow'
 import { deriveForPersona, monthStart } from '../budget/derive'
-import { markingOf, NO_MARKINGS, type Markings } from '../budget/markings'
+import { NO_MARKINGS, type Markings } from '../budget/markings'
+import { outliersIn } from '../budget/outliers'
 import { categoryDef, CATEGORY_KEYS, slotKey, type CategoryKey } from '../budget/slots'
 import { amountOf, type SavedBudget } from '../budget/storage'
 
@@ -529,11 +528,6 @@ function missedSignals(series: RecurringSeries[], today: string): Signal[] {
     }))
 }
 
-/** Ab dem Wievielfachen des Monatsbudgets eine einzelne Buchung auffällt. */
-const OUTLIER_FACTOR = 2
-/** Und mindestens so viel, damit kleine Budgets nicht ständig Alarm schlagen. */
-const OUTLIER_MIN = 50_000
-
 /**
  * Eine einzelne Buchung sprengt ihre Kategorie.
  *
@@ -551,21 +545,24 @@ function outlierSignals(
   ownName?: string,
 ): Signal[] {
   if (!budget) return []
-  const from = monthStart(today)
   const out: Signal[] = []
 
-  for (const tx of transactions) {
-    if (tx.date < from || tx.date > today) continue
-    if (moneyFlow(tx, { accounts, ownName }).flow !== 'out') continue
-    /* Schon eingeordnet — dann hat der Nutzer die Frage beantwortet. */
-    if (markingOf(markings, tx.id).kind !== 'normal') continue
+  /* Die Schwelle liegt in `budget/outliers.ts` — dieselbe, mit der die
+     Detailseite einer Kategorie fragt. Zwei Schwellen für dieselbe Frage wären
+     zwei Meinungen darüber, was ein Ausreisser ist. */
+  const candidates = outliersIn(transactions, accounts, {
+    from: monthStart(today),
+    to: today,
+    ownName,
+    markings,
+    assignments,
+    budget,
+  })
 
-    const { category } = categorize(tx, assignments)
-    if (category === 'taxes') continue
-
-    const amount = Math.abs(tx.amount)
-    const limit = Math.max(budget[category] * OUTLIER_FACTOR, OUTLIER_MIN)
-    if (amount < limit) continue
+  for (const { tx, category, amount, marking } of candidates) {
+    /* Schon eingeordnet — dann hat der Nutzer die Frage beantwortet. Die
+       Detailseite zeigt sie weiter an, eine Signalkarte hat sich erledigt. */
+    if (marking.kind !== 'normal') continue
 
     const name = merchantName(tx)
     out.push({

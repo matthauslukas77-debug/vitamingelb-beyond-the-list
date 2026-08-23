@@ -60,6 +60,25 @@ export function savingsBalance(accounts: Account[]): number {
     .reduce((total, account) => total + (account.balanceChf ?? account.balance), 0)
 }
 
+/**
+ * Die Reserve, aus der eine ausserordentliche Ausgabe wirklich bezahlt werden
+ * kann — Sparkonten, und nur die.
+ *
+ * `savingsBalance` zählt das Vorsorgekonto 3a mit, und für den Ausblick ist
+ * das richtig: Es wächst, es gehört zum Vermögen. Für den Satz «gedeckt aus
+ * der Reserve» ist es falsch. Brunos Anzahlung Heizung über CHF 12'000 kann
+ * nicht aus einem 3a bezahlt werden, das bis zur Pensionierung gebunden ist —
+ * eine Anzeige, die CHF 113'600 als verfügbar hinstellt, wo CHF 41'200
+ * erreichbar sind, hilft niemandem. Das Depot fehlt aus demselben Grund: Es
+ * müsste erst verkauft werden, und ob das eine gute Idee ist, entscheidet
+ * keine Budgetseite.
+ */
+export function reachableReserve(accounts: Account[]): number {
+  return accounts
+    .filter((account) => account.kind === 'savings')
+    .reduce((total, account) => total + (account.balanceChf ?? account.balance), 0)
+}
+
 /** Letzter Tag des Monats, `count` Monate nach dem Stichtag. */
 function monthEnd(today: string, count: number): string {
   const date = parseIso(today)

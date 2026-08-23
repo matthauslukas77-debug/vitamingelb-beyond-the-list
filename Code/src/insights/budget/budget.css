@@ -1043,3 +1043,70 @@
   font-size: 9px;
   fill: var(--text-muted);
 }
+
+/* ── Die Buchung, die den Monat sprengt ──────────────────────────────────── */
+
+.bud-outs { padding: var(--s-2) var(--s-5); }
+
+.bud-out {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  width: 100%;
+  padding: var(--s-4) 0;
+  text-align: left;
+}
+
+.bud-out + .bud-out { border-top: 1px solid var(--line); }
+
+.bud-out__main { flex: 1; min-width: 0; }
+
+.bud-out__who {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+.bud-out__when { display: block; margin-top: 1px; font-size: 11px; color: var(--text-muted); }
+
+/* Die Frage selbst. Solange sie offen ist, trägt sie die Aufmerksamkeit der
+   Zeile — sie ist der Grund, warum die Zeile überhaupt dasteht. */
+.bud-out__q {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: var(--s-2);
+  font-size: 12px;
+  font-weight: 700;
+  /* Das Paar, nicht `--pending3` allein: Rostrot auf petrol9 wäre im Dunkeln
+     ein Kontrast von 1,3:1 — sichtbar wie nichts. */
+  color: var(--pending3-pending1);
+}
+
+/* Beantwortet: dieselbe Zeile, nur ohne Dringlichkeit. Sie bleibt antippbar,
+   weil eine Einordnung, die man nicht wiederfindet, eine Falltür ist. */
+.bud-out--answered .bud-out__q { font-weight: 400; color: var(--text-muted); }
+
+.bud-out__amount {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-strong);
+  white-space: nowrap;
+}
+
+.bud-out--answered .bud-out__amount { color: var(--text-muted); }
+
+.bud-out__go { flex: none; color: var(--petrol4); }
+
+/* Wo das Geld stattdessen herkam. Ohne Karte, weil es ein Satz ist — und der
+   Satz ist der Grund, warum das Ausklammern kein Verstecken ist. */
+.bud-detail__reserve {
+  margin: var(--s-4) 0 0;
+  padding: 0 var(--s-2);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-body);
+}
+
+.bud-detail__reserve strong { color: var(--text-strong); }

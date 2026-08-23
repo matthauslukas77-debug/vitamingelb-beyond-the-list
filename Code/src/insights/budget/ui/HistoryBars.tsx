@@ -46,8 +46,13 @@ export function HistoryBars({
   if (points.length === 0) return null
 
   /* Die Skala richtet sich nach dem grössten Monat **und** der Strichlinie:
-     Läge die Linie über allen Balken, stünde sie sonst ausserhalb des Bildes. */
-  const peak = Math.max(...points.map((point) => point.spent), typical, 1)
+     Läge die Linie über allen Balken, stünde sie sonst ausserhalb des Bildes.
+
+     Der Zuschlag ist der Platz für die Beschriftung der Strichlinie. Ohne ihn
+     stösst sie in den höchsten Balken, sobald der übliche Monat *der* höchste
+     ist — und das ist bei lauter gleichen Monaten der Normalfall, nicht die
+     Ausnahme: Brunos Wohnen liegt elf Monate lang exakt auf CHF 1'463. */
+  const peak = Math.max(...points.map((point) => point.spent), typical, 1) * 1.14
   const plot = HEIGHT - FOOT
   const slot = WIDTH / points.length
   const bar = slot - GAP
@@ -107,7 +112,7 @@ export function HistoryBars({
       {typical > 0 && (
         <>
           <line className="hbar__typical" x1="0" y1={line} x2={WIDTH} y2={line} />
-          <text className="hbar__typical-label" x="0" y={Math.max(9, line - 4)}>
+          <text className="hbar__typical-label" x="0" y={line - 5}>
             üblich {format(typical)}
           </text>
         </>

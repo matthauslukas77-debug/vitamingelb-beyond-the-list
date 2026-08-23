@@ -6,6 +6,7 @@ import { useSession } from '../../../app/session'
 import { Icon } from '../../../app/shell/Icon'
 import { deriveForPersona, monthProgress, monthStart, spendByCategory, type SlotEvidence } from '../derive'
 import { loadAssignments } from '../assign'
+import { loadMarkings } from '../markings'
 import { BubbleField, BubbleLegend, bubbleTotals, type Bubble } from '../ui/BubbleField'
 import { amountOf, loadBudget, totalOf, type SavedBudget } from '../storage'
 import { slotKey as keyOf } from '../slots'
@@ -149,14 +150,19 @@ export function BudgetView() {
 
   const [saved, setSaved] = useState<SavedBudget | null>(() => loadBudget(persona.id))
   const [assignments, setAssignments] = useState(() => loadAssignments(persona.id))
+  /* Die Einordnungen aus `markings.ts`. Ohne diese Zeile bleibt Brunos
+     Wohnblase auf 920 %, auch nachdem er die CHF 12'000 als einmalig
+     eingeordnet hat — die Antwort wäre gespeichert und nirgends wirksam. */
+  const [markings, setMarkings] = useState(() => loadMarkings(persona.id))
   useEffect(() => {
     setSaved(loadBudget(persona.id))
     setAssignments(loadAssignments(persona.id))
+    setMarkings(loadMarkings(persona.id))
   }, [persona.id, stack.length])
 
   const derived = useMemo(
-    () => deriveForPersona(persona, { today: TODAY, months: 12, assignments }),
-    [persona, assignments],
+    () => deriveForPersona(persona, { today: TODAY, months: 12, assignments, markings }),
+    [persona, assignments, markings],
   )
 
   /* Wo ein Budget gesetzt ist, gilt es. Sonst der Vorschlag aus den Buchungen. */
@@ -201,8 +207,9 @@ export function BudgetView() {
         to: TODAY,
         ownName: persona.name,
         assignments,
+        markings,
       }),
-    [persona, assignments],
+    [persona, assignments, markings],
   )
   const progress = monthProgress(TODAY)
   const bubbles: Bubble[] = CATEGORY_KEYS.map((key) => ({

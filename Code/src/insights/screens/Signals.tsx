@@ -5,6 +5,7 @@ import { formatAmount } from '../../lib/money'
 import { useSession } from '../../app/session'
 import { Icon, type IconName } from '../../app/shell/Icon'
 import { Sheet } from '../../app/shell/Sheet'
+import { ClassifySheet } from '../budget/ui/ClassifySheet'
 import { budgetPerCategory, signalsForPersona, type Signal, type SignalKind } from '../signals/engine'
 import {
   loadDismissed,
@@ -19,7 +20,6 @@ import { fingerprintOf, loadAssignments } from '../budget/assign'
 import { openAssignments } from '../budget/review'
 import { fullMonthWindow } from '../budget/derive'
 import {
-  DEFAULT_SPREAD_MONTHS,
   loadMarkings,
   markingOf,
   saveMarkings,
@@ -70,67 +70,6 @@ function toneOf(signal: Signal): string {
   if (signal.kind === 'incomeSwitch' || signal.kind === 'incomeAnnual') return 'good'
   if (signal.confidence < 0.7) return 'soft'
   return 'warn'
-}
-
-/**
- * Das Blatt, das die Einordnung erfragt.
- *
- * Drei Antworten, weil es drei Fälle sind — die Begründung steht in
- * `budget/markings.ts`. Der Text nennt beim Verteilen ausdrücklich, was
- * danach im Monat steht: Wer «CHF 3'950 auf 12 Monate» wählt, soll die
- * CHF 329 sehen, bevor er tippt.
- */
-function ClassifySheet({
-  amount,
-  current,
-  onChoose,
-  onClose,
-}: {
-  amount: number
-  current: Marking
-  onChoose: (marking: Marking) => void
-  onClose: () => void
-}) {
-  const perMonth = Math.round(amount / DEFAULT_SPREAD_MONTHS)
-  const options: { marking: Marking; title: string; body: string }[] = [
-    {
-      marking: { kind: 'normal' },
-      title: 'Gehört so dazu',
-      body: 'Zählt im August gegen dein Budget, wie jede andere Buchung.',
-    },
-    {
-      marking: { kind: 'extraordinary' },
-      title: 'War einmalig',
-      body: 'Zählt nicht gegen das Monatsbudget. Steht weiterhin als ausserordentliche Ausgabe da — verschwindet also nicht.',
-    },
-    {
-      marking: { kind: 'spread', months: DEFAULT_SPREAD_MONTHS },
-      title: `Auf ${DEFAULT_SPREAD_MONTHS} Monate verteilen`,
-      body: `Jahresrechnung oder Anschaffung: ${formatAmount(perMonth, { sign: false })} pro Monat statt alles im August.`,
-    },
-  ]
-
-  return (
-    <>
-      <div className="sig-scrim" onClick={onClose} aria-hidden />
-      <div className="sig-sheet" role="dialog" aria-label="Gehört das ins Monatsbudget?">
-        <h3 className="sig-sheet__title">Gehört das ins Monatsbudget?</h3>
-        {options.map((option) => (
-          <button
-            key={option.title}
-            className={'sig-choice' + (option.marking.kind === current.kind ? ' is-current' : '')}
-            onClick={() => onChoose(option.marking)}
-          >
-            <span className="sig-choice__main">
-              <span className="sig-choice__title">{option.title}</span>
-              <span className="sig-choice__body">{option.body}</span>
-            </span>
-            {option.marking.kind === current.kind && <Icon name="check" size={18} />}
-          </button>
-        ))}
-      </div>
-    </>
-  )
 }
 
 export function Signals() {
@@ -346,6 +285,7 @@ export function Signals() {
       {transaction && (
         <ClassifySheet
           amount={Math.abs(transaction.amount)}
+          date={transaction.date}
           current={markingOf(markings, transaction.id)}
           onChoose={(marking) => mark(transaction.id, marking)}
           onClose={() => setClassify(null)}
