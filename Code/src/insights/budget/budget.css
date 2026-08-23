@@ -96,7 +96,7 @@
 }
 
 .bud-head__line--total .num { font-size: 22px; }
-.bud-head__line--total.is-negative { color: var(--danger3); }
+.bud-head__line--total.is-negative { color: var(--danger3-danger2); }
 
 .bud-head__note {
   margin-top: var(--s-3);
@@ -169,7 +169,7 @@
 }
 
 .bud-cat__delta { display: block; margin-top: 4px; font-size: 12px; color: var(--text-muted); }
-.bud-cat__delta .is-over { color: var(--pending3); }
+.bud-cat__delta .is-over { color: var(--pending3-pending1); }
 .bud-cat__delta .is-under { color: var(--text-muted); }
 
 .bud-cat__amount { font-size: 16px; font-weight: 700; color: var(--text-strong); white-space: nowrap; }
@@ -591,7 +591,7 @@
 .balbar__sub { display: block; margin-top: 2px; font-size: 11px; font-weight: 400; color: var(--text-muted); }
 .balbar__amount { font-size: 20px; font-weight: 700; color: var(--text-strong); white-space: nowrap; }
 .balbar__cur { font-size: 12px; font-weight: 400; color: var(--text-muted); }
-.balbar--negative .balbar__amount { color: var(--danger3); }
+.balbar--negative .balbar__amount { color: var(--danger3-danger2); }
 
 /* ── Der Ausblick ────────────────────────────────────────────────────────── */
 
@@ -806,8 +806,16 @@
    kippt, entscheidet `iconOnDark()` an der Rampe — auf petrol4 wäre Weiss zu
    schwach, auf Orange und Gelb unleserlich. Sinnbild und Zahl liegen in
    derselben Gruppe und kippen deshalb zusammen. */
+/* Die Grundfarbe gilt für die Beschriftung **auf der Füllung**: Die Rampe ist
+   in beiden Themen dieselbe Farbe, also braucht es hier keine Themenfarbe,
+   sondern die Gegenfarbe zur Rampe. */
 .bub__label { color: var(--petrol8); pointer-events: none; transition: color 200ms ease; }
 .bub__label--inverse { color: var(--weiss); }
+
+/* Reicht die Füllung nicht bis zur Beschriftung, steht sie auf dem
+   Ringinnenraum — und der ist `--surface-card` und kippt mit dem Thema.
+   Ohne diese Regel stand petrol8 auf petrol9: 1,33:1. */
+.bub__label--onsurface { color: var(--text-strong); }
 
 /* Die Zahl in der Blase. `currentColor` statt eines eigenen Tokens, damit sie
    dem Umschlag der Gruppe folgt statt ihn zu wiederholen.
@@ -823,6 +831,26 @@
   /* Zahlen mit gleicher Laufweite: Sonst wandert «96 %» gegenüber «100 %»
      sichtbar aus der Mitte, obwohl beide zentriert sind. */
   font-variant-numeric: tabular-nums;
+
+}
+
+/* Ein Saum in der Farbe des Ringinnenraums, hinter der Schrift gezeichnet.
+   Er löst den einen Fall, für den es keine richtige Textfarbe gibt: Eine
+   Füllung bei rund 20 % reicht bis unter die **Mitte** der Zahl, aber nicht bis
+   an ihre Ränder. Die Zahl steht dann gleichzeitig auf hellem Petrol und auf
+   dunkler Karte — im Dunkeln ist sie in der Mitte weg, egal welche Farbe man
+   wählt. Sichtbar bei Ninos «20 %».
+
+   Nur dort, und nicht überall: Auf einer vollen gelben Blase legt derselbe
+   Saum einen dunklen Rand um eine dunkle Zahl und lässt sie klobig aussehen.
+
+   `paint-order` ist das Entscheidende — ohne es liegt der Strich **über** der
+   Schrift und frisst sie von innen auf. */
+.bub__pct--halo {
+  paint-order: stroke fill;
+  stroke: var(--surface-card);
+  stroke-width: 3px;
+  stroke-linejoin: round;
 }
 
 /* «920 %» ist ein Zeichen länger als «100 %» und stösst sonst an den Ring. */
@@ -864,7 +892,7 @@
 .bub-legend__main { flex: 1; min-width: 0; text-align: left; }
 .bub-legend__title { display: block; font-size: 14px; color: var(--text-strong); }
 .bub-legend__sub { display: block; margin-top: 1px; font-size: 11px; color: var(--text-muted); }
-.bub-legend__row--over .bub-legend__sub { color: var(--danger3); }
+.bub-legend__row--over .bub-legend__sub { color: var(--danger3-danger2); }
 
 .bub-legend__amount {
   font-size: 14px;
@@ -968,7 +996,7 @@
   color: var(--text-body);
 }
 
-.bud-detail__rest.is-over { color: var(--danger3); }
+.bud-detail__rest.is-over { color: var(--danger3-danger2); }
 
 /* Die Hochrechnung steht ohne Karte auf dem Grund: Sie ist ein Satz, keine
    Kennzahl, und eine Karte würde sie zu einer machen. */

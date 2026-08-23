@@ -62,7 +62,7 @@
   color: var(--text-strong);
 }
 
-.recsum__gauge--over .recsum__gaugehead { color: var(--danger3); }
+.recsum__gauge--over .recsum__gaugehead { color: var(--danger3-danger2); }
 
 .recsum__gaugesub {
   display: block;

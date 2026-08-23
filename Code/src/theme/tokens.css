@@ -228,110 +228,129 @@
   --weiss-success4: var(--weiss);
 }
 
-/* Reconstructed dark theme: each --a-b pair resolves to its `b` primitive. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --danger1-danger4: var(--danger4);
-    --danger2-danger1: var(--danger1);
-    --danger2-danger3: var(--danger3);
-    --danger3-danger2: var(--danger2);
-    --danger4-danger1: var(--danger1);
-    --danger4-grau1: var(--grau1);
-    --grapefruit1-grapefruit9: var(--grapefruit9);
-    --grapefruit2-grapefruit8: var(--grapefruit8);
-    --grapefruit3-grapefruit7: var(--grapefruit7);
-    --grapefruit4-grapefruit6: var(--grapefruit6);
-    --grapefruit5-grapefruit5: var(--grapefruit5);
-    --grapefruit6-grapefruit4: var(--grapefruit4);
-    --grapefruit7-grapefruit3: var(--grapefruit3);
-    --grapefruit8-grapefruit2: var(--grapefruit2);
-    --grapefruit9-grapefruit1: var(--grapefruit1);
-    --grau1-grau2: var(--grau2);
-    --grau1-grau8: var(--grau8);
-    --grau1-petrol10: var(--petrol10);
-    --grau2-grau7: var(--grau7);
-    --grau2-petrol8: var(--petrol8);
-    --grau2-petrol9: var(--petrol9);
-    --grau3-grau6: var(--grau6);
-    --grau3-petrol3: var(--petrol3);
-    --grau3-petrol8: var(--petrol8);
-    --grau4-grau5: var(--grau5);
-    --grau4-petrol3: var(--petrol3);
-    --grau5-grau4: var(--grau4);
-    --grau6-grau1: var(--grau1);
-    --grau6-grau3: var(--grau3);
-    --grau7-grau1: var(--grau1);
-    --grau7-grau2: var(--grau2);
-    --grau7-grau3: var(--grau3);
-    --grau7-grau6: var(--grau6);
-    --grau7-petrol2: var(--petrol2);
-    --grau7-petrol3: var(--petrol3);
-    --grau7-petrol5: var(--petrol5);
-    --grau7-petrol7: var(--petrol7);
-    --grau7-petrol8: var(--petrol8);
-    --grau7-petrol9: var(--petrol9);
-    --grau8-grau1: var(--grau1);
-    --hellblau1-hellblau9: var(--hellblau9);
-    --hellblau2-hellblau8: var(--hellblau8);
-    --hellblau3-hellblau7: var(--hellblau7);
-    --hellblau4-hellblau6: var(--hellblau6);
-    --hellblau5-hellblau5: var(--hellblau5);
-    --hellblau6-hellblau4: var(--hellblau4);
-    --hellblau7-hellblau3: var(--hellblau3);
-    --hellblau8-hellblau2: var(--hellblau2);
-    --hellblau9-hellblau1: var(--hellblau1);
-    --info1-info2: var(--info2);
-    --info2-grau1: var(--grau1);
-    --info2-info1: var(--info1);
-    --pending1-pending3: var(--pending3);
-    --pending2-pending2: var(--pending2);
-    --pending3-grau1: var(--grau1);
-    --pending3-pending1: var(--pending1);
-    --petrol1-petrol10: var(--petrol10);
-    --petrol10-petrol2: var(--petrol2);
-    --petrol11-grau1: var(--grau1);
-    --petrol11-petrol1: var(--petrol1);
-    --petrol11-petrol3: var(--petrol3);
-    --petrol11-petrol4: var(--petrol4);
-    --petrol11-weiss: var(--weiss);
-    --petrol2-petrol10: var(--petrol10);
-    --petrol2-petrol3: var(--petrol3);
-    --petrol2-petrol9: var(--petrol9);
-    --petrol3-petrol4: var(--petrol4);
-    --petrol3-petrol8: var(--petrol8);
-    --petrol3-petrol9: var(--petrol9);
-    --petrol4-petrol8: var(--petrol8);
-    --petrol5-petrol7: var(--petrol7);
-    --petrol6-petrol6: var(--petrol6);
-    --petrol7-petrol5: var(--petrol5);
-    --petrol7-petrol9: var(--petrol9);
-    --petrol8-grau1: var(--grau1);
-    --petrol8-petrol1: var(--petrol1);
-    --petrol8-petrol2: var(--petrol2);
-    --petrol8-petrol3: var(--petrol3);
-    --petrol8-petrol4: var(--petrol4);
-    --petrol8-postfinancegelb: var(--postfinancegelb);
-    --petrol8-weiss: var(--weiss);
-    --petrol9-petrol3: var(--petrol3);
-    --postfinancegelb-petrol8: var(--petrol8);
-    --schwarz-grau1: var(--grau1);
-    --schwarz-petrol1: var(--petrol1);
-    --schwarz-petrol3: var(--petrol3);
-    --schwarz-weiss: var(--weiss);
-    --success1-success4: var(--success4);
-    --success2-success3: var(--success3);
-    --success3-success2: var(--success2);
-    --success4-grau1: var(--grau1);
-    --success4-success1: var(--success1);
-    --weiss-danger4: var(--danger4);
-    --weiss-grau1: var(--grau1);
-    --weiss-info2: var(--info2);
-    --weiss-pending3: var(--pending3);
-    --weiss-petrol11: var(--petrol11);
-    --weiss-petrol8: var(--petrol8);
-    --weiss-petrol9: var(--petrol9);
-    --weiss-postfinancegelb: var(--postfinancegelb);
-    --weiss-schwarz: var(--schwarz);
-    --weiss-success4: var(--success4);
-  }
+/* Reconstructed dark theme: each --a-b pair resolves to its `b` primitive.
+ *
+ * ── Warum `[data-theme]` und nicht `prefers-color-scheme` ─────────────────
+ *
+ * Hier stand `@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) }`,
+ * und damit hing die Dunkelfassung dieser Paare am **Betriebssystem**.
+ * `base.css` kennt aber nur `[data-theme='dark']` — dort gibt es keine
+ * Medienabfrage. Beide Dateien meinten also Verschiedenes mit «dunkel», und
+ * die Schnittmenge war: Die Akzentfarben kippten nur, wenn das System
+ * *zusätzlich* dunkel steht.
+ *
+ * Wer im hellen System in der App auf Dunkel schaltet, bekam dunkle Flächen
+ * aus `base.css` und helle Akzente von hier. Gemessen an der Frage auf der
+ * Budget-Detailseite: Rostrot (#B12E02) auf petrol9 (#00373D) ergibt 1,3:1 —
+ * sichtbar wie nichts.
+ *
+ * `SessionProvider` schreibt das Attribut ohnehin bei jedem Themenwechsel
+ * (`app/session.tsx`). Es ist die einzige Quelle der Wahrheit über das Thema,
+ * und diese Datei folgt ihr jetzt genauso wie `base.css`. Eine zweite,
+ * duplizierte Fassung unter `@media` wäre der Weg gewesen, beides zu haben —
+ * um den Preis von hundert Deklarationen, die auseinanderlaufen können.
+ */
+:root[data-theme="dark"] {
+  --danger1-danger4: var(--danger4);
+  --danger2-danger1: var(--danger1);
+  --danger2-danger3: var(--danger3);
+  --danger3-danger2: var(--danger2);
+  --danger4-danger1: var(--danger1);
+  --danger4-grau1: var(--grau1);
+  --grapefruit1-grapefruit9: var(--grapefruit9);
+  --grapefruit2-grapefruit8: var(--grapefruit8);
+  --grapefruit3-grapefruit7: var(--grapefruit7);
+  --grapefruit4-grapefruit6: var(--grapefruit6);
+  --grapefruit5-grapefruit5: var(--grapefruit5);
+  --grapefruit6-grapefruit4: var(--grapefruit4);
+  --grapefruit7-grapefruit3: var(--grapefruit3);
+  --grapefruit8-grapefruit2: var(--grapefruit2);
+  --grapefruit9-grapefruit1: var(--grapefruit1);
+  --grau1-grau2: var(--grau2);
+  --grau1-grau8: var(--grau8);
+  --grau1-petrol10: var(--petrol10);
+  --grau2-grau7: var(--grau7);
+  --grau2-petrol8: var(--petrol8);
+  --grau2-petrol9: var(--petrol9);
+  --grau3-grau6: var(--grau6);
+  --grau3-petrol3: var(--petrol3);
+  --grau3-petrol8: var(--petrol8);
+  --grau4-grau5: var(--grau5);
+  --grau4-petrol3: var(--petrol3);
+  --grau5-grau4: var(--grau4);
+  --grau6-grau1: var(--grau1);
+  --grau6-grau3: var(--grau3);
+  --grau7-grau1: var(--grau1);
+  --grau7-grau2: var(--grau2);
+  --grau7-grau3: var(--grau3);
+  --grau7-grau6: var(--grau6);
+  --grau7-petrol2: var(--petrol2);
+  --grau7-petrol3: var(--petrol3);
+  --grau7-petrol5: var(--petrol5);
+  --grau7-petrol7: var(--petrol7);
+  --grau7-petrol8: var(--petrol8);
+  --grau7-petrol9: var(--petrol9);
+  --grau8-grau1: var(--grau1);
+  --hellblau1-hellblau9: var(--hellblau9);
+  --hellblau2-hellblau8: var(--hellblau8);
+  --hellblau3-hellblau7: var(--hellblau7);
+  --hellblau4-hellblau6: var(--hellblau6);
+  --hellblau5-hellblau5: var(--hellblau5);
+  --hellblau6-hellblau4: var(--hellblau4);
+  --hellblau7-hellblau3: var(--hellblau3);
+  --hellblau8-hellblau2: var(--hellblau2);
+  --hellblau9-hellblau1: var(--hellblau1);
+  --info1-info2: var(--info2);
+  --info2-grau1: var(--grau1);
+  --info2-info1: var(--info1);
+  --pending1-pending3: var(--pending3);
+  --pending2-pending2: var(--pending2);
+  --pending3-grau1: var(--grau1);
+  --pending3-pending1: var(--pending1);
+  --petrol1-petrol10: var(--petrol10);
+  --petrol10-petrol2: var(--petrol2);
+  --petrol11-grau1: var(--grau1);
+  --petrol11-petrol1: var(--petrol1);
+  --petrol11-petrol3: var(--petrol3);
+  --petrol11-petrol4: var(--petrol4);
+  --petrol11-weiss: var(--weiss);
+  --petrol2-petrol10: var(--petrol10);
+  --petrol2-petrol3: var(--petrol3);
+  --petrol2-petrol9: var(--petrol9);
+  --petrol3-petrol4: var(--petrol4);
+  --petrol3-petrol8: var(--petrol8);
+  --petrol3-petrol9: var(--petrol9);
+  --petrol4-petrol8: var(--petrol8);
+  --petrol5-petrol7: var(--petrol7);
+  --petrol6-petrol6: var(--petrol6);
+  --petrol7-petrol5: var(--petrol5);
+  --petrol7-petrol9: var(--petrol9);
+  --petrol8-grau1: var(--grau1);
+  --petrol8-petrol1: var(--petrol1);
+  --petrol8-petrol2: var(--petrol2);
+  --petrol8-petrol3: var(--petrol3);
+  --petrol8-petrol4: var(--petrol4);
+  --petrol8-postfinancegelb: var(--postfinancegelb);
+  --petrol8-weiss: var(--weiss);
+  --petrol9-petrol3: var(--petrol3);
+  --postfinancegelb-petrol8: var(--petrol8);
+  --schwarz-grau1: var(--grau1);
+  --schwarz-petrol1: var(--petrol1);
+  --schwarz-petrol3: var(--petrol3);
+  --schwarz-weiss: var(--weiss);
+  --success1-success4: var(--success4);
+  --success2-success3: var(--success3);
+  --success3-success2: var(--success2);
+  --success4-grau1: var(--grau1);
+  --success4-success1: var(--success1);
+  --weiss-danger4: var(--danger4);
+  --weiss-grau1: var(--grau1);
+  --weiss-info2: var(--info2);
+  --weiss-pending3: var(--pending3);
+  --weiss-petrol11: var(--petrol11);
+  --weiss-petrol8: var(--petrol8);
+  --weiss-petrol9: var(--petrol9);
+  --weiss-postfinancegelb: var(--postfinancegelb);
+  --weiss-schwarz: var(--schwarz);
+  --weiss-success4: var(--success4);
 }

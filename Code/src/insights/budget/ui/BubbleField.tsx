@@ -156,6 +156,44 @@ export function iconOnDark(share: number, covered: boolean): boolean {
 }
 
 /**
+ * Auf welchem Grund die Beschriftung steht — und das ist der Punkt, an dem
+ * hell und dunkel auseinandergehen.
+ *
+ * Die **Füllung** folgt der Markenrampe und ist in beiden Themen dieselbe
+ * Farbe: petrol3 bleibt petrol3. Eine Beschriftung darauf braucht deshalb
+ * keine Themenfarbe, sondern die Gegenfarbe zur Rampe — das entscheidet
+ * `iconOnDark()`.
+ *
+ * Der **Ringinnenraum** ist `--surface-card` und kippt mit dem Thema: weiss im
+ * Hellen, petrol9 im Dunkeln. Eine Beschriftung dort braucht `--text-strong`,
+ * sonst steht petrol8 (#004B5A) auf petrol9 (#00373D) — gemessen 1,33:1, also
+ * unsichtbar. Genau das war bei den leeren Blasen der Fall, und beim Sinnbild
+ * der kleinen schon vorher.
+ *
+ * Ein blosser Token-Tausch hätte es nicht getan: Eine helle Grundfarbe wäre
+ * auf der hellen Füllung einer Blase bei 30 bis 45 Prozent genauso unsichtbar
+ * geworden. Deshalb zwei Fälle statt einer Farbe.
+ */
+export function labelOnSurface(covered: boolean): boolean {
+  return !covered
+}
+
+/**
+ * Liegt die Füllung **teilweise** unter der Beschriftung?
+ *
+ * Der eine Fall, für den es keine richtige Textfarbe gibt. Eine Füllung bei
+ * rund 20 % reicht bis unter die Mitte der Zahl, aber nicht bis an ihre
+ * Ränder: Die Zahl steht gleichzeitig auf hellem Petrol und auf der Karte
+ * dahinter. Im Hellen fällt das nicht auf, weil beide Gründe hell sind — im
+ * Dunkeln ist die Zahl in der Mitte weg.
+ *
+ * Dort, und nur dort, bekommt sie einen Saum (`.bub__pct--halo`).
+ */
+export function labelStraddles(fill: number, coveredAt: number): boolean {
+  return fill > 0 && fill < coveredAt
+}
+
+/**
  * Wie viel vom Ring der rote Bogen einnimmt, 0..1.
  *
  * Er misst die Überschreitung, nicht den Verbrauch: 135 % ergeben gut ein
@@ -342,8 +380,14 @@ export function BubbleField({
               const twoLine = outer >= LABEL_RADIUS && label !== null
               if (outer < ICON_RADIUS) return null
 
-              const inverse = iconOnDark(share, fill >= (twoLine ? LABEL_COVERED : ICON_COVERED))
-              const cls = 'bub__label' + (inverse ? ' bub__label--inverse' : '')
+              const coveredAt = twoLine ? LABEL_COVERED : ICON_COVERED
+              const covered = fill >= coveredAt
+              const halo = labelStraddles(fill, coveredAt) ? ' bub__pct--halo' : ''
+              const inverse = iconOnDark(share, covered)
+              const cls =
+                'bub__label' +
+                (inverse ? ' bub__label--inverse' : '') +
+                (labelOnSurface(covered) ? ' bub__label--onsurface' : '')
 
               /* Nur Zahl: die kleineren Blasen. Das Sinnbild wäre dort neben
                  der Zahl ein Fleck, und die Zahl ist die Aussage. */
@@ -357,7 +401,7 @@ export function BubbleField({
                 }
                 return (
                   <g className={cls}>
-                    <text className="bub__pct" y="5" textAnchor="middle">
+                    <text className={'bub__pct' + halo} y="5" textAnchor="middle">
                       {label}
                     </text>
                   </g>
@@ -376,7 +420,8 @@ export function BubbleField({
                   <text
                     className={
                       'bub__pct' +
-                      (label.length > 5 || (outer < 40 && label.length > 4) ? ' bub__pct--long' : '')
+                      (label.length > 5 || (outer < 40 && label.length > 4) ? ' bub__pct--long' : '') +
+                      halo
                     }
                     y="11"
                     textAnchor="middle"

@@ -1,6 +1,17 @@
 import { describe, expect, it } from 'vitest'
 import { boundsOf, packCircles, radiusFor, type PackedCircle } from '../pack'
-import { bubbleLabel, bubbleTotals, fillRamp, glowOf, iconOnDark, overshootOf, shareOf, stateOf } from '../ui/BubbleField'
+import {
+  bubbleLabel,
+  bubbleTotals,
+  fillRamp,
+  glowOf,
+  iconOnDark,
+  labelOnSurface,
+  labelStraddles,
+  overshootOf,
+  shareOf,
+  stateOf,
+} from '../ui/BubbleField'
 
 /** Überlappen sich zwei Kreise wirklich — mit etwas Luft für Rundung? */
 function overlaps(a: PackedCircle<unknown>, b: PackedCircle<unknown>): boolean {
@@ -274,5 +285,37 @@ describe('Die Zahl in der Blase', () => {
     // Schweizer Schreibweise — und im Kreis der Unterschied zwischen einer
     // Zahl mit ihrem Zeichen und einer Zahl, die davon wegdriftet.
     expect(bubbleLabel({ key: 'reside', budget: 100, spent: 50 })).not.toContain(' %')
+  })
+})
+
+describe('Auf welchem Grund die Zahl steht', () => {
+  /* Der Kern des Hell/Dunkel-Problems in den Blasen: Die **Füllung** folgt der
+     Markenrampe und ist in beiden Themen dieselbe Farbe. Der
+     **Ringinnenraum** ist `--surface-card` und kippt — weiss im Hellen,
+     petrol9 im Dunkeln. Wer beides mit einer Farbe bemalt, verliert einen der
+     beiden Fälle. */
+
+  it('nennt die Karte als Grund, wo die Füllung die Zahl nicht erreicht', () => {
+    expect(labelOnSurface(false)).toBe(true)
+    expect(labelOnSurface(true)).toBe(false)
+  })
+
+  it('erkennt den Fall, in dem die Füllung nur halb darunterliegt', () => {
+    /* Ninos Mobilität bei 20 %: Die Füllung reicht bis unter die Mitte der
+       Zahl, aber nicht bis an ihre Ränder. Im Dunkeln ist die Zahl dann in der
+       Mitte weg — dort, und nur dort, braucht sie einen Saum. */
+    expect(labelStraddles(16, 30)).toBe(true)
+  })
+
+  it('sieht keinen Saum vor, wo gar keine Füllung ist', () => {
+    // Die leere Blase: sauberer Grund, die Zahl steht frei darauf.
+    expect(labelStraddles(0, 30)).toBe(false)
+  })
+
+  it('sieht keinen Saum vor, wo die Füllung ganz darunterliegt', () => {
+    /* Die volle gelbe Blase. Ein Saum legte hier einen dunklen Rand um eine
+       dunkle Zahl und liesse sie klobig aussehen. */
+    expect(labelStraddles(30, 30)).toBe(false)
+    expect(labelStraddles(62, 30)).toBe(false)
   })
 })
