@@ -1,0 +1,14 @@
+{
+  "name": "pf-budget-wizard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Rekonstruierter PostFinance-Budgetrechner: Spezifikation, Referenzdaten und Rechenlogik",
+  "main": "src/index.ts",
+  "scripts": {
+    "derive": "node derive.mjs",
+    "verify": "node verify.mjs",
+    "verify:live": "node verify.mjs --live",
+    "typecheck": "tsc --noEmit"
+  }
+}

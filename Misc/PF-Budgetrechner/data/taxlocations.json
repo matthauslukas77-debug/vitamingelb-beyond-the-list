@@ -1,0 +1,158 @@
+{
+ "ZH": {
+  "canton": "ZH",
+  "city": "Zürich",
+  "taxLocationID": 800100000,
+  "zipCode": "8001"
+ },
+ "BE": {
+  "canton": "BE",
+  "city": "Bern",
+  "taxLocationID": 301100000,
+  "zipCode": "3011"
+ },
+ "LU": {
+  "canton": "LU",
+  "city": "Luzern",
+  "taxLocationID": 600300000,
+  "zipCode": "6003"
+ },
+ "UR": {
+  "canton": "UR",
+  "city": "Altdorf UR",
+  "taxLocationID": 646000000,
+  "zipCode": "6460"
+ },
+ "SZ": {
+  "canton": "SZ",
+  "city": "Schwyz",
+  "taxLocationID": 643000000,
+  "zipCode": "6430"
+ },
+ "OW": {
+  "canton": "OW",
+  "city": "Ramersberg",
+  "taxLocationID": 606100000,
+  "zipCode": "6060"
+ },
+ "NW": {
+  "canton": "NW",
+  "city": "Oberdorf NW",
+  "taxLocationID": 637041000,
+  "zipCode": "6370"
+ },
+ "GL": {
+  "canton": "GL",
+  "city": "Glaris",
+  "taxLocationID": 875000001,
+  "zipCode": "8750"
+ },
+ "ZG": {
+  "canton": "ZG",
+  "city": "Zoug",
+  "taxLocationID": 630000009,
+  "zipCode": "6300"
+ },
+ "FR": {
+  "canton": "FR",
+  "city": "Daillettes",
+  "taxLocationID": 170000010,
+  "zipCode": "1700"
+ },
+ "SO": {
+  "canton": "SO",
+  "city": "Soletta",
+  "taxLocationID": 450000001,
+  "zipCode": "4500"
+ },
+ "BS": {
+  "canton": "BS",
+  "city": "Basel",
+  "taxLocationID": 405100000,
+  "zipCode": "4051"
+ },
+ "BL": {
+  "canton": "BL",
+  "city": "Liestal",
+  "taxLocationID": 441000000,
+  "zipCode": "4410"
+ },
+ "SH": {
+  "canton": "SH",
+  "city": "Schaffhausen",
+  "taxLocationID": 820000000,
+  "zipCode": "8200"
+ },
+ "AR": {
+  "canton": "AR",
+  "city": "Herisau",
+  "taxLocationID": 910000000,
+  "zipCode": "9100"
+ },
+ "AI": {
+  "canton": "AI",
+  "city": "Appenzell",
+  "taxLocationID": 905000000,
+  "zipCode": "9050"
+ },
+ "SG": {
+  "canton": "SG",
+  "city": "S. Gallo",
+  "taxLocationID": 900000002,
+  "zipCode": "9000"
+ },
+ "GR": {
+  "canton": "GR",
+  "city": "Chur",
+  "taxLocationID": 700000000,
+  "zipCode": "7000"
+ },
+ "AG": {
+  "canton": "AG",
+  "city": "Aarau",
+  "taxLocationID": 500000000,
+  "zipCode": "5000"
+ },
+ "TG": {
+  "canton": "TG",
+  "city": "Bühl b. Frauenfeld",
+  "taxLocationID": 850000009,
+  "zipCode": "8500"
+ },
+ "TI": {
+  "canton": "TI",
+  "city": "Calprino",
+  "taxLocationID": 690000004,
+  "zipCode": "6900"
+ },
+ "VD": {
+  "canton": "VD",
+  "city": "Lausanne",
+  "taxLocationID": 100300000,
+  "zipCode": "1003"
+ },
+ "VS": {
+  "canton": "VS",
+  "city": "Châteauneuf (Sion)",
+  "taxLocationID": 195004000,
+  "zipCode": "1950"
+ },
+ "NE": {
+  "canton": "NE",
+  "city": "Neuchâtel",
+  "taxLocationID": 200000000,
+  "zipCode": "2000"
+ },
+ "GE": {
+  "canton": "GE",
+  "city": "Genève",
+  "taxLocationID": 120100000,
+  "zipCode": "1201"
+ },
+ "JU": {
+  "canton": "JU",
+  "city": "Delsberg",
+  "taxLocationID": 280000002,
+  "zipCode": "2800"
+ }
+}

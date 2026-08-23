@@ -22,8 +22,25 @@ import { CircleRow } from '../shell/parts'
  *
  * Der Bildschirmrahmen liegt nicht mehr hier: Diese Ansicht ist eine von drei
  * im Cockpit (`src/insights/screens/Cockpit.tsx`) und steht dort unter der
- * Pille «Analyse» — unverändert, als Vergleich neben unserer eigenen. Was hier
- * exportiert wird, ist deshalb der Inhalt ohne Kopfzeile.
+ * Pille «Analyse» — als Vergleich neben unserer eigenen. Was hier exportiert
+ * wird, ist deshalb der Inhalt ohne Kopfzeile.
+ *
+ * ── Zwei Zeilen des Originals fehlen ──────────────────────────────────────
+ *
+ * Unter der Legende standen im Nachbau noch «Keine aktiven Budgets» und
+ * «Wiederkehrende Buchungen». Im Cockpit sind beide Sackgassen:
+ *
+ *   Die Budgetzeile war ein Knopf **ohne** `onClick` — im Original führt sie
+ *   in ein Formular, das es hier nicht gibt. Sie behauptete «keine aktiven
+ *   Budgets», während die Pille daneben ein vollständiges Budget zeigt. Von
+ *   zwei Aussagen über dasselbe Konto war eine falsch.
+ *
+ *   Die Zeile zu den wiederkehrenden Buchungen führte auf einen Bildschirm,
+ *   der im Cockpit als dritte Pille direkt daneben liegt.
+ *
+ * Der Doppelring, die Zeitraumangabe und die Legende — alles, worauf sich der
+ * Vergleich im Pitch stützt — stehen unverändert. Weggefallen ist nur, was
+ * unter der Pille daneben schon besser dasteht.
  */
 
 const RING_GAP = 6
@@ -203,24 +220,6 @@ export function AnalysisContent() {
           </span>
           <span className="legend__chevron">
             <Icon name="chevronRight" size={18} />
-          </span>
-        </button>
-
-        <button className="listrow">
-          <span className="listrow__icon"><Icon name="document" size={24} accent /></span>
-          <span>
-            <span className="listrow__title">Keine aktiven Budgets</span>
-            <span className="listrow__sub">
-              Budgets erfassen, um Ausgaben in Bezug auf Kategorien oder Labels nachzuverfolgen.
-            </span>
-          </span>
-        </button>
-
-        <button className="listrow" onClick={() => push({ name: 'recurring' })}>
-          <span className="listrow__icon"><Icon name="calendar" size={24} accent /></span>
-          <span>
-            <span className="listrow__title">Wiederkehrende Buchungen</span>
-            <span className="listrow__sub">Abos, Daueraufträge, Rechnungen und der Lohn</span>
           </span>
         </button>
 

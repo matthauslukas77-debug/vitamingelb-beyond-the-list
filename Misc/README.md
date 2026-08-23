@@ -9,9 +9,11 @@ Misc/
 │   ├── SYNTHESE.md        Querauswertung aller sechs Gespräche
 │   ├── transkripte/       die vollständigen Gespräche, anonymisiert
 │   └── auswertungen/      strukturierte Notizen nach eigener Vorlage
-└── Design-Thinking/
-    ├── Interviewleitfaden.md   womit wir in die Gespräche gegangen sind
-    └── Entscheidungen.md       Entscheidlog: was, wann, warum
+├── Design-Thinking/
+│   ├── Interviewleitfaden.md   womit wir in die Gespräche gegangen sind
+│   └── Entscheidungen.md       Entscheidlog: was, wann, warum
+├── PF-Budgetrechner/       wie wir den öffentlichen Rechner vermessen haben
+└── Apertus/                was das Sprachmodell kann — und was nicht
 ```
 
 ## Die sechs Gespräche
@@ -60,3 +62,44 @@ bewusst nicht geglättet: Was hier steht, ist das, was gesagt wurde.
 
 Die Zuordnungstabelle Klarname → Pseudonym ist der Schlüssel zur Re-Identifikation. Sie liegt
 ausserhalb dieses Repositorys und wird nicht veröffentlicht.
+
+## PF-Budgetrechner — die Vermessung
+
+Unser Budget vergleicht gegen einen Richtwert. Damit «du zahlst mehr fürs Wohnen als ein
+vergleichbarer Haushalt» eine Aussage ist und keine Behauptung, muss der Richtwert im selben
+Massstab stehen wie das Original. Also haben wir das Original vermessen statt nachempfunden.
+
+| Datei | Was drinsteht |
+|---|---|
+| [`SPEC.md`](PF-Budgetrechner/SPEC.md) | Struktur des öffentlichen Rechners: sechs Kategorien, neunzehn Detailfelder, Beschriftungen wörtlich |
+| [`MODELL.md`](PF-Budgetrechner/MODELL.md) | Die rekonstruierte Rechenlogik, Formel für Formel |
+| [`API.md`](PF-Budgetrechner/API.md) | Die Schnittstelle, gegen die wir geprüft haben |
+| [`VERBESSERUNGEN.md`](PF-Budgetrechner/VERBESSERUNGEN.md) | Was am Original schwach ist — der Ausgangspunkt unseres Wizards |
+| `data/samples.jsonl.gz` | **2'513 Messpunkte** der öffentlichen API |
+| `data/labels.*.json` | Die Originalbeschriftungen in vier Sprachen |
+| `src/`, `verify.mjs` | Der Prüfstand: unsere Nachrechnung gegen die Messpunkte |
+
+**Ergebnis:** maximal 1 CHF Abweichung pro Jahr, die Klassenzuordnung in 100 % der Fälle korrekt.
+
+Zwei Dinge liegen bewusst **nicht** hier. Das extrahierte Angular-Bundle des Rechners ist
+PostFinance-Code — den geben wir nicht weiter, auch wenn er öffentlich ausgeliefert wird. Und die
+Schriftdateien fehlen aus demselben Grund an anderer Stelle: Die Lizenz der PostFinance Grotesk
+erlaubt keine Weitergabe.
+
+## Apertus — was das Modell kann, und was nicht
+
+[`APERTUS_CAPABILITY_TEST.md`](Apertus/APERTUS_CAPABILITY_TEST.md) ist die Messung, auf der unsere
+KI-Architektur beruht. Beide Modellgrössen gegen 90 Testtransaktionen mit drei eingebauten
+Signalen. Die drei Befunde, die alles Weitere bestimmt haben:
+
+- **Beide rechnen falsch.** Vierzehn Beträge addieren, jedes Mal daneben — der 70B plausibel nah
+  dran, was in einer Banking-App der teuerste Fehlertyp ist.
+- **Beide halten den Lohn für das Ungewöhnlichste am Konto.** Das Regelmässigste, was es gibt.
+- **Mit vorberechnetem Fakt formulieren beide sauber** und erfinden keine Zahl.
+
+Daraus folgt die Trennung, die im Code steht: erkennen deterministisch, formulieren im Modell.
+Details dazu im [Tech-Jury-Dokument](../Documentation/TECH_JURY_DOC.md), Abschnitt «Implementation».
+
+Die Prüfskripte selbst liegen nicht hier: Sie lesen die Zugangsdatei direkt vom Entwicklungsrechner
+und tragen die Schlüsselpräfixe in ihren Suchmustern. Was sie gemessen haben, steht vollständig im
+Dokument.

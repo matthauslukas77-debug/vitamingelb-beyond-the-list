@@ -1,0 +1,10232 @@
+{
+ "_source": "https://www.postfinance.ch/de/privat/anlegen/tools-rechner/budget-erstellen.html",
+ "_sampled": "2026-08-22",
+ "_samples": 2513,
+ "_note": "Richtwerte des PostFinance-Budgetrechners, gemessen ueber die oeffentliche API. Siehe ../MODELL.md",
+ "categories": [
+  "taxes",
+  "reside",
+  "insurance",
+  "health",
+  "mobility",
+  "consumption"
+ ],
+ "expenseClasses": {
+  "1|0": [
+   {
+    "netMin": 772,
+    "netMax": 4167,
+    "n": 124,
+    "expenseRatio": 1.32902,
+    "shares": {
+     "reside": 0.38815,
+     "insurance": 0.03063,
+     "health": 0.14256,
+     "mobility": 0.11608,
+     "consumption": 0.32259
+    },
+    "netUpperBound": 4205,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4244,
+    "netMax": 6019,
+    "n": 54,
+    "expenseRatio": 1.05238,
+    "shares": {
+     "reside": 0.33688,
+     "insurance": 0.04033,
+     "health": 0.12679,
+     "mobility": 0.13432,
+     "consumption": 0.36168
+    },
+    "netLowerBound": 4205,
+    "netUpperBound": 6057
+   },
+   {
+    "netMin": 6096,
+    "netMax": 8135,
+    "n": 286,
+    "expenseRatio": 0.99376,
+    "shares": {
+     "reside": 0.30253,
+     "insurance": 0.05276,
+     "health": 0.12059,
+     "mobility": 0.14566,
+     "consumption": 0.37854
+    },
+    "netLowerBound": 6057,
+    "netUpperBound": 8172
+   },
+   {
+    "netMin": 8209,
+    "netMax": 11105,
+    "n": 90,
+    "expenseRatio": 0.91598,
+    "shares": {
+     "reside": 0.28155,
+     "insurance": 0.06794,
+     "health": 0.10981,
+     "mobility": 0.15634,
+     "consumption": 0.38439
+    },
+    "netLowerBound": 8172,
+    "netUpperBound": 11142
+   },
+   {
+    "netMin": 11179,
+    "netMax": 24173,
+    "n": 195,
+    "expenseRatio": 0.82013,
+    "shares": {
+     "reside": 0.24392,
+     "insurance": 0.07923,
+     "health": 0.08934,
+     "mobility": 0.14804,
+     "consumption": 0.43948
+    },
+    "netLowerBound": 11142,
+    "netUpperBound": null
+   }
+  ],
+  "1|1": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.3111,
+    "shares": {
+     "reside": 0.30255,
+     "insurance": 0.02731,
+     "health": 0.22641,
+     "mobility": 0.10249,
+     "consumption": 0.34132
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 2,
+    "expenseRatio": 1.03908,
+    "shares": {
+     "reside": 0.27679,
+     "insurance": 0.03203,
+     "health": 0.20511,
+     "mobility": 0.12123,
+     "consumption": 0.36484
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5952
+   },
+   {
+    "netMin": 6559,
+    "netMax": 7690,
+    "n": 2,
+    "expenseRatio": 0.98246,
+    "shares": {
+     "reside": 0.25479,
+     "insurance": 0.03869,
+     "health": 0.19395,
+     "mobility": 0.13019,
+     "consumption": 0.3823
+    },
+    "netLowerBound": 5952,
+    "netUpperBound": 8400
+   },
+   {
+    "netMin": 9175,
+    "netMax": 11405,
+    "n": 2,
+    "expenseRatio": 0.90879,
+    "shares": {
+     "reside": 0.24059,
+     "insurance": 0.04705,
+     "health": 0.17696,
+     "mobility": 0.13959,
+     "consumption": 0.39593
+    },
+    "netLowerBound": 8400,
+    "netUpperBound": 13169
+   },
+   {
+    "netMin": 15205,
+    "netMax": 19005,
+    "n": 2,
+    "expenseRatio": 0.81906,
+    "shares": {
+     "reside": 0.22502,
+     "insurance": 0.05369,
+     "health": 0.14685,
+     "mobility": 0.13366,
+     "consumption": 0.44078
+    },
+    "netLowerBound": 13169,
+    "netUpperBound": null
+   }
+  ],
+  "1|2": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 56,
+    "expenseRatio": 1.34083,
+    "shares": {
+     "reside": 0.27987,
+     "insurance": 0.02584,
+     "health": 0.22994,
+     "mobility": 0.10127,
+     "consumption": 0.36313
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 28,
+    "expenseRatio": 1.06332,
+    "shares": {
+     "reside": 0.25916,
+     "insurance": 0.03059,
+     "health": 0.2088,
+     "mobility": 0.11926,
+     "consumption": 0.38228
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5952
+   },
+   {
+    "netMin": 6559,
+    "netMax": 7690,
+    "n": 80,
+    "expenseRatio": 1.00606,
+    "shares": {
+     "reside": 0.23995,
+     "insurance": 0.03688,
+     "health": 0.19627,
+     "mobility": 0.12729,
+     "consumption": 0.3996
+    },
+    "netLowerBound": 5952,
+    "netUpperBound": 8400
+   },
+   {
+    "netMin": 9175,
+    "netMax": 11405,
+    "n": 54,
+    "expenseRatio": 0.931,
+    "shares": {
+     "reside": 0.22656,
+     "insurance": 0.04459,
+     "health": 0.17832,
+     "mobility": 0.13554,
+     "consumption": 0.41498
+    },
+    "netLowerBound": 8400,
+    "netUpperBound": 13169
+   },
+   {
+    "netMin": 15205,
+    "netMax": 19005,
+    "n": 54,
+    "expenseRatio": 0.83946,
+    "shares": {
+     "reside": 0.21377,
+     "insurance": 0.05062,
+     "health": 0.14679,
+     "mobility": 0.12907,
+     "consumption": 0.4598
+    },
+    "netLowerBound": 13169,
+    "netUpperBound": null
+   }
+  ],
+  "1|3": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.34706,
+    "shares": {
+     "reside": 0.25921,
+     "insurance": 0.02567,
+     "health": 0.24563,
+     "mobility": 0.09579,
+     "consumption": 0.37364
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 2,
+    "expenseRatio": 1.06839,
+    "shares": {
+     "reside": 0.24117,
+     "insurance": 0.02992,
+     "health": 0.22448,
+     "mobility": 0.1133,
+     "consumption": 0.39123
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5952
+   },
+   {
+    "netMin": 6559,
+    "netMax": 7690,
+    "n": 2,
+    "expenseRatio": 1.01081,
+    "shares": {
+     "reside": 0.22366,
+     "insurance": 0.03554,
+     "health": 0.21103,
+     "mobility": 0.12086,
+     "consumption": 0.40891
+    },
+    "netLowerBound": 5952,
+    "netUpperBound": 8400
+   },
+   {
+    "netMin": 9175,
+    "netMax": 11405,
+    "n": 2,
+    "expenseRatio": 0.93561,
+    "shares": {
+     "reside": 0.21181,
+     "insurance": 0.04254,
+     "health": 0.19242,
+     "mobility": 0.1292,
+     "consumption": 0.42391
+    },
+    "netLowerBound": 8400,
+    "netUpperBound": 13169
+   },
+   {
+    "netMin": 15205,
+    "netMax": 19005,
+    "n": 2,
+    "expenseRatio": 0.84373,
+    "shares": {
+     "reside": 0.20038,
+     "insurance": 0.04802,
+     "health": 0.15871,
+     "mobility": 0.12332,
+     "consumption": 0.46956
+    },
+    "netLowerBound": 13169,
+    "netUpperBound": null
+   }
+  ],
+  "1|4": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.34706,
+    "shares": {
+     "reside": 0.25921,
+     "insurance": 0.02567,
+     "health": 0.24563,
+     "mobility": 0.09579,
+     "consumption": 0.37364
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 2,
+    "expenseRatio": 1.06839,
+    "shares": {
+     "reside": 0.24119,
+     "insurance": 0.02988,
+     "health": 0.22443,
+     "mobility": 0.11324,
+     "consumption": 0.39135
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5952
+   },
+   {
+    "netMin": 6559,
+    "netMax": 7690,
+    "n": 2,
+    "expenseRatio": 1.01081,
+    "shares": {
+     "reside": 0.22362,
+     "insurance": 0.03548,
+     "health": 0.21107,
+     "mobility": 0.12088,
+     "consumption": 0.40894
+    },
+    "netLowerBound": 5952,
+    "netUpperBound": 8400
+   },
+   {
+    "netMin": 9175,
+    "netMax": 11405,
+    "n": 2,
+    "expenseRatio": 0.93557,
+    "shares": {
+     "reside": 0.21178,
+     "insurance": 0.04254,
+     "health": 0.19241,
+     "mobility": 0.12923,
+     "consumption": 0.42397
+    },
+    "netLowerBound": 8400,
+    "netUpperBound": 13169
+   },
+   {
+    "netMin": 15205,
+    "netMax": 19005,
+    "n": 2,
+    "expenseRatio": 0.84373,
+    "shares": {
+     "reside": 0.20042,
+     "insurance": 0.04798,
+     "health": 0.15869,
+     "mobility": 0.12335,
+     "consumption": 0.4696
+    },
+    "netLowerBound": 13169,
+    "netUpperBound": null
+   }
+  ],
+  "1|5": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.34706,
+    "shares": {
+     "reside": 0.25921,
+     "insurance": 0.02567,
+     "health": 0.24563,
+     "mobility": 0.09579,
+     "consumption": 0.37364
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 2,
+    "expenseRatio": 1.06839,
+    "shares": {
+     "reside": 0.24118,
+     "insurance": 0.02986,
+     "health": 0.22447,
+     "mobility": 0.11326,
+     "consumption": 0.39131
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5952
+   },
+   {
+    "netMin": 6559,
+    "netMax": 7690,
+    "n": 2,
+    "expenseRatio": 1.01081,
+    "shares": {
+     "reside": 0.22363,
+     "insurance": 0.03552,
+     "health": 0.21112,
+     "mobility": 0.12091,
+     "consumption": 0.40897
+    },
+    "netLowerBound": 5952,
+    "netUpperBound": 8400
+   },
+   {
+    "netMin": 9175,
+    "netMax": 11405,
+    "n": 2,
+    "expenseRatio": 0.93561,
+    "shares": {
+     "reside": 0.21186,
+     "insurance": 0.04252,
+     "health": 0.19245,
+     "mobility": 0.1293,
+     "consumption": 0.42399
+    },
+    "netLowerBound": 8400,
+    "netUpperBound": 13169
+   },
+   {
+    "netMin": 15205,
+    "netMax": 19005,
+    "n": 2,
+    "expenseRatio": 0.84373,
+    "shares": {
+     "reside": 0.2004,
+     "insurance": 0.04802,
+     "health": 0.15873,
+     "mobility": 0.12331,
+     "consumption": 0.46958
+    },
+    "netLowerBound": 13169,
+    "netUpperBound": null
+   }
+  ],
+  "2|0": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.2293,
+    "shares": {
+     "reside": 0.31411,
+     "insurance": 0.03919,
+     "health": 0.16865,
+     "mobility": 0.13543,
+     "consumption": 0.34265
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 0.96845,
+    "shares": {
+     "reside": 0.27404,
+     "insurance": 0.05291,
+     "health": 0.14775,
+     "mobility": 0.15793,
+     "consumption": 0.36751
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 32,
+    "expenseRatio": 0.9113,
+    "shares": {
+     "reside": 0.24622,
+     "insurance": 0.06891,
+     "health": 0.13748,
+     "mobility": 0.16901,
+     "consumption": 0.3784
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 10803,
+    "n": 61,
+    "expenseRatio": 0.83645,
+    "shares": {
+     "reside": 0.22789,
+     "insurance": 0.08826,
+     "health": 0.1231,
+     "mobility": 0.1798,
+     "consumption": 0.38103
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 10994
+   },
+   {
+    "netMin": 11189,
+    "netMax": 28180,
+    "n": 181,
+    "expenseRatio": 0.74492,
+    "shares": {
+     "reside": 0.20555,
+     "insurance": 0.10358,
+     "health": 0.10007,
+     "mobility": 0.1698,
+     "consumption": 0.42103
+    },
+    "netLowerBound": 10994,
+    "netUpperBound": null
+   }
+  ],
+  "2|1": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.30026,
+    "shares": {
+     "reside": 0.3018,
+     "insurance": 0.03158,
+     "health": 0.20473,
+     "mobility": 0.11294,
+     "consumption": 0.349
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.02931,
+    "shares": {
+     "reside": 0.26865,
+     "insurance": 0.03992,
+     "health": 0.18397,
+     "mobility": 0.13376,
+     "consumption": 0.37381
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 0.97222,
+    "shares": {
+     "reside": 0.24314,
+     "insurance": 0.05029,
+     "health": 0.17312,
+     "mobility": 0.1439,
+     "consumption": 0.3896
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.89749,
+    "shares": {
+     "reside": 0.22694,
+     "insurance": 0.06307,
+     "health": 0.15671,
+     "mobility": 0.15422,
+     "consumption": 0.39908
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.80611,
+    "shares": {
+     "reside": 0.2063,
+     "insurance": 0.07361,
+     "health": 0.12934,
+     "mobility": 0.14701,
+     "consumption": 0.44373
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ],
+  "2|2": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.32965,
+    "shares": {
+     "reside": 0.27971,
+     "insurance": 0.03021,
+     "health": 0.21019,
+     "mobility": 0.1123,
+     "consumption": 0.36778
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.05373,
+    "shares": {
+     "reside": 0.2515,
+     "insurance": 0.03857,
+     "health": 0.18954,
+     "mobility": 0.13266,
+     "consumption": 0.38768
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 8334,
+    "n": 42,
+    "expenseRatio": 0.99596,
+    "shares": {
+     "reside": 0.22836,
+     "insurance": 0.04857,
+     "health": 0.17755,
+     "mobility": 0.14192,
+     "consumption": 0.4036
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8411
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11421,
+    "n": 134,
+    "expenseRatio": 0.91995,
+    "shares": {
+     "reside": 0.21311,
+     "insurance": 0.06069,
+     "health": 0.16019,
+     "mobility": 0.15112,
+     "consumption": 0.41491
+    },
+    "netLowerBound": 8411,
+    "netUpperBound": 11455
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28651,
+    "n": 210,
+    "expenseRatio": 0.82681,
+    "shares": {
+     "reside": 0.19531,
+     "insurance": 0.07081,
+     "health": 0.13191,
+     "mobility": 0.14406,
+     "consumption": 0.45794
+    },
+    "netLowerBound": 11455,
+    "netUpperBound": null
+   }
+  ],
+  "2|3": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.33588,
+    "shares": {
+     "reside": 0.25957,
+     "insurance": 0.02976,
+     "health": 0.22549,
+     "mobility": 0.1066,
+     "consumption": 0.37854
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.05871,
+    "shares": {
+     "reside": 0.23455,
+     "insurance": 0.03733,
+     "health": 0.20479,
+     "mobility": 0.12651,
+     "consumption": 0.39691
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 1.00082,
+    "shares": {
+     "reside": 0.21328,
+     "insurance": 0.04631,
+     "health": 0.19188,
+     "mobility": 0.1354,
+     "consumption": 0.41318
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.92459,
+    "shares": {
+     "reside": 0.19978,
+     "insurance": 0.05746,
+     "health": 0.17384,
+     "mobility": 0.14482,
+     "consumption": 0.4241
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.83109,
+    "shares": {
+     "reside": 0.18377,
+     "insurance": 0.06677,
+     "health": 0.14355,
+     "mobility": 0.13845,
+     "consumption": 0.46748
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ],
+  "2|4": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.33588,
+    "shares": {
+     "reside": 0.25957,
+     "insurance": 0.02976,
+     "health": 0.22549,
+     "mobility": 0.1066,
+     "consumption": 0.37854
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.05871,
+    "shares": {
+     "reside": 0.23456,
+     "insurance": 0.0373,
+     "health": 0.20481,
+     "mobility": 0.1265,
+     "consumption": 0.39689
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 1.00085,
+    "shares": {
+     "reside": 0.21329,
+     "insurance": 0.04631,
+     "health": 0.19188,
+     "mobility": 0.13536,
+     "consumption": 0.41315
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.92458,
+    "shares": {
+     "reside": 0.19981,
+     "insurance": 0.05747,
+     "health": 0.17384,
+     "mobility": 0.14484,
+     "consumption": 0.42413
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.83109,
+    "shares": {
+     "reside": 0.18375,
+     "insurance": 0.06678,
+     "health": 0.14355,
+     "mobility": 0.13845,
+     "consumption": 0.46748
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ],
+  "2|5": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.33588,
+    "shares": {
+     "reside": 0.25957,
+     "insurance": 0.02976,
+     "health": 0.22549,
+     "mobility": 0.1066,
+     "consumption": 0.37854
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.05871,
+    "shares": {
+     "reside": 0.23454,
+     "insurance": 0.03729,
+     "health": 0.20479,
+     "mobility": 0.12645,
+     "consumption": 0.39695
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 1.00082,
+    "shares": {
+     "reside": 0.21328,
+     "insurance": 0.04632,
+     "health": 0.1919,
+     "mobility": 0.13539,
+     "consumption": 0.41314
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.92458,
+    "shares": {
+     "reside": 0.19979,
+     "insurance": 0.05747,
+     "health": 0.17383,
+     "mobility": 0.14483,
+     "consumption": 0.42413
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.83109,
+    "shares": {
+     "reside": 0.18376,
+     "insurance": 0.06677,
+     "health": 0.14355,
+     "mobility": 0.13846,
+     "consumption": 0.46747
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ],
+  "3|0": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.2293,
+    "shares": {
+     "reside": 0.31417,
+     "insurance": 0.0393,
+     "health": 0.16866,
+     "mobility": 0.13529,
+     "consumption": 0.34274
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 0.96845,
+    "shares": {
+     "reside": 0.27407,
+     "insurance": 0.05283,
+     "health": 0.14778,
+     "mobility": 0.15792,
+     "consumption": 0.36751
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 0.91129,
+    "shares": {
+     "reside": 0.24628,
+     "insurance": 0.06893,
+     "health": 0.13747,
+     "mobility": 0.16902,
+     "consumption": 0.37837
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 10803,
+    "n": 9,
+    "expenseRatio": 0.83648,
+    "shares": {
+     "reside": 0.22785,
+     "insurance": 0.08824,
+     "health": 0.12308,
+     "mobility": 0.1798,
+     "consumption": 0.38099
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11100
+   },
+   {
+    "netMin": 11405,
+    "netMax": 28180,
+    "n": 25,
+    "expenseRatio": 0.74492,
+    "shares": {
+     "reside": 0.20555,
+     "insurance": 0.10358,
+     "health": 0.10007,
+     "mobility": 0.16979,
+     "consumption": 0.42103
+    },
+    "netLowerBound": 11100,
+    "netUpperBound": null
+   }
+  ],
+  "3|1": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.30026,
+    "shares": {
+     "reside": 0.30182,
+     "insurance": 0.0316,
+     "health": 0.20468,
+     "mobility": 0.11289,
+     "consumption": 0.349
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.02931,
+    "shares": {
+     "reside": 0.26862,
+     "insurance": 0.03983,
+     "health": 0.18392,
+     "mobility": 0.13375,
+     "consumption": 0.37377
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 0.9722,
+    "shares": {
+     "reside": 0.24314,
+     "insurance": 0.05027,
+     "health": 0.17314,
+     "mobility": 0.14392,
+     "consumption": 0.38962
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.8975,
+    "shares": {
+     "reside": 0.22697,
+     "insurance": 0.06308,
+     "health": 0.15672,
+     "mobility": 0.15422,
+     "consumption": 0.39907
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.80611,
+    "shares": {
+     "reside": 0.20631,
+     "insurance": 0.07362,
+     "health": 0.12937,
+     "mobility": 0.14703,
+     "consumption": 0.44374
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ],
+  "3|2": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.32965,
+    "shares": {
+     "reside": 0.27973,
+     "insurance": 0.03019,
+     "health": 0.21018,
+     "mobility": 0.11223,
+     "consumption": 0.36783
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.05373,
+    "shares": {
+     "reside": 0.25159,
+     "insurance": 0.03856,
+     "health": 0.18955,
+     "mobility": 0.13261,
+     "consumption": 0.38769
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 0.99592,
+    "shares": {
+     "reside": 0.22838,
+     "insurance": 0.04858,
+     "health": 0.17756,
+     "mobility": 0.14191,
+     "consumption": 0.40365
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.91997,
+    "shares": {
+     "reside": 0.21311,
+     "insurance": 0.06068,
+     "health": 0.16021,
+     "mobility": 0.15113,
+     "consumption": 0.41491
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.82682,
+    "shares": {
+     "reside": 0.19532,
+     "insurance": 0.0708,
+     "health": 0.13191,
+     "mobility": 0.14405,
+     "consumption": 0.45794
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ],
+  "3|3": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.33588,
+    "shares": {
+     "reside": 0.25957,
+     "insurance": 0.02976,
+     "health": 0.22549,
+     "mobility": 0.1066,
+     "consumption": 0.37854
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.05871,
+    "shares": {
+     "reside": 0.23455,
+     "insurance": 0.0373,
+     "health": 0.20482,
+     "mobility": 0.12651,
+     "consumption": 0.39693
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 1.00085,
+    "shares": {
+     "reside": 0.21332,
+     "insurance": 0.0463,
+     "health": 0.19194,
+     "mobility": 0.13537,
+     "consumption": 0.41316
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.92459,
+    "shares": {
+     "reside": 0.19979,
+     "insurance": 0.05745,
+     "health": 0.17382,
+     "mobility": 0.14482,
+     "consumption": 0.42413
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.83109,
+    "shares": {
+     "reside": 0.18377,
+     "insurance": 0.06677,
+     "health": 0.14355,
+     "mobility": 0.13846,
+     "consumption": 0.46748
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ],
+  "3|4": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.33588,
+    "shares": {
+     "reside": 0.25957,
+     "insurance": 0.02976,
+     "health": 0.22549,
+     "mobility": 0.1066,
+     "consumption": 0.37854
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.05871,
+    "shares": {
+     "reside": 0.23458,
+     "insurance": 0.03731,
+     "health": 0.20481,
+     "mobility": 0.12646,
+     "consumption": 0.39694
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 1.00085,
+    "shares": {
+     "reside": 0.21331,
+     "insurance": 0.04632,
+     "health": 0.19192,
+     "mobility": 0.13537,
+     "consumption": 0.41317
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.92458,
+    "shares": {
+     "reside": 0.19979,
+     "insurance": 0.05745,
+     "health": 0.17385,
+     "mobility": 0.14484,
+     "consumption": 0.42415
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.83109,
+    "shares": {
+     "reside": 0.18376,
+     "insurance": 0.06677,
+     "health": 0.14356,
+     "mobility": 0.13846,
+     "consumption": 0.46747
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ],
+  "3|5": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.33588,
+    "shares": {
+     "reside": 0.25957,
+     "insurance": 0.02976,
+     "health": 0.22549,
+     "mobility": 0.1066,
+     "consumption": 0.37854
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.05871,
+    "shares": {
+     "reside": 0.23454,
+     "insurance": 0.03729,
+     "health": 0.20479,
+     "mobility": 0.12645,
+     "consumption": 0.39695
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 1.00085,
+    "shares": {
+     "reside": 0.21329,
+     "insurance": 0.04632,
+     "health": 0.19189,
+     "mobility": 0.13537,
+     "consumption": 0.41316
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.92459,
+    "shares": {
+     "reside": 0.19978,
+     "insurance": 0.05745,
+     "health": 0.17382,
+     "mobility": 0.14484,
+     "consumption": 0.42412
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.83109,
+    "shares": {
+     "reside": 0.18376,
+     "insurance": 0.06677,
+     "health": 0.14356,
+     "mobility": 0.13846,
+     "consumption": 0.46748
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ],
+  "4|0": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.2293,
+    "shares": {
+     "reside": 0.31411,
+     "insurance": 0.03919,
+     "health": 0.16865,
+     "mobility": 0.13543,
+     "consumption": 0.34265
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 0.96845,
+    "shares": {
+     "reside": 0.27404,
+     "insurance": 0.05291,
+     "health": 0.14775,
+     "mobility": 0.15793,
+     "consumption": 0.36751
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 0.91129,
+    "shares": {
+     "reside": 0.24621,
+     "insurance": 0.06889,
+     "health": 0.13748,
+     "mobility": 0.16898,
+     "consumption": 0.37839
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 10803,
+    "n": 9,
+    "expenseRatio": 0.83647,
+    "shares": {
+     "reside": 0.22787,
+     "insurance": 0.08825,
+     "health": 0.12309,
+     "mobility": 0.17977,
+     "consumption": 0.38102
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11100
+   },
+   {
+    "netMin": 11405,
+    "netMax": 28180,
+    "n": 25,
+    "expenseRatio": 0.74492,
+    "shares": {
+     "reside": 0.20555,
+     "insurance": 0.10358,
+     "health": 0.10006,
+     "mobility": 0.1698,
+     "consumption": 0.42101
+    },
+    "netLowerBound": 11100,
+    "netUpperBound": null
+   }
+  ],
+  "4|1": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.30026,
+    "shares": {
+     "reside": 0.3018,
+     "insurance": 0.03158,
+     "health": 0.20473,
+     "mobility": 0.11294,
+     "consumption": 0.349
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.02931,
+    "shares": {
+     "reside": 0.26865,
+     "insurance": 0.03992,
+     "health": 0.18397,
+     "mobility": 0.13376,
+     "consumption": 0.37381
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 0.97222,
+    "shares": {
+     "reside": 0.24314,
+     "insurance": 0.05029,
+     "health": 0.17312,
+     "mobility": 0.1439,
+     "consumption": 0.3896
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.89749,
+    "shares": {
+     "reside": 0.22694,
+     "insurance": 0.06307,
+     "health": 0.15671,
+     "mobility": 0.15422,
+     "consumption": 0.39908
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.80611,
+    "shares": {
+     "reside": 0.2063,
+     "insurance": 0.07361,
+     "health": 0.12934,
+     "mobility": 0.14701,
+     "consumption": 0.44373
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ],
+  "4|2": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.32965,
+    "shares": {
+     "reside": 0.27971,
+     "insurance": 0.03021,
+     "health": 0.21019,
+     "mobility": 0.1123,
+     "consumption": 0.36778
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.05373,
+    "shares": {
+     "reside": 0.2515,
+     "insurance": 0.03857,
+     "health": 0.18954,
+     "mobility": 0.13266,
+     "consumption": 0.38768
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 0.99592,
+    "shares": {
+     "reside": 0.22835,
+     "insurance": 0.04857,
+     "health": 0.17754,
+     "mobility": 0.14189,
+     "consumption": 0.4036
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.91996,
+    "shares": {
+     "reside": 0.21311,
+     "insurance": 0.06069,
+     "health": 0.16019,
+     "mobility": 0.15112,
+     "consumption": 0.41489
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.82682,
+    "shares": {
+     "reside": 0.19532,
+     "insurance": 0.07081,
+     "health": 0.13192,
+     "mobility": 0.14405,
+     "consumption": 0.45793
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ],
+  "4|3": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.33588,
+    "shares": {
+     "reside": 0.25957,
+     "insurance": 0.02976,
+     "health": 0.22549,
+     "mobility": 0.1066,
+     "consumption": 0.37854
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.05871,
+    "shares": {
+     "reside": 0.23455,
+     "insurance": 0.03733,
+     "health": 0.20479,
+     "mobility": 0.12651,
+     "consumption": 0.39691
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 1.00082,
+    "shares": {
+     "reside": 0.21328,
+     "insurance": 0.04631,
+     "health": 0.19188,
+     "mobility": 0.1354,
+     "consumption": 0.41318
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.92459,
+    "shares": {
+     "reside": 0.19978,
+     "insurance": 0.05746,
+     "health": 0.17384,
+     "mobility": 0.14482,
+     "consumption": 0.4241
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.83109,
+    "shares": {
+     "reside": 0.18377,
+     "insurance": 0.06677,
+     "health": 0.14355,
+     "mobility": 0.13845,
+     "consumption": 0.46748
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ],
+  "4|4": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.33588,
+    "shares": {
+     "reside": 0.25957,
+     "insurance": 0.02976,
+     "health": 0.22549,
+     "mobility": 0.1066,
+     "consumption": 0.37854
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.05871,
+    "shares": {
+     "reside": 0.23456,
+     "insurance": 0.0373,
+     "health": 0.20481,
+     "mobility": 0.1265,
+     "consumption": 0.39689
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 1.00085,
+    "shares": {
+     "reside": 0.21329,
+     "insurance": 0.04631,
+     "health": 0.19188,
+     "mobility": 0.13536,
+     "consumption": 0.41315
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.92458,
+    "shares": {
+     "reside": 0.19981,
+     "insurance": 0.05747,
+     "health": 0.17384,
+     "mobility": 0.14484,
+     "consumption": 0.42413
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.83109,
+    "shares": {
+     "reside": 0.18375,
+     "insurance": 0.06678,
+     "health": 0.14355,
+     "mobility": 0.13845,
+     "consumption": 0.46748
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ],
+  "4|5": [
+   {
+    "netMin": 1543,
+    "netMax": 3858,
+    "n": 4,
+    "expenseRatio": 1.33588,
+    "shares": {
+     "reside": 0.25957,
+     "insurance": 0.02976,
+     "health": 0.22549,
+     "mobility": 0.1066,
+     "consumption": 0.37854
+    },
+    "netUpperBound": 4226,
+    "netLowerBound": 0
+   },
+   {
+    "netMin": 4630,
+    "netMax": 5402,
+    "n": 4,
+    "expenseRatio": 1.05871,
+    "shares": {
+     "reside": 0.23454,
+     "insurance": 0.03729,
+     "health": 0.20479,
+     "mobility": 0.12645,
+     "consumption": 0.39695
+    },
+    "netLowerBound": 4226,
+    "netUpperBound": 5775
+   },
+   {
+    "netMin": 6173,
+    "netMax": 7717,
+    "n": 6,
+    "expenseRatio": 1.00082,
+    "shares": {
+     "reside": 0.21328,
+     "insurance": 0.04632,
+     "health": 0.1919,
+     "mobility": 0.13539,
+     "consumption": 0.41314
+    },
+    "netLowerBound": 5775,
+    "netUpperBound": 8093
+   },
+   {
+    "netMin": 8488,
+    "netMax": 11405,
+    "n": 10,
+    "expenseRatio": 0.92458,
+    "shares": {
+     "reside": 0.19979,
+     "insurance": 0.05747,
+     "health": 0.17383,
+     "mobility": 0.14483,
+     "consumption": 0.42413
+    },
+    "netLowerBound": 8093,
+    "netUpperBound": 11447
+   },
+   {
+    "netMin": 11490,
+    "netMax": 28180,
+    "n": 24,
+    "expenseRatio": 0.83109,
+    "shares": {
+     "reside": 0.18376,
+     "insurance": 0.06677,
+     "health": 0.14355,
+     "mobility": 0.13846,
+     "consumption": 0.46747
+    },
+    "netLowerBound": 11447,
+    "netUpperBound": null
+   }
+  ]
+ },
+ "taxByLocation": {
+  "301100000": {
+   "1|0|1": [
+    [
+     10000,
+     0
+    ],
+    [
+     20000,
+     395
+    ],
+    [
+     22000,
+     631
+    ],
+    [
+     26000,
+     1242
+    ],
+    [
+     30000,
+     1872
+    ],
+    [
+     31000,
+     2042
+    ],
+    [
+     32000,
+     2195
+    ],
+    [
+     33000,
+     2349
+    ],
+    [
+     34000,
+     2517
+    ],
+    [
+     35000,
+     2730
+    ],
+    [
+     36000,
+     2906
+    ],
+    [
+     37000,
+     3119
+    ],
+    [
+     38000,
+     3295
+    ],
+    [
+     39000,
+     3508
+    ],
+    [
+     40000,
+     3685
+    ],
+    [
+     41000,
+     3879
+    ],
+    [
+     42000,
+     4074
+    ],
+    [
+     43000,
+     4269
+    ],
+    [
+     44000,
+     4464
+    ],
+    [
+     45000,
+     4660
+    ],
+    [
+     46000,
+     4855
+    ],
+    [
+     47000,
+     5052
+    ],
+    [
+     48000,
+     5247
+    ],
+    [
+     49000,
+     5443
+    ],
+    [
+     50000,
+     5646
+    ],
+    [
+     51000,
+     5834
+    ],
+    [
+     52000,
+     6022
+    ],
+    [
+     53000,
+     6225
+    ],
+    [
+     54000,
+     6454
+    ],
+    [
+     55000,
+     6657
+    ],
+    [
+     56000,
+     6862
+    ],
+    [
+     57000,
+     7067
+    ],
+    [
+     58000,
+     7293
+    ],
+    [
+     59000,
+     7498
+    ],
+    [
+     60000,
+     7703
+    ],
+    [
+     61000,
+     7908
+    ],
+    [
+     62000,
+     8135
+    ],
+    [
+     63000,
+     8339
+    ],
+    [
+     64000,
+     8544
+    ],
+    [
+     65000,
+     8749
+    ],
+    [
+     66000,
+     8976
+    ],
+    [
+     67000,
+     9181
+    ],
+    [
+     68000,
+     9386
+    ],
+    [
+     69000,
+     9593
+    ],
+    [
+     70000,
+     9824
+    ],
+    [
+     71000,
+     10031
+    ],
+    [
+     72000,
+     10239
+    ],
+    [
+     73000,
+     10447
+    ],
+    [
+     74000,
+     10654
+    ],
+    [
+     75000,
+     10862
+    ],
+    [
+     76000,
+     11070
+    ],
+    [
+     77000,
+     11277
+    ],
+    [
+     78000,
+     11484
+    ],
+    [
+     79000,
+     11697
+    ],
+    [
+     80000,
+     11927
+    ],
+    [
+     81000,
+     12156
+    ],
+    [
+     82000,
+     12386
+    ],
+    [
+     83000,
+     12617
+    ],
+    [
+     84000,
+     12847
+    ],
+    [
+     85000,
+     13076
+    ],
+    [
+     86000,
+     13307
+    ],
+    [
+     87000,
+     13536
+    ],
+    [
+     88000,
+     13768
+    ],
+    [
+     88200,
+     13826
+    ],
+    [
+     89000,
+     14026
+    ],
+    [
+     90000,
+     14282
+    ],
+    [
+     91000,
+     14841
+    ],
+    [
+     92000,
+     15091
+    ],
+    [
+     93000,
+     15347
+    ],
+    [
+     94000,
+     15584
+    ],
+    [
+     95000,
+     15840
+    ],
+    [
+     96000,
+     16104
+    ],
+    [
+     97000,
+     16343
+    ],
+    [
+     98000,
+     16600
+    ],
+    [
+     99000,
+     16839
+    ],
+    [
+     100000,
+     17102
+    ],
+    [
+     101000,
+     17358
+    ],
+    [
+     102000,
+     17598
+    ],
+    [
+     103000,
+     17861
+    ],
+    [
+     104000,
+     18116
+    ],
+    [
+     105000,
+     18356
+    ],
+    [
+     106000,
+     18612
+    ],
+    [
+     107000,
+     18875
+    ],
+    [
+     108000,
+     19115
+    ],
+    [
+     109000,
+     19392
+    ],
+    [
+     110000,
+     19679
+    ],
+    [
+     111000,
+     19942
+    ],
+    [
+     112000,
+     20222
+    ],
+    [
+     113000,
+     20484
+    ],
+    [
+     114000,
+     20770
+    ],
+    [
+     115000,
+     21051
+    ],
+    [
+     116000,
+     21312
+    ],
+    [
+     117000,
+     21600
+    ],
+    [
+     118000,
+     21880
+    ],
+    [
+     119000,
+     22141
+    ],
+    [
+     120000,
+     22422
+    ],
+    [
+     121000,
+     22708
+    ],
+    [
+     122000,
+     22970
+    ],
+    [
+     123000,
+     23250
+    ],
+    [
+     124000,
+     23538
+    ],
+    [
+     125000,
+     23808
+    ],
+    [
+     126000,
+     24105
+    ],
+    [
+     127000,
+     24388
+    ],
+    [
+     128000,
+     24695
+    ],
+    [
+     129000,
+     24992
+    ],
+    [
+     130000,
+     25273
+    ],
+    [
+     131000,
+     25581
+    ],
+    [
+     132000,
+     25879
+    ],
+    [
+     133000,
+     26160
+    ],
+    [
+     134000,
+     26458
+    ],
+    [
+     135000,
+     26765
+    ],
+    [
+     136000,
+     27046
+    ],
+    [
+     137000,
+     27343
+    ],
+    [
+     138000,
+     27651
+    ],
+    [
+     139000,
+     27932
+    ],
+    [
+     140000,
+     28234
+    ],
+    [
+     141000,
+     28521
+    ],
+    [
+     142000,
+     28835
+    ],
+    [
+     143000,
+     29139
+    ],
+    [
+     144000,
+     29425
+    ],
+    [
+     145000,
+     29730
+    ],
+    [
+     146000,
+     30043
+    ],
+    [
+     147000,
+     30355
+    ],
+    [
+     148000,
+     30642
+    ],
+    [
+     149000,
+     30981
+    ],
+    [
+     150000,
+     31295
+    ],
+    [
+     151000,
+     31607
+    ],
+    [
+     152000,
+     31920
+    ],
+    [
+     153000,
+     32233
+    ],
+    [
+     154000,
+     32554
+    ],
+    [
+     155000,
+     32866
+    ],
+    [
+     156000,
+     33180
+    ],
+    [
+     157000,
+     33492
+    ],
+    [
+     158000,
+     33831
+    ],
+    [
+     159000,
+     34144
+    ],
+    [
+     160000,
+     34456
+    ],
+    [
+     162000,
+     35103
+    ],
+    [
+     166000,
+     36459
+    ],
+    [
+     170000,
+     37807
+    ],
+    [
+     174000,
+     39188
+    ],
+    [
+     178000,
+     40543
+    ],
+    [
+     180000,
+     41232
+    ],
+    [
+     182000,
+     41909
+    ],
+    [
+     186000,
+     43291
+    ],
+    [
+     190000,
+     44657
+    ],
+    [
+     194000,
+     46039
+    ],
+    [
+     198000,
+     47405
+    ],
+    [
+     200000,
+     48118
+    ],
+    [
+     202000,
+     48807
+    ],
+    [
+     206000,
+     50198
+    ],
+    [
+     210000,
+     51617
+    ],
+    [
+     214000,
+     53089
+    ],
+    [
+     218000,
+     54575
+    ],
+    [
+     220000,
+     55317
+    ],
+    [
+     222000,
+     56047
+    ],
+    [
+     226000,
+     57533
+    ],
+    [
+     230000,
+     59012
+    ],
+    [
+     234000,
+     60514
+    ],
+    [
+     238000,
+     62002
+    ],
+    [
+     240000,
+     62740
+    ],
+    [
+     242000,
+     63505
+    ],
+    [
+     246000,
+     64994
+    ],
+    [
+     250000,
+     66496
+    ],
+    [
+     254000,
+     67983
+    ],
+    [
+     258000,
+     69485
+    ],
+    [
+     260000,
+     70224
+    ],
+    [
+     262000,
+     70974
+    ],
+    [
+     266000,
+     72477
+    ],
+    [
+     270000,
+     73968
+    ],
+    [
+     274000,
+     75496
+    ],
+    [
+     278000,
+     76995
+    ],
+    [
+     280000,
+     77758
+    ],
+    [
+     282000,
+     78507
+    ],
+    [
+     286000,
+     80034
+    ],
+    [
+     290000,
+     81548
+    ],
+    [
+     294000,
+     83075
+    ],
+    [
+     298000,
+     84587
+    ],
+    [
+     300000,
+     85365
+    ],
+    [
+     302000,
+     86116
+    ],
+    [
+     306000,
+     87627
+    ],
+    [
+     310000,
+     89155
+    ],
+    [
+     314000,
+     90668
+    ],
+    [
+     318000,
+     92195
+    ]
+   ],
+   "1|1|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     168
+    ],
+    [
+     40000,
+     1133
+    ],
+    [
+     50000,
+     2562
+    ],
+    [
+     60000,
+     4193
+    ],
+    [
+     70000,
+     5884
+    ],
+    [
+     85000,
+     8476
+    ],
+    [
+     100000,
+     11580
+    ],
+    [
+     120000,
+     15652
+    ],
+    [
+     150000,
+     22849
+    ],
+    [
+     200000,
+     38642
+    ],
+    [
+     250000,
+     56453
+    ]
+   ],
+   "1|2|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     56
+    ],
+    [
+     50000,
+     927
+    ],
+    [
+     60000,
+     2266
+    ],
+    [
+     70000,
+     3913
+    ],
+    [
+     85000,
+     6364
+    ],
+    [
+     100000,
+     9097
+    ],
+    [
+     120000,
+     13064
+    ],
+    [
+     150000,
+     19851
+    ],
+    [
+     200000,
+     34753
+    ],
+    [
+     250000,
+     52494
+    ]
+   ],
+   "1|3|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     60000,
+     709
+    ],
+    [
+     70000,
+     1968
+    ],
+    [
+     85000,
+     4374
+    ],
+    [
+     100000,
+     7016
+    ],
+    [
+     120000,
+     10501
+    ],
+    [
+     150000,
+     16885
+    ],
+    [
+     200000,
+     30925
+    ],
+    [
+     250000,
+     48535
+    ]
+   ],
+   "1|4|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     502
+    ],
+    [
+     85000,
+     2446
+    ],
+    [
+     100000,
+     5008
+    ],
+    [
+     120000,
+     8200
+    ],
+    [
+     150000,
+     14111
+    ],
+    [
+     200000,
+     27382
+    ],
+    [
+     250000,
+     44638
+    ]
+   ],
+   "1|5|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     0
+    ],
+    [
+     85000,
+     838
+    ],
+    [
+     100000,
+     3073
+    ],
+    [
+     120000,
+     6210
+    ],
+    [
+     150000,
+     11468
+    ],
+    [
+     200000,
+     24003
+    ],
+    [
+     250000,
+     40750
+    ]
+   ],
+   "2|0|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     410
+    ],
+    [
+     40000,
+     1557
+    ],
+    [
+     50000,
+     3201
+    ],
+    [
+     60000,
+     5027
+    ],
+    [
+     70000,
+     6792
+    ],
+    [
+     85000,
+     9445
+    ],
+    [
+     100000,
+     12926
+    ],
+    [
+     120000,
+     17128
+    ],
+    [
+     150000,
+     24446
+    ],
+    [
+     200000,
+     40530
+    ],
+    [
+     250000,
+     58373
+    ]
+   ],
+   "2|0|2": [
+    [
+     60000,
+     4341
+    ],
+    [
+     70000,
+     6067
+    ],
+    [
+     80000,
+     7693
+    ],
+    [
+     90000,
+     9402
+    ],
+    [
+     100000,
+     11450
+    ],
+    [
+     110000,
+     13432
+    ],
+    [
+     120000,
+     15480
+    ],
+    [
+     125000,
+     16623
+    ],
+    [
+     130000,
+     17870
+    ],
+    [
+     140000,
+     20307
+    ],
+    [
+     145000,
+     21474
+    ],
+    [
+     150000,
+     22528
+    ],
+    [
+     160000,
+     25407
+    ],
+    [
+     165000,
+     26752
+    ],
+    [
+     170000,
+     27612
+    ],
+    [
+     180000,
+     31075
+    ],
+    [
+     190000,
+     33734
+    ],
+    [
+     200000,
+     37822
+    ],
+    [
+     205000,
+     38700
+    ],
+    [
+     210000,
+     40792
+    ],
+    [
+     220000,
+     44575
+    ],
+    [
+     230000,
+     47825
+    ],
+    [
+     240000,
+     51240
+    ],
+    [
+     260000,
+     58426
+    ],
+    [
+     270000,
+     61395
+    ],
+    [
+     280000,
+     65533
+    ],
+    [
+     290000,
+     68984
+    ],
+    [
+     310000,
+     76252
+    ],
+    [
+     320000,
+     79255
+    ],
+    [
+     330000,
+     83440
+    ],
+    [
+     370000,
+     97369
+    ]
+   ],
+   "2|1|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     387
+    ],
+    [
+     50000,
+     1519
+    ],
+    [
+     60000,
+     3073
+    ],
+    [
+     70000,
+     4820
+    ],
+    [
+     85000,
+     7422
+    ],
+    [
+     100000,
+     10652
+    ],
+    [
+     120000,
+     14643
+    ],
+    [
+     150000,
+     21640
+    ],
+    [
+     200000,
+     36975
+    ],
+    [
+     250000,
+     54759
+    ]
+   ],
+   "2|1|2": [
+    [
+     60000,
+     2463
+    ],
+    [
+     70000,
+     4210
+    ],
+    [
+     80000,
+     5952
+    ],
+    [
+     90000,
+     7531
+    ],
+    [
+     100000,
+     9228
+    ],
+    [
+     110000,
+     11194
+    ],
+    [
+     120000,
+     13178
+    ],
+    [
+     125000,
+     14191
+    ],
+    [
+     130000,
+     15310
+    ],
+    [
+     140000,
+     17698
+    ],
+    [
+     150000,
+     19881
+    ],
+    [
+     160000,
+     22348
+    ],
+    [
+     165000,
+     23875
+    ],
+    [
+     170000,
+     24711
+    ],
+    [
+     180000,
+     27998
+    ],
+    [
+     190000,
+     30462
+    ],
+    [
+     200000,
+     34287
+    ],
+    [
+     205000,
+     35146
+    ],
+    [
+     220000,
+     41021
+    ],
+    [
+     230000,
+     44249
+    ],
+    [
+     240000,
+     47625
+    ],
+    [
+     270000,
+     57780
+    ],
+    [
+     280000,
+     61917
+    ],
+    [
+     290000,
+     65359
+    ],
+    [
+     320000,
+     75600
+    ],
+    [
+     330000,
+     79784
+    ],
+    [
+     370000,
+     93611
+    ]
+   ],
+   "2|2|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     366
+    ],
+    [
+     60000,
+     1468
+    ],
+    [
+     70000,
+     3023
+    ],
+    [
+     85000,
+     5644
+    ],
+    [
+     100000,
+     8493
+    ],
+    [
+     120000,
+     12333
+    ],
+    [
+     150000,
+     18956
+    ],
+    [
+     200000,
+     33421
+    ],
+    [
+     250000,
+     51144
+    ]
+   ],
+   "2|2|2": [
+    [
+     60000,
+     1069
+    ],
+    [
+     70000,
+     2381
+    ],
+    [
+     80000,
+     4111
+    ],
+    [
+     90000,
+     5867
+    ],
+    [
+     92000,
+     6227
+    ],
+    [
+     94000,
+     6605
+    ],
+    [
+     96000,
+     6930
+    ],
+    [
+     98000,
+     7239
+    ],
+    [
+     100000,
+     7536
+    ],
+    [
+     102000,
+     7857
+    ],
+    [
+     104000,
+     8165
+    ],
+    [
+     106000,
+     8475
+    ],
+    [
+     108000,
+     8801
+    ],
+    [
+     110000,
+     9113
+    ],
+    [
+     112000,
+     9472
+    ],
+    [
+     114000,
+     9822
+    ],
+    [
+     116000,
+     10171
+    ],
+    [
+     118000,
+     10584
+    ],
+    [
+     120000,
+     10966
+    ],
+    [
+     122000,
+     11414
+    ],
+    [
+     124000,
+     11818
+    ],
+    [
+     125000,
+     11933
+    ],
+    [
+     126000,
+     12224
+    ],
+    [
+     128000,
+     12627
+    ],
+    [
+     130000,
+     13019
+    ],
+    [
+     132000,
+     13453
+    ],
+    [
+     134000,
+     13875
+    ],
+    [
+     136000,
+     14296
+    ],
+    [
+     138000,
+     14698
+    ],
+    [
+     140000,
+     15152
+    ],
+    [
+     142000,
+     15581
+    ],
+    [
+     144000,
+     16048
+    ],
+    [
+     145000,
+     16280
+    ],
+    [
+     146000,
+     16513
+    ],
+    [
+     148000,
+     16960
+    ],
+    [
+     150000,
+     17330
+    ],
+    [
+     152000,
+     18500
+    ],
+    [
+     154000,
+     18958
+    ],
+    [
+     156000,
+     19419
+    ],
+    [
+     158000,
+     19876
+    ],
+    [
+     160000,
+     20012
+    ],
+    [
+     162000,
+     20795
+    ],
+    [
+     164000,
+     21254
+    ],
+    [
+     165000,
+     21110
+    ],
+    [
+     166000,
+     21728
+    ],
+    [
+     168000,
+     22203
+    ],
+    [
+     170000,
+     22304
+    ],
+    [
+     172000,
+     23212
+    ],
+    [
+     174000,
+     23713
+    ],
+    [
+     176000,
+     24220
+    ],
+    [
+     178000,
+     24745
+    ],
+    [
+     180000,
+     25173
+    ],
+    [
+     182000,
+     25781
+    ],
+    [
+     184000,
+     26306
+    ],
+    [
+     186000,
+     26825
+    ],
+    [
+     188000,
+     27354
+    ],
+    [
+     190000,
+     27611
+    ],
+    [
+     192000,
+     28409
+    ],
+    [
+     194000,
+     28944
+    ],
+    [
+     196000,
+     29480
+    ],
+    [
+     198000,
+     30041
+    ],
+    [
+     200000,
+     30774
+    ],
+    [
+     202000,
+     31190
+    ],
+    [
+     204000,
+     31792
+    ],
+    [
+     205000,
+     31735
+    ],
+    [
+     206000,
+     32410
+    ],
+    [
+     208000,
+     33034
+    ],
+    [
+     210000,
+     33700
+    ],
+    [
+     212000,
+     34381
+    ],
+    [
+     214000,
+     35078
+    ],
+    [
+     216000,
+     35775
+    ],
+    [
+     218000,
+     36485
+    ],
+    [
+     220000,
+     37324
+    ],
+    [
+     224000,
+     38551
+    ],
+    [
+     230000,
+     40695
+    ],
+    [
+     232000,
+     41353
+    ],
+    [
+     240000,
+     44078
+    ],
+    [
+     248000,
+     46939
+    ],
+    [
+     256000,
+     49764
+    ],
+    [
+     260000,
+     51196
+    ],
+    [
+     264000,
+     52614
+    ],
+    [
+     270000,
+     54165
+    ],
+    [
+     272000,
+     55439
+    ],
+    [
+     280000,
+     58296
+    ],
+    [
+     288000,
+     61114
+    ],
+    [
+     290000,
+     61744
+    ],
+    [
+     296000,
+     63965
+    ],
+    [
+     304000,
+     66789
+    ],
+    [
+     310000,
+     68941
+    ],
+    [
+     312000,
+     69659
+    ],
+    [
+     320000,
+     72229
+    ],
+    [
+     328000,
+     75398
+    ],
+    [
+     330000,
+     76128
+    ],
+    [
+     336000,
+     78254
+    ],
+    [
+     344000,
+     81137
+    ],
+    [
+     352000,
+     83994
+    ],
+    [
+     360000,
+     86876
+    ],
+    [
+     368000,
+     89733
+    ],
+    [
+     370000,
+     89854
+    ],
+    [
+     376000,
+     92696
+    ]
+   ],
+   "2|3|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     60000,
+     335
+    ],
+    [
+     70000,
+     1429
+    ],
+    [
+     85000,
+     3765
+    ],
+    [
+     100000,
+     6810
+    ],
+    [
+     120000,
+     10036
+    ],
+    [
+     150000,
+     16322
+    ],
+    [
+     200000,
+     30002
+    ],
+    [
+     250000,
+     47531
+    ]
+   ],
+   "2|3|2": [
+    [
+     60000,
+     112
+    ],
+    [
+     70000,
+     1005
+    ],
+    [
+     80000,
+     2281
+    ],
+    [
+     90000,
+     4028
+    ],
+    [
+     100000,
+     5764
+    ],
+    [
+     110000,
+     7548
+    ],
+    [
+     120000,
+     9084
+    ],
+    [
+     125000,
+     9938
+    ],
+    [
+     130000,
+     10851
+    ],
+    [
+     140000,
+     12823
+    ],
+    [
+     150000,
+     14736
+    ],
+    [
+     160000,
+     17081
+    ],
+    [
+     165000,
+     18482
+    ],
+    [
+     170000,
+     19240
+    ],
+    [
+     180000,
+     22228
+    ],
+    [
+     190000,
+     24554
+    ],
+    [
+     200000,
+     27896
+    ],
+    [
+     205000,
+     28597
+    ],
+    [
+     220000,
+     33912
+    ],
+    [
+     230000,
+     37141
+    ],
+    [
+     240000,
+     40498
+    ],
+    [
+     270000,
+     50550
+    ],
+    [
+     280000,
+     54688
+    ],
+    [
+     290000,
+     58130
+    ],
+    [
+     320000,
+     68287
+    ],
+    [
+     330000,
+     72472
+    ],
+    [
+     370000,
+     86197
+    ]
+   ],
+   "2|4|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     313
+    ],
+    [
+     85000,
+     1985
+    ],
+    [
+     100000,
+     4905
+    ],
+    [
+     120000,
+     8286
+    ],
+    [
+     150000,
+     13837
+    ],
+    [
+     200000,
+     26888
+    ],
+    [
+     250000,
+     43977
+    ]
+   ],
+   "2|4|2": [
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     77
+    ],
+    [
+     80000,
+     927
+    ],
+    [
+     90000,
+     2199
+    ],
+    [
+     100000,
+     3930
+    ],
+    [
+     110000,
+     5678
+    ],
+    [
+     120000,
+     7462
+    ],
+    [
+     125000,
+     8286
+    ],
+    [
+     130000,
+     9103
+    ],
+    [
+     140000,
+     10825
+    ],
+    [
+     150000,
+     12433
+    ],
+    [
+     160000,
+     14535
+    ],
+    [
+     165000,
+     15873
+    ],
+    [
+     170000,
+     16631
+    ],
+    [
+     180000,
+     19530
+    ],
+    [
+     190000,
+     21697
+    ],
+    [
+     200000,
+     24945
+    ],
+    [
+     205000,
+     25621
+    ],
+    [
+     220000,
+     30498
+    ],
+    [
+     230000,
+     33587
+    ],
+    [
+     240000,
+     36944
+    ],
+    [
+     270000,
+     46934
+    ],
+    [
+     280000,
+     51072
+    ],
+    [
+     290000,
+     54514
+    ],
+    [
+     320000,
+     64669
+    ],
+    [
+     330000,
+     68816
+    ],
+    [
+     370000,
+     82541
+    ]
+   ],
+   "2|5|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     0
+    ],
+    [
+     85000,
+     695
+    ],
+    [
+     100000,
+     3105
+    ],
+    [
+     120000,
+     6415
+    ],
+    [
+     150000,
+     11511
+    ],
+    [
+     200000,
+     23878
+    ],
+    [
+     250000,
+     40422
+    ]
+   ],
+   "2|5|2": [
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     0
+    ],
+    [
+     80000,
+     35
+    ],
+    [
+     90000,
+     863
+    ],
+    [
+     100000,
+     2100
+    ],
+    [
+     110000,
+     3848
+    ],
+    [
+     120000,
+     5558
+    ],
+    [
+     125000,
+     6415
+    ],
+    [
+     130000,
+     7376
+    ],
+    [
+     140000,
+     9083
+    ],
+    [
+     150000,
+     10686
+    ],
+    [
+     160000,
+     12452
+    ],
+    [
+     165000,
+     13452
+    ],
+    [
+     170000,
+     14090
+    ],
+    [
+     180000,
+     16911
+    ],
+    [
+     190000,
+     19013
+    ],
+    [
+     200000,
+     22045
+    ],
+    [
+     205000,
+     22719
+    ],
+    [
+     220000,
+     27422
+    ],
+    [
+     230000,
+     30148
+    ],
+    [
+     240000,
+     33390
+    ],
+    [
+     270000,
+     43371
+    ],
+    [
+     280000,
+     47457
+    ],
+    [
+     290000,
+     50899
+    ],
+    [
+     320000,
+     61053
+    ],
+    [
+     330000,
+     65191
+    ],
+    [
+     370000,
+     78886
+    ]
+   ],
+   "3|0|1": [
+    [
+     20000,
+     395
+    ],
+    [
+     30000,
+     1872
+    ],
+    [
+     40000,
+     3685
+    ],
+    [
+     50000,
+     5646
+    ],
+    [
+     60000,
+     7703
+    ],
+    [
+     70000,
+     9824
+    ],
+    [
+     85000,
+     13076
+    ],
+    [
+     100000,
+     17102
+    ],
+    [
+     120000,
+     22422
+    ],
+    [
+     150000,
+     31295
+    ],
+    [
+     200000,
+     48118
+    ],
+    [
+     250000,
+     66496
+    ]
+   ],
+   "3|0|2": [
+    [
+     60000,
+     4080
+    ],
+    [
+     70000,
+     5557
+    ],
+    [
+     80000,
+     7370
+    ],
+    [
+     90000,
+     9331
+    ],
+    [
+     100000,
+     11855
+    ],
+    [
+     110000,
+     13654
+    ],
+    [
+     120000,
+     15612
+    ],
+    [
+     125000,
+     16761
+    ],
+    [
+     130000,
+     17573
+    ],
+    [
+     140000,
+     21078
+    ],
+    [
+     150000,
+     23022
+    ],
+    [
+     160000,
+     26107
+    ],
+    [
+     165000,
+     25003
+    ],
+    [
+     170000,
+     28068
+    ],
+    [
+     180000,
+     29577
+    ],
+    [
+     190000,
+     33613
+    ],
+    [
+     200000,
+     34349
+    ],
+    [
+     205000,
+     35498
+    ],
+    [
+     220000,
+     39524
+    ],
+    [
+     230000,
+     43222
+    ],
+    [
+     240000,
+     48324
+    ],
+    [
+     270000,
+     53717
+    ],
+    [
+     280000,
+     60045
+    ],
+    [
+     290000,
+     70181
+    ],
+    [
+     320000,
+     70540
+    ],
+    [
+     330000,
+     78423
+    ],
+    [
+     370000,
+     88918
+    ]
+   ],
+   "3|1|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     168
+    ],
+    [
+     40000,
+     1133
+    ],
+    [
+     50000,
+     2562
+    ],
+    [
+     60000,
+     4193
+    ],
+    [
+     70000,
+     5884
+    ],
+    [
+     85000,
+     8476
+    ],
+    [
+     100000,
+     11580
+    ],
+    [
+     120000,
+     15652
+    ],
+    [
+     150000,
+     22849
+    ],
+    [
+     200000,
+     38642
+    ],
+    [
+     250000,
+     56453
+    ]
+   ],
+   "3|1|2": [
+    [
+     60000,
+     1133
+    ],
+    [
+     70000,
+     1301
+    ],
+    [
+     80000,
+     2266
+    ],
+    [
+     90000,
+     3695
+    ],
+    [
+     100000,
+     6448
+    ],
+    [
+     110000,
+     7377
+    ],
+    [
+     120000,
+     8702
+    ],
+    [
+     125000,
+     9609
+    ],
+    [
+     130000,
+     10131
+    ],
+    [
+     140000,
+     13376
+    ],
+    [
+     150000,
+     14636
+    ],
+    [
+     160000,
+     16785
+    ],
+    [
+     165000,
+     16045
+    ],
+    [
+     170000,
+     18214
+    ],
+    [
+     180000,
+     19497
+    ],
+    [
+     190000,
+     22759
+    ],
+    [
+     200000,
+     23221
+    ],
+    [
+     205000,
+     24128
+    ],
+    [
+     220000,
+     27232
+    ],
+    [
+     230000,
+     30418
+    ],
+    [
+     240000,
+     35540
+    ],
+    [
+     270000,
+     38501
+    ],
+    [
+     280000,
+     46211
+    ],
+    [
+     290000,
+     57586
+    ],
+    [
+     320000,
+     54294
+    ],
+    [
+     330000,
+     64022
+    ],
+    [
+     370000,
+     72105
+    ]
+   ],
+   "3|2|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     56
+    ],
+    [
+     50000,
+     927
+    ],
+    [
+     60000,
+     2266
+    ],
+    [
+     70000,
+     3913
+    ],
+    [
+     85000,
+     6364
+    ],
+    [
+     100000,
+     9097
+    ],
+    [
+     120000,
+     13064
+    ],
+    [
+     150000,
+     19851
+    ],
+    [
+     200000,
+     34753
+    ],
+    [
+     250000,
+     52494
+    ]
+   ],
+   "3|2|2": [
+    [
+     60000,
+     56
+    ],
+    [
+     70000,
+     56
+    ],
+    [
+     80000,
+     112
+    ],
+    [
+     90000,
+     983
+    ],
+    [
+     100000,
+     3940
+    ],
+    [
+     110000,
+     4764
+    ],
+    [
+     120000,
+     5614
+    ],
+    [
+     125000,
+     6420
+    ],
+    [
+     130000,
+     6485
+    ],
+    [
+     140000,
+     10014
+    ],
+    [
+     150000,
+     11268
+    ],
+    [
+     160000,
+     13120
+    ],
+    [
+     165000,
+     11922
+    ],
+    [
+     170000,
+     13991
+    ],
+    [
+     180000,
+     14992
+    ],
+    [
+     190000,
+     18442
+    ],
+    [
+     200000,
+     18622
+    ],
+    [
+     205000,
+     19428
+    ],
+    [
+     220000,
+     22161
+    ],
+    [
+     230000,
+     25409
+    ],
+    [
+     240000,
+     30468
+    ],
+    [
+     270000,
+     32915
+    ],
+    [
+     280000,
+     40311
+    ],
+    [
+     290000,
+     52550
+    ],
+    [
+     320000,
+     47817
+    ],
+    [
+     330000,
+     58052
+    ],
+    [
+     370000,
+     65558
+    ]
+   ],
+   "3|3|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     60000,
+     709
+    ],
+    [
+     70000,
+     1968
+    ],
+    [
+     85000,
+     4374
+    ],
+    [
+     100000,
+     7016
+    ],
+    [
+     120000,
+     10501
+    ],
+    [
+     150000,
+     16885
+    ],
+    [
+     200000,
+     30925
+    ],
+    [
+     250000,
+     48535
+    ]
+   ],
+   "3|3|2": [
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     0
+    ],
+    [
+     80000,
+     0
+    ],
+    [
+     90000,
+     0
+    ],
+    [
+     100000,
+     2146
+    ],
+    [
+     110000,
+     2776
+    ],
+    [
+     120000,
+     3583
+    ],
+    [
+     125000,
+     4374
+    ],
+    [
+     130000,
+     3583
+    ],
+    [
+     140000,
+     7270
+    ],
+    [
+     150000,
+     8026
+    ],
+    [
+     160000,
+     10501
+    ],
+    [
+     165000,
+     7957
+    ],
+    [
+     170000,
+     10501
+    ],
+    [
+     180000,
+     10904
+    ],
+    [
+     190000,
+     14677
+    ],
+    [
+     200000,
+     14084
+    ],
+    [
+     205000,
+     14875
+    ],
+    [
+     220000,
+     17517
+    ],
+    [
+     230000,
+     20468
+    ],
+    [
+     240000,
+     25964
+    ],
+    [
+     270000,
+     27386
+    ],
+    [
+     280000,
+     34508
+    ],
+    [
+     290000,
+     48535
+    ],
+    [
+     320000,
+     41426
+    ],
+    [
+     330000,
+     52118
+    ],
+    [
+     370000,
+     59036
+    ]
+   ],
+   "3|4|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     502
+    ],
+    [
+     85000,
+     2446
+    ],
+    [
+     100000,
+     5008
+    ],
+    [
+     120000,
+     8200
+    ],
+    [
+     150000,
+     14111
+    ],
+    [
+     200000,
+     27382
+    ],
+    [
+     250000,
+     44638
+    ]
+   ],
+   "3|4|2": [
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     0
+    ],
+    [
+     80000,
+     0
+    ],
+    [
+     90000,
+     0
+    ],
+    [
+     100000,
+     843
+    ],
+    [
+     110000,
+     1094
+    ],
+    [
+     120000,
+     1686
+    ],
+    [
+     125000,
+     2446
+    ],
+    [
+     130000,
+     1686
+    ],
+    [
+     140000,
+     4965
+    ],
+    [
+     150000,
+     5194
+    ],
+    [
+     160000,
+     8200
+    ],
+    [
+     165000,
+     4132
+    ],
+    [
+     170000,
+     8200
+    ],
+    [
+     180000,
+     7447
+    ],
+    [
+     190000,
+     11406
+    ],
+    [
+     200000,
+     9886
+    ],
+    [
+     205000,
+     10646
+    ],
+    [
+     220000,
+     13208
+    ],
+    [
+     230000,
+     15797
+    ],
+    [
+     240000,
+     21891
+    ],
+    [
+     270000,
+     22311
+    ],
+    [
+     280000,
+     29068
+    ],
+    [
+     290000,
+     44638
+    ],
+    [
+     320000,
+     35582
+    ],
+    [
+     330000,
+     46324
+    ],
+    [
+     370000,
+     52838
+    ]
+   ],
+   "3|5|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     0
+    ],
+    [
+     85000,
+     838
+    ],
+    [
+     100000,
+     3073
+    ],
+    [
+     120000,
+     6210
+    ],
+    [
+     150000,
+     11468
+    ],
+    [
+     200000,
+     24003
+    ],
+    [
+     250000,
+     40750
+    ]
+   ],
+   "3|5|2": [
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     0
+    ],
+    [
+     80000,
+     0
+    ],
+    [
+     90000,
+     0
+    ],
+    [
+     100000,
+     175
+    ],
+    [
+     110000,
+     175
+    ],
+    [
+     120000,
+     350
+    ],
+    [
+     125000,
+     838
+    ],
+    [
+     130000,
+     350
+    ],
+    [
+     140000,
+     3211
+    ],
+    [
+     150000,
+     3280
+    ],
+    [
+     160000,
+     6210
+    ],
+    [
+     165000,
+     1188
+    ],
+    [
+     170000,
+     6210
+    ],
+    [
+     180000,
+     4816
+    ],
+    [
+     190000,
+     8839
+    ],
+    [
+     200000,
+     6560
+    ],
+    [
+     205000,
+     7048
+    ],
+    [
+     220000,
+     9283
+    ],
+    [
+     230000,
+     11818
+    ],
+    [
+     240000,
+     18212
+    ],
+    [
+     270000,
+     17678
+    ],
+    [
+     280000,
+     24353
+    ],
+    [
+     290000,
+     40750
+    ],
+    [
+     320000,
+     30213
+    ],
+    [
+     330000,
+     41100
+    ],
+    [
+     370000,
+     46960
+    ]
+   ],
+   "4|0|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     410
+    ],
+    [
+     40000,
+     1557
+    ],
+    [
+     50000,
+     3201
+    ],
+    [
+     60000,
+     5027
+    ],
+    [
+     70000,
+     6792
+    ],
+    [
+     85000,
+     9445
+    ],
+    [
+     100000,
+     12926
+    ],
+    [
+     120000,
+     17128
+    ],
+    [
+     150000,
+     24446
+    ],
+    [
+     200000,
+     40530
+    ],
+    [
+     250000,
+     58373
+    ]
+   ],
+   "4|0|2": [
+    [
+     60000,
+     4341
+    ],
+    [
+     70000,
+     6067
+    ],
+    [
+     80000,
+     7693
+    ],
+    [
+     90000,
+     9389
+    ],
+    [
+     100000,
+     11450
+    ],
+    [
+     110000,
+     13430
+    ],
+    [
+     120000,
+     15480
+    ],
+    [
+     125000,
+     16623
+    ],
+    [
+     130000,
+     17844
+    ],
+    [
+     140000,
+     20307
+    ],
+    [
+     150000,
+     22528
+    ],
+    [
+     160000,
+     25168
+    ],
+    [
+     165000,
+     26752
+    ],
+    [
+     170000,
+     27612
+    ],
+    [
+     180000,
+     31011
+    ],
+    [
+     190000,
+     33734
+    ],
+    [
+     200000,
+     37822
+    ],
+    [
+     205000,
+     38700
+    ],
+    [
+     220000,
+     44575
+    ],
+    [
+     230000,
+     47825
+    ],
+    [
+     240000,
+     51240
+    ],
+    [
+     270000,
+     61395
+    ],
+    [
+     280000,
+     65533
+    ],
+    [
+     290000,
+     68984
+    ],
+    [
+     320000,
+     79255
+    ],
+    [
+     330000,
+     83440
+    ],
+    [
+     370000,
+     97369
+    ]
+   ],
+   "4|1|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     387
+    ],
+    [
+     50000,
+     1519
+    ],
+    [
+     60000,
+     3073
+    ],
+    [
+     70000,
+     4820
+    ],
+    [
+     85000,
+     7422
+    ],
+    [
+     100000,
+     10652
+    ],
+    [
+     120000,
+     14643
+    ],
+    [
+     150000,
+     21640
+    ],
+    [
+     200000,
+     36975
+    ],
+    [
+     250000,
+     54759
+    ]
+   ],
+   "4|1|2": [
+    [
+     60000,
+     2463
+    ],
+    [
+     70000,
+     4210
+    ],
+    [
+     80000,
+     5952
+    ],
+    [
+     90000,
+     7531
+    ],
+    [
+     100000,
+     9228
+    ],
+    [
+     110000,
+     11194
+    ],
+    [
+     120000,
+     13178
+    ],
+    [
+     125000,
+     14191
+    ],
+    [
+     130000,
+     15310
+    ],
+    [
+     140000,
+     17698
+    ],
+    [
+     150000,
+     19881
+    ],
+    [
+     160000,
+     22348
+    ],
+    [
+     165000,
+     23875
+    ],
+    [
+     170000,
+     24711
+    ],
+    [
+     180000,
+     27998
+    ],
+    [
+     190000,
+     30462
+    ],
+    [
+     200000,
+     34287
+    ],
+    [
+     205000,
+     35146
+    ],
+    [
+     220000,
+     41021
+    ],
+    [
+     230000,
+     44249
+    ],
+    [
+     240000,
+     47625
+    ],
+    [
+     270000,
+     57780
+    ],
+    [
+     280000,
+     61917
+    ],
+    [
+     290000,
+     65359
+    ],
+    [
+     320000,
+     75600
+    ],
+    [
+     330000,
+     79784
+    ],
+    [
+     370000,
+     93611
+    ]
+   ],
+   "4|2|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     366
+    ],
+    [
+     60000,
+     1468
+    ],
+    [
+     70000,
+     3023
+    ],
+    [
+     85000,
+     5644
+    ],
+    [
+     100000,
+     8493
+    ],
+    [
+     120000,
+     12333
+    ],
+    [
+     150000,
+     18956
+    ],
+    [
+     200000,
+     33421
+    ],
+    [
+     250000,
+     51144
+    ]
+   ],
+   "4|2|2": [
+    [
+     60000,
+     1069
+    ],
+    [
+     70000,
+     2381
+    ],
+    [
+     80000,
+     4111
+    ],
+    [
+     90000,
+     5867
+    ],
+    [
+     100000,
+     7530
+    ],
+    [
+     110000,
+     9104
+    ],
+    [
+     120000,
+     10943
+    ],
+    [
+     125000,
+     11933
+    ],
+    [
+     130000,
+     12989
+    ],
+    [
+     140000,
+     15157
+    ],
+    [
+     150000,
+     17272
+    ],
+    [
+     160000,
+     19690
+    ],
+    [
+     165000,
+     21110
+    ],
+    [
+     170000,
+     21897
+    ],
+    [
+     180000,
+     25082
+    ],
+    [
+     190000,
+     27472
+    ],
+    [
+     200000,
+     30948
+    ],
+    [
+     205000,
+     31735
+    ],
+    [
+     220000,
+     37466
+    ],
+    [
+     230000,
+     40695
+    ],
+    [
+     240000,
+     44052
+    ],
+    [
+     270000,
+     54165
+    ],
+    [
+     280000,
+     58303
+    ],
+    [
+     290000,
+     61744
+    ],
+    [
+     320000,
+     71944
+    ],
+    [
+     330000,
+     76128
+    ],
+    [
+     370000,
+     89854
+    ]
+   ],
+   "4|3|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     60000,
+     335
+    ],
+    [
+     70000,
+     1429
+    ],
+    [
+     85000,
+     3765
+    ],
+    [
+     100000,
+     6810
+    ],
+    [
+     120000,
+     10036
+    ],
+    [
+     150000,
+     16322
+    ],
+    [
+     200000,
+     30002
+    ],
+    [
+     250000,
+     47531
+    ]
+   ],
+   "4|3|2": [
+    [
+     60000,
+     112
+    ],
+    [
+     70000,
+     1005
+    ],
+    [
+     80000,
+     2281
+    ],
+    [
+     90000,
+     4028
+    ],
+    [
+     100000,
+     5764
+    ],
+    [
+     110000,
+     7548
+    ],
+    [
+     120000,
+     9084
+    ],
+    [
+     125000,
+     9938
+    ],
+    [
+     130000,
+     10851
+    ],
+    [
+     140000,
+     12823
+    ],
+    [
+     150000,
+     14736
+    ],
+    [
+     160000,
+     17081
+    ],
+    [
+     165000,
+     18482
+    ],
+    [
+     170000,
+     19240
+    ],
+    [
+     180000,
+     22228
+    ],
+    [
+     190000,
+     24554
+    ],
+    [
+     200000,
+     27896
+    ],
+    [
+     205000,
+     28597
+    ],
+    [
+     220000,
+     33912
+    ],
+    [
+     230000,
+     37141
+    ],
+    [
+     240000,
+     40498
+    ],
+    [
+     270000,
+     50550
+    ],
+    [
+     280000,
+     54688
+    ],
+    [
+     290000,
+     58130
+    ],
+    [
+     320000,
+     68287
+    ],
+    [
+     330000,
+     72472
+    ],
+    [
+     370000,
+     86197
+    ]
+   ],
+   "4|4|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     313
+    ],
+    [
+     85000,
+     1985
+    ],
+    [
+     100000,
+     4905
+    ],
+    [
+     120000,
+     8286
+    ],
+    [
+     150000,
+     13837
+    ],
+    [
+     200000,
+     26888
+    ],
+    [
+     250000,
+     43977
+    ]
+   ],
+   "4|4|2": [
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     77
+    ],
+    [
+     80000,
+     927
+    ],
+    [
+     90000,
+     2199
+    ],
+    [
+     100000,
+     3930
+    ],
+    [
+     110000,
+     5678
+    ],
+    [
+     120000,
+     7462
+    ],
+    [
+     125000,
+     8286
+    ],
+    [
+     130000,
+     9103
+    ],
+    [
+     140000,
+     10825
+    ],
+    [
+     150000,
+     12433
+    ],
+    [
+     160000,
+     14535
+    ],
+    [
+     165000,
+     15873
+    ],
+    [
+     170000,
+     16631
+    ],
+    [
+     180000,
+     19530
+    ],
+    [
+     190000,
+     21697
+    ],
+    [
+     200000,
+     24945
+    ],
+    [
+     205000,
+     25621
+    ],
+    [
+     220000,
+     30498
+    ],
+    [
+     230000,
+     33587
+    ],
+    [
+     240000,
+     36944
+    ],
+    [
+     270000,
+     46934
+    ],
+    [
+     280000,
+     51072
+    ],
+    [
+     290000,
+     54514
+    ],
+    [
+     320000,
+     64669
+    ],
+    [
+     330000,
+     68816
+    ],
+    [
+     370000,
+     82541
+    ]
+   ],
+   "4|5|1": [
+    [
+     20000,
+     0
+    ],
+    [
+     30000,
+     0
+    ],
+    [
+     40000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     0
+    ],
+    [
+     85000,
+     695
+    ],
+    [
+     100000,
+     3105
+    ],
+    [
+     120000,
+     6415
+    ],
+    [
+     150000,
+     11511
+    ],
+    [
+     200000,
+     23878
+    ],
+    [
+     250000,
+     40422
+    ]
+   ],
+   "4|5|2": [
+    [
+     60000,
+     0
+    ],
+    [
+     70000,
+     0
+    ],
+    [
+     80000,
+     35
+    ],
+    [
+     90000,
+     863
+    ],
+    [
+     100000,
+     2100
+    ],
+    [
+     110000,
+     3848
+    ],
+    [
+     120000,
+     5558
+    ],
+    [
+     125000,
+     6415
+    ],
+    [
+     130000,
+     7376
+    ],
+    [
+     140000,
+     9083
+    ],
+    [
+     150000,
+     10686
+    ],
+    [
+     160000,
+     12452
+    ],
+    [
+     165000,
+     13452
+    ],
+    [
+     170000,
+     14090
+    ],
+    [
+     180000,
+     16911
+    ],
+    [
+     190000,
+     19013
+    ],
+    [
+     200000,
+     22045
+    ],
+    [
+     205000,
+     22719
+    ],
+    [
+     220000,
+     27422
+    ],
+    [
+     230000,
+     30148
+    ],
+    [
+     240000,
+     33390
+    ],
+    [
+     270000,
+     43371
+    ],
+    [
+     280000,
+     47457
+    ],
+    [
+     290000,
+     50899
+    ],
+    [
+     320000,
+     61053
+    ],
+    [
+     330000,
+     65191
+    ],
+    [
+     370000,
+     78886
+    ]
+   ]
+  },
+  "800100000": {
+   "1|0|1": [
+    [
+     30000,
+     1000
+    ],
+    [
+     50000,
+     3175
+    ],
+    [
+     70000,
+     6284
+    ],
+    [
+     85000,
+     8987
+    ],
+    [
+     100000,
+     12520
+    ],
+    [
+     120000,
+     16967
+    ],
+    [
+     150000,
+     24621
+    ],
+    [
+     200000,
+     39837
+    ],
+    [
+     250000,
+     56910
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     24
+    ],
+    [
+     50000,
+     213
+    ],
+    [
+     70000,
+     1537
+    ],
+    [
+     85000,
+     2971
+    ],
+    [
+     100000,
+     5093
+    ],
+    [
+     120000,
+     8293
+    ],
+    [
+     150000,
+     13792
+    ],
+    [
+     200000,
+     26342
+    ],
+    [
+     250000,
+     41533
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     2173
+    ],
+    [
+     110000,
+     4407
+    ],
+    [
+     130000,
+     7520
+    ],
+    [
+     145000,
+     10095
+    ],
+    [
+     160000,
+     13501
+    ],
+    [
+     180000,
+     17529
+    ],
+    [
+     210000,
+     24766
+    ],
+    [
+     260000,
+     39918
+    ],
+    [
+     310000,
+     55799
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     5117
+    ],
+    [
+     110000,
+     8376
+    ],
+    [
+     130000,
+     11958
+    ],
+    [
+     145000,
+     14952
+    ],
+    [
+     160000,
+     18646
+    ],
+    [
+     180000,
+     23294
+    ],
+    [
+     210000,
+     31347
+    ],
+    [
+     260000,
+     46974
+    ],
+    [
+     310000,
+     63313
+    ]
+   ]
+  },
+  "600300000": {
+   "1|0|1": [
+    [
+     30000,
+     482
+    ],
+    [
+     50000,
+     3565
+    ],
+    [
+     70000,
+     6912
+    ],
+    [
+     85000,
+     9269
+    ],
+    [
+     100000,
+     12083
+    ],
+    [
+     120000,
+     15712
+    ],
+    [
+     150000,
+     21851
+    ],
+    [
+     200000,
+     33666
+    ],
+    [
+     250000,
+     47042
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     50
+    ],
+    [
+     50000,
+     50
+    ],
+    [
+     70000,
+     1136
+    ],
+    [
+     85000,
+     3146
+    ],
+    [
+     100000,
+     5341
+    ],
+    [
+     120000,
+     8209
+    ],
+    [
+     150000,
+     13079
+    ],
+    [
+     200000,
+     24124
+    ],
+    [
+     250000,
+     37678
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     2350
+    ],
+    [
+     110000,
+     5024
+    ],
+    [
+     130000,
+     7837
+    ],
+    [
+     145000,
+     10149
+    ],
+    [
+     160000,
+     12954
+    ],
+    [
+     180000,
+     16528
+    ],
+    [
+     210000,
+     22800
+    ],
+    [
+     260000,
+     36342
+    ],
+    [
+     310000,
+     49940
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     5525
+    ],
+    [
+     110000,
+     8662
+    ],
+    [
+     130000,
+     11857
+    ],
+    [
+     145000,
+     14494
+    ],
+    [
+     160000,
+     17517
+    ],
+    [
+     180000,
+     21515
+    ],
+    [
+     210000,
+     28852
+    ],
+    [
+     260000,
+     42450
+    ],
+    [
+     310000,
+     56048
+    ]
+   ]
+  },
+  "646000000": {
+   "1|0|1": [
+    [
+     30000,
+     1207
+    ],
+    [
+     50000,
+     3924
+    ],
+    [
+     70000,
+     6949
+    ],
+    [
+     85000,
+     9224
+    ],
+    [
+     100000,
+     11968
+    ],
+    [
+     120000,
+     15496
+    ],
+    [
+     150000,
+     21314
+    ],
+    [
+     200000,
+     32413
+    ],
+    [
+     250000,
+     44558
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     70
+    ],
+    [
+     50000,
+     347
+    ],
+    [
+     70000,
+     2911
+    ],
+    [
+     85000,
+     4784
+    ],
+    [
+     100000,
+     6942
+    ],
+    [
+     120000,
+     9959
+    ],
+    [
+     150000,
+     14896
+    ],
+    [
+     200000,
+     25408
+    ],
+    [
+     250000,
+     37650
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     3502
+    ],
+    [
+     110000,
+     6066
+    ],
+    [
+     130000,
+     9027
+    ],
+    [
+     145000,
+     11438
+    ],
+    [
+     160000,
+     14241
+    ],
+    [
+     180000,
+     17700
+    ],
+    [
+     210000,
+     23558
+    ],
+    [
+     260000,
+     35783
+    ],
+    [
+     310000,
+     48025
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     6380
+    ],
+    [
+     110000,
+     9431
+    ],
+    [
+     130000,
+     12699
+    ],
+    [
+     145000,
+     15237
+    ],
+    [
+     160000,
+     18219
+    ],
+    [
+     180000,
+     21929
+    ],
+    [
+     210000,
+     28566
+    ],
+    [
+     260000,
+     40806
+    ],
+    [
+     310000,
+     53048
+    ]
+   ]
+  },
+  "643000000": {
+   "1|0|1": [
+    [
+     30000,
+     283
+    ],
+    [
+     50000,
+     2146
+    ],
+    [
+     70000,
+     4390
+    ],
+    [
+     85000,
+     6233
+    ],
+    [
+     100000,
+     8576
+    ],
+    [
+     120000,
+     11690
+    ],
+    [
+     150000,
+     16877
+    ],
+    [
+     200000,
+     26731
+    ],
+    [
+     250000,
+     37631
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     70000,
+     251
+    ],
+    [
+     85000,
+     1614
+    ],
+    [
+     100000,
+     3688
+    ],
+    [
+     120000,
+     6315
+    ],
+    [
+     150000,
+     10622
+    ],
+    [
+     200000,
+     19889
+    ],
+    [
+     250000,
+     30886
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     177
+    ],
+    [
+     110000,
+     1544
+    ],
+    [
+     130000,
+     3929
+    ],
+    [
+     145000,
+     6140
+    ],
+    [
+     160000,
+     8800
+    ],
+    [
+     180000,
+     11691
+    ],
+    [
+     210000,
+     16886
+    ],
+    [
+     260000,
+     27867
+    ],
+    [
+     310000,
+     38863
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     3157
+    ],
+    [
+     110000,
+     5459
+    ],
+    [
+     130000,
+     7941
+    ],
+    [
+     145000,
+     9998
+    ],
+    [
+     160000,
+     12390
+    ],
+    [
+     180000,
+     15672
+    ],
+    [
+     210000,
+     21678
+    ],
+    [
+     260000,
+     32675
+    ],
+    [
+     310000,
+     43671
+    ]
+   ]
+  },
+  "606100000": {
+   "1|0|1": [
+    [
+     30000,
+     1404
+    ],
+    [
+     50000,
+     4168
+    ],
+    [
+     70000,
+     7099
+    ],
+    [
+     85000,
+     9227
+    ],
+    [
+     100000,
+     11830
+    ],
+    [
+     120000,
+     15167
+    ],
+    [
+     150000,
+     20715
+    ],
+    [
+     200000,
+     31336
+    ],
+    [
+     250000,
+     43005
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     499
+    ],
+    [
+     70000,
+     2854
+    ],
+    [
+     85000,
+     4761
+    ],
+    [
+     100000,
+     6943
+    ],
+    [
+     120000,
+     9947
+    ],
+    [
+     150000,
+     14615
+    ],
+    [
+     200000,
+     24651
+    ],
+    [
+     250000,
+     36414
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     4364
+    ],
+    [
+     110000,
+     6975
+    ],
+    [
+     130000,
+     9893
+    ],
+    [
+     145000,
+     12158
+    ],
+    [
+     160000,
+     14778
+    ],
+    [
+     180000,
+     18058
+    ],
+    [
+     210000,
+     23646
+    ],
+    [
+     260000,
+     35394
+    ],
+    [
+     310000,
+     47158
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     6794
+    ],
+    [
+     110000,
+     9713
+    ],
+    [
+     130000,
+     12783
+    ],
+    [
+     145000,
+     15176
+    ],
+    [
+     160000,
+     17976
+    ],
+    [
+     180000,
+     21506
+    ],
+    [
+     210000,
+     27872
+    ],
+    [
+     260000,
+     39636
+    ],
+    [
+     310000,
+     51401
+    ]
+   ]
+  },
+  "637041000": {
+   "1|0|1": [
+    [
+     30000,
+     917
+    ],
+    [
+     50000,
+     3370
+    ],
+    [
+     70000,
+     6224
+    ],
+    [
+     85000,
+     8451
+    ],
+    [
+     100000,
+     11178
+    ],
+    [
+     120000,
+     14728
+    ],
+    [
+     150000,
+     20637
+    ],
+    [
+     200000,
+     32042
+    ],
+    [
+     250000,
+     43655
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     50
+    ],
+    [
+     50000,
+     50
+    ],
+    [
+     70000,
+     974
+    ],
+    [
+     85000,
+     2510
+    ],
+    [
+     100000,
+     4530
+    ],
+    [
+     120000,
+     7411
+    ],
+    [
+     150000,
+     12220
+    ],
+    [
+     200000,
+     22715
+    ],
+    [
+     250000,
+     35157
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     2574
+    ],
+    [
+     110000,
+     4885
+    ],
+    [
+     130000,
+     7634
+    ],
+    [
+     145000,
+     9968
+    ],
+    [
+     160000,
+     12731
+    ],
+    [
+     180000,
+     16132
+    ],
+    [
+     210000,
+     21940
+    ],
+    [
+     260000,
+     34338
+    ],
+    [
+     310000,
+     46941
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     5615
+    ],
+    [
+     110000,
+     8454
+    ],
+    [
+     130000,
+     11578
+    ],
+    [
+     145000,
+     14067
+    ],
+    [
+     160000,
+     17008
+    ],
+    [
+     180000,
+     20669
+    ],
+    [
+     210000,
+     27342
+    ],
+    [
+     260000,
+     39802
+    ],
+    [
+     310000,
+     52454
+    ]
+   ]
+  },
+  "875000001": {
+   "1|0|1": [
+    [
+     30000,
+     1134
+    ],
+    [
+     50000,
+     3956
+    ],
+    [
+     70000,
+     7479
+    ],
+    [
+     85000,
+     10324
+    ],
+    [
+     100000,
+     13783
+    ],
+    [
+     120000,
+     18038
+    ],
+    [
+     150000,
+     25287
+    ],
+    [
+     200000,
+     39251
+    ],
+    [
+     250000,
+     54715
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     544
+    ],
+    [
+     70000,
+     2574
+    ],
+    [
+     85000,
+     4425
+    ],
+    [
+     100000,
+     6960
+    ],
+    [
+     120000,
+     10283
+    ],
+    [
+     150000,
+     16327
+    ],
+    [
+     200000,
+     28782
+    ],
+    [
+     250000,
+     43314
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     3678
+    ],
+    [
+     110000,
+     6393
+    ],
+    [
+     130000,
+     9548
+    ],
+    [
+     145000,
+     12477
+    ],
+    [
+     160000,
+     16154
+    ],
+    [
+     180000,
+     20332
+    ],
+    [
+     210000,
+     27303
+    ],
+    [
+     260000,
+     41821
+    ],
+    [
+     310000,
+     56554
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     6546
+    ],
+    [
+     110000,
+     9811
+    ],
+    [
+     130000,
+     13621
+    ],
+    [
+     145000,
+     16727
+    ],
+    [
+     160000,
+     20551
+    ],
+    [
+     180000,
+     24979
+    ],
+    [
+     210000,
+     32736
+    ],
+    [
+     260000,
+     47461
+    ],
+    [
+     310000,
+     62247
+    ]
+   ]
+  },
+  "630000009": {
+   "1|0|1": [
+    [
+     30000,
+     208
+    ],
+    [
+     50000,
+     1123
+    ],
+    [
+     70000,
+     2649
+    ],
+    [
+     85000,
+     3944
+    ],
+    [
+     100000,
+     5696
+    ],
+    [
+     120000,
+     8315
+    ],
+    [
+     150000,
+     13322
+    ],
+    [
+     200000,
+     23552
+    ],
+    [
+     250000,
+     34126
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     70000,
+     0
+    ],
+    [
+     85000,
+     0
+    ],
+    [
+     100000,
+     224
+    ],
+    [
+     120000,
+     1275
+    ],
+    [
+     150000,
+     3650
+    ],
+    [
+     200000,
+     10634
+    ],
+    [
+     250000,
+     19995
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     0
+    ],
+    [
+     110000,
+     3
+    ],
+    [
+     130000,
+     825
+    ],
+    [
+     145000,
+     1882
+    ],
+    [
+     160000,
+     3172
+    ],
+    [
+     180000,
+     5176
+    ],
+    [
+     210000,
+     9161
+    ],
+    [
+     260000,
+     18491
+    ],
+    [
+     310000,
+     28812
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     1513
+    ],
+    [
+     110000,
+     2845
+    ],
+    [
+     130000,
+     4545
+    ],
+    [
+     145000,
+     6101
+    ],
+    [
+     160000,
+     7893
+    ],
+    [
+     180000,
+     10445
+    ],
+    [
+     210000,
+     15579
+    ],
+    [
+     260000,
+     26025
+    ],
+    [
+     310000,
+     37723
+    ]
+   ]
+  },
+  "170000010": {
+   "1|0|1": [
+    [
+     30000,
+     1316
+    ],
+    [
+     50000,
+     5160
+    ],
+    [
+     70000,
+     9604
+    ],
+    [
+     85000,
+     13200
+    ],
+    [
+     100000,
+     17185
+    ],
+    [
+     120000,
+     22559
+    ],
+    [
+     150000,
+     31646
+    ],
+    [
+     200000,
+     49627
+    ],
+    [
+     250000,
+     67987
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     610
+    ],
+    [
+     70000,
+     3016
+    ],
+    [
+     85000,
+     4978
+    ],
+    [
+     100000,
+     7858
+    ],
+    [
+     120000,
+     12048
+    ],
+    [
+     150000,
+     18984
+    ],
+    [
+     200000,
+     34109
+    ],
+    [
+     250000,
+     51010
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     4658
+    ],
+    [
+     110000,
+     8391
+    ],
+    [
+     130000,
+     12583
+    ],
+    [
+     145000,
+     16027
+    ],
+    [
+     160000,
+     19610
+    ],
+    [
+     180000,
+     24702
+    ],
+    [
+     210000,
+     33380
+    ],
+    [
+     260000,
+     50337
+    ],
+    [
+     310000,
+     68234
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     8410
+    ],
+    [
+     110000,
+     12588
+    ],
+    [
+     130000,
+     17264
+    ],
+    [
+     145000,
+     20906
+    ],
+    [
+     160000,
+     24900
+    ],
+    [
+     180000,
+     30508
+    ],
+    [
+     210000,
+     39712
+    ],
+    [
+     260000,
+     57034
+    ],
+    [
+     310000,
+     75307
+    ]
+   ]
+  },
+  "450000001": {
+   "1|0|1": [
+    [
+     30000,
+     1131
+    ],
+    [
+     50000,
+     4867
+    ],
+    [
+     70000,
+     9364
+    ],
+    [
+     85000,
+     12833
+    ],
+    [
+     100000,
+     16910
+    ],
+    [
+     120000,
+     22032
+    ],
+    [
+     150000,
+     30717
+    ],
+    [
+     200000,
+     46828
+    ],
+    [
+     250000,
+     63988
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     50
+    ],
+    [
+     50000,
+     50
+    ],
+    [
+     70000,
+     1549
+    ],
+    [
+     85000,
+     3695
+    ],
+    [
+     100000,
+     6982
+    ],
+    [
+     120000,
+     11238
+    ],
+    [
+     150000,
+     18245
+    ],
+    [
+     200000,
+     32787
+    ],
+    [
+     250000,
+     49259
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     3404
+    ],
+    [
+     110000,
+     7151
+    ],
+    [
+     130000,
+     11463
+    ],
+    [
+     145000,
+     14923
+    ],
+    [
+     160000,
+     19290
+    ],
+    [
+     180000,
+     24276
+    ],
+    [
+     210000,
+     32437
+    ],
+    [
+     260000,
+     48988
+    ],
+    [
+     310000,
+     66243
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     7898
+    ],
+    [
+     110000,
+     12322
+    ],
+    [
+     130000,
+     17044
+    ],
+    [
+     145000,
+     20778
+    ],
+    [
+     160000,
+     25257
+    ],
+    [
+     180000,
+     30493
+    ],
+    [
+     210000,
+     39433
+    ],
+    [
+     260000,
+     56432
+    ],
+    [
+     310000,
+     73687
+    ]
+   ]
+  },
+  "405100000": {
+   "1|0|1": [
+    [
+     30000,
+     60
+    ],
+    [
+     50000,
+     4077
+    ],
+    [
+     70000,
+     8424
+    ],
+    [
+     85000,
+     11743
+    ],
+    [
+     100000,
+     15377
+    ],
+    [
+     120000,
+     20250
+    ],
+    [
+     150000,
+     28087
+    ],
+    [
+     200000,
+     42448
+    ],
+    [
+     250000,
+     57856
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     70000,
+     1218
+    ],
+    [
+     85000,
+     4138
+    ],
+    [
+     100000,
+     7183
+    ],
+    [
+     120000,
+     11545
+    ],
+    [
+     150000,
+     18501
+    ],
+    [
+     200000,
+     32276
+    ],
+    [
+     250000,
+     47780
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     1974
+    ],
+    [
+     110000,
+     5860
+    ],
+    [
+     130000,
+     10141
+    ],
+    [
+     145000,
+     13599
+    ],
+    [
+     160000,
+     17180
+    ],
+    [
+     180000,
+     21984
+    ],
+    [
+     210000,
+     29860
+    ],
+    [
+     260000,
+     45348
+    ],
+    [
+     310000,
+     60852
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     6085
+    ],
+    [
+     110000,
+     10458
+    ],
+    [
+     130000,
+     15045
+    ],
+    [
+     145000,
+     18630
+    ],
+    [
+     160000,
+     22391
+    ],
+    [
+     180000,
+     27445
+    ],
+    [
+     210000,
+     36100
+    ],
+    [
+     260000,
+     51604
+    ],
+    [
+     310000,
+     67108
+    ]
+   ]
+  },
+  "441000000": {
+   "1|0|1": [
+    [
+     30000,
+     1109
+    ],
+    [
+     50000,
+     4591
+    ],
+    [
+     70000,
+     9337
+    ],
+    [
+     85000,
+     13219
+    ],
+    [
+     100000,
+     17592
+    ],
+    [
+     120000,
+     23642
+    ],
+    [
+     150000,
+     33503
+    ],
+    [
+     200000,
+     51533
+    ],
+    [
+     250000,
+     70812
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     70000,
+     1254
+    ],
+    [
+     85000,
+     3752
+    ],
+    [
+     100000,
+     6770
+    ],
+    [
+     120000,
+     11418
+    ],
+    [
+     150000,
+     19183
+    ],
+    [
+     200000,
+     35194
+    ],
+    [
+     250000,
+     53769
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     3973
+    ],
+    [
+     110000,
+     7907
+    ],
+    [
+     130000,
+     12571
+    ],
+    [
+     145000,
+     16453
+    ],
+    [
+     160000,
+     20548
+    ],
+    [
+     180000,
+     26181
+    ],
+    [
+     210000,
+     35552
+    ],
+    [
+     260000,
+     54207
+    ],
+    [
+     310000,
+     73214
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     6956
+    ],
+    [
+     110000,
+     11401
+    ],
+    [
+     130000,
+     16383
+    ],
+    [
+     145000,
+     20399
+    ],
+    [
+     160000,
+     24681
+    ],
+    [
+     180000,
+     30571
+    ],
+    [
+     210000,
+     40731
+    ],
+    [
+     260000,
+     59415
+    ],
+    [
+     310000,
+     78425
+    ]
+   ]
+  },
+  "820000000": {
+   "1|0|1": [
+    [
+     30000,
+     966
+    ],
+    [
+     50000,
+     3361
+    ],
+    [
+     70000,
+     6442
+    ],
+    [
+     85000,
+     9037
+    ],
+    [
+     100000,
+     12144
+    ],
+    [
+     120000,
+     16305
+    ],
+    [
+     150000,
+     23079
+    ],
+    [
+     200000,
+     36375
+    ],
+    [
+     250000,
+     50567
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     60
+    ],
+    [
+     50000,
+     60
+    ],
+    [
+     70000,
+     1355
+    ],
+    [
+     85000,
+     2650
+    ],
+    [
+     100000,
+     4223
+    ],
+    [
+     120000,
+     6916
+    ],
+    [
+     150000,
+     11880
+    ],
+    [
+     200000,
+     23550
+    ],
+    [
+     250000,
+     37457
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     2506
+    ],
+    [
+     110000,
+     4435
+    ],
+    [
+     130000,
+     7110
+    ],
+    [
+     145000,
+     9583
+    ],
+    [
+     160000,
+     12210
+    ],
+    [
+     180000,
+     16027
+    ],
+    [
+     210000,
+     22758
+    ],
+    [
+     260000,
+     36648
+    ],
+    [
+     310000,
+     50553
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     5494
+    ],
+    [
+     110000,
+     8426
+    ],
+    [
+     130000,
+     11772
+    ],
+    [
+     145000,
+     14602
+    ],
+    [
+     160000,
+     17620
+    ],
+    [
+     180000,
+     21974
+    ],
+    [
+     210000,
+     29562
+    ],
+    [
+     260000,
+     43466
+    ],
+    [
+     310000,
+     57391
+    ]
+   ]
+  },
+  "910000000": {
+   "1|0|1": [
+    [
+     30000,
+     1634
+    ],
+    [
+     50000,
+     4680
+    ],
+    [
+     70000,
+     8498
+    ],
+    [
+     85000,
+     11572
+    ],
+    [
+     100000,
+     15065
+    ],
+    [
+     120000,
+     19876
+    ],
+    [
+     150000,
+     27686
+    ],
+    [
+     200000,
+     42257
+    ],
+    [
+     250000,
+     57875
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     1011
+    ],
+    [
+     70000,
+     3496
+    ],
+    [
+     85000,
+     5648
+    ],
+    [
+     100000,
+     8207
+    ],
+    [
+     120000,
+     12179
+    ],
+    [
+     150000,
+     18894
+    ],
+    [
+     200000,
+     32542
+    ],
+    [
+     250000,
+     48162
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     5160
+    ],
+    [
+     110000,
+     8015
+    ],
+    [
+     130000,
+     11741
+    ],
+    [
+     145000,
+     15056
+    ],
+    [
+     160000,
+     18536
+    ],
+    [
+     180000,
+     23291
+    ],
+    [
+     210000,
+     31092
+    ],
+    [
+     260000,
+     46693
+    ],
+    [
+     310000,
+     62407
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     7606
+    ],
+    [
+     110000,
+     11164
+    ],
+    [
+     130000,
+     15383
+    ],
+    [
+     145000,
+     18856
+    ],
+    [
+     160000,
+     22578
+    ],
+    [
+     180000,
+     27582
+    ],
+    [
+     210000,
+     36162
+    ],
+    [
+     260000,
+     51874
+    ],
+    [
+     310000,
+     67587
+    ]
+   ]
+  },
+  "905000000": {
+   "1|0|1": [
+    [
+     30000,
+     1100
+    ],
+    [
+     50000,
+     3299
+    ],
+    [
+     70000,
+     6030
+    ],
+    [
+     85000,
+     8136
+    ],
+    [
+     100000,
+     10822
+    ],
+    [
+     120000,
+     14391
+    ],
+    [
+     150000,
+     20267
+    ],
+    [
+     200000,
+     31027
+    ],
+    [
+     250000,
+     42598
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     40
+    ],
+    [
+     50000,
+     684
+    ],
+    [
+     70000,
+     2084
+    ],
+    [
+     85000,
+     3525
+    ],
+    [
+     100000,
+     5417
+    ],
+    [
+     120000,
+     8273
+    ],
+    [
+     150000,
+     13064
+    ],
+    [
+     200000,
+     23256
+    ],
+    [
+     250000,
+     35424
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     3474
+    ],
+    [
+     110000,
+     5588
+    ],
+    [
+     130000,
+     8214
+    ],
+    [
+     145000,
+     10457
+    ],
+    [
+     160000,
+     13052
+    ],
+    [
+     180000,
+     16419
+    ],
+    [
+     210000,
+     22251
+    ],
+    [
+     260000,
+     34403
+    ],
+    [
+     310000,
+     46569
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     5383
+    ],
+    [
+     110000,
+     8067
+    ],
+    [
+     130000,
+     11043
+    ],
+    [
+     145000,
+     13415
+    ],
+    [
+     160000,
+     16190
+    ],
+    [
+     180000,
+     19824
+    ],
+    [
+     210000,
+     26518
+    ],
+    [
+     260000,
+     38684
+    ],
+    [
+     310000,
+     50851
+    ]
+   ]
+  },
+  "900000002": {
+   "1|0|1": [
+    [
+     30000,
+     1285
+    ],
+    [
+     50000,
+     4451
+    ],
+    [
+     70000,
+     8508
+    ],
+    [
+     85000,
+     11964
+    ],
+    [
+     100000,
+     15892
+    ],
+    [
+     120000,
+     21034
+    ],
+    [
+     150000,
+     29365
+    ],
+    [
+     200000,
+     44566
+    ],
+    [
+     250000,
+     60814
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     70000,
+     2192
+    ],
+    [
+     85000,
+     4228
+    ],
+    [
+     100000,
+     6548
+    ],
+    [
+     120000,
+     10633
+    ],
+    [
+     150000,
+     17171
+    ],
+    [
+     200000,
+     31360
+    ],
+    [
+     250000,
+     47521
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     3886
+    ],
+    [
+     110000,
+     6765
+    ],
+    [
+     130000,
+     10751
+    ],
+    [
+     145000,
+     13999
+    ],
+    [
+     160000,
+     17575
+    ],
+    [
+     180000,
+     22552
+    ],
+    [
+     210000,
+     30792
+    ],
+    [
+     260000,
+     46957
+    ],
+    [
+     310000,
+     63301
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     6872
+    ],
+    [
+     110000,
+     10966
+    ],
+    [
+     130000,
+     15259
+    ],
+    [
+     145000,
+     18643
+    ],
+    [
+     160000,
+     22827
+    ],
+    [
+     180000,
+     28124
+    ],
+    [
+     210000,
+     37143
+    ],
+    [
+     260000,
+     53408
+    ],
+    [
+     310000,
+     69753
+    ]
+   ]
+  },
+  "700000000": {
+   "1|0|1": [
+    [
+     30000,
+     316
+    ],
+    [
+     50000,
+     3056
+    ],
+    [
+     70000,
+     6856
+    ],
+    [
+     85000,
+     9859
+    ],
+    [
+     100000,
+     13245
+    ],
+    [
+     120000,
+     17807
+    ],
+    [
+     150000,
+     25346
+    ],
+    [
+     200000,
+     39324
+    ],
+    [
+     250000,
+     54352
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     70000,
+     135
+    ],
+    [
+     85000,
+     1712
+    ],
+    [
+     100000,
+     3960
+    ],
+    [
+     120000,
+     7472
+    ],
+    [
+     150000,
+     13712
+    ],
+    [
+     200000,
+     26514
+    ],
+    [
+     250000,
+     41200
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     1057
+    ],
+    [
+     110000,
+     3622
+    ],
+    [
+     130000,
+     7010
+    ],
+    [
+     145000,
+     10072
+    ],
+    [
+     160000,
+     13371
+    ],
+    [
+     180000,
+     17744
+    ],
+    [
+     210000,
+     25099
+    ],
+    [
+     260000,
+     39768
+    ],
+    [
+     310000,
+     54800
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     4596
+    ],
+    [
+     110000,
+     8061
+    ],
+    [
+     130000,
+     12198
+    ],
+    [
+     145000,
+     15439
+    ],
+    [
+     160000,
+     18884
+    ],
+    [
+     180000,
+     23600
+    ],
+    [
+     210000,
+     31748
+    ],
+    [
+     260000,
+     46566
+    ],
+    [
+     310000,
+     61688
+    ]
+   ]
+  },
+  "500000000": {
+   "1|0|1": [
+    [
+     30000,
+     757
+    ],
+    [
+     50000,
+     3469
+    ],
+    [
+     70000,
+     6928
+    ],
+    [
+     85000,
+     9706
+    ],
+    [
+     100000,
+     12976
+    ],
+    [
+     120000,
+     17363
+    ],
+    [
+     150000,
+     24694
+    ],
+    [
+     200000,
+     38554
+    ],
+    [
+     250000,
+     53895
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     259
+    ],
+    [
+     70000,
+     1600
+    ],
+    [
+     85000,
+     2981
+    ],
+    [
+     100000,
+     4786
+    ],
+    [
+     120000,
+     7824
+    ],
+    [
+     150000,
+     13384
+    ],
+    [
+     200000,
+     25657
+    ],
+    [
+     250000,
+     40206
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     2813
+    ],
+    [
+     110000,
+     5118
+    ],
+    [
+     130000,
+     8214
+    ],
+    [
+     145000,
+     10922
+    ],
+    [
+     160000,
+     13863
+    ],
+    [
+     180000,
+     17927
+    ],
+    [
+     210000,
+     24949
+    ],
+    [
+     260000,
+     39482
+    ],
+    [
+     310000,
+     54336
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     5463
+    ],
+    [
+     110000,
+     8651
+    ],
+    [
+     130000,
+     12354
+    ],
+    [
+     145000,
+     15319
+    ],
+    [
+     160000,
+     18526
+    ],
+    [
+     180000,
+     22964
+    ],
+    [
+     210000,
+     30926
+    ],
+    [
+     260000,
+     45511
+    ],
+    [
+     310000,
+     60512
+    ]
+   ]
+  },
+  "850000009": {
+   "1|0|1": [
+    [
+     30000,
+     1002
+    ],
+    [
+     50000,
+     4056
+    ],
+    [
+     70000,
+     7767
+    ],
+    [
+     85000,
+     10540
+    ],
+    [
+     100000,
+     13677
+    ],
+    [
+     120000,
+     18050
+    ],
+    [
+     150000,
+     25173
+    ],
+    [
+     200000,
+     38749
+    ],
+    [
+     250000,
+     53737
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     0
+    ],
+    [
+     70000,
+     1585
+    ],
+    [
+     85000,
+     3629
+    ],
+    [
+     100000,
+     5828
+    ],
+    [
+     120000,
+     9364
+    ],
+    [
+     150000,
+     15272
+    ],
+    [
+     200000,
+     27485
+    ],
+    [
+     250000,
+     41862
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     3546
+    ],
+    [
+     110000,
+     6351
+    ],
+    [
+     130000,
+     9990
+    ],
+    [
+     145000,
+     12919
+    ],
+    [
+     160000,
+     15951
+    ],
+    [
+     180000,
+     20052
+    ],
+    [
+     210000,
+     26891
+    ],
+    [
+     260000,
+     41310
+    ],
+    [
+     310000,
+     55822
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     6408
+    ],
+    [
+     110000,
+     10121
+    ],
+    [
+     130000,
+     14067
+    ],
+    [
+     145000,
+     17122
+    ],
+    [
+     160000,
+     20334
+    ],
+    [
+     180000,
+     24686
+    ],
+    [
+     210000,
+     32436
+    ],
+    [
+     260000,
+     46948
+    ],
+    [
+     310000,
+     61460
+    ]
+   ]
+  },
+  "690000004": {
+   "1|0|1": [
+    [
+     30000,
+     770
+    ],
+    [
+     50000,
+     3068
+    ],
+    [
+     70000,
+     6586
+    ],
+    [
+     85000,
+     9453
+    ],
+    [
+     100000,
+     12862
+    ],
+    [
+     120000,
+     17411
+    ],
+    [
+     150000,
+     25047
+    ],
+    [
+     200000,
+     39255
+    ],
+    [
+     250000,
+     54512
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     20
+    ],
+    [
+     50000,
+     20
+    ],
+    [
+     70000,
+     718
+    ],
+    [
+     85000,
+     1687
+    ],
+    [
+     100000,
+     3540
+    ],
+    [
+     120000,
+     6958
+    ],
+    [
+     150000,
+     13265
+    ],
+    [
+     200000,
+     26432
+    ],
+    [
+     250000,
+     41821
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     889
+    ],
+    [
+     110000,
+     2592
+    ],
+    [
+     130000,
+     5678
+    ],
+    [
+     145000,
+     8523
+    ],
+    [
+     160000,
+     11844
+    ],
+    [
+     180000,
+     16466
+    ],
+    [
+     210000,
+     23901
+    ],
+    [
+     260000,
+     39196
+    ],
+    [
+     310000,
+     55109
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     3779
+    ],
+    [
+     110000,
+     7201
+    ],
+    [
+     130000,
+     11285
+    ],
+    [
+     145000,
+     14727
+    ],
+    [
+     160000,
+     18331
+    ],
+    [
+     180000,
+     23049
+    ],
+    [
+     210000,
+     31541
+    ],
+    [
+     260000,
+     47201
+    ],
+    [
+     310000,
+     63325
+    ]
+   ]
+  },
+  "100300000": {
+   "1|0|1": [
+    [
+     30000,
+     191
+    ],
+    [
+     50000,
+     4236
+    ],
+    [
+     70000,
+     10049
+    ],
+    [
+     85000,
+     13498
+    ],
+    [
+     100000,
+     17512
+    ],
+    [
+     120000,
+     23193
+    ],
+    [
+     150000,
+     32700
+    ],
+    [
+     200000,
+     50925
+    ],
+    [
+     250000,
+     70960
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     201
+    ],
+    [
+     70000,
+     2900
+    ],
+    [
+     85000,
+     5947
+    ],
+    [
+     100000,
+     9821
+    ],
+    [
+     120000,
+     14224
+    ],
+    [
+     150000,
+     21077
+    ],
+    [
+     200000,
+     35925
+    ],
+    [
+     250000,
+     53832
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     4146
+    ],
+    [
+     110000,
+     9157
+    ],
+    [
+     130000,
+     13962
+    ],
+    [
+     145000,
+     17028
+    ],
+    [
+     160000,
+     20459
+    ],
+    [
+     180000,
+     25223
+    ],
+    [
+     210000,
+     33394
+    ],
+    [
+     260000,
+     49971
+    ],
+    [
+     310000,
+     69108
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     9661
+    ],
+    [
+     110000,
+     13779
+    ],
+    [
+     130000,
+     18260
+    ],
+    [
+     145000,
+     21974
+    ],
+    [
+     160000,
+     25910
+    ],
+    [
+     180000,
+     31679
+    ],
+    [
+     210000,
+     41493
+    ],
+    [
+     260000,
+     60071
+    ],
+    [
+     310000,
+     79144
+    ]
+   ]
+  },
+  "195004000": {
+   "1|0|1": [
+    [
+     30000,
+     202
+    ],
+    [
+     50000,
+     4042
+    ],
+    [
+     70000,
+     7822
+    ],
+    [
+     85000,
+     11102
+    ],
+    [
+     100000,
+     15048
+    ],
+    [
+     120000,
+     20655
+    ],
+    [
+     150000,
+     30606
+    ],
+    [
+     200000,
+     50165
+    ],
+    [
+     250000,
+     67894
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     34
+    ],
+    [
+     50000,
+     34
+    ],
+    [
+     70000,
+     975
+    ],
+    [
+     85000,
+     2730
+    ],
+    [
+     100000,
+     4592
+    ],
+    [
+     120000,
+     7707
+    ],
+    [
+     150000,
+     13386
+    ],
+    [
+     200000,
+     28507
+    ],
+    [
+     250000,
+     47821
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     1869
+    ],
+    [
+     110000,
+     4054
+    ],
+    [
+     130000,
+     7082
+    ],
+    [
+     145000,
+     9755
+    ],
+    [
+     160000,
+     12775
+    ],
+    [
+     180000,
+     17159
+    ],
+    [
+     210000,
+     26150
+    ],
+    [
+     260000,
+     45653
+    ],
+    [
+     310000,
+     63220
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     5754
+    ],
+    [
+     110000,
+     9003
+    ],
+    [
+     130000,
+     12777
+    ],
+    [
+     145000,
+     15990
+    ],
+    [
+     160000,
+     19483
+    ],
+    [
+     180000,
+     25625
+    ],
+    [
+     210000,
+     37060
+    ],
+    [
+     260000,
+     54942
+    ],
+    [
+     310000,
+     72574
+    ]
+   ]
+  },
+  "200000000": {
+   "1|0|1": [
+    [
+     30000,
+     1294
+    ],
+    [
+     50000,
+     5924
+    ],
+    [
+     70000,
+     10764
+    ],
+    [
+     85000,
+     14538
+    ],
+    [
+     100000,
+     18933
+    ],
+    [
+     120000,
+     24711
+    ],
+    [
+     150000,
+     34280
+    ],
+    [
+     200000,
+     52428
+    ],
+    [
+     250000,
+     71280
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     307
+    ],
+    [
+     70000,
+     3298
+    ],
+    [
+     85000,
+     6236
+    ],
+    [
+     100000,
+     9526
+    ],
+    [
+     120000,
+     14074
+    ],
+    [
+     150000,
+     21559
+    ],
+    [
+     200000,
+     37321
+    ],
+    [
+     250000,
+     55596
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     5980
+    ],
+    [
+     110000,
+     10091
+    ],
+    [
+     130000,
+     14741
+    ],
+    [
+     145000,
+     18470
+    ],
+    [
+     160000,
+     22684
+    ],
+    [
+     180000,
+     28068
+    ],
+    [
+     210000,
+     37105
+    ],
+    [
+     260000,
+     55399
+    ],
+    [
+     310000,
+     74299
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     9827
+    ],
+    [
+     110000,
+     14517
+    ],
+    [
+     130000,
+     19568
+    ],
+    [
+     145000,
+     23511
+    ],
+    [
+     160000,
+     27988
+    ],
+    [
+     180000,
+     33754
+    ],
+    [
+     210000,
+     43699
+    ],
+    [
+     260000,
+     62199
+    ],
+    [
+     310000,
+     81226
+    ]
+   ]
+  },
+  "120100000": {
+   "1|0|1": [
+    [
+     30000,
+     617
+    ],
+    [
+     50000,
+     4085
+    ],
+    [
+     70000,
+     8674
+    ],
+    [
+     85000,
+     12307
+    ],
+    [
+     100000,
+     16413
+    ],
+    [
+     120000,
+     22009
+    ],
+    [
+     150000,
+     30970
+    ],
+    [
+     200000,
+     47869
+    ],
+    [
+     250000,
+     66341
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     25
+    ],
+    [
+     50000,
+     25
+    ],
+    [
+     70000,
+     25
+    ],
+    [
+     85000,
+     687
+    ],
+    [
+     100000,
+     2954
+    ],
+    [
+     120000,
+     6991
+    ],
+    [
+     150000,
+     14177
+    ],
+    [
+     200000,
+     28987
+    ],
+    [
+     250000,
+     46169
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     471
+    ],
+    [
+     110000,
+     3229
+    ],
+    [
+     130000,
+     7153
+    ],
+    [
+     145000,
+     10694
+    ],
+    [
+     160000,
+     14533
+    ],
+    [
+     180000,
+     19745
+    ],
+    [
+     210000,
+     28223
+    ],
+    [
+     260000,
+     45436
+    ],
+    [
+     310000,
+     62778
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     6003
+    ],
+    [
+     110000,
+     10271
+    ],
+    [
+     130000,
+     15130
+    ],
+    [
+     145000,
+     19028
+    ],
+    [
+     160000,
+     23090
+    ],
+    [
+     180000,
+     28552
+    ],
+    [
+     210000,
+     38234
+    ],
+    [
+     260000,
+     55577
+    ],
+    [
+     310000,
+     73148
+    ]
+   ]
+  },
+  "280000002": {
+   "1|0|1": [
+    [
+     30000,
+     1112
+    ],
+    [
+     50000,
+     4360
+    ],
+    [
+     70000,
+     8537
+    ],
+    [
+     85000,
+     12180
+    ],
+    [
+     100000,
+     16312
+    ],
+    [
+     120000,
+     21844
+    ],
+    [
+     150000,
+     31129
+    ],
+    [
+     200000,
+     47952
+    ],
+    [
+     250000,
+     65971
+    ]
+   ],
+   "1|2|1": [
+    [
+     30000,
+     0
+    ],
+    [
+     50000,
+     582
+    ],
+    [
+     70000,
+     3140
+    ],
+    [
+     85000,
+     5523
+    ],
+    [
+     100000,
+     8554
+    ],
+    [
+     120000,
+     12663
+    ],
+    [
+     150000,
+     19935
+    ],
+    [
+     200000,
+     34468
+    ],
+    [
+     250000,
+     50787
+    ]
+   ],
+   "2|2|2": [
+    [
+     90000,
+     4157
+    ],
+    [
+     110000,
+     7716
+    ],
+    [
+     130000,
+     11735
+    ],
+    [
+     145000,
+     15217
+    ],
+    [
+     160000,
+     19364
+    ],
+    [
+     180000,
+     24486
+    ],
+    [
+     210000,
+     32786
+    ],
+    [
+     260000,
+     49031
+    ],
+    [
+     310000,
+     67299
+    ]
+   ],
+   "2|0|2": [
+    [
+     90000,
+     7049
+    ],
+    [
+     110000,
+     11158
+    ],
+    [
+     130000,
+     15712
+    ],
+    [
+     145000,
+     19504
+    ],
+    [
+     160000,
+     23854
+    ],
+    [
+     180000,
+     29204
+    ],
+    [
+     210000,
+     38304
+    ],
+    [
+     260000,
+     55160
+    ],
+    [
+     310000,
+     73428
+    ]
+   ]
+  }
+ },
+ "denominationFactor": {
+  "301100000": {
+   "1": 1.0374,
+   "2": 1.0386,
+   "3": 1.0561,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "800100000": {
+   "1": 1.0411,
+   "2": 1.0411,
+   "3": 1.0574,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "600300000": {
+   "1": 1.0757,
+   "2": 1.0697,
+   "3": 1.094,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "646000000": {
+   "1": 1.076,
+   "2": 1.0551,
+   "3": 1.0033,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "643000000": {
+   "1": 1.0725,
+   "2": 1.0756,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "606100000": {
+   "1": 1.0671,
+   "2": 1.0671,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "637041000": {
+   "1": 1.0489,
+   "2": 1.0753,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "875000001": {
+   "1": 1.0557,
+   "2": 1.0594,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "630000009": {
+   "1": 1.0335,
+   "2": 1.0332,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "170000010": {
+   "1": 1.047,
+   "2": 1.0313,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "450000001": {
+   "1": 1.0683,
+   "2": 1.0902,
+   "3": 1.081,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "405100000": {
+   "1": 1.0726,
+   "2": 1.0726,
+   "3": 1.0726,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "441000000": {
+   "1": 1.0317,
+   "2": 1.0376,
+   "3": 1.0403,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "820000000": {
+   "1": 1.0715,
+   "2": 1.0715,
+   "3": 1.0743,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "910000000": {
+   "1": 1.0735,
+   "2": 1.0576,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "905000000": {
+   "1": 1.0572,
+   "2": 1.0572,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "900000002": {
+   "1": 1.0936,
+   "2": 1.0974,
+   "3": 1.0899,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "700000000": {
+   "1": 1.0718,
+   "2": 1.0445,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "500000000": {
+   "1": 1.0671,
+   "2": 1.0849,
+   "3": 1.1117,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "850000009": {
+   "1": 1.0572,
+   "2": 1.0572,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "690000004": {
+   "1": 1.0,
+   "2": 1.0,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "100300000": {
+   "1": 1.0,
+   "2": 1.0,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "195004000": {
+   "1": 1.0,
+   "2": 1.0136,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "200000000": {
+   "1": 1.0546,
+   "2": 1.0546,
+   "3": 1.0007,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "120100000": {
+   "1": 1.0834,
+   "2": 1.0834,
+   "3": 1.0008,
+   "4": 1.0,
+   "9": 1.0
+  },
+  "280000002": {
+   "1": 1.0443,
+   "2": 1.035,
+   "3": 1.0,
+   "4": 1.0,
+   "9": 1.0
+  }
+ },
+ "taxLocations": {
+  "ZH": {
+   "canton": "ZH",
+   "city": "Zürich",
+   "taxLocationID": 800100000,
+   "zipCode": "8001"
+  },
+  "BE": {
+   "canton": "BE",
+   "city": "Bern",
+   "taxLocationID": 301100000,
+   "zipCode": "3011"
+  },
+  "LU": {
+   "canton": "LU",
+   "city": "Luzern",
+   "taxLocationID": 600300000,
+   "zipCode": "6003"
+  },
+  "UR": {
+   "canton": "UR",
+   "city": "Altdorf UR",
+   "taxLocationID": 646000000,
+   "zipCode": "6460"
+  },
+  "SZ": {
+   "canton": "SZ",
+   "city": "Schwyz",
+   "taxLocationID": 643000000,
+   "zipCode": "6430"
+  },
+  "OW": {
+   "canton": "OW",
+   "city": "Ramersberg",
+   "taxLocationID": 606100000,
+   "zipCode": "6060"
+  },
+  "NW": {
+   "canton": "NW",
+   "city": "Oberdorf NW",
+   "taxLocationID": 637041000,
+   "zipCode": "6370"
+  },
+  "GL": {
+   "canton": "GL",
+   "city": "Glaris",
+   "taxLocationID": 875000001,
+   "zipCode": "8750"
+  },
+  "ZG": {
+   "canton": "ZG",
+   "city": "Zoug",
+   "taxLocationID": 630000009,
+   "zipCode": "6300"
+  },
+  "FR": {
+   "canton": "FR",
+   "city": "Daillettes",
+   "taxLocationID": 170000010,
+   "zipCode": "1700"
+  },
+  "SO": {
+   "canton": "SO",
+   "city": "Soletta",
+   "taxLocationID": 450000001,
+   "zipCode": "4500"
+  },
+  "BS": {
+   "canton": "BS",
+   "city": "Basel",
+   "taxLocationID": 405100000,
+   "zipCode": "4051"
+  },
+  "BL": {
+   "canton": "BL",
+   "city": "Liestal",
+   "taxLocationID": 441000000,
+   "zipCode": "4410"
+  },
+  "SH": {
+   "canton": "SH",
+   "city": "Schaffhausen",
+   "taxLocationID": 820000000,
+   "zipCode": "8200"
+  },
+  "AR": {
+   "canton": "AR",
+   "city": "Herisau",
+   "taxLocationID": 910000000,
+   "zipCode": "9100"
+  },
+  "AI": {
+   "canton": "AI",
+   "city": "Appenzell",
+   "taxLocationID": 905000000,
+   "zipCode": "9050"
+  },
+  "SG": {
+   "canton": "SG",
+   "city": "S. Gallo",
+   "taxLocationID": 900000002,
+   "zipCode": "9000"
+  },
+  "GR": {
+   "canton": "GR",
+   "city": "Chur",
+   "taxLocationID": 700000000,
+   "zipCode": "7000"
+  },
+  "AG": {
+   "canton": "AG",
+   "city": "Aarau",
+   "taxLocationID": 500000000,
+   "zipCode": "5000"
+  },
+  "TG": {
+   "canton": "TG",
+   "city": "Bühl b. Frauenfeld",
+   "taxLocationID": 850000009,
+   "zipCode": "8500"
+  },
+  "TI": {
+   "canton": "TI",
+   "city": "Calprino",
+   "taxLocationID": 690000004,
+   "zipCode": "6900"
+  },
+  "VD": {
+   "canton": "VD",
+   "city": "Lausanne",
+   "taxLocationID": 100300000,
+   "zipCode": "1003"
+  },
+  "VS": {
+   "canton": "VS",
+   "city": "Châteauneuf (Sion)",
+   "taxLocationID": 195004000,
+   "zipCode": "1950"
+  },
+  "NE": {
+   "canton": "NE",
+   "city": "Neuchâtel",
+   "taxLocationID": 200000000,
+   "zipCode": "2000"
+  },
+  "GE": {
+   "canton": "GE",
+   "city": "Genève",
+   "taxLocationID": 120100000,
+   "zipCode": "1201"
+  },
+  "JU": {
+   "canton": "JU",
+   "city": "Delsberg",
+   "taxLocationID": 280000002,
+   "zipCode": "2800"
+  }
+ }
+}

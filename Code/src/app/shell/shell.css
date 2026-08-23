@@ -707,31 +707,6 @@ button.row:active { background: var(--tap); }
 .legend__amount { font-size: 18px; color: var(--text-strong); white-space: nowrap; }
 .legend__cur { font-size: 13px; color: var(--text-muted); }
 
-.listrow {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--s-5);
-  width: 100%;
-  padding: var(--s-6) var(--s-2);
-  text-align: left;
-}
-
-.listrow:first-of-type { margin-top: var(--s-4); }
-
-.listrow__icon {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--surface-sunken);
-  color: var(--text-strong);
-  flex: none;
-}
-
-.listrow__title { display: block; font-size: 17px; font-weight: 700; color: var(--text-strong); }
-.listrow__sub { display: block; margin-top: 3px; font-size: 14px; line-height: 1.35; color: var(--text-muted); }
-
 /* ── Meine Abos ────────────────────────────────────────────────────────── */
 
 .abo {
