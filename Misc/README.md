@@ -7,7 +7,7 @@ sie aussieht, findet die Antwort in diesem Ordner und nicht im Code.
 Misc/
 ├── Interviews/
 │   ├── SYNTHESE.md        Querauswertung aller sechs Gespräche
-│   ├── pdf/               alle sieben Gespräche als aufbereitetes PDF
+│   ├── gespraeche/        alle sieben Gespräche, als Markdown und als PDF
 │   ├── transkripte/       die vollständigen Gespräche, anonymisiert
 │   └── auswertungen/      strukturierte Notizen nach eigener Vorlage
 ├── Design-Thinking/
@@ -34,10 +34,14 @@ Die Nummer 03 fehlt: ein Zählsprung, kein Gespräch. Nummer 08 — Elias, Finan
 Tag später dazu und ist nur als PDF erfasst; im Anschluss an sein Gespräch gab er die erste
 externe Rückmeldung auf den Prototyp.
 
-## Die Gespräche als PDF
+## Die sieben Gespräche
 
-In [`Interviews/pdf/`](Interviews/pdf/) liegen alle sieben Gespräche aufbereitet: Profiltabelle,
-Fragen und bereinigte Antworten, Kernzitate. Erzeugt aus denselben Quellen wie die Transkripte.
+In [`Interviews/gespraeche/`](Interviews/gespraeche/) liegt jedes Gespräch aufbereitet: Profil,
+Fragen mit bereinigten Antworten, Kernzitate, Erkenntnis. Zweimal dieselbe Sache — als **Markdown**,
+weil GitHub das direkt anzeigt und durchsuchbar hält, und als **PDF** zum Weitergeben.
+
+Das ist etwas anderes als die [`auswertungen/`](Interviews/auswertungen/): Die sind kondensiert und
+von Hand geschrieben, hier steht das vollständige Gespräch.
 
 **Zur Anonymisierung.** Die Namen sind durchgehend Pseudonyme, und sie sind dieselben wie in der
 App: Reto, Silvan, Nino, Livia, Selin, Bruno, Elias. Wohnorte stehen als `[Ort]`. Geschwärzt ist
