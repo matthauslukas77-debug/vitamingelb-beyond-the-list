@@ -22,9 +22,10 @@ import type { BudgetSlot, CategoryKey } from './slots'
  *   2. **Nur an Wortgrenzen** — sonst steckt «SPAR» in «SPARAUFTRAG» und
  *      «BAR» in «BARBARA».
  *
- * Gemessen am Datensatz: die Regeln allein ordnen 88 % der Ausgabenfranken
- * sicher zu, mit der Bankkategorie dazu 94.9 %. Was übrig bleibt, ist zu vier
- * Fünfteln Bargeld — und dafür gibt es keine Lösung ausser der Rückfrage.
+ * Gemessen am Datensatz: die Regeln allein ordnen 91.8 % der Ausgabenfranken
+ * sicher zu, mit der Bankkategorie dazu 96.1 %. Was übrig bleibt, sind 3.9 % —
+ * fast nur Bargeld, und dafür gibt es keine Lösung ausser der Rückfrage.
+ * (Vorher 88 % / 94.9 %; die Kioske und die Baumarkt-Regeln haben es gehoben.)
  */
 
 export interface Categorization extends BudgetSlot {

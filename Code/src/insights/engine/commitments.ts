@@ -12,14 +12,14 @@ import type { Signal, SignalKind } from '../signals/engine'
  * «Fix pro Monat 2'728.94». Die Zahl ist richtig und sagt allein nichts: Ob
  * sie viel ist, hängt daran, was hereinkommt. Erst der **Anteil** ist eine
  * Auskunft, und er ist über die Personas hinweg der ganze Unterschied — bei
- * Reto ein Drittel, bei Livia mehr als die Hälfte.
+ * Reto knapp ein Drittel, bei Livia fast die Hälfte.
  *
  * Gerechnet wird nur auf erkannten Reihen, also auf dem, was mehrfach
  * vorgekommen ist. Einmalige Buchungen zählen bewusst nicht mit: «vergeben»
  * heisst hier, dass es auch nächsten Monat wieder abgeht.
  *
- * **Nicht alles, was abgeht, ist weg.** Livias Dauerauftrag von CHF 500 landet
- * auf ihrem eigenen Sparkonto — das sind 43 ihrer 54 Prozent. Ein Balken, der
+ * **Nicht alles, was abgeht, ist weg.** Livias Dauerauftrag landet auf ihrem
+ * eigenen Sparkonto — das sind 36 ihrer 47 Prozent. Ein Balken, der
  * das als vergeben führt, sagt ihr das Gegenteil von dem, was stimmt. Erkannt
  * wird es nicht neu, sondern mit `moneyFlow` aus `insights/budget/flow.ts`:
  * dieselbe Unterscheidung, die auch das Budget die Doppelzählung vermeiden

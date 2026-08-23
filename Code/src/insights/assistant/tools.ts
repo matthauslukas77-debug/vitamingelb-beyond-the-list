@@ -8,8 +8,8 @@ import { categoryDef, CATEGORY_KEYS, slotKey, type CategoryKey } from '../budget
 import { deriveForPersona, fullMonthWindow, monthStart, spendByCategory } from '../budget/derive'
 import { merchantName } from '../budget/merchant'
 import { moneyFlow } from '../budget/flow'
-import { markingOf, NO_MARKINGS, type Markings } from '../budget/markings'
-import { NO_ASSIGNMENTS, type Assignments } from '../budget/assign'
+import { markingOf, type Markings } from '../budget/markings'
+import type { Assignments } from '../budget/assign'
 import { categorize } from '../budget/mapping'
 import { amountOf, type SavedBudget } from '../budget/storage'
 import { budgetPerCategory, signalsForPersona } from '../signals/engine'
@@ -612,7 +612,7 @@ export const TOOLS: Tool[] = [
  * Der Katalog als OpenAI-Werkzeugliste — was der Apertus 8B zu sehen bekommt.
  *
  * Erzeugt aus derselben Liste, die der Browser ausführt. Die Edge Function
- * führt eine Kopie davon (`supabase/functions/ask/catalog.json`), weil Deno
+ * führt eine Kopie davon (`supabase/functions/ask/catalog.ts`), weil Deno
  * dieses Modul nicht laden kann — es hinge am halben Motor. Ein Test hält die
  * beiden zusammen: Weicht ein Name ab, fällt er.
  */
@@ -625,10 +625,4 @@ export function routerSchema() {
       parameters: tool.parameters,
     },
   }))
-}
-
-export const NO_CONTEXT: Pick<AskContext, 'markings' | 'assignments' | 'budget'> = {
-  markings: NO_MARKINGS,
-  assignments: NO_ASSIGNMENTS,
-  budget: null,
 }

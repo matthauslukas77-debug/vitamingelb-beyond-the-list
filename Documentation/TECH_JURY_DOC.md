@@ -235,7 +235,7 @@ Formulierungsvielfalt — keine Funktion.
 - **Zahlungen laufen durch, buchen aber nicht.** Der Zahlungsfluss ist vollständig bedienbar und
   legt Aufträge an, erzeugt aber keine Buchung. Sobald eine Buchung echt wäre, ändert sie jede
   abgeleitete Zahl — Kontostand, Prognose, Budget, Signale. Sauber heisst dafür: **eine** Quelle
-  für Buchungen. Heute lesen 22 Stellen in 17 Dateien die Persona-Daten direkt; sie in der
+  für Buchungen. Heute lesen 30 Stellen in 23 Dateien die Persona-Daten direkt; sie in der
   verbleibenden Zeit umzuschreiben hätte zwei Wahrheiten riskiert. Eine ehrliche Attrappe ist uns
   lieber als eine halb echte Rechnung.
 

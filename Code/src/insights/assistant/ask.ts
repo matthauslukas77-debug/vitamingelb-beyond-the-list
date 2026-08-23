@@ -45,6 +45,15 @@ export type AskOutcome =
 export const MIN_QUESTION = 4
 
 /**
+ * Obergrenze, spiegelbildlich zur Edge Function.
+ *
+ * Ohne sie ging eine Frage über zweitausend Zeichen erst hinaus und wurde dann
+ * serverseitig mit 400 abgewiesen — der Nutzer sah nur, dass nichts kam. Was
+ * hier schon scheitert, belastet die Leitung gar nicht erst.
+ */
+export const MAX_QUESTION = 300
+
+/**
  * Sieht diese Eingabe nach einer Frage aus?
  *
  * Das Suchfeld bleibt in erster Linie ein Suchfeld: Wer «twint» tippt, will
@@ -53,7 +62,7 @@ export const MIN_QUESTION = 4
  */
 export function looksLikeQuestion(input: string): boolean {
   const raw = input.trim()
-  if (raw.length < MIN_QUESTION) return false
+  if (raw.length < MIN_QUESTION || raw.length > MAX_QUESTION) return false
   if (raw.includes('?')) return true
   const q = plain(raw)
   if (/^(wie|was|wer|wo|wofuer|wohin|warum|wieso|welche|welches|wieviel|wie viel)\b/.test(q)) return true
