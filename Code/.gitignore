@@ -20,3 +20,6 @@ supabase/.branches
 # verbietet die Lizenz. Lokal und im lokalen Build ist die Schrift aktiv.
 # Wer sie trotzdem ausliefern will: git add -f public/fonts
 public/fonts/
+
+# Debug-Seite, gehört nicht in die Auslieferung (alles in public/ wird deployt).
+public/_probe.html
