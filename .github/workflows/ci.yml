@@ -1,0 +1,55 @@
+# Typecheck und Tests bei jedem Push auf main.
+#
+# Bewusst kein Gate vor einem Deploy: Vercel baut weiter, auch wenn hier etwas
+# rot ist. Ein roter Test muss sichtbar sein, aber am Hackathon-Sonntag darf er
+# um 11:52 nicht das Ausliefern verhindern.
+#
+# Der Lauf braucht nichts von aussen: keine Datenbank, kein Supabase, kein
+# Modellschlüssel. Die Tests decken den Motor und die Muster ab — beides
+# rechnet lokal. Deshalb steht hier auch kein `secrets`-Block.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Zwei Pushes kurz hintereinander: der ältere Lauf wird abgebrochen, damit das
+# Ergebnis immer zum letzten Stand von main gehört.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Typecheck und Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Code
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # 22 ist die LTS, die `engines: node >=20.19` und Vite 7 beide erfüllen.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: Code/package-lock.json
+
+      # ci statt install: installiert genau den Lockfile-Stand und schlägt fehl,
+      # wenn package.json und package-lock.json auseinanderlaufen.
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      # Läuft auch, wenn der Typecheck rot ist — ein Typfehler und ein
+      # fehlgeschlagener Test sind zwei Auskünfte, nicht eine.
+      - name: Tests
+        if: '!cancelled()'
+        run: npm test
