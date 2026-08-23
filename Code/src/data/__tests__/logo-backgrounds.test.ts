@@ -48,8 +48,13 @@ describe('LOGO_BACKGROUNDS', () => {
   })
 
   it('reicht die Farbe bis zum Markentreffer durch', () => {
-    const twint = resolveBrand('TWINT KAUF/DIENSTLEISTUNG VOM 22.08.2026 BURGER LAB BERN (CH)')
+    /* Eine gesendete TWINT-Zahlung: Hier steht wirklich TWINT dahinter.
+       Der Kauf im Laden dagegen gehört dem Laden — «TWINT KAUF/DIENSTLEISTUNG
+       VOM … BURGER LAB BERN» löst absichtlich nicht mehr auf TWINT auf, sonst
+       sammelt eine Blase 64 Einkäufe an 20 Orten (siehe `PROCESSORS`). */
+    const twint = resolveBrand('TWINT GELD GESENDET VOM 22.08.2026 AN SVEN AEBI')
     expect(twint?.bg).toBe('#000000')
+    expect(resolveBrand('TWINT KAUF/DIENSTLEISTUNG VOM 22.08.2026 BURGER LAB BERN (CH)')).toBeNull()
   })
 
   it('lässt die Farbe weg, wo keine gemessen wurde', () => {

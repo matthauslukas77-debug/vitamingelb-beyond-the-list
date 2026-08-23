@@ -1,7 +1,7 @@
 import type { Account, Persona, Transaction } from '../types'
 import { liviaTransactions } from './livia.data'
 import { liviaBeneficiaries } from './livia.beneficiaries'
-import { monthly, withRaise } from './events'
+import { monthly, withRaise, withVariants } from './events'
 
 const PRIVATE = 'livia-private'
 const SAVINGS = 'livia-savings'
@@ -41,8 +41,13 @@ const events: Transaction[] = [
     id: 'livia-EV-2026-08-notebook',
     accountId: PRIVATE,
     date: '2026-08-07',
+    /* CHF 1'490, nicht 1'290: Die Ausreisser-Erkennung schlägt ab dem
+       Doppelten des Kategorienbudgets an, und ihr Konsumbudget ist mit den
+       neuen Buchungen gewachsen. Bei 1'290 fiel die Karte «CHF 1'290 sprengen
+       Konsum und Freizeit» knapp unter die Schwelle — dabei ist genau sie der
+       Anlass, das Notebook als ausserordentlich einzuordnen. */
     text: 'KAUF/ONLINE-SHOPPING VOM 07.08.2026 KARTEN NR. XXXX9042 MICROSPOT',
-    amount: -129_000,
+    amount: -149_000,
     currency: 'CHF',
     category: 'shopping',
   },
@@ -98,6 +103,85 @@ const newSubscription = monthly({
   to: '2026-08',
 })
 
+/**
+ * Die Haftpflicht — die einzige Rechnung, die auch bei ihr kommt.
+ *
+ * Steuern zahlt eine Lernende mit CHF 1'380 im Monat keine; ihre
+ * Steuerkategorie bleibt deshalb bewusst leer, und das ist kein Loch im Bild,
+ * sondern ihr Bild. Eine Privathaftpflicht dagegen hat in der Schweiz fast
+ * jede und jeder — CHF 145 im Jahr, einmal im Januar abgebucht. Die Ableitung
+ * legt sie auf CHF 12 im Monat um und füllt damit die vierte ihrer sechs
+ * Kategorien.
+ */
+const bills: Transaction[] = [
+  {
+    id: 'livia-EV-2026-01-haftpflicht',
+    accountId: PRIVATE,
+    date: '2026-01-20',
+    text: 'DIE MOBILIAR / HAFTPFLICHT UND HAUSRAT',
+    amount: -14_500,
+    currency: 'CHF',
+    category: 'insurance',
+  },
+]
+
+/**
+ * Zwei Quellen fürs Zuordnungsbrett.
+ *
+ * Das Möbelhaus ist der Fall aus dem Regelwerk — beim Eigentümer Unterhalt,
+ * beim Mieter Konsum, und bei einer 18-Jährigen im Elternhaus weiss das
+ * niemand ausser ihr. Hinter PayPal steht ein Laden, den die Buchung nicht
+ * nennt.
+ */
+const board: Transaction[] = [
+  {
+    id: 'livia-EV-2026-06-ikea',
+    accountId: PRIVATE,
+    date: '2026-06-27',
+    text: 'KAUF/DIENSTLEISTUNG VOM 27.06.2026 KARTEN NR. XXXX9042 IKEA LYSSACH (CH)',
+    amount: -16_500,
+    currency: 'CHF',
+    category: 'shopping',
+  },
+  {
+    id: 'livia-EV-2026-05-paypal',
+    accountId: PRIVATE,
+    date: '2026-05-09',
+    text: 'KAUF/ONLINE-SHOPPING VOM 09.05.2026 KARTEN NR. XXXX9042 PAYPAL EUROPE S.A.R.L.',
+    amount: -6_490,
+    currency: 'CHF',
+    category: 'shopping',
+  },
+  {
+    id: 'livia-EV-2026-07-paypal',
+    accountId: PRIVATE,
+    date: '2026-07-11',
+    text: 'KAUF/ONLINE-SHOPPING VOM 11.07.2026 KARTEN NR. XXXX9042 PAYPAL EUROPE S.A.R.L.',
+    amount: -4_750,
+    currency: 'CHF',
+    category: 'shopping',
+  },
+]
+
+/*
+ * 18 Buchungen am selben Terminal in Bern — der Klumpen ist bei ihr der
+ * kleinste, aber dieselbe Sache: Aus «Six Payment 33071» werden die Läden,
+ * bei denen eine Lernende in der Mittagspause wirklich steht. Jede vierte
+ * bleibt anonym.
+ */
+const withShopsNamed = withVariants(liviaTransactions, {
+  match: /SIX PAYMENT 33071 BERN/,
+  text: (merchant, date) =>
+    `KAUF/DIENSTLEISTUNG VOM ${date} KARTEN NR. XXXX9042 ${merchant} (CH)`,
+  variants: [
+    { merchant: 'BREZELKOENIG BERN' },
+    { merchant: 'STARBUCKS BERN' },
+    { merchant: 'COOP PRONTO BERN', category: 'groceries' },
+    { merchant: 'BAECKEREI ZBINDEN BERN' },
+  ],
+  keepEvery: 4,
+})
+
 export const livia: Persona = {
   id: 'livia',
   name: 'Livia Berger',
@@ -116,13 +200,15 @@ export const livia: Persona = {
    * die auf 50'000 spart, ist das die Karte mit der grössten Wirkung.
    */
   transactions: [
-    ...withRaise(liviaTransactions, {
+    ...withRaise(withShopsNamed, {
       since: '2026-07-01',
       match: /^LEHRLINGSLOHN \/ Raiffeisen$/,
       amount: 138_000,
       idPrefix: 'livia-EV-lohn',
     }),
     ...events,
+    ...bills,
+    ...board,
     ...newSubscription,
   ],
   beneficiaries: liviaBeneficiaries,

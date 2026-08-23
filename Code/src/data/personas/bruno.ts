@@ -1,7 +1,7 @@
 import type { Account, Persona, Transaction } from '../types'
 import { brunoTransactions } from './bruno.data'
 import { brunoBeneficiaries } from './bruno.beneficiaries'
-import { withRenamed } from './events'
+import { withRenamed, withVariants } from './events'
 
 const PRIVATE = 'bruno-private'
 const SAVINGS = 'bruno-savings'
@@ -130,6 +130,35 @@ const events: Transaction[] = [
   },
 ]
 
+/*
+ * Die Kasse beim Namen: Bruno und seine Frau sind bei der Visana, einer Berner
+ * Kasse — «2 Personen» stand schon im Buchungstext, nur der Name der Kasse
+ * fehlte. Damit trägt die drittgrösste Blase des Jahres ein Logo.
+ */
+const withInsurerNamed = withRenamed(brunoTransactions, {
+  match: /^KRANKENKASSE PRAEMIE 2P$/,
+  text: 'VISANA AG / PRAEMIE 2 PERSONEN',
+})
+
+/*
+ * 27 Buchungen am Terminal in Biel. Bei Bruno ist der Klumpen besonders
+ * schief: Er stand als «Six Payment 55210 Biel» im Blasenfeld neben Coop und
+ * Migros, als wäre er ein Laden. Jede vierte bleibt anonym — er zahlt viel mit
+ * Karte, und dass der Auszug den Laden verschweigt, ist sein Alltag.
+ */
+const withShopsNamed = withVariants(withInsurerNamed, {
+  match: /SIX PAYMENT 55210 BIEL/,
+  text: (merchant, date) =>
+    `KAUF/DIENSTLEISTUNG VOM ${date} KARTEN NR. XXXX4417 ${merchant} (CH)`,
+  variants: [
+    { merchant: 'RESTAURANT SEELAND NIDAU' },
+    { merchant: 'COOP PRONTO BIEL', category: 'groceries' },
+    { merchant: 'MCDONALDS BIEL' },
+    { merchant: 'BAECKEREI GLATZ BIEL' },
+  ],
+  keepEvery: 4,
+})
+
 export const bruno: Persona = {
   id: 'bruno',
   name: 'Bruno Aebischer',
@@ -139,18 +168,7 @@ export const bruno: Persona = {
   birthYear: 1967,
   address: { street: 'Mettstrasse 88', place: '2504 Biel/Bienne', country: 'Schweiz' },
   accounts,
-  /*
-   * Die Kasse beim Namen: Bruno und seine Frau sind bei der Visana, einer
-   * Berner Kasse — «2 Personen» stand schon im Buchungstext, nur der Name der
-   * Kasse fehlte. Damit trägt die drittgrösste Blase des Jahres ein Logo.
-   */
-  transactions: [
-    ...withRenamed(brunoTransactions, {
-      match: /^KRANKENKASSE PRAEMIE 2P$/,
-      text: 'VISANA AG / PRAEMIE 2 PERSONEN',
-    }),
-    ...events,
-  ],
+  transactions: [...withShopsNamed, ...events],
   beneficiaries: brunoBeneficiaries,
   standingOrders: [
     { id: 'm-so-1', accountId: PRIVATE, recipient: 'Vorsorgekonto 3a', amount: -60_000, currency: 'CHF', nextExecution: '2026-08-26' },

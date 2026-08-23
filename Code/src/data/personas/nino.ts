@@ -1,7 +1,13 @@
 import { TODAY, type Account, type Persona, type Transaction } from '../types'
 import { ninoTransactions } from './nino.data'
 import { ninoBeneficiaries } from './nino.beneficiaries'
-import { withJobChange, withoutBookings, withRenamed, withShiftedDay } from './events'
+import {
+  withJobChange,
+  withoutBookings,
+  withRenamed,
+  withShiftedDay,
+  withVariants,
+} from './events'
 
 const PRIVATE = 'nino-private'
 const CUSTODY = 'nino-custody'
@@ -82,6 +88,83 @@ const events: Transaction[] = [
 ]
 
 /**
+ * Steuern und Haftpflicht — auch bei ihm, nur klein.
+ *
+ * Ein 19-Jähriger mit CHF 2'640 netto zahlt Steuern, aber wenig: zwei
+ * Schlussrechnungen über zwei Jahre ergeben geglättet CHF 75 im Monat. Das
+ * füllt die Kategorie, lässt die App seinen Steuerkanton erkennen — und kippt
+ * seinen Monat ins Minus. Genau dort steht er: Nach Budget blieben ihm bisher
+ * CHF 37, mit der Steuerrate sind es minus 38. Der Kontostand von CHF 42.70
+ * ist die Folge davon, und jetzt rechnet sie sich auch nach.
+ */
+const bills: Transaction[] = [
+  {
+    id: 'nino-EV-2025-03-steuern',
+    accountId: PRIVATE,
+    date: '2025-03-20',
+    text: 'STEUERVERWALTUNG KT. BERN / SCHLUSSRECHNUNG 2024',
+    amount: -78_000,
+    currency: 'CHF',
+    category: 'taxes',
+  },
+  {
+    id: 'nino-EV-2026-03-steuern',
+    accountId: PRIVATE,
+    date: '2026-03-18',
+    text: 'STEUERVERWALTUNG KT. BERN / SCHLUSSRECHNUNG 2025',
+    amount: -94_500,
+    currency: 'CHF',
+    category: 'taxes',
+  },
+  {
+    id: 'nino-EV-2026-02-haftpflicht',
+    accountId: PRIVATE,
+    date: '2026-02-10',
+    text: 'ZURICH VERSICHERUNG / HAFTPFLICHT',
+    amount: -16_800,
+    currency: 'CHF',
+    category: 'insurance',
+  },
+]
+
+/**
+ * Drei Quellen fürs Zuordnungsbrett.
+ *
+ * Hinter PayPal steht ein Laden, den die Buchung nicht nennt; das Studio kennt
+ * das Regelwerk nicht. Beides kann nur er beantworten — und beides zusammen
+ * macht aus einem Brett mit einem einzigen Eintrag eines mit dreien.
+ */
+const board: Transaction[] = [
+  {
+    id: 'nino-EV-2026-06-paypal',
+    accountId: PRIVATE,
+    date: '2026-06-03',
+    text: 'KAUF/ONLINE-SHOPPING VOM 03.06.2026 KARTEN NR. XXXX2264 PAYPAL EUROPE S.A.R.L.',
+    amount: -6_850,
+    currency: 'CHF',
+    category: 'shopping',
+  },
+  {
+    id: 'nino-EV-2026-07-paypal',
+    accountId: PRIVATE,
+    date: '2026-07-22',
+    text: 'KAUF/ONLINE-SHOPPING VOM 22.07.2026 KARTEN NR. XXXX2264 PAYPAL EUROPE S.A.R.L.',
+    amount: -5_490,
+    currency: 'CHF',
+    category: 'shopping',
+  },
+  {
+    id: 'nino-EV-2026-05-studio',
+    accountId: PRIVATE,
+    date: '2026-05-16',
+    text: 'TWINT KAUF/DIENSTLEISTUNG VOM 16.05.2026 STUDIO NORD TATTOO BERN (CH)',
+    amount: -18_000,
+    currency: 'CHF',
+    category: 'other',
+  },
+]
+
+/**
  * Wechsel per Ende Mai 2026: CHF 2'640 statt CHF 2'380.
  *
  * Drei weitere Eingriffe, alle aus derselben Geschichte:
@@ -100,26 +183,54 @@ const events: Transaction[] = [
  *   Monatsanfang, und die Karte «was bis Ende Monat noch abgeht» zeigte am 22.
  *   eine Null. Jetzt zeigt sie, was sie zeigen soll: die Belastung, die noch
  *   kommt, wenn ohnehin nichts mehr da ist.
+ *
+ * Nacheinander statt ineinander: Bei vier Eingriffen liest in einer
+ * Verschachtelung niemand mehr, was zuerst passiert.
  */
-const transactions = [
-  ...withShiftedDay(
-    withoutBookings(
-      withRenamed(
-        withJobChange(ninoTransactions, {
-          since: '2026-05-01',
-          match: /^LOHN \/ Agentur Meridian AG$/,
-          text: 'LOHN / Studio Kreis GmbH',
-          amount: 264_000,
-          idPrefix: 'nino-EV-lohn',
-        }),
-        { match: /^KRANKENKASSE PRAEMIE$/, text: 'ATUPRI GESUNDHEITSVERSICHERUNG / PRAEMIE' },
-      ),
-      { match: /^MMA GYM BERN/, from: '2026-08-01' },
-    ),
-    { match: /^SUNRISE GMBH$/, day: 27, today: TODAY },
-  ),
-  ...events,
-]
+const afterJobChange = withJobChange(ninoTransactions, {
+  since: '2026-05-01',
+  match: /^LOHN \/ Agentur Meridian AG$/,
+  text: 'LOHN / Studio Kreis GmbH',
+  amount: 264_000,
+  idPrefix: 'nino-EV-lohn',
+})
+
+const withInsurerNamed = withRenamed(afterJobChange, {
+  match: /^KRANKENKASSE PRAEMIE$/,
+  text: 'ATUPRI GESUNDHEITSVERSICHERUNG / PRAEMIE',
+})
+
+const withoutGymInAugust = withoutBookings(withInsurerNamed, {
+  match: /^MMA GYM BERN/,
+  from: '2026-08-01',
+})
+
+const withMobileLate = withShiftedDay(withoutGymInAugust, {
+  match: /^SUNRISE GMBH$/,
+  day: 27,
+  today: TODAY,
+})
+
+/*
+ * 41 Buchungen am selben Terminal — bei ihm der grösste Klumpen von allen.
+ * Sie wurden zu einer Blase «Six Payment 21903 Bern», die nichts sagt. Jede
+ * vierte bleibt anonym: So sieht ein Kartenauszug wirklich aus.
+ */
+const withShopsNamed = withVariants(withMobileLate, {
+  match: /SIX PAYMENT 21903 BERN/,
+  text: (merchant, date) =>
+    `KAUF/DIENSTLEISTUNG VOM ${date} KARTEN NR. XXXX2264 ${merchant} (CH)`,
+  variants: [
+    { merchant: 'RICE UP BERN' },
+    { merchant: 'BREZELKOENIG BERN' },
+    { merchant: 'MCDONALDS BERN' },
+    { merchant: 'K KIOSK BERN BAHNHOF' },
+    { merchant: 'TAKEAWAY SUSHI BERN' },
+  ],
+  keepEvery: 4,
+})
+
+const transactions = [...withShopsNamed, ...events, ...bills, ...board]
 
 export const nino: Persona = {
   id: 'nino',

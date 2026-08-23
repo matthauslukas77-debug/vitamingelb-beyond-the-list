@@ -49,8 +49,8 @@ describe('Projektion', () => {
 
 describe('Die zwei Linien', () => {
   it('trennt das Versprechen des Budgets vom gemessenen Sparverhalten', () => {
-    // Reto hat CHF 1'390 Überschuss, spart davon aber nur 1'250. Genau diese
-    // Lücke ist die Aussage des Ausblicks.
+    // Reto bleiben nach Budget rund CHF 1'270 im Monat, per Dauerauftrag legt
+    // er davon 1'250 zurück. Genau diese Lücke ist die Aussage des Ausblicks.
     const reto = findPersona('reto')!
     const derived = deriveForPersona(reto, { today: TODAY, months: 12 })
     const start = savingsBalance(reto.accounts)

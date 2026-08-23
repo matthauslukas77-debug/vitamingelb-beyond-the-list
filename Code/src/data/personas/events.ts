@@ -231,3 +231,55 @@ export function monthly(spec: MonthlySeries): Transaction[] {
 
   return out
 }
+
+export interface Variant {
+  /** Der Laden, wie er im Auszug stünde — ohne Vorspann und ohne Land. */
+  merchant: string
+  /** Nur setzen, wo der Laden in eine andere Kategorie gehört als der Klumpen. */
+  category?: Category
+}
+
+export interface Spread {
+  /** Woran die Buchungen des Klumpens zu erkennen sind. */
+  match: RegExp
+  /** Wie der Auszug die Zeile baut. `date` kommt als «TT.MM.JJJJ». */
+  text: (merchant: string, date: string) => string
+  /** Die Läden, der Reihe nach durchgereicht. */
+  variants: Variant[]
+  /** Jede wievielte Buchung unverändert bleibt. 0 oder fehlend: keine. */
+  keepEvery?: number
+}
+
+/**
+ * Verteilt einen Klumpen anonymer Buchungen auf echte Läden.
+ *
+ * Wozu: «SIX PAYMENT 21903 BERN» ist der Acquirer, nicht der Laden — hinter
+ * der Terminalnummer steht ein Café, ein Take-away, ein Kiosk. Im Datensatz
+ * sind es 18 bis 41 Buchungen je Person, die zu **einer** bedeutungslosen
+ * Blase verklumpen: der grösste Posten ohne Aussage.
+ *
+ * `keepEvery` lässt bewusst einen Teil stehen. Der anonyme Terminaltext ist
+ * kein Mangel des Datensatzes, sondern die Wahrheit über Kartenzahlungen —
+ * und das Argument der ganzen Challenge: Die App weiss selbst nicht, wo du
+ * warst. Ein paar davon gehören ins Bild.
+ *
+ * Die Zuteilung läuft reihum über den Zähler der Treffer, nicht über den
+ * Zufall: Derselbe Datensatz ergibt bei jedem Laden dieselbe Buchung.
+ */
+export function withVariants(transactions: Transaction[], spread: Spread): Transaction[] {
+  let seen = -1
+  return transactions.map((tx) => {
+    if (!spread.match.test(tx.text)) return tx
+    seen += 1
+    if (spread.keepEvery && seen % spread.keepEvery === 0) return tx
+
+    const variant = spread.variants[seen % spread.variants.length]
+    const [year, month, day] = tx.date.split('-')
+    return {
+      ...tx,
+      text: spread.text(variant.merchant, `${day}.${month}.${year}`),
+      ...(variant.category ? { category: variant.category } : {}),
+    }
+  })
+}
+
