@@ -114,11 +114,22 @@ export function AskAnswer({ question }: { question: string }) {
 
   const outcome = routed?.outcome ?? local
 
+  /* Dieselbe Überschrift wie über jeder anderen Gruppe im Suchbildschirm.
+     So meldet sich in dieser App ein Abschnitt — nicht mit einer Farbfläche. */
+  const head = (
+    <div className="section-head">
+      <span className="section-head__title">Antwort</span>
+    </div>
+  )
+
   if (outcome.kind === 'unknown') {
     return (
-      <section className="ask ask--quiet">
-        <p className="ask__text">{waiting ? 'Einen Moment — ich schaue nach.' : NO_ANSWER}</p>
-      </section>
+      <>
+        {head}
+        <section className="ask">
+          <p className="ask__text">{waiting ? 'Einen Moment — ich schaue nach.' : NO_ANSWER}</p>
+        </section>
+      </>
     )
   }
 
@@ -126,55 +137,63 @@ export function AskAnswer({ question }: { question: string }) {
      dieselbe Fläche wie eine Antwort und nicht eine Fehlermeldung. */
   if (outcome.kind === 'refused') {
     return (
-      <section className="ask ask--quiet">
-        <p className="ask__text">{outcome.text}</p>
-        <span className="ask__badge">Dazu sage ich nichts</span>
-      </section>
+      <>
+        {head}
+        <section className="ask">
+          <p className="ask__text">{outcome.text}</p>
+          <div className="ask__foot">
+            <span className="ask__badge">Dazu sage ich nichts</span>
+          </div>
+        </section>
+      </>
     )
   }
 
   const { result } = outcome
   const proof =
     result.transactionIds.length > 0
-      ? `gerechnet aus ${result.transactionIds.length} ${
+      ? `gerechnet · ${result.transactionIds.length} ${
           result.transactionIds.length === 1 ? 'Buchung' : 'Buchungen'
         }`
       : 'gerechnet'
 
   return (
-    <section className="ask">
-      <p className="ask__text">{result.text}</p>
+    <>
+      {head}
+      <section className="ask">
+        <p className="ask__text">{result.text}</p>
 
-      {result.rows && result.rows.length > 0 && (
-        <ul className="ask-rows">
-          {result.rows.slice(0, 6).map((row, index) => (
-            <li className="ask-row" key={`${row.label}-${index}`}>
-              <span className="ask-row__label">{row.label}</span>
-              {row.sub && <span className="ask-row__sub">{row.sub}</span>}
-              <span className="ask-row__amount num">{formatAmount(row.amount, { sign: false })}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+        {result.rows && result.rows.length > 0 && (
+          <ul className="ask-rows">
+            {result.rows.slice(0, 6).map((row, index) => (
+              <li className="ask-row" key={`${row.label}-${index}`}>
+                <span className="ask-row__label">{row.label}</span>
+                {row.sub && <span className="ask-row__sub">{row.sub}</span>}
+                <span className="ask-row__amount num">{formatAmount(row.amount, { sign: false })}</span>
+              </li>
+            ))}
+          </ul>
+        )}
 
-      <div className="ask__foot">
+        <div className="ask__foot">
         {/* Der Beleg. Ohne ihn ist die Antwort eine Behauptung — dieselbe
             Doktrin wie auf jeder Signalkarte und im Budget. Dass Apertus die
             Frage verstanden hat, steht daneben und nicht davor: Gerechnet hat
             es nicht das Modell. */}
-        <span className="ask__badge">
-          {routed?.by === 'apertus' ? 'Frage von Apertus verstanden · ' : ''}
-          {proof}
-          {result.period ? ` · ${result.period}` : ''}
-        </span>
+          <span className="ask__badge">
+            {routed?.by === 'apertus' ? 'Apertus · ' : ''}
+            {proof}
+            {result.period ? ` · ${result.period}` : ''}
+          </span>
 
-        {result.link && (
-          <button className="ask__link" onClick={() => push(result.link!.screen)}>
-            {result.link.label}
-            <Icon name="chevronRight" size={15} />
-          </button>
-        )}
-      </div>
-    </section>
+          {result.link && (
+            <button className="ask__link" onClick={() => push(result.link!.screen)}>
+              {result.link.label}
+              <Icon name="chevronRight" size={15} />
+            </button>
+          )}
+        </div>
+      </section>
+    </>
   )
 }

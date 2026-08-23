@@ -5,10 +5,16 @@
    `theme/base.css` — keine eigenen Farbwerte, damit der dunkle Modus von
    selbst stimmt.
 
-   Die Antwort ist dunkel gesetzt und nicht wie eine Karte weiss: Sie ist kein
-   weiterer Treffer in der Liste, sondern die Aussage darüber. Eine Absage
-   («dazu sage ich nichts») bekommt dieselbe Fläche in ruhig — sie ist ein
-   Ergebnis, keine Fehlermeldung.
+   ── Warum keine farbige Fläche ─────────────────────────────────────────
+
+   Die erste Fassung setzte die Antwort auf `--surface-inverse`, damit sie als
+   Aussage über der Trefferliste steht. Gemessen war das ein **dunkler Block
+   über 48 % des Bildschirms** — in einer App, die sonst aus weissen Karten auf
+   Mint besteht, liest sich das als Fremdkörper und nicht als Antwort.
+
+   Jetzt ist es eine gewöhnliche Karte, wie die Signalkarte daneben. Die
+   Betonung trägt die Typografie und die Überschrift «Antwort» darüber; das
+   ist in dieser App die Art, wie ein Abschnitt sich meldet.
    ────────────────────────────────────────────────────────────────────────── */
 
 /* ── Die Antwort ─────────────────────────────────────────────────────────── */
@@ -16,31 +22,25 @@
 .ask {
   display: flex;
   flex-direction: column;
-  gap: var(--s-3);
   min-width: 0;
-  margin-top: var(--s-4);
-  padding: var(--s-4) var(--s-5);
+  padding: var(--s-5) var(--s-6);
   border-radius: var(--CornerRadius-R-16);
-  /* Das Tokenpaar für eine umgekehrte Fläche: hell auf dunkel im hellen Modus,
-     dunkel auf hell im dunklen. Ein festes `--petrol10` sähe im hellen Modus
-     richtig aus und wäre im dunklen **exakt die Seitenfarbe** — die Antwort
-     verschwände in der Fläche. Dasselbe Paar nutzt die aktive Pille im
-     Cockpit. */
-  background: var(--surface-inverse);
-  color: var(--weiss-petrol11);
-}
-
-/* Wo nichts zu sagen ist, wird auch nicht laut gesprochen. */
-.ask--quiet {
   background: var(--surface-card);
-  color: var(--text-body);
   box-shadow: var(--shadow-card);
+  overflow: hidden;
 }
 
+/**
+ * Der Satz ist die Antwort und trägt sie allein.
+ *
+ * Etwas grösser als der Fliesstext einer Signalkarte und in der starken
+ * Schriftfarbe — das genügt, damit das Auge zuerst hier landet.
+ */
 .ask__text {
   margin: 0;
   font-size: 16px;
   line-height: 1.45;
+  color: var(--text-strong);
 }
 
 .ask__foot {
@@ -50,36 +50,38 @@
   justify-content: space-between;
   gap: var(--s-2);
   min-width: 0;
+  margin-top: var(--s-3);
 }
 
+/* Dieselbe Form wie der Beleg auf der Signalkarte — es ist dieselbe Zusage. */
 .ask__badge {
-  font-size: 11.5px;
-  letter-spacing: .02em;
-  opacity: .72;
   min-width: 0;
+  padding: 2px 8px;
+  border-radius: var(--CornerRadius-R-100);
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.5;
 }
 
 .ask__link {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   flex: 0 0 auto;
   font-size: 13.5px;
   font-weight: 600;
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  color: var(--petrol6);
 }
 
 /* ── Die Aufschlüsselung ─────────────────────────────────────────────────── */
 
 .ask-rows {
   list-style: none;
-  margin: 0;
+  margin: var(--s-4) 0 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1px;
 }
 
 .ask-row {
@@ -88,14 +90,15 @@
      Länge des Namens, und eine Spalte, die wandert, liest sich nicht. */
   grid-template-columns: 1fr auto;
   align-items: baseline;
-  gap: 2px var(--s-3);
+  gap: 1px var(--s-3);
   min-width: 0;
   padding: var(--s-2) 0;
-  border-top: 1px solid color-mix(in oklab, var(--weiss-petrol11) 16%, transparent);
+  border-top: 1px solid var(--line);
 }
 
-.ask--quiet .ask-row {
-  border-top-color: var(--line);
+.ask-row:first-child {
+  border-top: 0;
+  padding-top: 0;
 }
 
 .ask-row__label {
@@ -104,6 +107,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 14px;
+  color: var(--text-body);
 }
 
 .ask-row__sub {
@@ -113,7 +117,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 11.5px;
-  opacity: .62;
+  color: var(--text-muted);
 }
 
 /* Ohne Unterzeile steht der Betrag auf der Grundlinie des Namens. Erst wenn
@@ -125,6 +129,7 @@
   align-self: baseline;
   font-size: 14px;
   font-weight: 600;
+  color: var(--text-strong);
   font-variant-numeric: tabular-nums;
 }
 
@@ -156,5 +161,5 @@
 }
 
 .ask-chip:active {
-  background: var(--petrol2);
+  background: var(--surface-sunken);
 }

@@ -223,7 +223,7 @@ const topSpending: Tool = {
       text: lead + follow,
       rows,
       transactionIds: expensesOf(context, derived.from, derived.to).map((tx) => tx.id),
-      period: 'Schnitt aus zwölf vollen Monaten',
+      period: '12 Monate',
       link: { label: 'Im Cockpit ansehen', screen: { name: 'cockpit', view: 'budget' } },
     }
   },
@@ -296,7 +296,7 @@ const subscriptions: Tool = {
         sub: `zuletzt ${formatDate(entry.lastSeen)}`,
       })),
       transactionIds: shown.flatMap((entry) => entry.transactionIds),
-      period: 'auf den Monat umgerechnet',
+      period: 'pro Monat',
       link: { label: 'Alle wiederkehrenden ansehen', screen: { name: 'recurring' } },
     }
   },
@@ -388,7 +388,7 @@ const merchantLookup: Tool = {
           sub: tx.text.length > 44 ? `${tx.text.slice(0, 44)}…` : tx.text,
         })),
       transactionIds: hits.map((tx) => tx.id),
-      period: 'zwölf Monate',
+      period: '12 Monate',
       link: { label: 'Buchung öffnen', screen: { name: 'transaction', transactionId: latest.id } },
     }
   },
@@ -588,7 +588,7 @@ const extraordinary: Tool = {
         sub: formatDate(tx.date),
       })),
       transactionIds: biggest.map((tx) => tx.id),
-      period: 'zwölf Monate',
+      period: '12 Monate',
       link: { label: 'Buchung öffnen', screen: { name: 'transaction', transactionId: top.id } },
     }
   },
